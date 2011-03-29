@@ -28,6 +28,7 @@ namespace NHiberanteDal.Mappings
             HasMany(x => x.Surveys);
             HasMany(x => x.Tests);
         }
+    }
 
         public class CourseTypeModelMap : ClassMap<CourseTypeModel>
         {
@@ -60,4 +61,3 @@ namespace NHiberanteDal.Mappings
             }
         }
     }
-}

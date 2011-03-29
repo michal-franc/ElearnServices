@@ -9,19 +9,19 @@ namespace Models
 
     public class ShoutboxModel
     {
-        public int ID;
-        public CourseModel CourseOwner;
+        public virtual int ID { get;private set; }
+        public virtual CourseModel CourseOwner { get; set; }
        
         //Many
-        public List<ShoutBoxMessageModel> Messages;
+        public virtual List<ShoutBoxMessageModel> Messages { get; set; }
     }
 
     public class ShoutBoxMessageModel
     {
-        public int ID;
-        public string Author;
-        public DateTime TimePosted;
-        public string Message;
+        public virtual int ID { get; private set; }
+        public virtual string Author { get; set; }
+        public virtual DateTime TimePosted { get; set; }
+        public virtual string Message { get; set; }
     }
 
     #endregion

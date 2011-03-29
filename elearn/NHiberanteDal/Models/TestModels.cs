@@ -10,43 +10,43 @@ namespace Models
     #region Models
     public class TestModel
     {
-        public int ID;
-        public string Name;
+        public virtual int ID { get;private set; }
+        public virtual string Name { get; set; }
         //Kurs
-        
-        public DateTime CreationDate;
-        public DateTime EditDate;
 
+        public virtual DateTime CreationDate { get; set; }
+        public virtual DateTime EditDate { get; set; }
+         
         //One
-        public ProfileModel Author;
-        public CourseModel Course;
-        public TestTypeModel TestType;
+        public virtual ProfileModel Author { get; set; }
+        public virtual CourseModel Course { get; set; }
+        public virtual TestTypeModel TestType { get; set; }
 
         //Many
-        public List<TestQuestionModel> Questions;
+        public virtual List<TestQuestionModel> Questions { get; set; }
 
 
     }
 
     public class TestTypeModel
     {
-        public int ID;
-        public string TypeName;
+        public virtual int ID { get;private set; }
+        public virtual string TypeName { get; set; }
     }
 
     public class TestQuestionModel
     {
-        public int ID;
-        public string QuestionText;
-        public List<TestQuestionAnswer> Answers;
+        public virtual int ID { get; private set; }
+        public virtual string QuestionText { get; set; }
+        public virtual List<TestQuestionAnswer> Answers { get; set; }
     }
 
     public class TestQuestionAnswer
     {
-        public int ID;
-        public string Text;
-        public bool Correct;
-        public int NumberSelected;
+        public virtual int ID { get;private set; }
+        public virtual string Text { get; set; }
+        public virtual bool Correct { get; set; }
+        public virtual int NumberSelected { get; set; }
     }
     #endregion
 }

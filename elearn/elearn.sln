@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ELearnServices", "ELearnSer
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NHiberanteDal", "NHiberanteDal\NHiberanteDal.csproj", "{843D2C18-032C-42E3-A212-161BDC81A56C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NHibernateTests", "NHibernateTests\NHibernateTests.csproj", "{A19ED946-F053-4997-9279-40672D23A08D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +30,10 @@ Global
 		{843D2C18-032C-42E3-A212-161BDC81A56C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{843D2C18-032C-42E3-A212-161BDC81A56C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{843D2C18-032C-42E3-A212-161BDC81A56C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A19ED946-F053-4997-9279-40672D23A08D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A19ED946-F053-4997-9279-40672D23A08D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A19ED946-F053-4997-9279-40672D23A08D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A19ED946-F053-4997-9279-40672D23A08D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

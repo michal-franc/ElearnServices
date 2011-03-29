@@ -8,26 +8,26 @@ namespace Models
     #region Models
     public class ContentModel
     {
-        public int ID;
-        public string ContentUrl;
-        public string Name;
-        public string Text;
-        public DateTime CreationDate;
-        public DateTime EditDate;
-        public int DownloadNumber;
+        public virtual int ID { get;private set; }
+        public virtual string ContentUrl { get; set; }
+        public virtual string Name { get; set; }
+        public virtual string Text { get; set; }
+        public virtual DateTime CreationDate { get; set; }
+        public virtual DateTime EditDate { get; set; }
+        public virtual int DownloadNumber { get; set; }
 
 
-        public int IDCourse;
+        public virtual int IDCourse { get; set; }
 
         //Reference
-        public ContentTypeModel Type;
+        public virtual ContentTypeModel Type { get; set; }
 
     }
 
     public class ContentTypeModel
     {
-        public int ID;
-        public string TypeName;
+        public virtual int ID { get;private set; }
+        public virtual string TypeName { get; set; }
     }
 
     public class TagModel

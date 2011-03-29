@@ -10,46 +10,46 @@ namespace Models
 
     public class CourseModel
     {
-        public int ID;
-        public string Name;
-        public DateTime CreationDate;
-        public string Logo;
+        public virtual int ID { get;private set; }
+        public virtual string Name { get; set; }
+        public virtual DateTime CreationDate { get; set; }
+        public virtual string Logo { get; set; }
 
 
         //One
-        public CourseTypeModel CourseType;
-        public GroupModel Group;
-        public ForumModel Forum;
+        public virtual CourseTypeModel CourseType { get; set; }
+        public virtual GroupModel Group { get; set; }
+        public virtual ForumModel Forum { get; set; }
 
         //Many
-        public List<SurveyModel> Surveys;
-        public List<TestModel> Tests;
-        public List<ContentModel> Contents;
+        public virtual List<SurveyModel> Surveys { get; set; }
+        public virtual List<TestModel> Tests { get; set; }
+        public virtual List<ContentModel> Contents { get; set; }
     }
 
     public class CourseTypeModel
     {
-        public int ID;
-        public string TypeName;
+        public virtual int ID { get; private set; }
+        public virtual string TypeName { get; set; }
     }
 
     public class SurveyModel
     {
-        public int ID;
+        public virtual int ID { get; private set; }
         //public int IDCourse;
         //public int IDGroup;
-        public string SurveyText;
+        public virtual string SurveyText { get; set; }
 
         //Many
-        public List<SurveyQuestionModel> Questions;
+        public virtual List<SurveyQuestionModel> Questions { get; set; }
 
     }
 
     public class SurveyQuestionModel
     {
-        public int ID;
-        public string QuestionText;
-        public int TimesSelected;
+        public virtual int ID { get;private set; }
+        public virtual string QuestionText { get; set; }
+        public virtual int TimesSelected { get; set; }
     }
 
     #endregion

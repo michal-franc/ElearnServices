@@ -32,16 +32,22 @@ namespace NHiberanteDal.Mappings
         }
     }
 
-    public class ProfileModel
+    public class ProfileModelMap : ClassMap<ProfileModel>
     {
-        int ID;
-        // Linked with Forms Authentication
+        public ProfileModelMap ()
+	    {
+            Id(x=>x.ID);
+
+	    }
     }
 
-    public class ProfileTypeModel
+    public class ProfileTypeModelMap : ClassMap<ProfileTypeModel>
     {
-        int ID;
-        string TypeName;
+        public ProfileTypeModelMap()
+        {
+            Id(x => x.ID);
+            Map(x => x.TypeName);
+        }
     }
 
     public class PrivateMessageModelMap :ClassMap<PrivateMessageModel>

@@ -11,51 +11,51 @@ namespace Models
 
     public class GroupModel
     {
-        public int ID;
-        public List<ProfileModel> Users;
-        public string GroupName;
+        public virtual int ID { get; private set; }
+        public virtual List<ProfileModel> Users { get; set; }
+        public virtual string GroupName { get; set; }
         //AuthModel GroupAuth;
     }
 
     public class GroupTypeModel
     {
-        public int ID;
-        public string TypeName;
+        public virtual int ID {get;private set;}
+        public virtual string TypeName { get; set; }
     }
 
     public class ProfileModel
     {
-        int ID;
+        public virtual int ID { get; private set; }
         // Linked with Forms Authentication
     }
 
     public class ProfileTypeModel
     {
-        int ID;
-        string TypeName;
+        public virtual int ID { get;private set; }
+        public virtual string TypeName { get; set; }
     }
 
     public class PrivateMessageModel
     {
-        public int ID;
-        public ProfileModel Sender;
-        public ProfileModel Receiver;
+        public virtual int ID { get;private set; }
+        public virtual ProfileModel Sender { get; set; }
+        public virtual ProfileModel Receiver { get; set; }
     }
 
     public class JournalModel
     {
-        public int ID;
-        public ProfileModel Owner;
-        public string Name;
-        public double AverageMark;
-        public List<JournalMarkModel> Marks;
+        public virtual int ID { get; private set; }
+        public virtual ProfileModel Owner { get; set; }
+        public virtual string Name { get; set; }
+        public virtual double AverageMark { get; set; }
+        public virtual List<JournalMarkModel> Marks { get; set; }
     }
 
     public class JournalMarkModel
     {
-        public int ID;
-        public string Name;
-        public string Value;
+        public virtual int ID { get; private set; }
+        public virtual string Name { get; set; }
+        public virtual string Value { get; set; }
     }
 
     #endregion
