@@ -12,17 +12,17 @@ namespace NHiberanteDal.Mappings
         public ContentMap()
         {
             Id(x => x.ID);
-            Map(x => x.IDCourse);
-            Map(x => x.Name);
+            Map(x => x.IDCourse).Not.Nullable();
+            Map(x => x.Name).Not.Nullable();
             Map(x => x.Text);
             Map(x => x.DownloadNumber);
-            Map(x => x.CreationDate);
+            Map(x => x.CreationDate).Not.Nullable();
             Map(x => x.EditDate);
-            Map(x => x.ContentUrl);
+            Map(x => x.ContentUrl).Not.Nullable();
 
 
             //References
-            References(x => x.Type);                      
+            References(x => x.Type).Not.Nullable();                      
         }
     }
 
@@ -31,7 +31,7 @@ namespace NHiberanteDal.Mappings
         public ContentTypeMap()
         {
             Id(x => x.ID);
-            Map(x => x.TypeName);
+            Map(x => x.TypeName).Not.Nullable();
         }
     }
 }

@@ -12,8 +12,8 @@ namespace NHiberanteDal.Mappings
         public ForumModelMap()
         {
             Id(x => x.ID);
-            Map(x => x.Author);
-            Map(x => x.Name);
+            Map(x => x.Author).Not.Nullable();
+            Map(x => x.Name).Not.Nullable();
         }
 
     }
@@ -23,7 +23,7 @@ namespace NHiberanteDal.Mappings
         public TopicModelMap()
         {
             Id(x => x.ID);
-            Map(x => x.Text);
+            Map(x => x.Text).Not.Nullable();
         }
     }
 
@@ -32,7 +32,7 @@ namespace NHiberanteDal.Mappings
         public PostModelMap()
         {
             Id(x => x.ID);
-            Map(x=>x.Text);
+            Map(x => x.Text).Not.Nullable();
         }
     }
 }

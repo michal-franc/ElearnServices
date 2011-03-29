@@ -14,7 +14,7 @@ namespace NHiberanteDal.Mappings
             Id(x => x.ID);
             
             //One
-            References(x=>x.CourseOwner);
+            References(x => x.CourseOwner).Not.Nullable();
 
             //Many
             HasMany(x=>x.Messages);
@@ -28,9 +28,9 @@ namespace NHiberanteDal.Mappings
         public ShoutBoxMessageModelMap()
         {
             Id(x => x.ID);
-            Map(x=>x.Author);
-            Map(x=>x.Message);
-            Map(x=>x.TimePosted);
+            Map(x => x.Author).Not.Nullable();
+            Map(x => x.Message).Not.Nullable();
+            Map(x => x.TimePosted).Not.Nullable();
         } 
     }
 }

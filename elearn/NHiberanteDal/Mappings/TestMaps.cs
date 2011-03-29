@@ -13,15 +13,15 @@ namespace NHiberanteDal.Mappings
         public TestModelMap()
         {
             Id(x => x.ID);
-            Map(x => x.Name);
-            Map(x => x.CreationDate);
+            Map(x => x.Name).Not.Nullable();
+            Map(x => x.CreationDate).Not.Nullable();
             Map(x => x.EditDate);
 
 
             //One
-            References(x=>x.Author);
-            References(x=>x.Course);
-            References(x=>x.TestType);
+            References(x => x.Author).Not.Nullable();
+            References(x => x.Course).Not.Nullable();
+            References(x => x.TestType).Not.Nullable();
 
             //Many
             HasMany(x=>x.Questions);
@@ -35,7 +35,7 @@ namespace NHiberanteDal.Mappings
         public TestTypeModelMap()
         {
             Id(x => x.ID);
-            Map(x => x.TypeName);
+            Map(x => x.TypeName).Not.Nullable();
         }
     }
 
@@ -45,7 +45,7 @@ namespace NHiberanteDal.Mappings
         public TestQuestionModelMap()
         {
             Id(x => x.ID);
-            Map(x => x.QuestionText);
+            Map(x => x.QuestionText).Not.Nullable();
 
             //Many
             HasMany(x => x.Answers);
@@ -58,8 +58,8 @@ namespace NHiberanteDal.Mappings
         public TestQuestionAnswerMap()
         {
             Id(x => x.ID);
-            Map(x => x.Correct);
-            Map(x => x.Text);
+            Map(x => x.Correct).Not.Nullable();
+            Map(x => x.Text).Not.Nullable();
             Map(x => x.NumberSelected);
 
         }

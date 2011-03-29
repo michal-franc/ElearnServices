@@ -14,14 +14,14 @@ namespace NHiberanteDal.Mappings
         {
             Id(x => x.ID);
             Map(x => x.Logo);
-            Map(x => x.Name);
-            Map(x => x.CreationDate);
+            Map(x => x.Name).Not.Nullable();
+            Map(x => x.CreationDate).Not.Nullable();
             
 
             //One
-            References(x => x.Group);
-            References(x => x.CourseType);
-            References(x => x.Forum);
+            References(x => x.Group).Not.Nullable();
+            References(x => x.CourseType).Not.Nullable();
+            References(x => x.Forum).Not.Nullable();
 
             //Many
             HasMany(x => x.Contents);
@@ -35,7 +35,7 @@ namespace NHiberanteDal.Mappings
             public CourseTypeModelMap()
             {
                 Id(x => x.ID);
-                Map(x => x.TypeName);
+                Map(x => x.TypeName).Not.Nullable();
             }
         }
 
@@ -44,7 +44,7 @@ namespace NHiberanteDal.Mappings
             public SurveyModelMap()
             {
                 Id(x => x.ID);
-                Map(x => x.SurveyText);
+                Map(x => x.SurveyText).Not.Nullable();
 
                 //Many
                 HasMany(x => x.Questions);
@@ -56,7 +56,7 @@ namespace NHiberanteDal.Mappings
             public SurveyQuestionModelMap()
             {
                 Id(x => x.ID);
-                Map(x => x.QuestionText);
+                Map(x => x.QuestionText).Not.Nullable();
                 Map(x => x.TimesSelected);
             }
         }

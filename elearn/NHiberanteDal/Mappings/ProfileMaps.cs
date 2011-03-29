@@ -13,7 +13,7 @@ namespace NHiberanteDal.Mappings
         public GroupModelMap()
         {
             Id(x => x.ID);
-            Map(x => x.GroupName);
+            Map(x => x.GroupName).Not.Nullable();
 
             //Many
 
@@ -27,7 +27,7 @@ namespace NHiberanteDal.Mappings
         public GroupTypeModelMap()
         {
             Id(x=>x.ID);
-            Map(x=>x.TypeName);
+            Map(x => x.TypeName).Not.Nullable();
 
         }
     }
@@ -57,8 +57,8 @@ namespace NHiberanteDal.Mappings
             Id(x => x.ID);
 
             //One
-            References(x=>x.Sender);
-            References(x=>x.Receiver);
+            References(x => x.Sender).Not.Nullable();
+            References(x => x.Receiver).Not.Nullable();
         }
     }
 
@@ -67,11 +67,11 @@ namespace NHiberanteDal.Mappings
         public JournalModelMap()
         {
             Id(x => x.ID);
-            Map(x => x.Name);
+            Map(x => x.Name).Not.Nullable();
             Map(x=>x.AverageMark);
 
             //One
-            References(x=>x.Owner);
+            References(x => x.Owner).Not.Nullable();
 
             //Many
             HasMany(x=>x.Marks);
@@ -84,8 +84,8 @@ namespace NHiberanteDal.Mappings
         public MarkModelMap()
         {
             Id(x => x.ID);
-            Map(x => x.Name);
-            Map(x => x.Value);
+            Map(x => x.Name).Not.Nullable();
+            Map(x => x.Value).Not.Nullable();
         }
     }
 }
