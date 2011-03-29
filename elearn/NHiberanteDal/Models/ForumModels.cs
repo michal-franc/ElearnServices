@@ -9,10 +9,10 @@ namespace Models
     public class ForumModel
     {
         public virtual int ID { get; private set; }
-        //public int IDCourse; // Course
-        //public int IDGroup; // Group
         public virtual string Name { get; set; }
         public virtual string Author { get; set; }
+
+        public virtual List<TopicModel> Topics { get; set; }
          
         //Todo: Uprawnienia Forum
     }
@@ -22,6 +22,9 @@ namespace Models
         public virtual int ID { get;private set; }
         //public int IDForum; // Forum
         public virtual string Text { get; set; }
+
+        public virtual List<PostModel> Posts { get; set; }
+
     }
 
     public class PostModel

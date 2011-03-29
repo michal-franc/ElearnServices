@@ -14,6 +14,10 @@ namespace NHiberanteDal.Mappings
             Id(x => x.ID);
             Map(x => x.Author).Not.Nullable();
             Map(x => x.Name).Not.Nullable();
+
+
+            //Many
+            HasMany(x=>x.Topics).KeyColumns.Add("ForumId");
         }
 
     }
@@ -24,6 +28,9 @@ namespace NHiberanteDal.Mappings
         {
             Id(x => x.ID);
             Map(x => x.Text).Not.Nullable();
+
+            //Many
+            HasMany(x => x.Posts).KeyColumns.Add("TopicId");
         }
     }
 

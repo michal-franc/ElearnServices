@@ -17,7 +17,7 @@ namespace NHiberanteDal.Mappings
             References(x => x.CourseOwner).Not.Nullable();
 
             //Many
-            HasMany(x=>x.Messages);
+            HasMany(x => x.Messages).KeyColumns.Add("ShoutboxId");
 
         }
     }

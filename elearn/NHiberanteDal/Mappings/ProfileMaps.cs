@@ -74,7 +74,7 @@ namespace NHiberanteDal.Mappings
             References(x => x.Owner).Not.Nullable();
 
             //Many
-            HasMany(x=>x.Marks);
+            HasMany(x => x.Marks).KeyColumns.Add("JournalId"); ;
 
         }
     }
