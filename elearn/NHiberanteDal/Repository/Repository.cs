@@ -5,12 +5,12 @@ using System.Text;
 using NHibernate;
 using NHibernate.Criterion;
 
-namespace NHiberanteDal.Repository
+namespace NHiberanteDal
 {
-    public class Repository<T> : IRepository<T>
+    public static class Repository<T> 
         where T : class
     {
-        public T GetById(int id)
+        public static T GetById(int id)
         {
             T klient;
 
@@ -18,7 +18,7 @@ namespace NHiberanteDal.Repository
 
             return klient;
         }
-        public int Add(T item)
+        public static int Add(T item)
         {
             int addedItemId;
 
@@ -35,7 +35,7 @@ namespace NHiberanteDal.Repository
             return addedItemId;
         }
 
-        public void AddById(T item, int Id)
+        public static void AddById(T item, int Id)
         {
             using (var session = SessionFactory.OpenSession())
             {
@@ -48,7 +48,7 @@ namespace NHiberanteDal.Repository
             }
         }
 
-        public void Remove(T item)
+        public static void Remove(T item)
         {
 
             using (var session = SessionFactory.OpenSession())
@@ -63,7 +63,7 @@ namespace NHiberanteDal.Repository
             }
         }
 
-        public void Update(T item)
+        public static void Update(T item)
         {
 
             using (var session = SessionFactory.OpenSession())
@@ -78,7 +78,7 @@ namespace NHiberanteDal.Repository
             }
         }
 
-        public void UpdateById(T item, int Id)
+        public static void UpdateById(T item, int Id)
         {
 
             using (var session = SessionFactory.OpenSession())
@@ -93,7 +93,7 @@ namespace NHiberanteDal.Repository
             }
         }
 
-        public int GetCount()
+        public static int GetCount()
         {
             int count = 0;
             using (var session = SessionFactory.OpenSession())
@@ -104,7 +104,7 @@ namespace NHiberanteDal.Repository
             }
             return count;
         }
-        public IList<T> GetAll()
+        public static IList<T> GetAll()
         {
             IList<T> returnedList = null;
             using (var session = SessionFactory.OpenSession())
@@ -115,7 +115,7 @@ namespace NHiberanteDal.Repository
             return returnedList;
         }
 
-        public IList<T> GetByFilter(string parameterName, object value)
+        public static IList<T> GetByFilter(string parameterName, object value)
         {
             IList<T> returnedList = null;
             using (var session = SessionFactory.OpenSession())
@@ -127,7 +127,7 @@ namespace NHiberanteDal.Repository
         }
 
 
-        protected IList<T> GetByCriteria(ICriterion criteria)
+        public static IList<T> GetByCriteria(ICriterion criteria)
         {
             IList<T> returnedList = null;
             using (var session = SessionFactory.OpenSession())
@@ -138,7 +138,7 @@ namespace NHiberanteDal.Repository
             return returnedList;
         }
 
-        protected IList<T> GetByQuery(string query)
+        public static IList<T> GetByQuery(string query)
         {
             IList<T> returnedList = null;
             using (var session = SessionFactory.OpenSession())
@@ -149,7 +149,7 @@ namespace NHiberanteDal.Repository
             return returnedList;
         }
 
-        public IQueryable<T> SelectUserData(Guid id)
+        public static IQueryable<T> SelectUserData(Guid id)
         {
             IQueryable<T> table;
 

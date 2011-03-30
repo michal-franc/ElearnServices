@@ -11,10 +11,10 @@ namespace NHibernateTests
     public class NHibernateInit
     {
 
-        [Test]
+        [SetUp]
         public void ResetSchema()
         {
-            NHiberanteDal.Repository.SessionFactory.ResetSchema();
+            NHiberanteDal.SessionFactory.ResetSchema();
         }
 
         [Test]
@@ -22,23 +22,14 @@ namespace NHibernateTests
         {
             //CreateData
             GroupTypeModel sampleGroupType = new GroupTypeModel() { TypeName = "Testowy typ grupy" };
-            NHiberanteDal.Repository.Repository<GroupTypeModel> repo3 = new NHiberanteDal.Repository.Repository<GroupTypeModel>();
-            repo3.Add(sampleGroupType);
-
+            NHiberanteDal.Repository<GroupTypeModel>.Add(sampleGroupType);
             GroupModel sampleGroup = new GroupModel() { GroupName = "Testowa grupa", GroupType = sampleGroupType };
-
-            NHiberanteDal.Repository.Repository<GroupModel> repo4 = new NHiberanteDal.Repository.Repository<GroupModel>();
-            repo4.Add(sampleGroup);
-
+            NHiberanteDal.Repository<GroupModel>.Add(sampleGroup);
             ForumModel sampleForum = new ForumModel() { Name = "Testowe forum", Author = "Testowy User" };
-
-            NHiberanteDal.Repository.Repository<ForumModel> repo2= new NHiberanteDal.Repository.Repository<ForumModel>();
-            repo2.Add(sampleForum);
+            NHiberanteDal.Repository<ForumModel>.Add(sampleForum);
 
             CourseTypeModel sampleCourseType = new CourseTypeModel() { TypeName = "Testowy typ kursu" };
-
-            NHiberanteDal.Repository.Repository<CourseTypeModel> repo1 = new NHiberanteDal.Repository.Repository<CourseTypeModel>();
-            repo1.Add(sampleCourseType);
+            NHiberanteDal.Repository<CourseTypeModel>.Add(sampleCourseType);
 
             CourseModel samplecourse = new CourseModel()
             {
@@ -48,11 +39,8 @@ namespace NHibernateTests
                 Group = sampleGroup,
                 Forum = sampleForum
             };
-
             //FillData
-            NHiberanteDal.Repository.Repository<CourseModel> repo = new NHiberanteDal.Repository.Repository<CourseModel>();
-            repo.Add(samplecourse);
-
+            NHiberanteDal.Repository<CourseModel>.Add(samplecourse); 
         }
 
     }
