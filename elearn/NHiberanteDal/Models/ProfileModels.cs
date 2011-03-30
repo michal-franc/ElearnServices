@@ -14,6 +14,7 @@ namespace Models
         public virtual int ID { get; private set; }
         public virtual List<ProfileModel> Users { get; set; }
         public virtual string GroupName { get; set; }
+        public virtual GroupTypeModel  GroupType {get;set;}
         //AuthModel GroupAuth;
     }
 

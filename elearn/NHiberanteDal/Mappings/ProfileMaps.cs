@@ -15,6 +15,9 @@ namespace NHiberanteDal.Mappings
             Id(x => x.ID);
             Map(x => x.GroupName).Not.Nullable();
 
+            //One
+            References(x=>x.GroupType);
+
             //Many
 
             HasMany(x=>x.Users);
