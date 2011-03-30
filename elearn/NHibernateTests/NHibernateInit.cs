@@ -11,7 +11,7 @@ namespace NHibernateTests
     public class NHibernateInit
     {
 
-        [Test]
+        [SetUp]
         public void ResetSchema()
         {
             NHiberanteDal.Repository.SessionFactory.ResetSchema();
