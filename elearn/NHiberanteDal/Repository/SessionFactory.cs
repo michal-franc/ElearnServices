@@ -9,7 +9,7 @@ using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using NHiberanteDal.Mappings;
 
-namespace NHiberanteDal
+namespace NHiberanteDal.Repository
 {
     public static class SessionFactory
     {
