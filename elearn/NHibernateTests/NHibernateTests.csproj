@@ -71,8 +71,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContentModelTests.cs" />
+    <Compile Include="CourseModelTests.cs" />
+    <Compile Include="CrudRepositoryTests.cs" />
+    <Compile Include="ForumModelTests.cs" />
     <Compile Include="NHibernateInit.cs" />
+    <Compile Include="ProfileModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShoutBoxModelTests.cs" />
+    <Compile Include="TestModelTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NHiberanteDal\NHiberanteDal.csproj">

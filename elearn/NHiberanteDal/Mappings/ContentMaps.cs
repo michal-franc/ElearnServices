@@ -12,11 +12,10 @@ namespace NHiberanteDal.Mappings
         public ContentMap()
         {
             Id(x => x.ID);
-            Map(x => x.IDCourse).Not.Nullable();
             Map(x => x.Name).Not.Nullable();
             Map(x => x.Text);
             Map(x => x.DownloadNumber);
-            Map(x => x.CreationDate).Not.Nullable();
+            Map(x => x.CreationDate).Default(DateTime.Now.ToShortDateString()).Not.Nullable();
             Map(x => x.EditDate);
             Map(x => x.ContentUrl).Not.Nullable();
 

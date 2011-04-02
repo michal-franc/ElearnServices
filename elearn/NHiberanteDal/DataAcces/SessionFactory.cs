@@ -9,10 +9,12 @@ using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using NHiberanteDal.Mappings;
 
-namespace NHiberanteDal.Repository
+namespace NHiberanteDal
 {
     public static class SessionFactory
     {
+        static readonly object factorylock = new object();
+
         public static ISession OpenSession()
         {
             return GetSessionFactory().OpenSession();
@@ -34,13 +36,15 @@ namespace NHiberanteDal.Repository
 
         private static ISessionFactory CreateSessionFactory(Action<Configuration> func)
         {
-
-            return Fluently.Configure().
-                    Database(MsSqlConfiguration.MsSql2008.ConnectionString
-                    ("Data Source=LaM-PC\\SQL2008;Initial Catalog=elearntest;Integrated Security=SSPI;"))
-                    .Mappings(x => x.FluentMappings.AddFromAssembly(System.Reflection.Assembly.GetExecutingAssembly()))
-                    .ExposeConfiguration(func)
-                    .BuildSessionFactory();
+            lock (factorylock)
+            {
+                return Fluently.Configure().
+                        Database(MsSqlConfiguration.MsSql2008.ConnectionString
+                        ("Data Source=LaM-PC\\SQL2008;Initial Catalog=elearntest;Integrated Security=SSPI;"))
+                        .Mappings(x => x.FluentMappings.AddFromAssembly(System.Reflection.Assembly.GetExecutingAssembly()))
+                        .ExposeConfiguration(func)
+                        .BuildSessionFactory();
+            }
         }
         private static void UpdateSchema(Configuration config)
         {

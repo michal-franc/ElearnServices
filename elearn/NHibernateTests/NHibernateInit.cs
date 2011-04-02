@@ -11,48 +11,59 @@ namespace NHibernateTests
     public class NHibernateInit
     {
 
-        [SetUp]
-        public void ResetSchema()
+        [TestCase]
+        public void CanGenerateMappings()
         {
-            NHiberanteDal.Repository.SessionFactory.ResetSchema();
+            NHiberanteDal.SessionFactory.ResetSchema();
         }
 
+        //Test the default value creation of CreationDate DateTime
+
         [Test]
-        public void FillData()
+        public void CanFillWithTestData()
         {
-            //CreateData
-            GroupTypeModel sampleGroupType = new GroupTypeModel() { TypeName = "Testowy typ grupy" };
-            NHiberanteDal.Repository.Repository<GroupTypeModel> repo3 = new NHiberanteDal.Repository.Repository<GroupTypeModel>();
-            repo3.Add(sampleGroupType);
+            //2 ContentTypeModel
+            ContentTypeModel contentTypeImage = new ContentTypeModel() { TypeName="Image" };
+            ContentTypeModel contentTypeVideo = new ContentTypeModel() { TypeName = "Video" };
 
-            GroupModel sampleGroup = new GroupModel() { GroupName = "Testowa grupa", GroupType = sampleGroupType };
+            //2 Group Model
+            //2 Group ModelTypes
 
-            NHiberanteDal.Repository.Repository<GroupModel> repo4 = new NHiberanteDal.Repository.Repository<GroupModel>();
-            repo4.Add(sampleGroup);
+            //2 Forum Model
+            //2 Topic Model
+            //2 Post Model
 
-            ForumModel sampleForum = new ForumModel() { Name = "Testowe forum", Author = "Testowy User" };
+          
+            //2 Profile Model
+            //2 Profile ModelTypes
 
-            NHiberanteDal.Repository.Repository<ForumModel> repo2= new NHiberanteDal.Repository.Repository<ForumModel>();
-            repo2.Add(sampleForum);
+            //2 ContentModel
+            ContentModel contentImage = new ContentModel() { ContentUrl="/image/logo.jpeg" , Name="LogoImage", Type=contentTypeImage };
+            ContentModel contentBideo = new ContentModel() { ContentUrl="/video/intro.avi" , Name="IntroVideo", Type=contentTypeVideo };
 
-            CourseTypeModel sampleCourseType = new CourseTypeModel() { TypeName = "Testowy typ kursu" };
+            //2 Course Type Model
+            CourseTypeModel courseTypeMath = new CourseTypeModel() { TypeName="Math" };
+            CourseTypeModel courseTypeProgramming = new CourseTypeModel() { TypeName = "Programming" };
 
-            NHiberanteDal.Repository.Repository<CourseTypeModel> repo1 = new NHiberanteDal.Repository.Repository<CourseTypeModel>();
-            repo1.Add(sampleCourseType);
+            //2 Course Model
+            //CourseModel courseMath = new CourseModel() { CourseType=courseTypeMath , Forum= , Group=  };
 
-            CourseModel samplecourse = new CourseModel()
-            {
-                Name = "Testowy kurs",
-                CourseType = sampleCourseType,
-                CreationDate = DateTime.Now,
-                Group = sampleGroup,
-                Forum = sampleForum
-            };
 
-            //FillData
-            NHiberanteDal.Repository.Repository<CourseModel> repo = new NHiberanteDal.Repository.Repository<CourseModel>();
-            repo.Add(samplecourse);
+            //2 Survey Model
+            //4 Survey Question Model
 
+            //2 Private Message Model
+
+            //2 Journal Model
+            //4 Journal Mark
+
+            //1 ShoutBoxModel
+            //2 ShoutBoxMessages
+
+            //2 TestModel
+            //2 TestType
+            //2 TestQuestionModel
+            //2 QuestionAnswerModel
         }
 
     }

@@ -16,9 +16,6 @@ namespace Models
         public virtual DateTime EditDate { get; set; }
         public virtual int DownloadNumber { get; set; }
 
-
-        public virtual int IDCourse { get; set; }
-
         //Reference
         public virtual ContentTypeModel Type { get; set; }
 
