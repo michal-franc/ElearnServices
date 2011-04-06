@@ -92,8 +92,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ServicesTests\CourseServicesTest.cs" />
-    <Compile Include="ServicesTests\ProfileServicesTests.cs" />
+    <Compile Include="ModelTests\CourseModelTests.cs" />
+    <Compile Include="ModelTests\ProfileModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlLiteTestDBAccess.cs" />
     <Compile Include="TestBase.cs" />

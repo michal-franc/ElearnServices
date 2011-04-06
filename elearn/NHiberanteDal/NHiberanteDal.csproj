@@ -76,7 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataAccess\DataAccess.cs" />
-    <Compile Include="DataAccess\ProfileService.cs" />
+    <Compile Include="DataAccess\Repository.cs" />
     <Compile Include="Mappings\ContentMaps.cs" />
     <Compile Include="Mappings\CourseMaps.cs" />
     <Compile Include="Mappings\ForumMaps.cs" />
@@ -93,7 +93,9 @@
     <Compile Include="Models\TestModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="DataAccess\QueryObjects\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
