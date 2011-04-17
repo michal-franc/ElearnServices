@@ -5,6 +5,8 @@ using System.Text;
 using NHibernate;
 using FluentNHibernate.Cfg.Db;
 using FluentNHibernate.Cfg;
+using NHibernate.Tool.hbm2ddl;
+using NHibernate.Cfg;
 
 //Based on Maciej Aniserowicz Samples http://www.maciejaniserowicz.com/
 
@@ -14,6 +16,7 @@ namespace NHiberanteDal.DataAccess
     {
         private static ISessionFactory _sessionFactory;
         private static readonly object _syncRoot = new object();
+        private static Configuration _configuration;
 
         private static readonly Func<ISession> _defaultOpenSession = () =>
         {
@@ -31,10 +34,25 @@ namespace NHiberanteDal.DataAccess
 
         private static void Configure()
         {
-            _sessionFactory = Fluently.Configure().
-                        Database(MsSqlConfiguration.MsSql2008.ConnectionString("Data Source=LaM-PC\\SQL2008;Initial Catalog=elearntest;Integrated Security=SSPI;"))
-                        .Mappings(x => x.FluentMappings.AddFromAssembly(System.Reflection.Assembly.GetExecutingAssembly()))
-                        .BuildSessionFactory();
+            _sessionFactory = Configuration.BuildSessionFactory();
+        }
+
+        public static  Configuration Configuration
+        {
+            get
+            {
+                if (_configuration == null)
+                {
+                    _configuration = Fluently.Configure().
+                            Database(MsSqlConfiguration.MsSql2008.ConnectionString("Data Source=LaM-PC\\SQL2008;Initial Catalog=elearntest;Integrated Security=SSPI;"))
+                            .Mappings(x => x.FluentMappings.AddFromAssembly(System.Reflection.Assembly.GetExecutingAssembly())).BuildConfiguration();
+                }
+                return _configuration;
+            }
+            set
+            {
+                _configuration = value;
+            }
         }
 
 
@@ -56,8 +74,14 @@ namespace NHiberanteDal.DataAccess
                     operation(session);
 
                     tx.Commit();
-                }
-            }
+               }
+           }
         }
+
+        public static void ResetDb()
+        {
+            new SchemaUpdate(Configuration).Execute(true, true);
+        }
+
     }
 }
