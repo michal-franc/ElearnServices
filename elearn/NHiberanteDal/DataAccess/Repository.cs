@@ -2,38 +2,148 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NHibernate.Linq;
+using NHibernate;
+using NHibernate.Criterion;
 
 namespace NHiberanteDal.DataAccess
 {
-    public static class Repository<T>
-        where T : class
+    public class Repository<T> 
     {
-        public static void Add(T model)
+        public T GetById(int id)
         {
-            DataAccess.InTransaction(session => session.Save(model));
+            T obj;
+
+            using (var session = DataAccess.OpenSession())
+            {
+                obj = session.Get<T>(id);
+            }
+
+            return obj;
+        }
+        public int Add(T item)
+        {
+            int addedItemId;
+
+            using (var session = DataAccess.OpenSession())
+            {
+                using (var transaction = session.BeginTransaction())
+                {
+                    try
+                    {
+                        addedItemId = (int)session.Save(item);
+                        transaction.Commit();
+                    }
+                    catch(Exception)
+                    {
+                        transaction.Rollback();
+
+                    }
+
+                    finally
+                    {
+                        transaction.Dispose();
+                        addedItemId = -1;
+                    }
+                }
+            }
+
+            return addedItemId;
         }
 
-        public static int GetCount()
+        public void Remove(T item)
+        {
+
+            using (var session = DataAccess.OpenSession())
+            {
+
+                using (ITransaction transaction = session.BeginTransaction())
+                {
+                    try
+                    {
+                        session.Delete(item);
+                        transaction.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                    }
+                    finally
+                    {
+                        transaction.Dispose();
+                    }
+                }
+            }
+        }
+
+        public void Update(T item)
+        {
+
+            using (var session = DataAccess.OpenSession())
+            {
+
+                using (ITransaction transaction = session.BeginTransaction())
+                {
+                    try
+                    {
+                        session.Update(item);
+                        transaction.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                    }
+                    finally
+                    {
+                        transaction.Dispose();
+                    }
+                }
+            }
+        }
+
+        public int GetCount()
         {
             int count = 0;
             using (var session = DataAccess.OpenSession())
             {
-                count = session.Linq<T>().ToList().Count;
+                count = session.CreateCriteria(typeof(T))
+                   .List<T>().Count;
             }
-
             return count;
         }
-
-        public static T GetByID(int p)
+        public IList<T> GetAll()
         {
-            T returnedObject = null;
+            IList<T> returnedList = null;
             using (var session = DataAccess.OpenSession())
             {
-                returnedObject = session.Get<T>(p);
+                returnedList = session.CreateCriteria(typeof(T)).List<T>();
             }
+            return returnedList;
+        }
 
-            return returnedObject;
+        public IList<T> GetByParameterEqualsFilter(string parameterName, object value)
+        {
+            IList<T> returnedList = null;
+            using (var session = DataAccess.OpenSession())
+            {
+                returnedList = session.CreateCriteria(typeof(T)).Add(Expression.Eq(parameterName, value)).List<T>();
+            }
+            return returnedList;
+        }
+
+        public IList<T> GetByQuery(string query)
+        {
+            IList<T> returnedList = null;
+            using (var session = DataAccess.OpenSession())
+            {
+                returnedList = session.CreateQuery(query).List<T>();
+                session.Flush();
+            }
+            return returnedList;
+        }
+
+        public IList<T> GetByQueryObject(IQueryObject query)
+        {
+            return GetByQuery(query.Query);
         }
     }
 }
