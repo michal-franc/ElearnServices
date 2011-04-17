@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
 
 namespace NHiberanteDal.Models
 {
-    public class ShoutboxModel
+
+    public class ContentTypeModel
     {
         public virtual int ID { get;private set; }
-       
-        //Many
-        public virtual IList<ShoutBoxMessageModel> Messages { get; set; }
+        public virtual string TypeName { get; set; }
     }
 }

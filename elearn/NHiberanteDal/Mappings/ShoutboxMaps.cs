@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Models;
+using NHiberanteDal.Models;
 using FluentNHibernate.Mapping;
 
 namespace NHiberanteDal.Mappings
@@ -12,9 +12,6 @@ namespace NHiberanteDal.Mappings
         public ShoutboxModelMap()
         {
             Id(x => x.ID);
-            
-            //One
-            References(x => x.CourseOwner).Not.Nullable();
 
             //Many
             HasMany(x => x.Messages).KeyColumns.Add("ShoutboxId");

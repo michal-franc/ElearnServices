@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Models;
+using NHiberanteDal.Models;
 using FluentNHibernate.Mapping;
 
 namespace NHiberanteDal.Mappings

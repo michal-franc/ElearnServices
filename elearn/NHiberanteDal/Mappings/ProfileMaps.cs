@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FluentNHibernate.Mapping;
-using Models;
+using NHiberanteDal.Models;
 
 namespace NHiberanteDal.Mappings
 {
@@ -16,7 +16,7 @@ namespace NHiberanteDal.Mappings
             Map(x => x.GroupName).Not.Nullable();
 
             //One
-            References(x=>x.GroupType);
+            References(x => x.GroupType).Not.LazyLoad();
 
             //Many
 
@@ -40,6 +40,7 @@ namespace NHiberanteDal.Mappings
         public ProfileModelMap ()
 	    {
             Id(x=>x.ID);
+            Map(x => x.Name);
 
 	    }
     }

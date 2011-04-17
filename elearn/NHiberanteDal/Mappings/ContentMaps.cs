@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FluentNHibernate.Mapping;
-using Models;
+using NHiberanteDal.Models;
+
 
 namespace NHiberanteDal.Mappings
 {
@@ -21,7 +22,7 @@ namespace NHiberanteDal.Mappings
 
 
             //References
-            References(x => x.Type).Not.Nullable();                      
+            References(x => x.Type).Not.Nullable().Not.LazyLoad();                      
         }
     }
 

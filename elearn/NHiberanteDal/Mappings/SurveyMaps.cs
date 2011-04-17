@@ -15,7 +15,7 @@ namespace NHiberanteDal.Mappings
             Map(x => x.SurveyText).Not.Nullable();
 
             //Many
-            HasMany(x => x.Questions).KeyColumns.Add("SurveyId"); ;
+            HasMany(x => x.Questions).KeyColumns.Add("SurveyId").Not.LazyLoad();
         }
     }
 

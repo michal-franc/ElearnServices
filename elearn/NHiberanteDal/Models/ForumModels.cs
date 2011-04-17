@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Runtime.Serialization;
 
-namespace Models
+namespace NHiberanteDal.Models
 {
     #region Models
     public class ForumModel
@@ -12,7 +13,7 @@ namespace Models
         public virtual string Name { get; set; }
         public virtual string Author { get; set; }
 
-        public virtual List<TopicModel> Topics { get; set; }
+        public virtual IList<TopicModel> Topics { get; set; }
          
         //Todo: Uprawnienia Forum
     }
@@ -23,7 +24,7 @@ namespace Models
         //public int IDForum; // Forum
         public virtual string Text { get; set; }
 
-        public virtual List<PostModel> Posts { get; set; }
+        public virtual IList<PostModel> Posts { get; set; }
 
     }
 

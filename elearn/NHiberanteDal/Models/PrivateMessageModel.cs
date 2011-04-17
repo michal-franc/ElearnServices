@@ -5,14 +5,10 @@ using System.Text;
 
 namespace NHiberanteDal.Models
 {
-
-    public class SurveyModel
+    public class PrivateMessageModel
     {
         public virtual int ID { get; private set; }
-        public virtual string SurveyText { get; set; }
-
-        //Many
-        public virtual IList<SurveyQuestionModel> Questions { get; set; }
+        public virtual ProfileModel Sender { get; set; }
+        public virtual ProfileModel Receiver { get; set; }
     }
-
 }

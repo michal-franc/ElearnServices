@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Models;
-using NHiberanteDal.Models;
+using System.Runtime.Serialization;
 
-namespace Models
+namespace NHiberanteDal.Models
 {
     #region Models
 
@@ -14,26 +13,20 @@ namespace Models
         public virtual int ID { get;private set; }
         public virtual string Name { get; set; }
         public virtual DateTime CreationDate { get; set; }
-        public virtual string Logo { get; set; }
-
+        public virtual string  Logo { get; set; }
+        public virtual string Description { get; set; }
 
         //One
         public virtual CourseTypeModel CourseType { get; set; }
         public virtual GroupModel Group { get; set; }
         public virtual ForumModel Forum { get; set; }
+        public virtual ShoutboxModel ShoutBox { get; set; }
 
         //Many
-        public virtual List<SurveyModel> Surveys { get; set; }
-        public virtual List<TestModel> Tests { get; set; }
-        public virtual List<ContentModel> Contents { get; set; }
+        public virtual IList<SurveyModel> Surveys { get; set; }
+        public virtual IList<TestModel> Tests { get; set; }
+        public virtual IList<ContentModel> Contents { get; set; }
+
     }
-
-    public class CourseTypeModel
-    {
-        public virtual int ID { get; private set; }
-        public virtual string TypeName { get; set; }
-    }
-
-
     #endregion
 }

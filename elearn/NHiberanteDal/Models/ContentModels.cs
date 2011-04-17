@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Models
+namespace NHiberanteDal.Models
 {
-    #region Models
     public class ContentModel
     {
         public virtual int ID { get;private set; }
@@ -18,17 +17,5 @@ namespace Models
 
         //Reference
         public virtual ContentTypeModel Type { get; set; }
-
     }
-
-    public class ContentTypeModel
-    {
-        public virtual int ID { get;private set; }
-        public virtual string TypeName { get; set; }
-    }
-
-    public class TagModel
-    {
-    } 
-    #endregion
 }
