@@ -20,8 +20,7 @@ namespace NHiberanteDal.Mappings
 
             //Many
 
-            HasMany(x=>x.Users);
-            
+            HasMany(x=>x.Users);           
         }
     }
 

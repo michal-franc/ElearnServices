@@ -35,6 +35,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\SharedLibs\NHibernate-2.1.0.GA-bin\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="AutoMapper">
+      <HintPath>..\..\..\..\..\SharedLibs\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="Castle.Core, Version=1.1.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\SharedLibs\NHibernate-2.1.0.GA-bin\Castle.Core.dll</HintPath>
@@ -68,6 +71,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Channels" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -76,7 +82,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataAccess\DataAccess.cs" />
+    <Compile Include="DataAccess\IQueryObject.cs" />
     <Compile Include="DataAccess\Repository.cs" />
+    <Compile Include="DTO\CourseDto.cs" />
+    <Compile Include="DTO\CourseSignatureDto.cs" />
+    <Compile Include="DTO\CourseTypeModelDto.cs" />
+    <Compile Include="DTO\DataTransferObject.cs" />
+    <Compile Include="DTO\DtoBaseClass.cs" />
+    <Compile Include="DTO\DTOMappings.cs" />
+    <Compile Include="DTO\ForumModelDto.cs" />
+    <Compile Include="DTO\GroupModelDto.cs" />
+    <Compile Include="DTO\GroupTypeModelDto.cs" />
+    <Compile Include="DTO\ShoutboxModelDto.cs" />
+    <Compile Include="DTO\SurveyModelDto.cs" />
     <Compile Include="Mappings\ContentMaps.cs" />
     <Compile Include="Mappings\CourseMaps.cs" />
     <Compile Include="Mappings\ForumMaps.cs" />
@@ -85,13 +103,40 @@
     <Compile Include="Mappings\SurveyMaps.cs" />
     <Compile Include="Mappings\TestMaps.cs" />
     <Compile Include="Models\ContentModels.cs" />
+    <Compile Include="Models\ContentTypeModel.cs" />
     <Compile Include="Models\CourseModels.cs" />
+    <Compile Include="Models\CourseTypeModel.cs" />
     <Compile Include="Models\ForumModels.cs" />
+    <Compile Include="Models\GroupModel.cs" />
+    <Compile Include="Models\GroupTypeModel.cs" />
+    <Compile Include="Models\IModel.cs" />
+    <Compile Include="Models\JournalMarkModel.cs" />
+    <Compile Include="Models\JournalModel.cs" />
+    <Compile Include="Models\PrivateMessageModel.cs" />
     <Compile Include="Models\ProfileModels.cs" />
+    <Compile Include="Models\ProfileTypeModel.cs" />
+    <Compile Include="Models\ShoutBoxMessageModel.cs" />
     <Compile Include="Models\ShoutboxModels.cs" />
     <Compile Include="Models\SurveyModels.cs" />
+    <Compile Include="Models\SurveyQuestionModel.cs" />
     <Compile Include="Models\TestModels.cs" />
+    <Compile Include="Models\TestQuestionAnswer.cs" />
+    <Compile Include="Models\TestQuestionModel.cs" />
+    <Compile Include="Models\TestTypeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Serializer\NHibernateDataSerializer.cs" />
+    <Compile Include="WCFNHibernate\BaseDomain.cs" />
+    <Compile Include="WCFNHibernate\BaseNHibernateRepository.cs" />
+    <Compile Include="WCFNHibernate\HibernateAutoRollbackErrorHandler.cs" />
+    <Compile Include="WCFNHibernate\IDomain.cs" />
+    <Compile Include="WCFNHibernate\INHibernateContextExtension.cs" />
+    <Compile Include="WCFNHibernate\ISessionStorage.cs" />
+    <Compile Include="WCFNHibernate\NHibernateContext.cs" />
+    <Compile Include="WCFNHibernate\NHibernateContextAttribute.cs" />
+    <Compile Include="WCFNHibernate\NHibernateContextExtension.cs" />
+    <Compile Include="WCFNHibernate\NHibernateContextInitializer.cs" />
+    <Compile Include="WCFNHibernate\NHibernateFactory.cs" />
+    <Compile Include="WCFNHibernate\WcfSessionStorage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataAccess\QueryObjects\" />

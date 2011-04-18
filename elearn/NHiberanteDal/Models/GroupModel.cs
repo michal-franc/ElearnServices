@@ -8,9 +8,10 @@ namespace NHiberanteDal.Models
     public class GroupModel : IModel
     {
         public virtual int ID { get; private set; }
-        public virtual IList<ProfileModel> Users { get; set; }
         public virtual string GroupName { get; set; }
+
         public virtual GroupTypeModel GroupType { get; set; }
-        //AuthModel GroupAuth;
+        public virtual IList<ProfileModel> Users { get; set; }
+
     }
 }

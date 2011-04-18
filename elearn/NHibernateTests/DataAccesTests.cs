@@ -16,7 +16,7 @@ namespace NHibernateTests
             SqlLiteTestDBAccess _database = new SqlLiteTestDBAccess();
             using (var session = DataAccess.OpenSession())
             {
-                Assert.That(session.Connection,Is.InstanceOfType(typeof(System.Data.SQLite.SQLiteConnection)));
+                Assert.That(session.Connection,Is.InstanceOf(typeof(System.Data.SQLite.SQLiteConnection)));
             }
         }
 
@@ -25,7 +25,7 @@ namespace NHibernateTests
         {
             using (var session = DataAccess.OpenSession())
             {
-                Assert.That(session.Connection, Is.InstanceOfType(typeof(System.Data.SqlClient.SqlConnection)));
+                Assert.That(session.Connection, Is.InstanceOf(typeof(System.Data.SqlClient.SqlConnection)));
             }
         }
 
