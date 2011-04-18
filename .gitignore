@@ -3,3 +3,8 @@ bin
 Bin
 ClientBin
 GeneratedCode
+Service References
+WCFNHibernate
+*UnitOfWork*
+GenericTransaction
+Properties
