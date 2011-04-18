@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NHiberanteDal.Models
 {
-    public class ShoutBoxMessageModel
+    public class ShoutBoxMessageModel : IModel
     {
         public virtual int ID { get; private set; }
         public virtual string Author { get; set; }

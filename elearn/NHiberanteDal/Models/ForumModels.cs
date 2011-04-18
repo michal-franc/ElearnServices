@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 namespace NHiberanteDal.Models
 {
     #region Models
-    public class ForumModel
+    public class ForumModel : IModel
     {
         public virtual int ID { get; private set; }
         public virtual string Name { get; set; }
@@ -18,7 +18,7 @@ namespace NHiberanteDal.Models
         //Todo: Uprawnienia Forum
     }
 
-    public class TopicModel
+    public class TopicModel : IModel
     {
         public virtual int ID { get;private set; }
         //public int IDForum; // Forum
@@ -28,7 +28,7 @@ namespace NHiberanteDal.Models
 
     }
 
-    public class PostModel
+    public class PostModel : IModel
     {
         public virtual int ID { get;private set; }
         //public int IDTopic;

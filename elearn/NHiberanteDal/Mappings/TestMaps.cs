@@ -20,7 +20,6 @@ namespace NHiberanteDal.Mappings
 
             //One
             References(x => x.Author).Not.Nullable();
-            References(x => x.Course).Not.Nullable();
             References(x => x.TestType).Not.Nullable();
 
             //Many

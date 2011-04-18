@@ -8,7 +8,7 @@ namespace NHiberanteDal.Models
 {
     #region Models
 
-    public class CourseModel
+    public class CourseModel : IModel
     {
         public virtual int ID { get;private set; }
         public virtual string Name { get; set; }

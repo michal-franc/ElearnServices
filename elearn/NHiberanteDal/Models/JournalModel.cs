@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NHiberanteDal.Models
 {
-    public class JournalModel
+    public class JournalModel : IModel
     {
         public virtual int ID { get; private set; }
         public virtual ProfileModel Owner { get; set; }

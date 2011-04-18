@@ -5,7 +5,7 @@ using System.Web;
 
 namespace NHiberanteDal.Models
 {
-    public class ShoutboxModel
+    public class ShoutboxModel : IModel
     {
         public virtual int ID { get;private set; }
        

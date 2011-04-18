@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NHiberanteDal.Models
 {
-    public class GroupModel
+    public class GroupModel : IModel
     {
         public virtual int ID { get; private set; }
         public virtual IList<ProfileModel> Users { get; set; }

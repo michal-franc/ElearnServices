@@ -5,7 +5,7 @@ using System.Web;
 
 namespace NHiberanteDal.Models
 {
-    public class ContentModel
+    public class ContentModel : IModel
     {
         public virtual int ID { get;private set; }
         public virtual string ContentUrl { get; set; }

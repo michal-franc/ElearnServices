@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 
 namespace NHiberanteDal.Models
 {
-    public class ProfileModel
+    public class ProfileModel : IModel
     {
         public virtual int ID { get; private set; }
         public virtual string Name { get; set; }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NHiberanteDal.Models
 {
-    public class GroupTypeModel
+    public class GroupTypeModel : IModel
     {
         public virtual int ID { get; private set; }
         public virtual string TypeName { get; set; }

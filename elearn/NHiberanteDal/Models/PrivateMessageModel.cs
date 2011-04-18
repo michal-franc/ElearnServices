@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NHiberanteDal.Models
 {
-    public class PrivateMessageModel
+    public class PrivateMessageModel : IModel
     {
         public virtual int ID { get; private set; }
         public virtual ProfileModel Sender { get; set; }

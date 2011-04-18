@@ -5,7 +5,7 @@ using System.Web;
 
 namespace NHiberanteDal.Models
 {
-    public class TestModel
+    public class TestModel : IModel
     {
         public virtual int ID { get;private set; }
         public virtual string Name { get; set; }
@@ -16,7 +16,6 @@ namespace NHiberanteDal.Models
          
         //One
         public virtual ProfileModel Author { get; set; }
-        public virtual CourseModel Course { get; set; }
         public virtual TestTypeModel TestType { get; set; }
 
         //Many

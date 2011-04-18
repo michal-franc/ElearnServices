@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NHiberanteDal.Models
 {
-    public class SurveyQuestionModel
+    public class SurveyQuestionModel : IModel
     {
         public virtual int ID { get; private set; }
         public virtual string QuestionText { get; set; }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NHiberanteDal.Models
 {
-    public class ProfileTypeModel
+    public class ProfileTypeModel : IModel
     {
         public virtual int ID { get; private set; }
         public virtual string TypeName { get; set; }
