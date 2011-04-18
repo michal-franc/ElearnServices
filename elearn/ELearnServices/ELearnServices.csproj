@@ -13,6 +13,7 @@
     <RootNamespace>ELearnServices</RootNamespace>
     <AssemblyName>ELearnServices</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <UseIISExpress>false</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,6 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <FilesToIncludeForPublish>OnlyFilesToRunTheApp</FilesToIncludeForPublish>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
@@ -52,7 +54,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ServiceAuthentication.svc" />
+    <Content Include="CourseService.svc" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -62,14 +64,20 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ServiceAuthentication.svc.cs">
-      <DependentUpon>ServiceAuthentication.svc</DependentUpon>
+    <Compile Include="CourseService.svc.cs">
+      <DependentUpon>CourseService.svc</DependentUpon>
     </Compile>
-    <Compile Include="IServiceAuthentication.cs" />
+    <Compile Include="ICourseService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NHiberanteDal\NHiberanteDal.csproj">
+      <Project>{843D2C18-032C-42E3-A212-161BDC81A56C}</Project>
+      <Name>NHiberanteDal</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
@@ -93,6 +101,10 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <PropertyGroup>
+    <PostBuildEvent>copy   $(TargetDir)*.* "C:\ElearnService\bin"
+copy   $(ProjectDir)CourseService.svc "C:\ElearnService\"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
