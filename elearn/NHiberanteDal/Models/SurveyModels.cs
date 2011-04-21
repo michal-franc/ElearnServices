@@ -10,6 +10,7 @@ namespace NHiberanteDal.Models
     {
         public virtual int ID { get; private set; }
         public virtual string SurveyText { get; set; }
+        public virtual DateTime DateCreated { get; set; }
 
         //Many
         public virtual IList<SurveyQuestionModel> Questions { get; set; }

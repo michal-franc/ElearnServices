@@ -26,9 +26,9 @@ namespace NHiberanteDal.Mappings
             References(x => x.ShoutBox).Not.Nullable().Not.LazyLoad();
 
             //Many
-            HasMany(x => x.Contents).KeyColumns.Add("CourseId").LazyLoad();
-            HasMany(x => x.Surveys).KeyColumns.Add("CourseId").LazyLoad();
-            HasMany(x => x.Tests).KeyColumns.Add("CourseId").LazyLoad();
+            HasMany(x => x.Contents).KeyColumns.Add("CourseId").Cascade.SaveUpdate().LazyLoad();
+            HasMany(x => x.Surveys).KeyColumns.Add("CourseId").Cascade.SaveUpdate().LazyLoad();
+            HasMany(x => x.Tests).KeyColumns.Add("CourseId").Cascade.SaveUpdate().LazyLoad();
         }
     }
 

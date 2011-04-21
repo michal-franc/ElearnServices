@@ -19,7 +19,14 @@ namespace NHiberanteDal.DTO
                 Mapper.CreateMap<CourseTypeModel, CourseTypeModelDto>();
                 Mapper.CreateMap<GroupTypeModel, GroupTypeModelDto>();
                 Mapper.CreateMap<GroupModel, GroupModelDto>();
-                Mapper.CreateMap<CourseModel, CourseDto>();
+                Mapper.CreateMap<CourseModel, CourseDto>()
+                    .ForMember(
+                    dest =>dest.LatestSurvey,
+                    opt => opt.MapFrom(c => 
+                        c.Surveys.OrderByDescending(s=>s.DateCreated).FirstOrDefault()
+                        )
+                    );
+                Mapper.CreateMap<CourseModel,CourseSignatureDto>();
                 Mapper.AssertConfigurationIsValid();
                 return true;
             }

@@ -7,7 +7,7 @@ using NHibernate.Criterion;
 
 namespace NHiberanteDal.DataAccess
 {
-    public class Repository<T> 
+    public class Repository<T>
     {
         public T GetById(int id)
         {

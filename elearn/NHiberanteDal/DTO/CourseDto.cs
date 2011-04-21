@@ -19,13 +19,8 @@ namespace NHiberanteDal.DTO
         public DateTime CreationDate { get; set; }
         [DataMember]
         public string Logo { get; set; }
-
         [DataMember]
         public CourseTypeModelDto CourseType { get; set; }
-        [DataMember]
-        public GroupModelDto Group { get; set; }
-        [DataMember]
-        public ForumModelDto Forum { get; set; }
         [DataMember]
         public ShoutboxModelDto ShoutBox { get; set; }
         [DataMember]
