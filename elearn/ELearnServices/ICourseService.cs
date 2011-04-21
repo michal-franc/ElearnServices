@@ -17,5 +17,8 @@ namespace ELearnServices
 
         [OperationContract]
         CourseDto GetById(int id);
+
+        [OperationContract]
+        IList<CourseSignatureDto> GetAllSignatures();
     }
 }

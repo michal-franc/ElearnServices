@@ -23,9 +23,19 @@ namespace ELearnServices
             return CourseDto.Map(new Repository<CourseModel>().GetAll().ToList());
         }
 
+        public IList<CourseSignatureDto> GetAllSignatures()
+        {
+            return CourseSignatureDto.Map(new Repository<CourseModel>().GetAll().ToList());
+        }
+
         public CourseDto GetById(int id)
         {
-            return CourseDto.Map(new Repository<CourseModel>().GetById(id));
+            CourseDto course = null;
+            using (var session = DataAccess.OpenSession())
+            {
+               course=  CourseDto.Map(session.Get<CourseModel>(id));
+            }
+            return course;
         }
     }
 }
