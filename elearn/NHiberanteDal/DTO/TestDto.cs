@@ -18,7 +18,6 @@ namespace NHiberanteDal.DTO
         //public ProfileModelDto Author { get; set; }
         //public TestTypeModel TestType { get; set; }
 
-        //Many
-        //public virtual IList<TestQuestionModel> Questions { get; set; }
+        public  IList<TestQuestionModelDto> Questions { get; set; }
     }
 }
