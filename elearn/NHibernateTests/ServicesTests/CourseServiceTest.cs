@@ -23,47 +23,54 @@ namespace NHibernateTests.ServicesTests
         SurveyModel _testLatestSurvey;
         CourseModel _testCourse1;
         CourseModel _testCourse2;
+        TestModel _testTest;
+        TestModel _latestTest;
+        TestTypeModel _testTestType;
+        ProfileModel _testPofile;
 
         [SetUp]
         public void SetUp()
         {
-         _testCourseType = new CourseTypeModel() { TypeName="Fizyka" };
-         _testCourseType1 = new CourseTypeModel() { TypeName = "Matematyka" };
-         _testGroupType = new GroupTypeModel() { TypeName = "test" };
-         _testGroup = new GroupModel() { GroupType = _testGroupType, GroupName = "test" };
-         _testForum = new ForumModel() { Author = "test", Name = "test" };
-         _testShoutBox = new ShoutboxModel() { };
-         _testSurvey = new SurveyModel() { SurveyText = "Smiga chodzi fruwa ?", DateCreated = new DateTime(2010,1,1)};
-         _testLatestSurvey = new SurveyModel() { SurveyText = "Smiga chodzi fruwa ?", DateCreated = new DateTime(2011, 1, 1) };
-         _testCourse1 = new CourseModel()
-        {
-            CourseType = _testCourseType,
-            ShoutBox = _testShoutBox,
-            Forum = _testForum,
-            Group = _testGroup,
-            CreationDate = DateTime.Now,
-            Description= "test",
-            Logo="/test.jpg",
-            Name="test", 
-            Surveys = new List<SurveyModel>()
-         
-        };
+             _testTestType = new TestTypeModel() { TypeName="test" };
+             _testPofile = new ProfileModel() { Name="test" };
+             _testTest = new TestModel() { Author = _testPofile, CreationDate=new DateTime(2010,1,1), Name="test" , TestType=_testTestType};
+             _latestTest = new TestModel() { Author = _testPofile, CreationDate = new DateTime(2011, 1, 1), Name = "test", TestType = _testTestType };
+             _testCourseType = new CourseTypeModel() { TypeName="Fizyka" };
+             _testCourseType1 = new CourseTypeModel() { TypeName = "Matematyka" };
+             _testGroupType = new GroupTypeModel() { TypeName = "test" };
+             _testGroup = new GroupModel() { GroupType = _testGroupType, GroupName = "test" };
+             _testForum = new ForumModel() { Author = "test", Name = "test" };
+             _testShoutBox = new ShoutboxModel() { };
+             _testSurvey = new SurveyModel() { SurveyText = "Smiga chodzi fruwa ?", DateCreated = new DateTime(2010,1,1)};
+             _testLatestSurvey = new SurveyModel() { SurveyText = "Smiga chodzi fruwa ?", DateCreated = new DateTime(2011, 1, 1) };
+             _testCourse1 = new CourseModel()
+            {
+                CourseType = _testCourseType,
+                ShoutBox = _testShoutBox,
+                Forum = _testForum,
+                Group = _testGroup,
+                CreationDate = DateTime.Now,
+                Description= "test",
+                Logo="/test.jpg",
+                Name="test",      
+            };
 
-         _testCourse2 = new CourseModel()
-        {
-            CourseType = _testCourseType1,
-            ShoutBox = _testShoutBox,
-            Forum = _testForum,
-            Group = _testGroup,
-            CreationDate = DateTime.Now,
-            Description = "test1",
-            Logo = "/test1.jpg",
-            Name = "test1",
+             _testCourse2 = new CourseModel()
+            {
+                CourseType = _testCourseType1,
+                ShoutBox = _testShoutBox,
+                Forum = _testForum,
+                Group = _testGroup,
+                CreationDate = DateTime.Now,
+                Description = "test1",
+                Logo = "/test1.jpg",
+                Name = "test1",
 
-        };
+            };
 
             using (var session = DataAccess.OpenSession())
             {
+                session.Save(_testPofile);
                 session.Save(_testCourseType);
                 session.Save(_testGroupType);
                 session.Save(_testGroup);
@@ -72,6 +79,10 @@ namespace NHibernateTests.ServicesTests
                 session.Save(_testCourseType1);
                 session.Save(_testSurvey);
                 session.Save(_testLatestSurvey);
+                session.Save(_testTestType);
+                session.Save(_testTest);
+                session.Save(_latestTest);
+                session.Flush();
             }
         }
 
@@ -106,8 +117,6 @@ namespace NHibernateTests.ServicesTests
             using (var session = DataAccess.OpenSession())
             {
                 _testCourse1.Surveys.Add(_testSurvey);
-                session.Save(_testCourse1);
-                session.Flush();
                 _testCourse1.Surveys.Add(_testLatestSurvey);
                 session.Save(_testCourse1);
                 session.Flush();
@@ -122,6 +131,7 @@ namespace NHibernateTests.ServicesTests
 
             #region Assert
             Assert.That(course.ShoutBox,Is.Not.Null);
+            Assert.That(course, Is.InstanceOfType(typeof(CourseDto)));
             Assert.That(course.LatestSurvey,Is.Not.Null);
             Assert.That(course.LatestSurvey.DateCreated, Is.EqualTo(new DateTime(2011, 1, 1)));
             #endregion
@@ -131,15 +141,25 @@ namespace NHibernateTests.ServicesTests
         public void Can_get_course_latest_Test()
         {
             #region Arrange
+            using (var session = DataAccess.OpenSession())
+            {
+                _testCourse1.Tests.Add(_testTest);
+                _testCourse1.Tests.Add(_latestTest);
+                session.Save(_testCourse1);
+                session.Flush();
+            }
             #endregion
 
             #region Act
 
-            Assert.Fail();
+            TestDto test = new CourseService().GetLatestTest(1);
 
             #endregion
 
             #region Assert
+            Assert.That(test, Is.Not.Null);
+            Assert.That(test, Is.InstanceOfType(typeof(TestDto)));
+            Assert.That(test.CreationDate, Is.EqualTo(new DateTime(2011,1,1)));
             #endregion
         }
 
@@ -147,15 +167,25 @@ namespace NHibernateTests.ServicesTests
         public void Can_get_course_all_Tests()
         {
             #region Arrange
+            using (var session = DataAccess.OpenSession())
+            {
+                _testCourse1.Tests.Add(_testTest);
+                _testCourse1.Tests.Add(_latestTest);
+                session.Save(_testCourse1);
+                session.Flush();
+            }
             #endregion
 
             #region Act
 
-            Assert.Fail();
+            var tests = new CourseService().GetAllTests(1);
+
 
             #endregion
 
             #region Assert
+            Assert.That(tests, Is.Not.Null);
+            Assert.That(tests.Count, Is.EqualTo(2));
             #endregion
         }
 
