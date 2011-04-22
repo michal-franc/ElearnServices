@@ -98,6 +98,7 @@
     <Compile Include="DTO\ShoutboxModelDto.cs" />
     <Compile Include="DTO\SurveyModelDto.cs" />
     <Compile Include="DTO\TestDto.cs" />
+    <Compile Include="DTO\TestQuestionModelDto.cs" />
     <Compile Include="Mappings\ContentMaps.cs" />
     <Compile Include="Mappings\CourseMaps.cs" />
     <Compile Include="Mappings\ForumMaps.cs" />
