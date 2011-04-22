@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -77,15 +78,16 @@
     <Content Include="Global.asax" />
     <None Include="Properties\DataSources\NHiberanteDal.DTO.CourseDto.datasource" />
     <None Include="Properties\DataSources\NHiberanteDal.DTO.CourseSignatureDto.datasource" />
+    <None Include="Properties\DataSources\NHiberanteDal.DTO.TestDto.datasource" />
     <None Include="Properties\DataSources\NHiberanteDal.Models.ForumModel.datasource" />
     <None Include="Properties\DataSources\NHiberanteDal.Models.ProfileModel.datasource" />
+    <Content Include="Images\nologo.jpg" />
     <None Include="Service References\CourseService\configuration91.svcinfo" />
     <None Include="Service References\CourseService\configuration.svcinfo" />
     <None Include="Service References\CourseService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <Content Include="Images\nologo.jpg" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -133,7 +135,6 @@
     <Content Include="Views\Account\ChangePasswordSuccess.cshtml" />
     <Content Include="Views\Account\LogOn.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Home\CourseList.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LogOnPartial.cshtml" />
@@ -152,6 +153,10 @@
     <None Include="Service References\CourseService\CourseService3.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Views\Course\Index.cshtml" />
+    <Content Include="Views\Course\Details.cshtml" />
+    <Content Include="Views\Course\Tests.cshtml" />
+    <Content Include="Views\Course\Surveys.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

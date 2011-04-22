@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Kursy";
+}
+
+@model IList<NHiberanteDal.DTO.CourseSignatureDto>
+
+
+
+<h2>Dostępne Kursy</h2>
+<ul>
+@foreach (var course in Model)
+{
+
+    // displaying logo
+    if (course.Logo == null)
+    {
+             <img src="../../Images/nologo.jpg" />        
+    }
+    else
+    {
+            <img src="../../Images/"@course.Logo /> 
+    }
+        
+    <li>Name : @course.Name</li>
+    <li>Course Type : @course.CourseType.TypeName</li>
+    <li>DateCreated : @course.CreationDate.ToShortDateString()</li>
+    <br />
+}
+</ul>
+

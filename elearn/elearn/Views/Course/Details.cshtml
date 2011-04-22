@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "Kurs";
+}
+
+@model NHiberanteDal.DTO.CourseDto
+
+
+<h2>@Model.Name</h2>
+<ul>
+
+        @if(Model.Logo == null)
+        {
+             <img src="../../Images/nologo.jpg" />        
+        }
+        else
+        {
+            <img src="../../Images/"@Model.Logo /> 
+        }
+
+    <li>Course Type : @Model.CourseType.TypeName</li>
+    <li>DateCreated : @Model.CreationDate.ToShortDateString()</li>
+    <br />
+</ul>
+
