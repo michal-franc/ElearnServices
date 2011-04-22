@@ -95,6 +95,7 @@
     <Compile Include="DTO\GroupTypeModelDto.cs" />
     <Compile Include="DTO\ShoutboxModelDto.cs" />
     <Compile Include="DTO\SurveyModelDto.cs" />
+    <Compile Include="DTO\TestDto.cs" />
     <Compile Include="Mappings\ContentMaps.cs" />
     <Compile Include="Mappings\CourseMaps.cs" />
     <Compile Include="Mappings\ForumMaps.cs" />
@@ -124,7 +125,6 @@
     <Compile Include="Models\TestQuestionModel.cs" />
     <Compile Include="Models\TestTypeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Serializer\NHibernateDataSerializer.cs" />
     <Compile Include="WCFNHibernate\BaseDomain.cs" />
     <Compile Include="WCFNHibernate\BaseNHibernateRepository.cs" />
     <Compile Include="WCFNHibernate\HibernateAutoRollbackErrorHandler.cs" />

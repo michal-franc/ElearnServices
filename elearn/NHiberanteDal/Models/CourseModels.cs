@@ -26,6 +26,14 @@ namespace NHiberanteDal.Models
         public virtual IList<SurveyModel> Surveys { get; set; }
         public virtual IList<TestModel> Tests { get; set; }
         public virtual IList<ContentModel> Contents { get; set; }
+
+        public CourseModel()
+        {
+            Surveys = new List<SurveyModel>();
+            Tests = new List<TestModel>();
+            Contents = new List<ContentModel>();
+        }
+
     }
     #endregion
 }

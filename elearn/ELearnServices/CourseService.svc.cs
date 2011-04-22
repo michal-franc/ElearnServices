@@ -37,5 +37,30 @@ namespace ELearnServices
             }
             return course;
         }
+
+        public TestDto GetLatestTest(int id)
+        {
+            TestDto test = null;
+            using(var session = DataAccess.OpenSession())
+            {
+                test = TestDto.Map(
+                    session.Get<CourseModel>(id)
+                    .Tests.OrderByDescending(c => c.CreationDate).FirstOrDefault()
+                    );
+            }
+            return test;
+        }
+
+        public IList<TestDto> GetAllTests(int id)
+        {
+            IList<TestDto> tests = null;
+            using (var session = DataAccess.OpenSession())
+            {
+                tests = TestDto.Map(
+                    session.Get<CourseModel>(id).Tests.ToList()
+                    );
+            }
+            return tests;
+        }
     }
 }
