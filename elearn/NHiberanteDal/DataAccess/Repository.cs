@@ -36,13 +36,13 @@ namespace NHiberanteDal.DataAccess
                     catch(Exception)
                     {
                         transaction.Rollback();
-
+                        addedItemId = -1;
                     }
 
                     finally
                     {
                         transaction.Dispose();
-                        addedItemId = -1;
+
                     }
                 }
             }
@@ -75,22 +75,23 @@ namespace NHiberanteDal.DataAccess
             }
         }
 
-        public void Update(T item)
+        public bool Update(T item)
         {
-
+            bool ok = false;
             using (var session = DataAccess.OpenSession())
             {
-
                 using (ITransaction transaction = session.BeginTransaction())
                 {
                     try
                     {
                         session.Update(item);
                         transaction.Commit();
+                        ok = true;
                     }
                     catch (Exception)
                     {
                         transaction.Rollback();
+                        ok = false;
                     }
                     finally
                     {
@@ -98,6 +99,7 @@ namespace NHiberanteDal.DataAccess
                     }
                 }
             }
+            return ok;
         }
 
         public int GetCount()

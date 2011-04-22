@@ -14,9 +14,15 @@ namespace ELearnServices
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "CourseService" in code, svc and config file together.
     public class CourseService : ICourseService
     {
+
+        private static bool _initialized;
+
         public CourseService()
         {
-            DTOMappings.Initialize();
+            if (!_initialized)
+            {
+                _initialized = DTOMappings.Initialize();
+            }
         }
 
         public IList<CourseDto> GetAll()
@@ -74,9 +80,26 @@ namespace ELearnServices
             return returnedList;
         }
 
-        public List<CourseDto> GetByCourseType(CourseTypeModel _testCourseType)
+        public List<CourseDto> GetByCourseType(CourseTypeModelDto _testCourseType)
         {
-            throw new NotImplementedException();
+            List<CourseDto> returnedList = null;
+            using (var session = DataAccess.OpenSession())
+            {
+                returnedList = CourseDto.Map((List<CourseModel>)session.CreateQuery(new QueryCourseByCourseType(CourseTypeModelDto.UnMap(_testCourseType)).Query).List<CourseModel>());
+            }
+            return returnedList;
+        }
+
+        public bool Update(CourseDto updatedCourse)
+        {
+            var course = CourseDto.UnMap(updatedCourse);
+            return new Repository<CourseModel>().Update(course);
+        }
+
+        public int AddCourse(CourseDto newCourse)
+        {
+            var course = CourseDto.UnMap(newCourse);
+            return new Repository<CourseModel>().Add(course);
         }
     }
 }

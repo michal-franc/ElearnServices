@@ -19,5 +19,15 @@ namespace NHiberanteDal.DTO
         {
             return Mapper.Map<List<Y>, List<T>>(coursemodels);
         }
+
+        public static Y UnMap(T coursemodel)
+        {
+            return Mapper.Map<T, Y>(coursemodel);
+        }
+
+        public static List<Y> UnMap(List<T> coursemodels)
+        {
+            return Mapper.Map<List<T>, List<Y>>(coursemodels);
+        }
     }
 }

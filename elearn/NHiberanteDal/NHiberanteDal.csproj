@@ -83,6 +83,8 @@
   <ItemGroup>
     <Compile Include="DataAccess\DataAccess.cs" />
     <Compile Include="DataAccess\IQueryObject.cs" />
+    <Compile Include="DataAccess\QueryObjects\QueryCourseByCourseType.cs" />
+    <Compile Include="DataAccess\QueryObjects\QueryCourseByName.cs" />
     <Compile Include="DataAccess\Repository.cs" />
     <Compile Include="DTO\CourseDto.cs" />
     <Compile Include="DTO\CourseSignatureDto.cs" />
@@ -138,9 +140,7 @@
     <Compile Include="WCFNHibernate\NHibernateFactory.cs" />
     <Compile Include="WCFNHibernate\WcfSessionStorage.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DataAccess\QueryObjects\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

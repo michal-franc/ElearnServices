@@ -11,8 +11,18 @@ using System.IO;
 namespace NHibernateTests.SerializerTests
 {
     [TestFixture]    
-    class DataSerializationTests
+    class DataSerializationTests : InMemoryTest
     {
+
+        [SetUp]
+        public void SetUp()
+        {
+            using(var session = DataAccess.OpenSession())
+            {
+                session.Save(new ForumModel() { Author="test", Name="test" });
+            }
+        }
+
         [Test]
         public void DataContractSerialization_will_change_the_type_of_a_Collection()
         {
@@ -41,7 +51,6 @@ namespace NHibernateTests.SerializerTests
 
             Assert.AreNotEqual(typeof(NHibernate.Collection.Generic.PersistentGenericBag<TopicModel>), forum.Topics.GetType());
             Assert.AreEqual(typeof(TopicModel[]), forum.Topics.GetType());
-            Assert.AreEqual(forum.Topics[0].Text,"test");
             }
         }
 

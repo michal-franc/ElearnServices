@@ -22,6 +22,10 @@ namespace NHiberanteDal.DTO
         [DataMember]
         public CourseTypeModelDto CourseType { get; set; }
         [DataMember]
+        public virtual GroupModelDto Group { get; set; }
+        [DataMember]
+        public virtual ForumModelDto Forum { get; set; }
+        [DataMember]
         public ShoutboxModelDto ShoutBox { get; set; }
         [DataMember]
         public SurveyModel LatestSurvey {get;set;}

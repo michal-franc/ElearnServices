@@ -20,10 +20,10 @@ namespace NHiberanteDal.Mappings
             
 
             //One
-            References(x => x.Group).Not.Nullable().Not.LazyLoad();
-            References(x => x.CourseType).Not.Nullable().Not.LazyLoad();
-            References(x => x.Forum).Not.Nullable().Not.LazyLoad();
-            References(x => x.ShoutBox).Not.Nullable().Not.LazyLoad();
+            References(x => x.Group).Not.Nullable().Cascade.SaveUpdate().Not.LazyLoad();
+            References(x => x.CourseType).Not.Nullable().Cascade.SaveUpdate().Not.LazyLoad();
+            References(x => x.Forum).Not.Nullable().Cascade.SaveUpdate().Not.LazyLoad();
+            References(x => x.ShoutBox).Not.Nullable().Cascade.SaveUpdate().Not.LazyLoad();
 
             //Many
             HasMany(x => x.Contents).KeyColumns.Add("CourseId").Cascade.SaveUpdate().LazyLoad();

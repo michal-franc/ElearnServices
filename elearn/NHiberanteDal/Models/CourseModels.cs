@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Runtime.Serialization;
+using NHiberanteDal.DTO;
 
-namespace NHiberanteDal.Models
+namespace NHiberanteDal.Models 
 {
     #region Models
 
     public class CourseModel : IModel
     {
-        public virtual int ID { get;private set; }
+        public virtual int ID { get;set; }
         public virtual string Name { get; set; }
         public virtual DateTime CreationDate { get; set; }
         public virtual string  Logo { get; set; }

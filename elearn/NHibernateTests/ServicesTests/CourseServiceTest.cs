@@ -128,7 +128,7 @@ namespace NHibernateTests.ServicesTests
 
             #region Assert
             Assert.That(course.ShoutBox,Is.Not.Null);
-            Assert.That(course, Is.InstanceOfType(typeof(CourseDto)));
+            Assert.That(course, Is.InstanceOf(typeof(CourseDto)));
             Assert.That(course.LatestSurvey,Is.Not.Null);
             Assert.That(course.LatestSurvey.DateCreated, Is.EqualTo(new DateTime(2011, 1, 1)));
             #endregion
@@ -155,7 +155,7 @@ namespace NHibernateTests.ServicesTests
 
             #region Assert
             Assert.That(test, Is.Not.Null);
-            Assert.That(test, Is.InstanceOfType(typeof(TestDto)));
+            Assert.That(test, Is.InstanceOf(typeof(TestDto)));
             Assert.That(test.CreationDate, Is.EqualTo(new DateTime(2011,1,1)));
             #endregion
         }
@@ -211,7 +211,7 @@ namespace NHibernateTests.ServicesTests
 
             #region Act
 
-            List<CourseDto> filteredCourses = new CourseService().GetByCourseType(_testCourseType);
+            List<CourseDto> filteredCourses = new CourseService().GetByCourseType(CourseTypeModelDto.Map(_testCourseType));
 
 
             #endregion
@@ -224,81 +224,74 @@ namespace NHibernateTests.ServicesTests
         [Test]
         public void Can_add_new_course()
         {
+            new CourseService();
             #region Arrange
+            CourseDto newCourse = new CourseDto()
+            {
+                CreationDate = DateTime.Now,
+                CourseType = CourseTypeModelDto.Map(_testCourseType),
+                Forum = new ForumModelDto() { Author = "test", Name = "added forum" },
+                Group = new GroupModelDto() {
+                    GroupName = "added test",
+                    GroupType = GroupTypeModelDto.Map(_testGroupType)
+                    },
+                Logo = "test/jpg",
+                Name = "test add",
+                ShoutBox = new ShoutboxModelDto() {  }
+            }; 
             #endregion
 
             #region Act
 
-            Assert.Fail();
-
+            int id = new CourseService().AddCourse(newCourse);
+            var testingAddedCourse = new CourseService().GetById(id);
             #endregion
 
             #region Assert
+            Assert.That(testingAddedCourse,Is.Not.Null);
+            Assert.That(testingAddedCourse.Name, Is.EqualTo("test add"));
+            Assert.That(testingAddedCourse.Group.GroupName, Is.EqualTo("added test"));
+            Assert.That(testingAddedCourse.Forum.Name, Is.EqualTo("added forum"));
             #endregion
         }
 
         [Test]
-        public void Can_add_new_survey_for_course()
+        public void Can_update_course_property()
         {
             #region Arrange
+            var course = new CourseService().GetById(1);
+            course.Name = "changed name";
             #endregion
 
             #region Act
 
-            Assert.Fail();
-
+            var updateOk = new CourseService().Update(course);
+            course = new CourseService().GetById(1);
             #endregion
 
             #region Assert
+            Assert.That(updateOk, Is.True);
+            Assert.That(course.Name,Is.EqualTo("changed name"));
             #endregion
         }
 
         [Test]
-        public void Can_add_new_test_for_course()
+        public void Can_update_course_reference()
         {
             #region Arrange
+            var course = new CourseService().GetById(1);
+            course.CourseType = CourseTypeModelDto.Map(_testCourseType1);
             #endregion
 
             #region Act
-
-            Assert.Fail();
-
+            var updateOk  = new CourseService().Update(course);
+            course = new CourseService().GetById(1);
             #endregion
 
             #region Assert
+            Assert.That(updateOk,Is.True);
+            Assert.That(course.CourseType.TypeName, Is.EqualTo("Matematyka"));
             #endregion
-        }
-
-        [Test]
-        public void Can_update_course()
-        {
-            #region Arrange
-            #endregion
-
-            #region Act
-
-            Assert.Fail();
-
-            #endregion
-
-            #region Assert
-            #endregion
-        }
-
-        [Test]
-        public void Can_update_survey()
-        {
-            #region Arrange
-            #endregion
-
-            #region Act
-
-            Assert.Fail();
-
-            #endregion
-
-            #region Assert
-            #endregion
-        }			
+        }	
     }
 }

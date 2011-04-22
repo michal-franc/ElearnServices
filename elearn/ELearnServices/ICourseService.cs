@@ -20,5 +20,23 @@ namespace ELearnServices
 
         [OperationContract]
         IList<CourseSignatureDto> GetAllSignatures();
+
+        [OperationContract]
+        TestDto GetLatestTest(int id);
+
+        [OperationContract]
+        IList<TestDto> GetAllTests(int id);
+
+        [OperationContract]
+        List<CourseDto> GetByName(string value);
+
+        [OperationContract]
+        List<CourseDto> GetByCourseType(CourseTypeModelDto _testCourseType);
+
+        [OperationContract]
+        bool Update(CourseDto updatedCourse);
+
+        [OperationContract]
+        int AddCourse(CourseDto newCourse);
     }
 }
