@@ -82,6 +82,8 @@ namespace NHibernateTests.ServicesTests
                 session.Save(_testTestType);
                 session.Save(_testTest);
                 session.Save(_latestTest);
+                session.Save(_testCourse1);
+                session.Save(_testCourse2);
                 session.Flush();
             }
         }
@@ -90,11 +92,6 @@ namespace NHibernateTests.ServicesTests
         public void Can_get_all_courses_signatures()
         {
             #region Arrange
-            using (var session = DataAccess.OpenSession())
-            {
-                session.Save(_testCourse1);
-                session.Save(_testCourse2);
-            }
             #endregion
 
             #region Act
@@ -118,7 +115,7 @@ namespace NHibernateTests.ServicesTests
             {
                 _testCourse1.Surveys.Add(_testSurvey);
                 _testCourse1.Surveys.Add(_testLatestSurvey);
-                session.Save(_testCourse1);
+                session.SaveOrUpdate(_testCourse1);
                 session.Flush();
             }
             #endregion
@@ -145,7 +142,7 @@ namespace NHibernateTests.ServicesTests
             {
                 _testCourse1.Tests.Add(_testTest);
                 _testCourse1.Tests.Add(_latestTest);
-                session.Save(_testCourse1);
+                session.SaveOrUpdate(_testCourse1);
                 session.Flush();
             }
             #endregion
@@ -171,7 +168,7 @@ namespace NHibernateTests.ServicesTests
             {
                 _testCourse1.Tests.Add(_testTest);
                 _testCourse1.Tests.Add(_latestTest);
-                session.Save(_testCourse1);
+                session.SaveOrUpdate(_testCourse1);
                 session.Flush();
             }
             #endregion
@@ -197,11 +194,12 @@ namespace NHibernateTests.ServicesTests
 
             #region Act
 
-            Assert.Fail();
+            List<CourseDto> filteredCourses = new CourseService().GetByName("test1");
 
             #endregion
 
             #region Assert
+            Assert.That(filteredCourses.Count,Is.EqualTo(1));
             #endregion
         }
 
@@ -213,14 +211,15 @@ namespace NHibernateTests.ServicesTests
 
             #region Act
 
-            Assert.Fail();
+            List<CourseDto> filteredCourses = new CourseService().GetByCourseType(_testCourseType);
+
 
             #endregion
 
             #region Assert
+            Assert.That(filteredCourses.Count, Is.EqualTo(1));
             #endregion
         }
-
 
         [Test]
         public void Can_add_new_course()
@@ -253,7 +252,6 @@ namespace NHibernateTests.ServicesTests
             #region Assert
             #endregion
         }
-
 
         [Test]
         public void Can_add_new_test_for_course()
@@ -301,7 +299,6 @@ namespace NHibernateTests.ServicesTests
 
             #region Assert
             #endregion
-        }
-				
+        }			
     }
 }

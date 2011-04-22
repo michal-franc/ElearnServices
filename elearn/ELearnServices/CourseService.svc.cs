@@ -7,6 +7,7 @@ using System.Text;
 using NHiberanteDal.DTO;
 using NHiberanteDal.DataAccess;
 using NHiberanteDal.Models;
+using NHiberanteDal.DataAccess.QueryObjects;
 
 namespace ELearnServices
 {
@@ -61,6 +62,21 @@ namespace ELearnServices
                     );
             }
             return tests;
+        }
+
+        public List<CourseDto> GetByName(string value)
+        {
+            List<CourseDto> returnedList = null;
+            using (var session = DataAccess.OpenSession())
+            {
+                returnedList =CourseDto.Map((List<CourseModel>)session.CreateQuery(new QueryCourseByName("test").Query).List<CourseModel>());
+            }
+            return returnedList;
+        }
+
+        public List<CourseDto> GetByCourseType(CourseTypeModel _testCourseType)
+        {
+            throw new NotImplementedException();
         }
     }
 }
