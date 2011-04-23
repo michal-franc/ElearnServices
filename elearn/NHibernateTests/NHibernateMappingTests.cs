@@ -44,6 +44,7 @@ namespace NHibernateTests
         CourseTypeModel _courseType = new CourseTypeModel() { TypeName = "test" };
         TestTypeModel _testType = new TestTypeModel() { TypeName = "test" };
         ProfileModel _testProfile = new ProfileModel() { Name = "test" };
+
         
         [SetUp]
         public void SetUp()
@@ -315,7 +316,15 @@ namespace NHibernateTests
                 new PersistenceSpecification<JournalModel>(session, new IDEqualityComparer())
                    .CheckProperty(c => c.Name, "test")
                    .CheckProperty(c => c.AverageMark, 3.45)
-                   .CheckReference(c => c.Owner, _testProfile)
+                   .CheckReference(c => c.Course, new CourseModel()
+                   {
+                       Name = "test",
+                       CourseType = _courseType,
+                       CreationDate = DateTime.Now,
+                       Forum = new ForumModel() { Name = "test", Author = "test" },
+                       Group = new GroupModel() { GroupName = "test", GroupType = _groupType },
+                       ShoutBox = new ShoutboxModel() { }
+                   })
                    .CheckList<JournalMarkModel>(c => c.Marks,
                    new List<JournalMarkModel>() 
                         { 
