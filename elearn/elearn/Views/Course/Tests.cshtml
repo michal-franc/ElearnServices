@@ -2,7 +2,7 @@
     ViewBag.Title = "Surveys";
 }
 
-@model IList<NHiberanteDal.DTO.TestDto>
+@model IList<NHiberanteDal.DTO.TestSignatureDto>
 
 <h2>Availble Tests</h2>
 <ul>
@@ -10,11 +10,7 @@
 {
     <li>Name : @test.Name</li>
     <li>Creation Date : @test.CreationDate</li>
-    <ul>
-    @foreach (var question in test.Questions)
-    {
-      <li>@question.QuestionText</li>   
-    }
-    </ul>
+    <li>Author: @test.Author</li>
+    <li>Type: @test.TestType</li>
 }
 </ul>

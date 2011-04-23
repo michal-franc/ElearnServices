@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace NHibernateTests.ServicesTests
 {
     [TestFixture]
-    public class TestServiceTest
+    class JournalServiceTest
     {
     }
 }

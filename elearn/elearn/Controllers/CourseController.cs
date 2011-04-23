@@ -35,7 +35,7 @@ namespace elearn.Controllers
         public ActionResult Tests(int id)
         {
             CourseService.CourseServiceClient client = new CourseService.CourseServiceClient();
-            var tests = client.GetAllTests(id);
+            var tests = client.GetAllTestsSignatures(id);
             return View(tests);
         }
 

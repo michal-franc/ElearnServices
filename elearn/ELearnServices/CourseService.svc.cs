@@ -14,7 +14,6 @@ namespace ELearnServices
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "CourseService" in code, svc and config file together.
     public class CourseService : ICourseService
     {
-
         private static bool _initialized;
 
         public CourseService()
@@ -58,12 +57,12 @@ namespace ELearnServices
             return test;
         }
 
-        public IList<TestDto> GetAllTests(int id)
+        public IList<TestSignatureDto> GetAllTestsSignatures(int id)
         {
-            IList<TestDto> tests = null;
+            IList<TestSignatureDto> tests = null;
             using (var session = DataAccess.OpenSession())
             {
-                tests = TestDto.Map(
+                tests = TestSignatureDto.Map(
                     session.Get<CourseModel>(id).Tests.ToList()
                     );
             }
@@ -101,5 +100,7 @@ namespace ELearnServices
             var course = CourseDto.UnMap(newCourse);
             return new Repository<CourseModel>().Add(course);
         }
+
+
     }
 }

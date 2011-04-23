@@ -22,10 +22,7 @@ namespace ELearnServices
         IList<CourseSignatureDto> GetAllSignatures();
 
         [OperationContract]
-        TestDto GetLatestTest(int id);
-
-        [OperationContract]
-        IList<TestDto> GetAllTests(int id);
+        IList<TestSignatureDto> GetAllTestsSignatures(int id);
 
         [OperationContract]
         List<CourseDto> GetByName(string value);

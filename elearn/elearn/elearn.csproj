@@ -79,6 +79,7 @@
     <None Include="Properties\DataSources\NHiberanteDal.DTO.CourseDto.datasource" />
     <None Include="Properties\DataSources\NHiberanteDal.DTO.CourseSignatureDto.datasource" />
     <None Include="Properties\DataSources\NHiberanteDal.DTO.TestDto.datasource" />
+    <None Include="Properties\DataSources\NHiberanteDal.DTO.TestSignatureDto.datasource" />
     <None Include="Properties\DataSources\NHiberanteDal.Models.ForumModel.datasource" />
     <None Include="Properties\DataSources\NHiberanteDal.Models.ProfileModel.datasource" />
     <Content Include="Images\nologo.jpg" />

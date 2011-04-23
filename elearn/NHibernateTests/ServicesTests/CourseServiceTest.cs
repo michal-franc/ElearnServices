@@ -87,7 +87,7 @@ namespace NHibernateTests.ServicesTests
         }
 
         [Test]
-        public void Can_get_course_all_Tests()
+        public void Can_get_course_all_TestsSignatures()
         {
             #region Arrange
             using (var session = DataAccess.OpenSession())
@@ -101,13 +101,14 @@ namespace NHibernateTests.ServicesTests
 
             #region Act
 
-            var tests = new CourseService().GetAllTests(1);
+            var tests = new CourseService().GetAllTestsSignatures(1);
 
 
             #endregion
 
             #region Assert
             Assert.That(tests, Is.Not.Null);
+            Assert.That(tests.First(), Is.InstanceOf(typeof(TestSignatureDto)));
             Assert.That(tests.Count, Is.EqualTo(2));
             #endregion
         }

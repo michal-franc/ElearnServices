@@ -11,9 +11,13 @@ namespace NHiberanteDal.DTO
     public class TestSignatureDto : DtoBaseClass<TestSignatureDto,TestModel>
     {
         [DataMember]
+        public int ID { get; private set; }
+        [DataMember]
         public  string Name { get; set; }
         [DataMember]
         public  DateTime CreationDate { get; set; }
+        [DataMember]
+        public DateTime EditDate { get; set; }
         [DataMember]
         public  string Author { get; set; }
         [DataMember]
