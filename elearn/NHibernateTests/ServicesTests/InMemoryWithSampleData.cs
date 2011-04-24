@@ -5,10 +5,12 @@ using System.Text;
 using NUnit.Framework;
 using NHiberanteDal.Models;
 using NHiberanteDal.DataAccess;
+using NHiberanteDal.DTO;
 
 namespace NHibernateTests.ServicesTests
 {
-    class InMemoryWithSampleData : InMemoryTest
+    [SetUpFixture]
+    public class InMemoryWithSampleData : InMemoryTest
     {
         protected CourseTypeModel _testCourseType;
         protected CourseTypeModel _testCourseType1;
@@ -28,6 +30,11 @@ namespace NHibernateTests.ServicesTests
         [SetUp]
         public void SetUp()
         {
+            //Initializaing Mappings
+            DTOMappings.Initialize();
+
+
+            //Initializing Data
             _testTestType = new TestTypeModel() { TypeName = "test" };
             _testPofile = new ProfileModel() { Name = "test" };
             _testTest = new TestModel() { Author = _testPofile, CreationDate = new DateTime(2010, 1, 1), Name = "test", TestType = _testTestType };

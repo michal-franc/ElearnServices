@@ -95,6 +95,9 @@
     <Compile Include="DTO\ForumModelDto.cs" />
     <Compile Include="DTO\GroupModelDto.cs" />
     <Compile Include="DTO\GroupTypeModelDto.cs" />
+    <Compile Include="DTO\JournalMarkModelDto.cs" />
+    <Compile Include="DTO\JournalModelDto.cs" />
+    <Compile Include="DTO\ProfileModelDto.cs" />
     <Compile Include="DTO\ShoutboxModelDto.cs" />
     <Compile Include="DTO\SurveyModelDto.cs" />
     <Compile Include="DTO\TestDto.cs" />
