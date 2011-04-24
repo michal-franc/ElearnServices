@@ -2,19 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NHiberanteDal.Models;
 using System.Runtime.Serialization;
 
 namespace NHiberanteDal.DTO
 {
     [DataContract]
-    public class TestQuestionModelDto : DtoBaseClass<TestQuestionModelDto,TestQuestionModel>
+    public class TestQuestionAnswerDto
     {
         [DataMember]
         public  int ID { get; private set; }
         [DataMember]
-        public  string QuestionText { get; set; }
+        public  string Text { get; set; }
         [DataMember]
-        public  List<TestQuestionAnswerDto> Answers { get; set; }
+        public  bool Correct { get; set; }
+        [DataMember]
+        public  int NumberSelected { get; set; }
     }
 }

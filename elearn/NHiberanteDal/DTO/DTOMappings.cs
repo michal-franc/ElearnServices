@@ -23,6 +23,8 @@ namespace NHiberanteDal.DTO
                 Mapper.CreateMap<SurveyModelDto, SurveyModel>();
                 Mapper.CreateMap<TestQuestionModel, TestQuestionModelDto>();
                 Mapper.CreateMap<TestQuestionModelDto, TestQuestionModel>();
+                Mapper.CreateMap<TestQuestionAnswer, TestQuestionAnswerDto>();
+                Mapper.CreateMap<TestQuestionAnswerDto, TestQuestionAnswer>();
                 Mapper.CreateMap<TestModel, TestDto>();
                 Mapper.CreateMap<TestDto, TestModel>();
                 Mapper.CreateMap<TestModel, TestSignatureDto>();

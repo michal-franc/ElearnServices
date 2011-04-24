@@ -24,7 +24,7 @@ namespace NHiberanteDal.DTO
         [DataMember]
         public TestTypeModelDto TestType { get; set; }
         
-        //[DataMember]
-        //public  IList<TestQuestionModelDto> Questions { get; set; }
+        [DataMember]
+        public  IList<TestQuestionModelDto> Questions { get; set; }
     }
 }
