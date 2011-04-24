@@ -13,7 +13,6 @@ namespace NHibernateTests.ServicesTests
     [TestFixture]
     class CourseServiceTest : InMemoryWithSampleData
     {
-
         [Test]
         public void Can_get_all_courses_signatures()
         {
