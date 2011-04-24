@@ -21,7 +21,7 @@ namespace NHiberanteDal.DTO
 
         //One
         [DataMember]
-        public string Author { get; set; }
+        public ProfileModelDto Author { get; set; }
         [DataMember]
         public TestTypeModelDto TestType { get; set; }
         

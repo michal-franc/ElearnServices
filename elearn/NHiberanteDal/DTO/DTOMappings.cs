@@ -13,6 +13,8 @@ namespace NHiberanteDal.DTO
         {
             try
             {
+                Mapper.CreateMap<ProfileModel, ProfileModelDto>();
+                Mapper.CreateMap<ProfileModelDto, ProfileModel>();
                 Mapper.CreateMap<SurveyModel, SurveyModelDto>();
                 Mapper.CreateMap<SurveyModelDto, SurveyModel>();
                 Mapper.CreateMap<TestQuestionModel, TestQuestionModelDto>();
