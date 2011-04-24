@@ -22,12 +22,16 @@ namespace NHibernateTests.ServicesTests
         protected SurveyModel _testLatestSurvey;
         protected CourseModel _testCourse1;
         protected CourseModel _testCourse2;
+        protected CourseModel _testCourse3;
         protected TestModel _testTest;
         protected TestModel _latestTest;
         protected TestTypeModel _testTestType;
         protected ProfileModel _testPofile;
         protected TestQuestionAnswer _testQuestionAnswer;
         protected TestQuestionModel _testQuestion;
+        protected JournalModel _testJournal;
+        protected JournalMarkModel _testJournalMark;
+
 
         [SetUp]
         public void SetUp()
@@ -76,6 +80,22 @@ namespace NHibernateTests.ServicesTests
 
             };
 
+            _testCourse3 = new CourseModel()
+            {
+                CourseType = _testCourseType1,
+                ShoutBox = _testShoutBox,
+                Forum = _testForum,
+                Group = _testGroup,
+                CreationDate = DateTime.Now,
+                Description = "test1",
+                Logo = "/test1.jpg",
+                Name = "test1",
+
+            };
+            _testJournalMark = new JournalMarkModel() { Name = "Zaliczenie", Value = "5" };
+            _testJournal = new JournalModel() { Course = _testCourse3, AverageMark = 0, Marks = new List<JournalMarkModel>() { _testJournalMark }, Name = "test journal" };
+
+
             using (var session = DataAccess.OpenSession())
             {
                 session.Save(_testPofile);
@@ -94,6 +114,9 @@ namespace NHibernateTests.ServicesTests
                 session.Save(_testCourse2);
                 session.Save(_testQuestionAnswer);
                 session.Save(_testQuestion);
+                session.Save(_testCourse3);
+                session.Save(_testJournalMark);
+                session.Save(_testJournal);
                 session.Flush();
             }
         }
