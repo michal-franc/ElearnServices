@@ -19,14 +19,12 @@ namespace NHiberanteDal.DTO
         [DataMember]
         public DateTime EditDate { get; set; }
 
-        //One
         [DataMember]
         public ProfileModelDto Author { get; set; }
         [DataMember]
         public TestTypeModelDto TestType { get; set; }
         
-        //Many
-        [DataMember]
-        public  IList<TestQuestionModelDto> Questions { get; set; }
+        //[DataMember]
+        //public  IList<TestQuestionModelDto> Questions { get; set; }
     }
 }
