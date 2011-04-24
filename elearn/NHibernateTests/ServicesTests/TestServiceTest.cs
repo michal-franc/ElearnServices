@@ -59,15 +59,35 @@ namespace NHibernateTests.ServicesTests
         public void Can_Update_Test()
         {
             #region Arrange
+            var test = new TestDto() { Author = ProfileModelDto.Map(_testPofile), CreationDate = DateTime.Now, Name = "new test", TestType = TestTypeModelDto.Map(_testTestType) };
+            using (var session = DataAccess.OpenSession())
+            {
+                var course = session.Get<CourseModel>(1);
+                course.Tests.Add(TestDto.UnMap(test));
+                session.Flush();
+            }
+
+            using (var session = DataAccess.OpenSession())
+            {
+                var course = session.Get<CourseModel>(1);
+                Assert.That(course.Tests[0].Name, Is.EqualTo("new test"));
+                test.ID = course.Tests[0].ID;
+            }
             #endregion
 
             #region Act
-
-            Assert.Fail();
+            test.Name = "updated test";
+            bool updateOk = new TestService().UpdateTest(test);
 
             #endregion
 
             #region Assert
+            using (var session = DataAccess.OpenSession())
+            {
+                var course = session.Get<CourseModel>(1);
+                Assert.That(course.Tests[0].Name, Is.EqualTo("updated test"));
+                Assert.That(updateOk,Is.True);
+            }
             #endregion
         }
 

@@ -37,5 +37,15 @@ namespace ELearnServices
                 session.Delete(TestDto.UnMap(test));
             });
         }
+
+        public bool UpdateTest(TestDto test)
+        {
+            DataAccess.InTransaction(session =>
+            {
+                session.Update(TestDto.UnMap(test));
+            });
+
+            return true;
+        }
     }
 }
