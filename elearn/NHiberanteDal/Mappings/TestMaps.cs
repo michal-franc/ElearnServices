@@ -19,8 +19,8 @@ namespace NHiberanteDal.Mappings
 
 
             //One
-            References(x => x.Author).Not.Nullable();
-            References(x => x.TestType).Not.Nullable();
+            References(x => x.Author).Not.Nullable().Not.LazyLoad();
+            References(x => x.TestType).Not.Nullable().Not.LazyLoad();
 
             //Many
             HasMany(x => x.Questions).KeyColumns.Add("TestId");

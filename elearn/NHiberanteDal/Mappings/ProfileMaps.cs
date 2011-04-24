@@ -42,7 +42,7 @@ namespace NHiberanteDal.Mappings
             Map(x => x.Name);
 
             //Many
-            HasMany(x=>x.Journals);
+            HasMany(x=>x.Journals).Not.LazyLoad();
 
 	    }
     }
@@ -63,8 +63,8 @@ namespace NHiberanteDal.Mappings
             Id(x => x.ID);
 
             //One
-            References(x => x.Sender).Not.Nullable();
-            References(x => x.Receiver).Not.Nullable();
+            References(x => x.Sender).Not.Nullable().Not.LazyLoad();
+            References(x => x.Receiver).Not.Nullable().Not.LazyLoad();
         }
     }
 
@@ -77,7 +77,7 @@ namespace NHiberanteDal.Mappings
             Map(x=>x.AverageMark);
 
             //One
-            References(x => x.Course).Not.Nullable();
+            References(x => x.Course).Not.Nullable().Not.LazyLoad();
 
             //Many
             HasMany(x => x.Marks).KeyColumns.Add("JournalId");
