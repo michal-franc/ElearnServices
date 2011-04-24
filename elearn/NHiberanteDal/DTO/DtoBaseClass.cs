@@ -10,24 +10,24 @@ namespace NHiberanteDal.DTO
     [DataContract]
     public class DtoBaseClass <T,Y>
     {
-        public static T Map(Y coursemodel)
+        public static T Map(Y mappedModel)
         {
-            return Mapper.Map<Y, T>(coursemodel);
+            return Mapper.Map<Y, T>(mappedModel);
         }
 
-        public static List<T> Map(List<Y> coursemodels)
+        public static List<T> Map(List<Y> mappedModels)
         {
-            return Mapper.Map<List<Y>, List<T>>(coursemodels);
+            return Mapper.Map<List<Y>, List<T>>(mappedModels);
         }
 
-        public static Y UnMap(T coursemodel)
+        public static Y UnMap(T mappedModel)
         {
-            return Mapper.Map<T, Y>(coursemodel);
+            return Mapper.Map<T, Y>(mappedModel);
         }
 
-        public static List<Y> UnMap(List<T> coursemodels)
+        public static List<Y> UnMap(List<T> mappedModels)
         {
-            return Mapper.Map<List<T>, List<Y>>(coursemodels);
+            return Mapper.Map<List<T>, List<Y>>(mappedModels);
         }
     }
 }
