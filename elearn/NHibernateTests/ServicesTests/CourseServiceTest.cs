@@ -27,7 +27,7 @@ namespace NHibernateTests.ServicesTests
 
             #region Assert
             Assert.That(courseSignatures,Is.Not.Null);
-            Assert.That(courseSignatures.Count, Is.EqualTo(2));
+            Assert.That(courseSignatures.Count, Is.EqualTo(3));
             Assert.That(courseSignatures.First(), Is.InstanceOf(typeof(CourseSignatureDto)));
             #endregion
         }
