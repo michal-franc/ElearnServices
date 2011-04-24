@@ -53,5 +53,17 @@ namespace ELearnServices
             var testModel = new Repository<TestModel>().GetById(id);
             return TestDto.Map(testModel);
         }
+
+        public bool AddQuestion(int id, TestQuestionModelDto question)
+        {
+            DataAccess.InTransaction(session =>
+            {
+                var test = session.Get<TestModel>(1);
+                test.Questions.Add(TestQuestionModelDto.UnMap(question));
+                session.Save(test);
+            });
+
+            return true;
+        }
     }
 }

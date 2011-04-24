@@ -96,34 +96,31 @@ namespace NHibernateTests.ServicesTests
         public void Can_Add_Test_Question()
         {
             #region Arrange
+            TestQuestionModelDto question = new TestQuestionModelDto() 
+            { 
+                QuestionText = "test question", 
+                Answers = new List<TestQuestionAnswerDto>()
+                {new TestQuestionAnswerDto(){ Correct=false, NumberSelected=0, Text="test answer"} } };
             #endregion
 
             #region Act
 
-            Assert.Fail();
+            bool addedQuestion = new TestService().AddQuestion(1,question);
 
             #endregion
 
             #region Assert
+            Assert.That(addedQuestion,Is.True);
+            using (var session = DataAccess.OpenSession())
+            {
+                var test = session.Get<TestModel>(1);
+                Assert.That(test.Questions.Count,Is.EqualTo(1));
+                Assert.That(test.Questions.First().QuestionText,Is.EqualTo("test question"));
+                Assert.That(test.Questions.First().Answers.Count, Is.EqualTo(1));
+                Assert.That(test.Questions.First().Answers.First().Text, Is.EqualTo("test answer"));
+            }
             #endregion
         }
-
-        [Test]
-        public void Can_add_test_question_answers()
-        {
-            #region Arrange
-            #endregion
-
-            #region Act
-
-            Assert.Fail();
-
-            #endregion
-
-            #region Assert
-            #endregion
-        }
-
 
         [Test]
         public void Can_Get_Test_Details()
