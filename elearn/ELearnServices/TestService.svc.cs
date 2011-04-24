@@ -47,5 +47,11 @@ namespace ELearnServices
 
             return true;
         }
+
+        public TestDto GetTestDetails(int id)
+        {
+            var testModel = new Repository<TestModel>().GetById(id);
+            return TestDto.Map(testModel);
+        }
     }
 }

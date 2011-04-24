@@ -93,24 +93,6 @@ namespace NHibernateTests.ServicesTests
 
 
         [Test]
-        public void Can_get_TestTypes()
-        {
-            #region Arrange
-            #endregion
-
-            #region Act
-
-            Assert.Fail();
-
-            #endregion
-
-            #region Assert
-            #endregion
-        }
-
-
-
-        [Test]
         public void Can_Add_Test_Question()
         {
             #region Arrange
@@ -147,15 +129,32 @@ namespace NHibernateTests.ServicesTests
         public void Can_Get_Test_Details()
         {
             #region Arrange
+            var test = new TestDto()
+            {
+                Author = ProfileModelDto.Map(_testPofile),
+                CreationDate = DateTime.Now,
+                Name = "new test",
+                TestType = TestTypeModelDto.Map(_testTestType),
+                Questions =new List<TestQuestionModelDto>(){ TestQuestionModelDto.Map(_testQuestion)}
+            };
+            using (var session = DataAccess.OpenSession())
+            {
+                var course = session.Get<CourseModel>(1);
+                course.Tests.Add(TestDto.UnMap(test));
+                session.Flush();
+            }
             #endregion
 
             #region Act
 
-            Assert.Fail();
+            test =new TestService().GetTestDetails(3);
 
             #endregion
 
             #region Assert
+            Assert.That(test.Name, Is.EqualTo("new test"));
+            Assert.That(test.Questions.Count,Is.EqualTo(1));
+            Assert.That(test.Questions.First().Answers.Count, Is.EqualTo(1));
             #endregion
         }
 				
