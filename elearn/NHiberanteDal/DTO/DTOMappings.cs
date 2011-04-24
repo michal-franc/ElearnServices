@@ -13,6 +13,10 @@ namespace NHiberanteDal.DTO
         {
             try
             {
+                Mapper.CreateMap<JournalModelDto, JournalModel>();
+                Mapper.CreateMap<JournalModel, JournalModelDto>();
+                Mapper.CreateMap<JournalMarkModelDto, JournalMarkModel>();
+                Mapper.CreateMap<JournalMarkModel, JournalMarkModelDto>();
                 Mapper.CreateMap<ProfileModel, ProfileModelDto>();
                 Mapper.CreateMap<ProfileModelDto, ProfileModel>();
                 Mapper.CreateMap<SurveyModel, SurveyModelDto>();
