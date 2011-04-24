@@ -23,7 +23,7 @@ namespace NHiberanteDal.Mappings
             References(x => x.TestType).Not.Nullable().Not.LazyLoad();
 
             //Many
-            HasMany(x => x.Questions).KeyColumns.Add("TestId");
+            HasMany(x => x.Questions).Not.LazyLoad().KeyColumns.Add("TestId");
 
         }
     }
@@ -47,7 +47,7 @@ namespace NHiberanteDal.Mappings
             Map(x => x.QuestionText).Not.Nullable();
 
             //Many
-            HasMany(x => x.Answers).KeyColumns.Add("TestQuestionId");
+            HasMany(x => x.Answers).Not.LazyLoad().KeyColumns.Add("TestQuestionId");
         }
     }
 
