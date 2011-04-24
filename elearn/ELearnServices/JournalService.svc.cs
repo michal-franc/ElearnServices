@@ -23,5 +23,15 @@ namespace ELearnServices
             }
             return modelDto;
         }
+
+        public bool AddMark(int journalId, JournalMarkModelDto markDto)
+        {
+            using (var session = DataAccess.OpenSession())
+            {
+                var model = session.Get<JournalModel>(journalId);
+                model.Marks.Add(JournalMarkModelDto.UnMap(markDto));
+            }
+            return true;
+        }
     }
 }

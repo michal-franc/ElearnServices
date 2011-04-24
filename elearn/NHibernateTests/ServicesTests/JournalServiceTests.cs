@@ -6,6 +6,7 @@ using NUnit.Framework;
 using ELearnServices;
 using NHiberanteDal.DataAccess;
 using NHiberanteDal.Models;
+using NHiberanteDal.DTO;
 
 namespace NHibernateTests.ServicesTests
 {
@@ -16,64 +17,25 @@ namespace NHibernateTests.ServicesTests
         public void Can_Add_Mark()
         {
             #region Arrange
+            JournalMarkModelDto markDto = new JournalMarkModelDto() { Name="test mark", Value="0" };
             #endregion
 
             #region Act
 
-            Assert.Fail();
+            bool addOk = new JournalService().AddMark(1,markDto);
+
+            JournalModel journal = null;
+            using (var session = DataAccess.OpenSession())
+            {
+                journal = session.Get<JournalModel>(1);
 
             #endregion
 
             #region Assert
+            Assert.That(addOk, Is.True);
+            Assert.That(journal.Marks.Count,Is.EqualTo(1));
             #endregion
-        }
-
-        [Test]
-        public void Can_Delete_Mark()
-        {
-            #region Arrange
-            #endregion
-
-            #region Act
-
-            Assert.Fail();
-
-            #endregion
-
-            #region Assert
-            #endregion
-        }
-
-        [Test]
-        public void Can_Edit_Mark()
-        {
-            #region Arrange
-            #endregion
-
-            #region Act
-
-            Assert.Fail();
-
-            #endregion
-
-            #region Assert
-            #endregion
-        }
-
-        [Test]
-        public void Can_Get_All_Journals_Signatures()
-        {
-            #region Arrange
-            #endregion
-
-            #region Act
-
-            Assert.Fail();
-
-            #endregion
-
-            #region Assert
-            #endregion
+            };
         }
 
         [Test]

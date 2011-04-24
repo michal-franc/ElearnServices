@@ -42,7 +42,7 @@ namespace NHiberanteDal.Mappings
             Map(x => x.Name);
 
             //Many
-            HasMany(x=>x.Journals).Not.LazyLoad();
+            HasMany(x=>x.Journals).Cascade.SaveUpdate().Not.LazyLoad();
 
 	    }
     }
