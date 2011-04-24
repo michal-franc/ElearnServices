@@ -26,6 +26,8 @@ namespace NHibernateTests.ServicesTests
         protected TestModel _latestTest;
         protected TestTypeModel _testTestType;
         protected ProfileModel _testPofile;
+        protected TestQuestionAnswer _testQuestionAnswer;
+        protected TestQuestionModel _testQuestion;
 
         [SetUp]
         public void SetUp()
@@ -35,6 +37,8 @@ namespace NHibernateTests.ServicesTests
 
 
             //Initializing Data
+            _testQuestionAnswer = new TestQuestionAnswer(){Correct = true,NumberSelected = 0, Text = "test"};
+            _testQuestion = new TestQuestionModel() { QuestionText = "test question", Answers = new List<TestQuestionAnswer>() { _testQuestionAnswer } };
             _testTestType = new TestTypeModel() { TypeName = "test" };
             _testPofile = new ProfileModel() { Name = "test" };
             _testTest = new TestModel() { Author = _testPofile, CreationDate = new DateTime(2010, 1, 1), Name = "test", TestType = _testTestType };
@@ -88,6 +92,8 @@ namespace NHibernateTests.ServicesTests
                 session.Save(_latestTest);
                 session.Save(_testCourse1);
                 session.Save(_testCourse2);
+                session.Save(_testQuestionAnswer);
+                session.Save(_testQuestion);
                 session.Flush();
             }
         }
