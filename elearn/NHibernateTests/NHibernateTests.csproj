@@ -106,10 +106,8 @@
     <Compile Include="RepositoryTests.cs" />
     <Compile Include="SerializerTests\DataSerializationTests.cs" />
     <Compile Include="ServicesTests\CourseServiceTest.cs" />
-    <Compile Include="ServicesTests\GroupsServiceTest.cs" />
     <Compile Include="ServicesTests\InMemoryWithSampleData.cs" />
     <Compile Include="ServicesTests\JournalServiceTests.cs" />
-    <Compile Include="ServicesTests\ProfileServiceTest.cs" />
     <Compile Include="ServicesTests\TestServiceTest.cs" />
     <Compile Include="SQLiteDBAccess.cs" />
     <Compile Include="InMemoryTest.cs" />
