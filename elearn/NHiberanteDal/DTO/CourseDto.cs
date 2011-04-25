@@ -20,6 +20,8 @@ namespace NHiberanteDal.DTO
         [DataMember]
         public string Logo { get; set; }
         [DataMember]
+        public  string Description { get; set; }
+        [DataMember]
         public CourseTypeModelDto CourseType { get; set; }
         [DataMember]
         public virtual GroupModelDto Group { get; set; }

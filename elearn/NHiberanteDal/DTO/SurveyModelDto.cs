@@ -14,5 +14,12 @@ namespace NHiberanteDal.DTO
         public int ID { get; private set; }
         [DataMember]
         public string SurveyText { get; set; }
+
+        [DataMember]
+        public  DateTime DateCreated { get; set; }
+
+        [DataMember]
+        public  IList<SurveyQuestionModelDto> Questions { get; set; }
+
     }
 }

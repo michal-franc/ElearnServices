@@ -100,6 +100,7 @@
     <Compile Include="DTO\ProfileModelDto.cs" />
     <Compile Include="DTO\ShoutboxModelDto.cs" />
     <Compile Include="DTO\SurveyModelDto.cs" />
+    <Compile Include="DTO\SurveyQuestionModelDto.cs" />
     <Compile Include="DTO\TestDto.cs" />
     <Compile Include="DTO\TestQuestionAnswerDto.cs" />
     <Compile Include="DTO\TestQuestionModelDto.cs" />
