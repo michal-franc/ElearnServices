@@ -54,6 +54,12 @@ namespace ELearnServices
             return TestDto.Map(testModel);
         }
 
+        public List<TestDto> GetAllTests()
+        {
+            var tests = new Repository<TestModel>().GetAll().ToList();
+            return TestDto.Map(tests);
+        }
+
         public bool AddQuestion(int id, TestQuestionModelDto question)
         {
             DataAccess.InTransaction(session =>

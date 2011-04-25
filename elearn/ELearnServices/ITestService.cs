@@ -26,5 +26,8 @@ namespace ELearnServices
 
         [OperationContract]
         int AddTest(int courseId, TestDto test);
+
+        [OperationContract]
+        List<TestDto> GetAllTests();
     }
 }

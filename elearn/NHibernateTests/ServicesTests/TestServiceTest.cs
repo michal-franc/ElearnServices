@@ -122,6 +122,26 @@ namespace NHibernateTests.ServicesTests
             #endregion
         }
 
+
+
+        [Test]
+        public void Can_get_All_tests()
+        {
+            #region Arrange
+            #endregion
+
+            #region Act
+
+            var tests = new TestService().GetAllTests();
+
+            #endregion
+
+            #region Assert
+            Assert.That(tests.Count,Is.EqualTo(2));
+            #endregion
+        }
+				
+
         [Test]
         public void Can_Get_Test_Details()
         {
