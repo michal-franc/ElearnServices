@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using NHiberanteDal.DTO;
 
 namespace ELearnServices
 {
@@ -11,5 +12,10 @@ namespace ELearnServices
     [ServiceContract]
     public interface IJournalService
     {
+        [OperationContract]
+        bool AddMark(int journalId, JournalMarkModelDto markDto);
+
+        [OperationContract]
+        JournalModelDto GetJournalDetails(int id);
     }
 }

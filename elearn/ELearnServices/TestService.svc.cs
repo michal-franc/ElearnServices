@@ -13,6 +13,11 @@ namespace ELearnServices
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "TestService" in code, svc and config file together.
     public class TestService : ITestService
     {
+        public TestService()
+        {
+            DTOMappings.Initialize();
+        }
+
         public int AddTest(int courseId,TestDto test)
         {
             int id = -1;
@@ -54,10 +59,10 @@ namespace ELearnServices
             return TestDto.Map(testModel);
         }
 
-        public List<TestDto> GetAllTests()
+        public List<TestSignatureDto> GetAllTests()
         {
             var tests = new Repository<TestModel>().GetAll().ToList();
-            return TestDto.Map(tests);
+            return TestSignatureDto.Map(tests);
         }
 
         public bool AddQuestion(int id, TestQuestionModelDto question)

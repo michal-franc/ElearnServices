@@ -128,7 +128,9 @@
   </ProjectExtensions>
   <PropertyGroup>
     <PostBuildEvent>copy   $(TargetDir)*.* "C:\ElearnService\bin"
-copy   $(ProjectDir)CourseService.svc "C:\ElearnService\"</PostBuildEvent>
+copy   $(ProjectDir)CourseService.svc "C:\ElearnService\"
+copy   $(ProjectDir)TestService.svc "C:\ElearnService\"
+copy   $(ProjectDir)JournalService.svc "C:\ElearnService\"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

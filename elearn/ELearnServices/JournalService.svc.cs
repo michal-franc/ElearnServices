@@ -13,6 +13,11 @@ namespace ELearnServices
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "JournalService" in code, svc and config file together.
     public class JournalService : IJournalService
     {
+        public JournalService()
+        {
+            DTOMappings.Initialize();
+        }
+
         public JournalModelDto GetJournalDetails(int id)
         {
             JournalModelDto modelDto = null;
