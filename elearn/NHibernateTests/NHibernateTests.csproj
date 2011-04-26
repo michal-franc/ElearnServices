@@ -106,6 +106,7 @@
     <Compile Include="RepositoryTests.cs" />
     <Compile Include="SerializerTests\DataSerializationTests.cs" />
     <Compile Include="ServicesTests\CourseServiceTest.cs" />
+    <Compile Include="ServicesTests\GroupServiceTests.cs" />
     <Compile Include="ServicesTests\InMemoryWithSampleData.cs" />
     <Compile Include="ServicesTests\JournalServiceTests.cs" />
     <Compile Include="ServicesTests\ProfileServiceTest.cs" />
