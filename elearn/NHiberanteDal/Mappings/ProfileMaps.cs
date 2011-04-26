@@ -40,7 +40,10 @@ namespace NHiberanteDal.Mappings
 	    {
             Id(x=>x.ID);
             Map(x => x.Name);
-
+            Map(x=>x.Uid).Not.Nullable();
+            Map(x=>x.Role);
+            Map(x => x.Email).Not.Nullable();
+            Map(x => x.IsActive).Not.Nullable();
             //Many
             HasMany(x=>x.Journals).Cascade.SaveUpdate().Not.LazyLoad();
 

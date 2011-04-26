@@ -44,7 +44,7 @@ namespace NHibernateTests.ServicesTests
             _testQuestionAnswer = new TestQuestionAnswer(){Correct = true,NumberSelected = 0, Text = "test"};
             _testQuestion = new TestQuestionModel() { QuestionText = "test question", Answers = new List<TestQuestionAnswer>() { _testQuestionAnswer } };
             _testTestType = new TestTypeModel() { TypeName = "test" };
-            _testPofile = new ProfileModel() { Name = "test" };
+            _testPofile = new ProfileModel() { Name = "test", Uid=new Guid(), Email="test@test.com",IsActive=true };
             _testTest = new TestModel() { Author = _testPofile, CreationDate = new DateTime(2010, 1, 1), Name = "test", TestType = _testTestType };
             _latestTest = new TestModel() { Author = _testPofile, CreationDate = new DateTime(2011, 1, 1), Name = "test", TestType = _testTestType };
             _testCourseType = new CourseTypeModel() { TypeName = "Fizyka" };
