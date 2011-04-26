@@ -7,6 +7,7 @@ using System.Text;
 using NHiberanteDal.DTO;
 using NHiberanteDal.DataAccess;
 using NHiberanteDal.Models;
+using System.Web.Security;
 
 namespace ELearnServices
 {
@@ -14,7 +15,7 @@ namespace ELearnServices
     public class ProfileService : IProfileService
     {
 
-        public int AddProfile(ProfileModelDto profile)
+        public int AddProfile(ProfileModelDto profile,string password)
         {
             var profileModel = ProfileModelDto.UnMap(profile);
             int id = -1;
@@ -22,7 +23,16 @@ namespace ELearnServices
                 {
                     id = (int)session.Save(profileModel);
                 });
-            return id;
+
+            if (id != -1)
+            {
+                var status = CreateUser(profile.Uid.ToString(),password,profile.Email);
+                if (status == MembershipCreateStatus.Success)
+                    return id;
+                else
+                    return -1;
+            }
+            return -1;
         }
 
         public ProfileModelDto GetProfile(int id)
@@ -71,6 +81,40 @@ namespace ELearnServices
             {
                 return false;
             }
+        }
+
+        public MembershipCreateStatus CreateUser(string userName, string password, string email)
+        {   
+            MembershipCreateStatus status;
+            if(Membership.Provider.RequiresQuestionAndAnswer)
+                Membership.Provider.CreateUser(userName, password, email, "this is sample question", "this is answer", true, null, out status);
+            else
+                Membership.Provider.CreateUser(userName, password, email, null, null, true, null, out status);
+            return status;
+        }
+
+        public bool ValidateUser(string userName, string password)
+        {
+            return Membership.Provider.ValidateUser(userName, password);
+        }
+
+        public void ResetPassword(string userName)
+        {
+            string newPassword = Membership.Provider.ResetPassword(userName, null);
+            //email newPassword
+        }
+
+
+
+        public bool ChangePassword(string userName, string oldPassword, string newPassword)
+        {
+            return Membership.Provider.ChangePassword(userName, oldPassword, newPassword);
+        }
+
+        public int GetMinPasswordLength()
+        {
+            return Membership.Provider.MinRequiredPasswordLength;
+
         }
     }
 }

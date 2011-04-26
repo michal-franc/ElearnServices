@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 using NHiberanteDal.DTO;
+using System.Web.Security;
 
 namespace ELearnServices
 {
@@ -13,7 +14,7 @@ namespace ELearnServices
     public interface IProfileService
     {
         [OperationContract]
-        int AddProfile(ProfileModelDto profile);
+        int AddProfile(ProfileModelDto profile, string password);
 
         [OperationContract]
         ProfileModelDto GetProfile(int id);
@@ -26,5 +27,20 @@ namespace ELearnServices
 
         [OperationContract]
         bool UpdateProfile(ProfileModelDto profile);
+
+        [OperationContract]
+        bool ValidateUser(string userName, string password);
+
+        [OperationContract]
+        void ResetPassword(string userName);
+
+        [OperationContract]
+        bool ChangePassword(string userName, string oldPassword, string newPassword);
+
+        [OperationContract]
+        int GetMinPasswordLength();
+
+        [OperationContract]
+         MembershipCreateStatus CreateUser(string userName, string password, string email);
     }
 }
