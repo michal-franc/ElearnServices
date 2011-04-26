@@ -8,6 +8,7 @@ using NHiberanteDal.Models;
 using NHiberanteDal.DataAccess;
 using NHiberanteDal.DTO;
 
+
 namespace NHibernateTests.ServicesTests
 {
     [TestFixture]
@@ -15,10 +16,34 @@ namespace NHibernateTests.ServicesTests
     {
 
         [Test]
+        public void Can_Valdiate_User_Authenticity()
+        {
+            #region Arrange
+            var profile = new ProfileModel() { Name = "new profile", Uid = Guid.NewGuid(), Email = "test@test.com", IsActive = true };
+            #endregion
+
+            #region Act
+
+            int id = new ProfileService().AddProfile(ProfileModelDto.Map(profile), "TestPassword@1");
+            bool validateTrue = new ProfileService().ValidateUser(profile.Uid.ToString(), "TestPassword@1");
+            bool validateFalse = new ProfileService().ValidateUser(profile.Uid.ToString(), "TestPassword1");
+
+            #endregion
+
+            #region Assert
+            Assert.That(validateTrue, Is.True);
+            Assert.That(validateFalse, Is.False);
+            #endregion
+        }
+
+				
+				
+
+        [Test]
         public void Can_Get_All_Profiles()
         {
             #region Arrange
-            var profile = new ProfileModel() { Name="test1" };
+            var profile = new ProfileModel() { Name = "test1", Uid = Guid.NewGuid(), Email = "test@test.com", IsActive = true };
             DataAccess.InTransaction(session =>
                 {
                     session.Save(profile);
@@ -33,6 +58,7 @@ namespace NHibernateTests.ServicesTests
 
             #region Assert
             Assert.That(profiles.First(),Is.InstanceOf(typeof(ProfileModelDto)));
+            Assert.That(profiles.First().Uid,Is.InstanceOf(typeof(Guid)));
             Assert.That(profiles.Count,Is.EqualTo(2));
             #endregion
         }
@@ -59,12 +85,12 @@ namespace NHibernateTests.ServicesTests
         public void Can_Add_Profile()
         {
             #region Arrange
-            var profile = new ProfileModel() {Name="new profile" };
+            var profile = new ProfileModel() { Name = "new profile", Uid = Guid.NewGuid(), Email = "test@test.com", IsActive = true };
             #endregion
 
             #region Act
 
-            int id = new ProfileService().AddProfile(ProfileModelDto.Map(profile));
+            int id = new ProfileService().AddProfile(ProfileModelDto.Map(profile),"TestPassword@1");
             ProfileModel profileModel = null;
             DataAccess.InTransaction(session =>
             {
@@ -73,6 +99,7 @@ namespace NHibernateTests.ServicesTests
             #endregion
 
             #region Assert
+            Assert.That(id,Is.GreaterThan(-1));
             Assert.That(profileModel,Is.Not.Null);
             Assert.That(profileModel.Name, Is.EqualTo("new profile"));
             #endregion
@@ -113,7 +140,7 @@ namespace NHibernateTests.ServicesTests
         public void Can_Delete_Profile()
         {
             #region Arrange
-            var profile = new ProfileModel() {Name="delete test" };
+            var profile = new ProfileModel() { Name = "delete test", Uid = new Guid(), Email = "test@test.com", IsActive = true };
             int id = -1;
             DataAccess.InTransaction(session =>
             {
@@ -139,6 +166,6 @@ namespace NHibernateTests.ServicesTests
             Assert.That(deleteOk, Is.True);
             Assert.That(profiles.Count, Is.EqualTo(1));
             #endregion
-        }			
+        }				
     }
 }
