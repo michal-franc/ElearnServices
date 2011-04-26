@@ -11,7 +11,7 @@ namespace NHiberanteDal.DTO
     public class ProfileModelDto : DtoBaseClass<ProfileModelDto,ProfileModel>
     {
         [DataMember]
-        public int ID { get; private set; }
+        public int ID { get; set; }
         [DataMember]
         public string Name { get; set; }
         [DataMember]

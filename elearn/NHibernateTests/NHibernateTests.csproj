@@ -108,6 +108,7 @@
     <Compile Include="ServicesTests\CourseServiceTest.cs" />
     <Compile Include="ServicesTests\InMemoryWithSampleData.cs" />
     <Compile Include="ServicesTests\JournalServiceTests.cs" />
+    <Compile Include="ServicesTests\ProfileServiceTest.cs" />
     <Compile Include="ServicesTests\TestServiceTest.cs" />
     <Compile Include="SQLiteDBAccess.cs" />
     <Compile Include="InMemoryTest.cs" />
