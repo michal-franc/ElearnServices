@@ -14,7 +14,7 @@ namespace ELearnServices
     public interface IProfileService
     {
         [OperationContract]
-        int AddProfile(ProfileModelDto profile, string password);
+        int AddProfile(ProfileModelDto profile);
 
         [OperationContract]
         ProfileModelDto GetProfile(int id);
@@ -41,6 +41,9 @@ namespace ELearnServices
         int GetMinPasswordLength();
 
         [OperationContract]
-         MembershipCreateStatus CreateUser(string userName, string password, string email);
+        MembershipCreateStatus CreateUser(string userName, string password, string email);
+
+        [OperationContract]
+        ProfileModelDto GetByName(string userName);
     }
 }

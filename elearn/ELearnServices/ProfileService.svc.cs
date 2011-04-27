@@ -8,14 +8,14 @@ using NHiberanteDal.DTO;
 using NHiberanteDal.DataAccess;
 using NHiberanteDal.Models;
 using System.Web.Security;
+using NHiberanteDal.DataAccess.QueryObjects;
 
 namespace ELearnServices
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "ProfileService" in code, svc and config file together.
     public class ProfileService : IProfileService
     {
-
-        public int AddProfile(ProfileModelDto profile,string password)
+        public int AddProfile(ProfileModelDto profile)
         {
             var profileModel = ProfileModelDto.UnMap(profile);
             int id = -1;
@@ -24,15 +24,7 @@ namespace ELearnServices
                     id = (int)session.Save(profileModel);
                 });
 
-            if (id != -1)
-            {
-                var status = CreateUser(profile.Uid.ToString(),password,profile.Email);
-                if (status == MembershipCreateStatus.Success)
-                    return id;
-                else
-                    return -1;
-            }
-            return -1;
+            return id;
         }
 
         public ProfileModelDto GetProfile(int id)
@@ -84,12 +76,15 @@ namespace ELearnServices
         }
 
         public MembershipCreateStatus CreateUser(string userName, string password, string email)
-        {   
+        {
+            var profile = new ProfileModelDto() { Name=userName, Uid=Guid.NewGuid(), Email=email };
+            this.AddProfile(profile);
+
             MembershipCreateStatus status;
             if(Membership.Provider.RequiresQuestionAndAnswer)
-                Membership.Provider.CreateUser(userName, password, email, "this is sample question", "this is answer", true, null, out status);
+                Membership.Provider.CreateUser(profile.Name, password, email, "this is sample question", "this is answer", true, null, out status);
             else
-                Membership.Provider.CreateUser(userName, password, email, null, null, true, null, out status);
+                Membership.Provider.CreateUser(profile.Name, password, email, null, null, true, null, out status);
             return status;
         }
 
@@ -115,6 +110,11 @@ namespace ELearnServices
         {
             return Membership.Provider.MinRequiredPasswordLength;
 
+        }
+
+        public ProfileModelDto GetByName(string userName)
+        {
+            return ProfileModelDto.Map(new Repository<ProfileModel>().GetByQueryObject(new QueryProfilesByName(userName)).FirstOrDefault());
         }
     }
 }
