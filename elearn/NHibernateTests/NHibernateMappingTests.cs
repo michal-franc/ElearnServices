@@ -43,7 +43,7 @@ namespace NHibernateTests
         ContentTypeModel _contentType = new ContentTypeModel() { TypeName="test" };
         CourseTypeModel _courseType = new CourseTypeModel() { TypeName = "test" };
         TestTypeModel _testType = new TestTypeModel() { TypeName = "test" };
-        ProfileModel _testProfile = new ProfileModel() { Name = "test" };
+        ProfileModel _testProfile = new ProfileModel() { Email="test", Name = "test" };
 
         
         [SetUp]
@@ -231,7 +231,7 @@ namespace NHibernateTests
                    .CheckList<ProfileModel>(c => c.Users,
                    new List<ProfileModel>() 
                         { 
-                            new ProfileModel(){ Name="test"}
+                            new ProfileModel(){ Email="test", Name="test"}
                         }
                    )
                    .VerifyTheMappings();
@@ -267,6 +267,7 @@ namespace NHibernateTests
 
                 new PersistenceSpecification<ProfileModel>(session)
                    .CheckProperty(c => c.Name, "test")
+                   .CheckProperty(c => c.Email, "test")
                    .VerifyTheMappings();
             }
 

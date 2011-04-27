@@ -85,6 +85,7 @@
     <Compile Include="DataAccess\IQueryObject.cs" />
     <Compile Include="DataAccess\QueryObjects\QueryCourseByCourseType.cs" />
     <Compile Include="DataAccess\QueryObjects\QueryCourseByName.cs" />
+    <Compile Include="DataAccess\QueryObjects\QueryProfilesByName.cs" />
     <Compile Include="DataAccess\Repository.cs" />
     <Compile Include="DTO\CourseDto.cs" />
     <Compile Include="DTO\CourseSignatureDto.cs" />

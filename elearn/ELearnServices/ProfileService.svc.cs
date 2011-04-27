@@ -15,13 +15,12 @@ namespace ELearnServices
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "ProfileService" in code, svc and config file together.
     public class ProfileService : IProfileService
     {
-        public int AddProfile(ProfileModelDto profile)
+        public int AddProfile(ProfileModel profile)
         {
-            var profileModel = ProfileModelDto.UnMap(profile);
             int id = -1;
             DataAccess.InTransaction(session =>
                 {
-                    id = (int)session.Save(profileModel);
+                    id = (int)session.Save(profile);
                 });
 
             return id;
@@ -77,7 +76,7 @@ namespace ELearnServices
 
         public MembershipCreateStatus CreateUser(string userName, string password, string email)
         {
-            var profile = new ProfileModelDto() { Name=userName, Uid=Guid.NewGuid(), Email=email };
+            var profile = new ProfileModel() { Name=userName, Email=email };
             this.AddProfile(profile);
 
             MembershipCreateStatus status;

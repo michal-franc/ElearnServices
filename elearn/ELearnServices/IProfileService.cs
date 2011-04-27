@@ -6,6 +6,7 @@ using System.ServiceModel;
 using System.Text;
 using NHiberanteDal.DTO;
 using System.Web.Security;
+using NHiberanteDal.Models;
 
 namespace ELearnServices
 {
@@ -14,7 +15,7 @@ namespace ELearnServices
     public interface IProfileService
     {
         [OperationContract]
-        int AddProfile(ProfileModelDto profile);
+        int AddProfile(ProfileModel profile);
 
         [OperationContract]
         ProfileModelDto GetProfile(int id);
