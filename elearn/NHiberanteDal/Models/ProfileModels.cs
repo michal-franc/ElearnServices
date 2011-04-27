@@ -11,11 +11,9 @@ namespace NHiberanteDal.Models
     {
         public virtual int ID { get; private set; }
         public virtual string Name { get; set; }
-        public virtual Guid Uid { get; set; }
         public virtual string Role { get; set; }
         public virtual string Email { get; set; }
         public virtual bool IsActive { get; set; }
         public virtual IList<JournalModel> Journals { get; set; }
-        // Linked with Forms Authentication
     }
 }

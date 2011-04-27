@@ -15,8 +15,6 @@ namespace NHiberanteDal.DTO
         [DataMember]
         public string Name { get; set; }
         [DataMember]
-        public Guid Uid { get; set; }
-        [DataMember]
         public string Role { get; set; }
         [DataMember]
         public string Email { get; set; }
