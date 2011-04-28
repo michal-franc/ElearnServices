@@ -87,6 +87,51 @@ namespace elearn.Models
         bool ChangePassword(string userName, string oldPassword, string newPassword);
     }
 
+    public class WcfAccountMembershipService : IMembershipService
+    {
+
+        ProfileService.ProfileServiceClient service = new ProfileService.ProfileServiceClient();
+        public int MinPasswordLength
+        {
+            get 
+            {
+                int returnInt = 6;
+                service.Open();
+                returnInt = service.GetMinPasswordLength();
+                service.Close();
+                return returnInt;
+            }
+        }
+
+        public bool ValidateUser(string userName, string password)
+        {
+            bool validated = false;
+            service.Open();
+            validated = service.ValidateUser(userName,password);
+            service.Close();
+            return validated;
+        }
+
+        public MembershipCreateStatus CreateUser(string userName, string password, string email)
+        {
+            MembershipCreateStatus status;
+            service.Open();
+            status = service.CreateUser(userName, password, email);
+            service.Close();
+            return status;
+        }
+
+        public bool ChangePassword(string userName, string oldPassword, string newPassword)
+        {
+            bool status;
+            service.Open();
+            status = service.ChangePassword(userName,oldPassword,newPassword);
+            service.Close();
+            return status;
+        }
+    }
+
+
     public class AccountMembershipService : IMembershipService
     {
         private readonly MembershipProvider _provider;
