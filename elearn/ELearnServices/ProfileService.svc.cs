@@ -15,6 +15,11 @@ namespace ELearnServices
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "ProfileService" in code, svc and config file together.
     public class ProfileService : IProfileService
     {
+        public ProfileService()
+        {
+            DTOMappings.Initialize();
+        }
+
         public int AddProfile(ProfileModel profile)
         {
             int id = -1;
