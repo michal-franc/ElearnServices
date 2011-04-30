@@ -165,5 +165,10 @@ namespace ELearnServices
             }
             return false;
         }
+
+        public  string[] GetAllRoles()
+        {
+            return Roles.GetAllRoles();
+        }
     }
 }

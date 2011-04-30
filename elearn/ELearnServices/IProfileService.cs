@@ -52,5 +52,8 @@ namespace ELearnServices
 
         [OperationContract]
         bool IsUserInRoles(string userName, string[] roles);
+
+        [OperationContract]
+        string[] GetAllRoles();
     }
 }
