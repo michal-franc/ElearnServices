@@ -63,6 +63,9 @@ namespace NHiberanteDal.Mappings
         public PrivateMessageModelMap()
         {
             Id(x => x.ID);
+            Map(x=>x.IsNew);
+            Map(x => x.IsNew);
+            Map(x=>x.Text);
 
             //One
             References(x => x.Sender).Not.Nullable().Not.LazyLoad();
