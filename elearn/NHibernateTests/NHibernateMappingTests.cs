@@ -298,6 +298,8 @@ namespace NHibernateTests
             {
 
                 new PersistenceSpecification<PrivateMessageModel>(session, new IDEqualityComparer())
+                   .CheckProperty(c=>c.IsNew,true)
+                   .CheckProperty(c=>c.Text,"test text")
                    .CheckReference(c => c.Receiver, _testProfile)
                    .CheckReference(c => c.Sender, _testProfile)
                    .VerifyTheMappings();

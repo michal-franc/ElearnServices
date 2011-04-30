@@ -64,7 +64,6 @@ namespace NHiberanteDal.Mappings
         {
             Id(x => x.ID);
             Map(x=>x.IsNew);
-            Map(x => x.IsNew);
             Map(x=>x.Text);
 
             //One
