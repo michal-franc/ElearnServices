@@ -79,6 +79,38 @@ namespace ELearnServices
             }
         }
 
+        public void UpdateRole(ProfileModelDto profile,bool createIfNotExist)
+        {
+            var role = profile.Role;
+            var userName = profile.Name;
+            if (!String.IsNullOrWhiteSpace(role))
+            {
+                if (Roles.RoleExists(role) && !Roles.IsUserInRole(userName, role))
+                {
+                    DeleteUserFromRoles(userName);
+                    Roles.AddUserToRole(userName, role);
+                }
+                else if (!Roles.RoleExists(role) && createIfNotExist)
+                {
+                    Roles.CreateRole(role);
+                    Roles.AddUserToRole(userName, role);
+                }
+            }
+            else
+            {
+                DeleteUserFromRoles(userName);
+            }
+        }
+
+        private void DeleteUserFromRoles(string userName)
+        {
+            var roles = Roles.GetRolesForUser();
+            foreach (string r in roles)
+            {
+                Roles.RemoveUserFromRole(userName, r);
+            }
+        }
+
         public MembershipCreateStatus CreateUser(string userName, string password, string email)
         {
             var profile = new ProfileModel() { Name=userName, Email=email };
@@ -119,6 +151,19 @@ namespace ELearnServices
         public ProfileModelDto GetByName(string userName)
         {
             return ProfileModelDto.Map(new Repository<ProfileModel>().GetByQueryObject(new QueryProfilesByName(userName)).FirstOrDefault());
+        }
+
+
+        public bool IsUserInRoles(string userName,string[] roles)
+        {
+            foreach (string s in roles)
+            {
+                if (Roles.IsUserInRole(userName,s))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
