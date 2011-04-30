@@ -19,6 +19,9 @@ namespace NHiberanteDal.DTO
         public  DateTime DateCreated { get; set; }
 
         [DataMember]
+        public DateTime EndDate { get; set; }
+
+        [DataMember]
         public  IList<SurveyQuestionModelDto> Questions { get; set; }
 
     }

@@ -400,6 +400,8 @@ namespace NHibernateTests
             {
                 new PersistenceSpecification<SurveyModel>(session, new IDEqualityComparer())
                    .CheckProperty(c => c.SurveyText, "test")
+                   .CheckProperty(c => c.EndDate , new DateTime(2010,10,10))
+                   .CheckProperty(c => c.DateCreated, new DateTime(2010, 10, 10))
                    .CheckList<SurveyQuestionModel>(c => c.Questions,
                    new List<SurveyQuestionModel>() 
                         { 

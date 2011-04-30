@@ -14,6 +14,7 @@ namespace NHiberanteDal.Mappings
             Id(x => x.ID);
             Map(x => x.SurveyText).Not.Nullable();
             Map(x=>x.DateCreated).Not.Nullable();
+            Map(x => x.EndDate).Not.Nullable();
 
             //Many
             HasMany(x => x.Questions).KeyColumns.Add("SurveyId").Not.LazyLoad();
