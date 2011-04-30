@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Ninject;
 
 namespace elearn
 {
@@ -31,6 +32,11 @@ namespace elearn
 
         protected void Application_Start()
         {
+            //Dependancy Injection
+            var kernel = new StandardKernel(new ProfileModule());
+            var resolver = new NinjectDependencyResolver(kernel);
+            DependencyResolver.SetResolver(resolver);
+
             AreaRegistration.RegisterAllAreas();
 
             RegisterGlobalFilters(GlobalFilters.Filters);
