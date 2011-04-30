@@ -70,6 +70,9 @@
     <Reference Include="NHibernate.Linq">
       <HintPath>..\..\..\..\..\SharedLibs\NHibernateLinq\NHibernate.Linq.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\..\..\..\..\SharedLibs\Ninject-2.2.0.0-release-net-4.0\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.core, Version=2.5.0.9122, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\Program Files (x86)\NUnit 2.5.10\bin\net-2.0\lib\nunit.core.dll</HintPath>
@@ -92,6 +95,9 @@
       <HintPath>..\..\..\..\..\SharedLibs\SQLite-1.0.65.0-binaries\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -100,6 +106,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataAccesTests.cs" />
+    <Compile Include="MVCTests\ProfileControllerTests.cs" />
     <Compile Include="NHibernateMappingTests.cs" />
     <Compile Include="NHibernateTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -119,6 +126,10 @@
     <ProjectReference Include="..\ELearnServices\ELearnServices.csproj">
       <Project>{C1EB3150-9BEB-4CDC-812E-2A51410B1D64}</Project>
       <Name>ELearnServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\elearn\elearn.csproj">
+      <Project>{655BF403-5DD2-4EC1-B5D3-EA7DB2496277}</Project>
+      <Name>elearn</Name>
     </ProjectReference>
     <ProjectReference Include="..\NHiberanteDal\NHiberanteDal.csproj">
       <Project>{843D2C18-032C-42E3-A212-161BDC81A56C}</Project>

@@ -161,6 +161,7 @@ namespace NHibernateTests.ServicesTests
             Assert.That(deleteOk, Is.True);
             Assert.That(profiles.Count, Is.EqualTo(1));
             #endregion
-        }				
+        }
+				
     }
 }
