@@ -58,8 +58,8 @@ namespace elearn.Controllers
 
         //
         // GET: /Profile/List
-            
-        [Authorize]
+
+        [AuthorizeAttributeWCF(Roles = "admin")]
         public ActionResult List()
         {
             var profiles = _service.GetAllProfiles();
@@ -87,6 +87,7 @@ namespace elearn.Controllers
             var profile = _service.GetProfile(id);
             if (TryUpdateModel(profile))
             {
+                _service.UpdateRole(profile, true);
                 _service.UpdateProfile(profile);
                 return RedirectToAction("Details", new { id = profile.ID });
             }
