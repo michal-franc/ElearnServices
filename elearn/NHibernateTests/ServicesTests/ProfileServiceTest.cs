@@ -7,13 +7,17 @@ using ELearnServices;
 using NHiberanteDal.Models;
 using NHiberanteDal.DataAccess;
 using NHiberanteDal.DTO;
+using Rhino.Mocks;
 
 
 namespace NHibernateTests.ServicesTests
 {
+
     [TestFixture]
     class ProfileServiceTest : InMemoryWithSampleData
     {
+        MockRepository mocker = new MockRepository();
+
         [Test]
         public void Can_Get_All_Profiles()
         {
@@ -130,7 +134,6 @@ namespace NHibernateTests.ServicesTests
             #endregion
         }
 
-
         [Test]
         public void Can_Delete_Profile()
         {
@@ -162,6 +165,147 @@ namespace NHibernateTests.ServicesTests
             Assert.That(profiles.Count, Is.EqualTo(1));
             #endregion
         }
+
+
+        [Test]
+        public void Updates_Role_deletes_user_from_existing_roles()
+        {
+            #region Arrange
+
+            var roleProvider = mocker.DynamicMock<IRoleProvider>();
+            var profile = new ProfileModelDto() { Role="admin", Name="user" };
+            var service = new ProfileService(roleProvider);
+
+            #endregion
+
+            #region Act
+            using (mocker.Record())
+            {
+                Expect.Call(roleProvider.RoleExists("admin")).Return(true);
+                Expect.Call(roleProvider.IsUserInRole("user", "admin")).Return(false);
+                Expect.Call(roleProvider.GetRolesForUser("user")).Return(new string[] { "unusedRole" });
+                Expect.Call(delegate {
+                    roleProvider.RemoveUserFromRole("user", "unusedRole");
+                }).Repeat.Once();
+                Expect.Call(delegate 
+                {
+                    roleProvider.AddUserToRole("user", "admin");
+                });
+            }
+
+            using (mocker.Playback())
+            {
+                service.UpdateRole(profile, false);
+            }
+
+            #endregion
+
+            #region Assert
+            #endregion
+        }
+
+
+        [Test]
+        public void Is_No_Role_Create_New_Role()
+        {
+            #region Arrange
+
+            var roleProvider = mocker.DynamicMock<IRoleProvider>();
+            var profile = new ProfileModelDto() { Role = "admin", Name = "user" };
+            var service = new ProfileService(roleProvider);
+
+            #endregion
+
+            #region Act
+            using (mocker.Record())
+            {
+                Expect.Call(roleProvider.RoleExists("admin")).Return(false);
+                Expect.Call(delegate {
+                    roleProvider.CreateRole("admin");
+                });
+                Expect.Call(roleProvider.IsUserInRole("user", "admin")).Repeat.Never();
+                Expect.Call(roleProvider.GetRolesForUser("user")).Return(new string[] { "unusedRole" });
+                Expect.Call(delegate
+                {
+                    roleProvider.RemoveUserFromRole("user", "unusedRole");
+                }).Repeat.Once();
+                Expect.Call(delegate
+                {
+                    roleProvider.AddUserToRole("user", "admin");
+                });
+            }
+
+            using (mocker.Playback())
+            {
+                service.UpdateRole(profile, true);
+            }
+
+            #endregion
+        }
+
+
+        [Test]
+        public void If_No_Role_Dont_Update()
+        {
+            #region Arrange
+
+            var roleProvider = mocker.DynamicMock<IRoleProvider>();
+            var profile = new ProfileModelDto() { Role = "admin", Name = "user" };
+            var service = new ProfileService(roleProvider);
+
+            #endregion
+
+            #region Act
+            using (mocker.Record())
+            {
+                Expect.Call(roleProvider.RoleExists("admin")).Return(false);
+                Expect.Call(delegate
+                {
+                    roleProvider.AddUserToRole("user", "admin");
+                }).Repeat.Never();
+                Expect.Call(delegate
+                {
+                    roleProvider.RemoveUserFromRole("user", "unusedRole");
+                }).Repeat.Never().IgnoreArguments();
+            }
+
+            using (mocker.Playback())
+            {
+                service.UpdateRole(profile, false);
+            }
+
+            #endregion
+        }
+
+        [Test]
+        public void If_Role_Parameter_Empty_Reset_User_Roles()
+        {
+            #region Arrange
+
+            var roleProvider = mocker.DynamicMock<IRoleProvider>();
+            var profile = new ProfileModelDto() { Role = "", Name = "user" };
+            var service = new ProfileService(roleProvider);
+
+            #endregion
+
+            #region Act
+            using (mocker.Record())
+            {
+                Expect.Call(roleProvider.GetRolesForUser("user")).Return(new string[] { "unusedRole" });
+                Expect.Call(delegate
+                {
+                    roleProvider.RemoveUserFromRole("user", "unusedRole");
+                });
+            }
+
+            using (mocker.Playback())
+            {
+                service.UpdateRole(profile, false);
+            }
+
+            #endregion
+        }
+							
 				
     }
 }

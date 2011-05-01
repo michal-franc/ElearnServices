@@ -98,9 +98,10 @@ namespace ELearnServices
                     DeleteUserFromRoles(userName);
                     _roleProvider.AddUserToRole(userName, role);
                 }
-                else if (!Roles.RoleExists(role) && createIfNotExist)
+                else if (!_roleProvider.RoleExists(role) && createIfNotExist)
                 {
                     _roleProvider.CreateRole(role);
+                    DeleteUserFromRoles(userName);
                     _roleProvider.AddUserToRole(userName, role);
                 }
             }
@@ -115,7 +116,7 @@ namespace ELearnServices
             var roles = _roleProvider.GetRolesForUser(userName);
             foreach (string r in roles)
             {
-                Roles.RemoveUserFromRole(userName, r);
+                _roleProvider.RemoveUserFromRole(userName, r);
             }
         }
 
