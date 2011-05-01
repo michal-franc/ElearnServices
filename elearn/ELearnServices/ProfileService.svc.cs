@@ -15,8 +15,16 @@ namespace ELearnServices
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "ProfileService" in code, svc and config file together.
     public class ProfileService : IProfileService
     {
-        public ProfileService()
+        IRoleProvider _roleProvider;
+
+        public ProfileService() : this(new MembershipRoleProvider())
         {
+            
+        }
+
+        public ProfileService(IRoleProvider provider)
+        {
+            _roleProvider = provider;
             DTOMappings.Initialize();
         }
 
@@ -85,15 +93,15 @@ namespace ELearnServices
             var userName = profile.Name;
             if (!String.IsNullOrWhiteSpace(role))
             {
-                if (Roles.RoleExists(role) && !Roles.IsUserInRole(userName, role))
+                if (_roleProvider.RoleExists(role) && !_roleProvider.IsUserInRole(userName, role))
                 {
                     DeleteUserFromRoles(userName);
-                    Roles.AddUserToRole(userName, role);
+                    _roleProvider.AddUserToRole(userName, role);
                 }
                 else if (!Roles.RoleExists(role) && createIfNotExist)
                 {
-                    Roles.CreateRole(role);
-                    Roles.AddUserToRole(userName, role);
+                    _roleProvider.CreateRole(role);
+                    _roleProvider.AddUserToRole(userName, role);
                 }
             }
             else
@@ -104,7 +112,7 @@ namespace ELearnServices
 
         private void DeleteUserFromRoles(string userName)
         {
-            var roles = Roles.GetRolesForUser();
+            var roles = _roleProvider.GetRolesForUser(userName);
             foreach (string r in roles)
             {
                 Roles.RemoveUserFromRole(userName, r);
@@ -158,7 +166,7 @@ namespace ELearnServices
         {
             foreach (string s in roles)
             {
-                if (Roles.IsUserInRole(userName,s))
+                if (_roleProvider.IsUserInRole(userName, s))
                 {
                     return true;
                 }
@@ -168,7 +176,7 @@ namespace ELearnServices
 
         public  string[] GetAllRoles()
         {
-            return Roles.GetAllRoles();
+            return _roleProvider.GetAllRoles();
         }
     }
 }
