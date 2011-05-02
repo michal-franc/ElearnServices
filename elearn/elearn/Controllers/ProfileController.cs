@@ -37,23 +37,23 @@ namespace elearn.Controllers
         //
         // GET: /Profile/
 
-        [Authorize]
+        [AuthorizeAttributeWCF(Roles = "admin")]
         public ActionResult Index()
         {
-            var profile = _service.GetByName(UserName);
-
-            return RedirectToAction("Details", new { id = profile.ID });
+            return RedirectToAction("List");
         }
 
         //
         // GET: /Profile/Details/id
 
-        [Authorize]
+        [AuthorizeAttributeWCF(Roles = "admin")]
         public ActionResult Details(int id)
         {
             var profile = _service.GetProfile(id);
-
-            return View(profile);
+            if(profile!=null)
+                return View(profile);
+            else
+                return View("NotFound");
         }
 
         //
@@ -70,27 +70,39 @@ namespace elearn.Controllers
         //
         // GET: /Profile/Edit/id
 
-        [Authorize]
+        [AuthorizeAttributeWCF(Roles = "admin")]
         public ActionResult Edit(int id)
         {
             var profile = _service.GetProfile(id);
-            return View(profile);
+            if (profile != null)
+                return View(profile);
+            else
+                return View("NotFound");
         }
 
         //
         // POST: /Profile/Edit/id
 
-        [Authorize]
+        [AuthorizeAttributeWCF(Roles = "admin")]
         [HttpPost]
         public ActionResult Edit(int id,FormCollection formValues)
         {
             var profile = _service.GetProfile(id);
             if (TryUpdateModel(profile))
             {
-                _service.UpdateRole(profile, true);
-                _service.UpdateProfile(profile);
-                return RedirectToAction("Details", new { id = profile.ID });
+                if (_service.UpdateRole(profile, true))
+                {
+                    if (_service.UpdateProfile(profile))
+                    {
+                        return RedirectToAction("Details", new { id = profile.ID });
+                    }
+                    ViewData["Error"] = "Problem Updating Profile";
+                    return View(profile);
+                }
+                ViewData["Error"] = "Problem Updating Role";
+                return View(profile);
             }
+            ViewData["Error"] = "Validation Error";
             return View(profile);
         }
 
@@ -98,12 +110,13 @@ namespace elearn.Controllers
         //
         // GET: /Profile/Delete/id
 
-        [Authorize]
+        [AuthorizeAttributeWCF(Roles = "admin")]
         public ActionResult Delete(int id)
         {
-            var profile = _service.GetProfile(id);
-            return View(profile);
-        }
+            if (!_service.SetAsInactive(id))
+                ViewData["Error"] = "Problem updating profile";
 
+            return RedirectToAction("List");
+        }
     }
 }
