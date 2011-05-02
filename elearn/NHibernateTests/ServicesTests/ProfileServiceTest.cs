@@ -105,6 +105,58 @@ namespace NHibernateTests.ServicesTests
             #endregion
         }
 
+
+        [Test]
+        public void Can_set_profile_as_inactive_by_id()
+        {
+            #region Arrange
+
+            #endregion
+
+            #region Act
+
+            var updateOk = new ProfileService().SetAsInactive(1);
+
+            bool isActive = true;
+            DataAccess.InTransaction(session =>
+                {
+                    isActive = session.Get<ProfileModel>(1).IsActive;
+                });
+
+            #endregion
+
+            #region Assert
+            Assert.IsTrue(updateOk);
+            Assert.IsFalse(isActive);
+            #endregion
+        }
+
+        [Test]
+        public void Can_set_profile_as_inactive_by_userName()
+        {
+            #region Arrange
+
+            #endregion
+
+            #region Act
+
+            var updateOk = new ProfileService().SetAsInactiveByName("test");
+
+            bool isActive = true;
+            DataAccess.InTransaction(session =>
+            {
+                isActive = session.Get<ProfileModel>(1).IsActive;
+            });
+
+            #endregion
+
+            #region Assert
+            Assert.IsTrue(updateOk);
+            Assert.IsFalse(isActive);
+            #endregion
+        }
+				
+
         [Test]
         public void Can_Update_Profile()
         {

@@ -59,6 +59,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\SharedLibs\NHibernate-2.1.0.GA-bin\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="MvcContrib.TestHelper">
+      <HintPath>..\..\..\..\..\SharedLibs\MVCContrib.release\MvcContrib.TestHelper.dll</HintPath>
+    </Reference>
     <Reference Include="NHibernate, Version=3.0.0.2001, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\SharedLibs\NHibernate-2.1.0.GA-bin\NHibernate.dll</HintPath>
@@ -106,7 +109,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataAccesTests.cs" />
-    <Compile Include="MVCTests\ProfileControllerTests.cs" />
+    <Compile Include="MVCTests\Controllers\UserProfile\UserProfileControllerTests.cs" />
+    <Compile Include="MVCTests\Controllers\Profile\ProfileControllerTests.cs" />
+    <Compile Include="MVCTests\TestHelper.cs" />
     <Compile Include="NHibernateMappingTests.cs" />
     <Compile Include="NHibernateTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -136,7 +141,9 @@
       <Name>NHiberanteDal</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="MVCTests\ModelValidation\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
