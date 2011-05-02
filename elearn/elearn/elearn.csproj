@@ -63,6 +63,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthorizeAttributeWCF.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\SurveyController.cs" />
     <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Controllers\UserProfileController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -151,6 +153,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\ProfileService\ProfileService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ProfileService\ProfileService5.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\TestService\configuration91.svcinfo" />
@@ -273,6 +278,9 @@
     <Content Include="Views\Profile\Details.cshtml" />
     <Content Include="Views\Profile\Edit.cshtml" />
     <Content Include="Views\Profile\Delete.cshtml" />
+    <Content Include="Views\UserProfile\Details.cshtml" />
+    <Content Include="Views\UserProfile\Edit.cshtml" />
+    <Content Include="Views\Shared\NotFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
