@@ -82,10 +82,12 @@
     <Compile Include="IGroupService.cs" />
     <Compile Include="IJournalService.cs" />
     <Compile Include="IProfileService.cs" />
+    <Compile Include="IRoleProvider.cs" />
     <Compile Include="ITestService.cs" />
     <Compile Include="JournalService.svc.cs">
       <DependentUpon>JournalService.svc</DependentUpon>
     </Compile>
+    <Compile Include="MembershipRoleProvider.cs" />
     <Compile Include="ProfileService.svc.cs">
       <DependentUpon>ProfileService.svc</DependentUpon>
     </Compile>
@@ -122,7 +124,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>33220</DevelopmentServerPort>
+          <DevelopmentServerPort>42760</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

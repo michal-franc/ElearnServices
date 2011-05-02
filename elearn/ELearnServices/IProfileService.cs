@@ -45,7 +45,7 @@ namespace ELearnServices
         MembershipCreateStatus CreateUser(string userName, string password, string email);
 
         [OperationContract]
-        void UpdateRole(ProfileModelDto profile, bool createIfNotExist);
+        bool UpdateRole(ProfileModelDto profile, bool createIfNotExist);
 
         [OperationContract]
         ProfileModelDto GetByName(string userName);
@@ -55,5 +55,11 @@ namespace ELearnServices
 
         [OperationContract]
         string[] GetAllRoles();
+
+        [OperationContract]
+        bool SetAsInactive(int id);
+
+        [OperationContract]
+        bool SetAsInactiveByName(string userName);
     }
 }

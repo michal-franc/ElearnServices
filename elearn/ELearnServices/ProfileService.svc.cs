@@ -87,27 +87,37 @@ namespace ELearnServices
             }
         }
 
-        public void UpdateRole(ProfileModelDto profile,bool createIfNotExist)
+        public bool UpdateRole(ProfileModelDto profile,bool createIfNotExist)
         {
             var role = profile.Role;
             var userName = profile.Name;
-            if (!String.IsNullOrWhiteSpace(role))
+            try
             {
-                if (_roleProvider.RoleExists(role) && !_roleProvider.IsUserInRole(userName, role))
+                if (!String.IsNullOrWhiteSpace(role))
+                {
+
+                    if (_roleProvider.RoleExists(role) && !_roleProvider.IsUserInRole(userName, role))
+                    {
+                        DeleteUserFromRoles(userName);
+                        _roleProvider.AddUserToRole(userName, role);
+                    }
+                    else if (!_roleProvider.RoleExists(role) && createIfNotExist)
+                    {
+                        _roleProvider.CreateRole(role);
+                        DeleteUserFromRoles(userName);
+                        _roleProvider.AddUserToRole(userName, role);
+                    }
+
+                }
+                else
                 {
                     DeleteUserFromRoles(userName);
-                    _roleProvider.AddUserToRole(userName, role);
                 }
-                else if (!_roleProvider.RoleExists(role) && createIfNotExist)
-                {
-                    _roleProvider.CreateRole(role);
-                    DeleteUserFromRoles(userName);
-                    _roleProvider.AddUserToRole(userName, role);
-                }
+                return true;
             }
-            else
+            catch (Exception ex)
             {
-                DeleteUserFromRoles(userName);
+                return false;
             }
         }
 
@@ -178,6 +188,49 @@ namespace ELearnServices
         public  string[] GetAllRoles()
         {
             return _roleProvider.GetAllRoles();
+        }
+
+        public bool SetAsInactive(int id)
+        {
+            try
+            {
+                try
+                {
+                    DataAccess.InTransaction(session =>
+                    {
+                        var profile = session.Get<ProfileModel>(id);
+                        profile.IsActive = false;
+                        session.Update(profile);
+                    });
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public bool SetAsInactiveByName(string userName)
+        {
+            try
+            {
+                DataAccess.InTransaction(session =>
+                {
+                    var profile = new Repository<ProfileModel>().GetByQueryObject(new QueryProfilesByName(userName)).FirstOrDefault();
+                    profile.IsActive = false;
+                    session.Update(profile);
+                });
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
     }
 }
