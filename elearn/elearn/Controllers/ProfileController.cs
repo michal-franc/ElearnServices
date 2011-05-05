@@ -75,7 +75,19 @@ namespace elearn.Controllers
         {
             var profile = _service.GetProfile(id);
             if (profile != null)
+            {
+                var roles = _service.GetAllRoles();
+                var list = roles.ToList();
+                list.Insert(0,"----");
+                if (list.Contains(profile.Role))
+                {
+                    list.Remove(profile.Role);
+                    list.Insert(0, profile.Role);
+                }
+                ViewData["Role"] = new SelectList(list);
+
                 return View(profile);
+            }
             else
                 return View("NotFound");
         }
@@ -90,16 +102,23 @@ namespace elearn.Controllers
             var profile = _service.GetProfile(id);
             if (TryUpdateModel(profile))
             {
-                if (_service.UpdateRole(profile, true))
+                if (_service.UpdateProfile(profile))
                 {
-                    if (_service.UpdateProfile(profile))
+                    if (profile.Role != "----")
+                    {
+                        if (_service.UpdateRole(profile, true))
+                        {
+                            return RedirectToAction("Details", new { id = profile.ID });
+                        }
+                        ViewData["Error"] = "Problem Updating Role";
+                        return View(profile);
+                    }
+                    else
                     {
                         return RedirectToAction("Details", new { id = profile.ID });
                     }
-                    ViewData["Error"] = "Problem Updating Profile";
-                    return View(profile);
                 }
-                ViewData["Error"] = "Problem Updating Role";
+                ViewData["Error"] = "Problem Updating Profile";
                 return View(profile);
             }
             ViewData["Error"] = "Validation Error";
