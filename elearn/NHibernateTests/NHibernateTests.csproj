@@ -113,7 +113,6 @@
     <Compile Include="MVCTests\Controllers\UserProfile\UserProfileControllerTests.cs" />
     <Compile Include="MVCTests\Controllers\Profile\ProfileControllerTests.cs" />
     <Compile Include="MVCTests\TestHelper.cs" />
-    <Compile Include="MVCTests\WcfAccountMembershipServiceTest.cs" />
     <Compile Include="NHibernateMappingTests.cs" />
     <Compile Include="NHibernateTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
