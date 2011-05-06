@@ -20,7 +20,7 @@ namespace elearn.Controllers
         protected override void Initialize(RequestContext requestContext)
         {
             if (FormsService == null) { FormsService = new FormsAuthenticationService(); }
-            if (MembershipService == null) { MembershipService = new WcfAccountMembershipService(); }
+            if (MembershipService == null) { MembershipService = new WcfAccountMembershipService(new ProfileService.ProfileServiceClient()); }
 
             base.Initialize(requestContext);
         }
