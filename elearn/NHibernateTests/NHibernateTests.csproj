@@ -99,6 +99,7 @@
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml.Linq" />
@@ -112,6 +113,7 @@
     <Compile Include="MVCTests\Controllers\UserProfile\UserProfileControllerTests.cs" />
     <Compile Include="MVCTests\Controllers\Profile\ProfileControllerTests.cs" />
     <Compile Include="MVCTests\TestHelper.cs" />
+    <Compile Include="MVCTests\WcfAccountMembershipServiceTest.cs" />
     <Compile Include="NHibernateMappingTests.cs" />
     <Compile Include="NHibernateTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

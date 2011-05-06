@@ -105,7 +105,6 @@ namespace NHibernateTests.ServicesTests
             #endregion
         }
 
-
         [Test]
         public void Can_set_profile_as_inactive_by_id()
         {
