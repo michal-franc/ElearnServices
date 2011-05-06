@@ -57,6 +57,9 @@ namespace ELearnServices
         string[] GetAllRoles();
 
         [OperationContract]
+        bool AddRole(string roleName);
+
+        [OperationContract]
         bool SetAsInactive(int id);
 
         [OperationContract]

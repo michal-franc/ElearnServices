@@ -232,5 +232,17 @@ namespace ELearnServices
                 return false;
             }
         }
+
+
+        public bool AddRole(string roleName)
+        {
+            if (_roleProvider.RoleExists(roleName))
+                return false;
+            else
+            {
+                _roleProvider.CreateRole(roleName);
+                return true;
+            }
+        }
     }
 }
