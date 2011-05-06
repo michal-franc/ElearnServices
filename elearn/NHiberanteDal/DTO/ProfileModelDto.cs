@@ -25,6 +25,9 @@ namespace NHiberanteDal.DTO
         public string Email { get; set; }
 
         [DataMember]
+        public bool IsActive { get; set; }
+
+        [DataMember]
         public  IList<JournalModelDto> Journals { get; set; }
     }
 }

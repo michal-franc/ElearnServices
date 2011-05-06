@@ -28,10 +28,6 @@ namespace elearn
             {
                 string [] roles = this.Roles.Split(','); 
                 var service = new ProfileService.ProfileServiceClient();
-                if (!service.IsActiveByName(user.Identity.Name))
-                {
-                    return false;
-                }
                 return service.IsUserInRoles(user.Identity.Name,roles);
             }
             return true;

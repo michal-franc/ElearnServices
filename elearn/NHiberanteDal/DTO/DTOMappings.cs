@@ -21,8 +21,7 @@ namespace NHiberanteDal.DTO
                     Mapper.CreateMap<JournalMarkModelDto, JournalMarkModel>();
                     Mapper.CreateMap<JournalMarkModel, JournalMarkModelDto>();
                     Mapper.CreateMap<ProfileModel, ProfileModelDto>();
-                    Mapper.CreateMap<ProfileModelDto, ProfileModel>()
-                        .ForMember(dest=>dest.IsActive,opt=>opt.Ignore());
+                    Mapper.CreateMap<ProfileModelDto, ProfileModel>();
                     Mapper.CreateMap<SurveyModel, SurveyModelDto>();
                     Mapper.CreateMap<SurveyModelDto, SurveyModel>();
                     Mapper.CreateMap<SurveyQuestionModel, SurveyQuestionModelDto>();
