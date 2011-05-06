@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using elearn.ProfileService;
 
 namespace elearn.Models
 {
@@ -89,44 +90,41 @@ namespace elearn.Models
 
     public class WcfAccountMembershipService : IMembershipService
     {
+        IProfileService _service;
 
-        ProfileService.ProfileServiceClient service = new ProfileService.ProfileServiceClient();
+
+        public WcfAccountMembershipService(IProfileService service)
+        {
+            _service = service;
+        }
+
+
         public int MinPasswordLength
         {
             get 
             {
                 int returnInt = 6;
-                service.Open();
-                returnInt = service.GetMinPasswordLength();
-                service.Close();
+                returnInt = _service.GetMinPasswordLength();
                 return returnInt;
             }
         }
 
         public bool ValidateUser(string userName, string password)
         {
-            bool validated = false;
-            service.Open();
-            validated = service.ValidateUser(userName,password);
-            service.Close();
-            return validated;
+            return _service.ValidateUser(userName, password);
         }
 
         public MembershipCreateStatus CreateUser(string userName, string password, string email)
         {
             MembershipCreateStatus status;
-            service.Open();
-            status = service.CreateUser(userName, password, email);
-            service.Close();
+            status = _service.CreateUser(userName, password, email);
             return status;
         }
 
         public bool ChangePassword(string userName, string oldPassword, string newPassword)
         {
             bool status;
-            service.Open();
-            status = service.ChangePassword(userName,oldPassword,newPassword);
-            service.Close();
+            status = _service.ChangePassword(userName, oldPassword, newPassword);
             return status;
         }
     }
