@@ -85,7 +85,7 @@ namespace NHibernateTests.ServicesTests
         public void Can_Add_Profile()
         {
             #region Arrange
-            var profile = new ProfileModel() { Name = "new profile", Email = "test@test.com", IsActive = true };
+            var profile = new ProfileModelDto() { Name = "new profile", Email = "test@test.com" };
             #endregion
 
             #region Act
