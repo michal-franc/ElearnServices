@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using elearn.ProfileService;
+using NHiberanteDal.Models;
+using NHiberanteDal.DTO;
 
 namespace elearn.Models
 {
@@ -111,18 +113,30 @@ namespace elearn.Models
 
         public bool ValidateUser(string userName, string password)
         {
+            if (String.IsNullOrEmpty(userName)) throw new ArgumentException("Value cannot be null or empty.", "userName");
+            if (String.IsNullOrEmpty(password)) throw new ArgumentException("Value cannot be null or empty.", "password");
+
             return _service.ValidateUser(userName, password);
         }
 
         public MembershipCreateStatus CreateUser(string userName, string password, string email)
         {
+            if (String.IsNullOrEmpty(userName)) throw new ArgumentException("Value cannot be null or empty.", "userName");
+            if (String.IsNullOrEmpty(password)) throw new ArgumentException("Value cannot be null or empty.", "password");
+            if (String.IsNullOrEmpty(email)) throw new ArgumentException("Value cannot be null or empty.", "email");
+
             MembershipCreateStatus status;
             status = _service.CreateUser(userName, password, email);
             return status;
         }
 
+
         public bool ChangePassword(string userName, string oldPassword, string newPassword)
         {
+            if (String.IsNullOrEmpty(userName)) throw new ArgumentException("Value cannot be null or empty.", "userName");
+            if (String.IsNullOrEmpty(oldPassword)) throw new ArgumentException("Value cannot be null or empty.", "oldPassword");
+            if (String.IsNullOrEmpty(newPassword)) throw new ArgumentException("Value cannot be null or empty.", "newPassword");
+
             bool status;
             status = _service.ChangePassword(userName, oldPassword, newPassword);
             return status;
