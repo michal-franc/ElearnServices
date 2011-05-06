@@ -28,12 +28,12 @@ namespace ELearnServices
             DTOMappings.Initialize();
         }
 
-        public int AddProfile(ProfileModel profile)
+        public int AddProfile(ProfileModelDto profile)
         {
             int id = -1;
             DataAccess.InTransaction(session =>
                 {
-                    id = (int)session.Save(profile);
+                    id = (int)session.Save(ProfileModelDto.UnMap(profile));
                 });
 
             return id;
@@ -132,8 +132,9 @@ namespace ELearnServices
 
         public MembershipCreateStatus CreateUser(string userName, string password, string email)
         {
-            var profile = new ProfileModel() { Name=userName, Email=email };
+            var profile = new ProfileModelDto() { Name=userName, Email=email , Role="basicuser" };
             this.AddProfile(profile);
+            this.UpdateRole(profile,false);
 
             MembershipCreateStatus status;
             if(Membership.Provider.RequiresQuestionAndAnswer)

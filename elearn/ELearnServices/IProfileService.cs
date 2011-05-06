@@ -15,7 +15,7 @@ namespace ELearnServices
     public interface IProfileService
     {
         [OperationContract]
-        int AddProfile(ProfileModel profile);
+        int AddProfile(ProfileModelDto profile);
 
         [OperationContract]
         ProfileModelDto GetProfile(int id);
