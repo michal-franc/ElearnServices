@@ -186,6 +186,12 @@ namespace ELearnServices
             return false;
         }
 
+        public bool IsActiveByName(string userName)
+        {
+            return new Repository<ProfileModel>().GetByQueryObject(new QueryProfilesByName(userName)).FirstOrDefault().IsActive;
+        }
+
+
         public  string[] GetAllRoles()
         {
             return _roleProvider.GetAllRoles();

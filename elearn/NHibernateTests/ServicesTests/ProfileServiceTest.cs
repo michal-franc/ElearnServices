@@ -185,6 +185,25 @@ namespace NHibernateTests.ServicesTests
             #endregion
         }
 
+
+        [Test]
+        public void Can_check_if_user_is_active()
+        {
+            #region Arrange
+            #endregion
+
+            #region Act
+
+            bool active = new ProfileService().IsActiveByName("test");
+
+            #endregion
+
+            #region Assert
+            Assert.IsTrue(active);
+            #endregion
+        }
+				
+
         [Test]
         public void Can_Delete_Profile()
         {
