@@ -11,23 +11,6 @@ namespace elearn.Controllers
     public class ProfileController : Controller
     {
         private IProfileService _service;
-
-        private string _userName;
-
-        public string UserName
-        {
-            get
-            {
-                if (_userName == null)
-                    return User.Identity.Name;
-                else
-                    return _userName;
-            }
-            set
-            {
-                _userName = value;
-            }
-        }
         
         public ProfileController(IProfileService service)
         {
