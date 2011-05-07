@@ -350,8 +350,8 @@ namespace NHibernateTests.MVCTests.Controllers.Course
 
             using (_mock.Record())
             {
-                Expect.Call(_service.GetById(1)).Return(_course);
-                Expect.Call(_service.Update(_course)).Repeat.Never();
+                Expect.Call(_service.GetById(1)).Return(_errorCourse);
+                Expect.Call(_service.Update(_errorCourse)).Repeat.Never();
             }
             #endregion
 
