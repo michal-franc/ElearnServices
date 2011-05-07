@@ -59,14 +59,14 @@ namespace elearn.Controllers
         }
 
         // GET: /Course/Add/
-        public ActionResult Add()
+        public ActionResult Create()
         {
             return View();
         }
 
-        // Post: /Course/Add/
+        // Post: /Course/Create/
         [HttpPost]
-        public ActionResult Add(FormCollection formValues)
+        public ActionResult Create(FormCollection formValues)
         {
             var course = new CourseDto();
             if (TryUpdateModel<CourseDto>(course))
@@ -84,7 +84,59 @@ namespace elearn.Controllers
             else
             {
                 ViewData["Error"] = "Update model error";
-                return View(course);
+                return View("Error");
+            }
+        }
+
+        // GET: /Course/Delete/id
+        public ActionResult Delete()
+        {
+            return View();
+        }
+
+        // Post: /Course/Delete/id
+        [HttpPost]
+        public ActionResult Delete(int id,FormCollection formValues)
+        {
+            if (_service.Remove(id))
+            {
+                return RedirectToAction("List");
+            }
+            else
+            {
+                ViewData["Error"] = "Problem Deleting Course";
+                return View("Error");
+            }
+        }
+
+        //Get: /Course/Edit/id
+        public ActionResult Edit(int id)
+        {
+            var course = _service.GetById(id);
+            return View(course);
+        }
+
+        //Post: /Course/Edit/id
+        [HttpPost]
+        public ActionResult Edit(int id , FormCollection formValues)
+        {
+            var course = _service.GetById(id);
+            if (TryUpdateModel<CourseDto>(course))
+            {
+                if (_service.Update(course))
+                {
+                    return RedirectToAction("Details", new {id=id});
+                }
+                else
+                {
+                    ViewData["Error"] = "Problem Updating Course in DB";
+                    return View("Error");
+                }
+            }
+            else
+            {
+                ViewData["Error"] = "Problem Updating Course";
+                return View();
             }
         }
     }
