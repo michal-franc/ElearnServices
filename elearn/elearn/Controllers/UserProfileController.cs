@@ -12,20 +12,11 @@ namespace elearn.Controllers
 
         IProfileService _service;
 
-        private string _userName;
-
         public string UserName
         {
             get
             {
-                if (_userName == null)
-                    return User.Identity.Name;
-                else
-                    return _userName;
-            }
-            set
-            {
-                _userName = value;
+                return User.Identity.Name;
             }
         }
 
