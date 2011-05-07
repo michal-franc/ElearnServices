@@ -41,7 +41,6 @@ namespace ELearnServices
         public void RemoveUserFromRole(string userName,string roleName)
         {
             Roles.RemoveUserFromRole(userName, roleName);
-        }
-            
+        }      
     }
 }

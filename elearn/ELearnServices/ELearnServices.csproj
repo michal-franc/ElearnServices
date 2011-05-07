@@ -96,9 +96,7 @@
       <DependentUpon>TestService.svc</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\NHiberanteDal\NHiberanteDal.csproj">
       <Project>{843D2C18-032C-42E3-A212-161BDC81A56C}</Project>

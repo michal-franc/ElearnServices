@@ -5,6 +5,7 @@ using System.Text;
 using NHiberanteDal.Models;
 using AutoMapper;
 using System.Runtime.Serialization;
+using System.ComponentModel.DataAnnotations;
 
 namespace NHiberanteDal.DTO
 {
@@ -14,6 +15,7 @@ namespace NHiberanteDal.DTO
         [DataMember]
         public int ID { get; set; }
         [DataMember]
+        [Required]
         public string Name { get; set; }
         [DataMember]
         public DateTime CreationDate { get; set; }
