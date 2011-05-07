@@ -57,5 +57,35 @@ namespace elearn.Controllers
             var courses = _service.GetAllSignatures().Skip((id - 1) * Limit).Take(Limit).ToArray();
             return View(courses);
         }
+
+        // GET: /Course/Add/
+        public ActionResult Add()
+        {
+            return View();
+        }
+
+        // Post: /Course/Add/
+        [HttpPost]
+        public ActionResult Add(FormCollection formValues)
+        {
+            var course = new CourseDto();
+            if (TryUpdateModel<CourseDto>(course))
+            {
+                var id = _service.AddCourse(course);
+
+                if (id > 0)
+                    return RedirectToAction("Details", new { id = id });
+                else
+                {
+                    ViewData["Error"] = "Problem in DB while creating Course";
+                    return View("Error");
+                }
+            }
+            else
+            {
+                ViewData["Error"] = "Update model error";
+                return View(course);
+            }
+        }
     }
 }
