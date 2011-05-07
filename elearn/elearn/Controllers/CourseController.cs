@@ -12,13 +12,13 @@ namespace elearn.Controllers
     {
         ICourseService _service;
 
-        private int _limit;
+        private int _limit = -1;
 
         public int Limit
         {
             get
             {
-                if (_limit == null)
+                if (_limit == -1)
                     _limit = 10;
 
                 return _limit;
