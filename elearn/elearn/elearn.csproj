@@ -155,9 +155,6 @@
     <None Include="Service References\ProfileService\ProfileService4.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ProfileService\ProfileService5.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Service References\TestService\configuration91.svcinfo" />
     <None Include="Service References\TestService\configuration.svcinfo" />
     <None Include="Service References\TestService\Reference.svcmap">
@@ -281,6 +278,8 @@
     <Content Include="Views\UserProfile\Details.cshtml" />
     <Content Include="Views\UserProfile\Edit.cshtml" />
     <Content Include="Views\Shared\NotFound.cshtml" />
+    <Content Include="Views\Course\List.cshtml" />
+    <Content Include="Views\Shared\NoAcces.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -318,7 +317,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>8300</DevelopmentServerPort>
+          <DevelopmentServerPort>29852</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>
