@@ -16,13 +16,20 @@ namespace NHibernateTests.MVCTests.Controllers.UserProfile
     class BaseTest
     {
         protected MockRepository _mock;
+        protected IProfileService _profileService;
+        protected UserProfileController _userProfileController;
         protected ProfileModelDto _profile;
         protected ProfileModelDto[] _profileList;
+
 
         [SetUp]
         public void SetUp()
         {
             _mock = new MockRepository();
+
+            _profileService = (IProfileService)_mock.DynamicMock(typeof(IProfileService));
+            _userProfileController = new UserProfileController(_profileService);
+
             _profile = new ProfileModelDto() { ID = 1, Email = "test@test.com", Role = "admin", Name = "testuser" };
             _profileList = new ProfileModelDto[]
                 {
@@ -40,16 +47,14 @@ namespace NHibernateTests.MVCTests.Controllers.UserProfile
         public void Gets_profile_of_current_user_redirects_to_details_view()
         {
             #region Arrange
-            var profileService = (IProfileService)_mock.DynamicMock(typeof(IProfileService));
-            var userProfileController = new UserProfileController(profileService);
             #endregion
 
             #region Act
-            var   redirect = (RedirectToRouteResult)userProfileController.Index();
+            var   redirect = (RedirectToRouteResult)_userProfileController.Index();
             #endregion
 
             #region Assert
-            redirect.AssertActionRedirect().ToAction("Details");
+            redirect.AssertActionRedirect().ToAction("Details").WithParameter("id",1);
             #endregion
         }			
     }
@@ -62,13 +67,9 @@ namespace NHibernateTests.MVCTests.Controllers.UserProfile
         public void GetsProfileByName_then_returns_default_view()
         {
             #region Arrange
-            var profileService = (IProfileService)_mock.DynamicMock(typeof(IProfileService));
-            var userProfileController = new UserProfileController(profileService);
-            userProfileController.UserName = "test";
-
             using (_mock.Record())
             {
-                Expect.Call(profileService.GetByName("test")).Return(_profile);
+                Expect.Call(_profileService.GetByName("test")).Return(_profile);
             }
 
             #endregion
@@ -78,7 +79,7 @@ namespace NHibernateTests.MVCTests.Controllers.UserProfile
             ViewResult view = null;
             using (_mock.Playback())
             {
-                view = (ViewResult)userProfileController.Details();
+                view = (ViewResult)_userProfileController.Details();
             }
 
             #endregion
@@ -97,13 +98,10 @@ namespace NHibernateTests.MVCTests.Controllers.UserProfile
 		public void Gets_profile_of_current_user_and_set_as_inactive_then_redirects_to_log_off_action()
 		{
             #region Arrange
-            var profileService = (IProfileService)_mock.DynamicMock(typeof(IProfileService));
-            var userProfileController = new UserProfileController(profileService);
-            userProfileController.UserName = "test";
 
             using (_mock.Record())
             {
-                Expect.Call(profileService.SetAsInactiveByName("test")).Return(true);
+                Expect.Call(_profileService.SetAsInactiveByName("test")).Return(true);
             }
 
             #endregion
@@ -113,7 +111,7 @@ namespace NHibernateTests.MVCTests.Controllers.UserProfile
             RedirectToRouteResult redirect = null;
             using (_mock.Playback())
             {
-                redirect = (RedirectToRouteResult)userProfileController.Delete();
+                redirect = (RedirectToRouteResult)_userProfileController.Delete();
             }
 
             #endregion
@@ -129,13 +127,10 @@ namespace NHibernateTests.MVCTests.Controllers.UserProfile
         public void If_set_as_inactive_fails_then_redirects_to_details_view()
         {
             #region Arrange
-            var profileService = (IProfileService)_mock.DynamicMock(typeof(IProfileService));
-            var userProfileController = new UserProfileController(profileService);
-            userProfileController.UserName = "test";
 
             using (_mock.Record())
             {
-                Expect.Call(profileService.SetAsInactiveByName("test")).Return(false);
+                Expect.Call(_profileService.SetAsInactiveByName("test")).Return(false);
             }
 
             #endregion
@@ -145,7 +140,7 @@ namespace NHibernateTests.MVCTests.Controllers.UserProfile
             RedirectToRouteResult redirect = null;
             using (_mock.Playback())
             {
-                redirect = (RedirectToRouteResult)userProfileController.Delete();
+                redirect = (RedirectToRouteResult)_userProfileController.Delete();
             }
 
             #endregion
@@ -165,13 +160,10 @@ namespace NHibernateTests.MVCTests.Controllers.UserProfile
         public void Gets_profile_of_current_user_then_return_default_view()
         {
             #region Arrange
-            var profileService = (IProfileService)_mock.DynamicMock(typeof(IProfileService));
-            var userProfileController = new UserProfileController(profileService);
-            userProfileController.UserName = "test";
 
             using (_mock.Record())
             {
-                Expect.Call(profileService.GetByName("test")).Return(_profile);
+                Expect.Call(_profileService.GetByName("test")).Return(_profile);
             }
 
             #endregion
@@ -181,7 +173,7 @@ namespace NHibernateTests.MVCTests.Controllers.UserProfile
             ViewResult view = null;
             using (_mock.Playback())
             {
-                view = (ViewResult)userProfileController.Edit();
+                view = (ViewResult)_userProfileController.Edit();
             }
 
             #endregion
@@ -196,17 +188,14 @@ namespace NHibernateTests.MVCTests.Controllers.UserProfile
         public void Post_updates_profile_then_redirects_to_details_view()
         {
             #region Arrange
-            var profileService = (IProfileService)_mock.DynamicMock(typeof(IProfileService));
-            var userProfileController = new UserProfileController(profileService);
-            userProfileController.UserName = "test";
 
-            userProfileController.ControllerContext = TestHelper.MockControllerContext(userProfileController);
-            userProfileController.ValueProvider = new FormCollection().ToValueProvider();
+            _userProfileController.ControllerContext = TestHelper.MockControllerContext(_userProfileController);
+            _userProfileController.ValueProvider = new FormCollection().ToValueProvider();
 
             using (_mock.Record())
             {
-                Expect.Call(profileService.GetByName("test")).Return(_profile);
-                Expect.Call(profileService.UpdateProfile(_profile)).Return(true);
+                Expect.Call(_profileService.GetByName("test")).Return(_profile);
+                Expect.Call(_profileService.UpdateProfile(_profile)).Return(true);
             }
 
             #endregion
@@ -216,7 +205,7 @@ namespace NHibernateTests.MVCTests.Controllers.UserProfile
             RedirectToRouteResult redirect = null;
             using (_mock.Playback())
             {
-                redirect = (RedirectToRouteResult)userProfileController.Edit(null);
+                redirect = (RedirectToRouteResult)_userProfileController.Edit(null);
             }
 
             #endregion
@@ -231,14 +220,11 @@ namespace NHibernateTests.MVCTests.Controllers.UserProfile
         public void Post_if_model_update_fails_then_adds_errormessage_and_returns_default_view()
         {
             #region Arrange
-            var profileService = _mock.DynamicMock<IProfileService>();
-            var userProfileController = new UserProfileController(profileService);
-            userProfileController.UserName = "test";
 
-            userProfileController.ControllerContext = TestHelper.MockControllerContext(userProfileController);
+            _userProfileController.ControllerContext = TestHelper.MockControllerContext(_userProfileController);
             
             //Values that will fail
-            userProfileController.ValueProvider = new FormCollection()
+            _userProfileController.ValueProvider = new FormCollection()
                 {
                     {"Email",""}
                 }
@@ -246,8 +232,8 @@ namespace NHibernateTests.MVCTests.Controllers.UserProfile
 
             using (_mock.Record())
             {
-                Expect.Call(profileService.GetByName("test")).Return(_profile);
-                Expect.Call(profileService.UpdateProfile(_profile)).Repeat.Never();
+                Expect.Call(_profileService.GetByName("test")).Return(_profile);
+                Expect.Call(_profileService.UpdateProfile(_profile)).Repeat.Never();
             }
 
             #endregion
@@ -256,7 +242,7 @@ namespace NHibernateTests.MVCTests.Controllers.UserProfile
             ViewResult view;
             using (_mock.Playback())
             {
-                view = (ViewResult)userProfileController.Edit(null);
+                view = (ViewResult)_userProfileController.Edit(null);
             }
 
             #endregion
@@ -273,17 +259,14 @@ namespace NHibernateTests.MVCTests.Controllers.UserProfile
         public void If_update_to_db_fails_return_default_view()
         {
             #region Arrange
-            var profileService = _mock.DynamicMock<IProfileService>();
-            var userProfileController = new UserProfileController(profileService);
-            userProfileController.UserName = "test";
 
-            userProfileController.ControllerContext = TestHelper.MockControllerContext(userProfileController);
-            userProfileController.ValueProvider = new FormCollection().ToValueProvider();
+            _userProfileController.ControllerContext = TestHelper.MockControllerContext(_userProfileController);
+            _userProfileController.ValueProvider = new FormCollection().ToValueProvider();
 
             using (_mock.Record())
             {
-                Expect.Call(profileService.GetByName("test")).Return(_profile);
-                Expect.Call(profileService.UpdateProfile(_profile)).Return(false);
+                Expect.Call(_profileService.GetByName("test")).Return(_profile);
+                Expect.Call(_profileService.UpdateProfile(_profile)).Return(false);
             }
 
             #endregion
@@ -292,7 +275,7 @@ namespace NHibernateTests.MVCTests.Controllers.UserProfile
             ViewResult view;
             using (_mock.Playback())
             {
-                view = (ViewResult)userProfileController.Edit(null);
+                view = (ViewResult)_userProfileController.Edit(null);
             }
 
             #endregion
