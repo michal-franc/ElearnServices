@@ -54,7 +54,7 @@ namespace NHibernateTests.MVCTests.Controllers.UserProfile
             #endregion
 
             #region Assert
-            redirect.AssertActionRedirect().ToAction("Details").WithParameter("id",1);
+            redirect.AssertActionRedirect().ToAction("Details");
             #endregion
         }			
     }
