@@ -25,6 +25,9 @@ namespace ELearnServices
         IList<TestSignatureDto> GetAllTestsSignatures(int id);
 
         [OperationContract]
+        bool Remove(int id);
+
+        [OperationContract]
         List<CourseDto> GetByName(string value);
 
         [OperationContract]

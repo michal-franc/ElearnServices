@@ -97,5 +97,21 @@ namespace ELearnServices
         }
 
 
+        public bool Remove(int id)
+        {
+            try
+            {
+                using (var session = DataAccess.OpenSession())
+                {
+                    var course = session.Get<CourseDto>(id);
+                    session.Delete(course);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }
