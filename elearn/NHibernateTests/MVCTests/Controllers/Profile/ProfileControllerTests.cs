@@ -365,7 +365,7 @@ namespace NHibernateTests.MVCTests.Controllers.Profile
             var profileService = _mock.DynamicMock<IProfileService>();
             var profileController = new ProfileController(profileService);
 
-            profileController.ControllerContext = TestHelper.MockControllerContext(profileController);
+            profileController.ControllerContext = TestHelper.MockControllerContext(profileController).WithAuthenticatedUser("test");
 
 
             //Values that will fail

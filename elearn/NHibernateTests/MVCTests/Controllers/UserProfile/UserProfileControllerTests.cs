@@ -67,6 +67,9 @@ namespace NHibernateTests.MVCTests.Controllers.UserProfile
         public void GetsProfileByName_then_returns_default_view()
         {
             #region Arrange
+            _userProfileController.ControllerContext = TestHelper.MockControllerContext(_userProfileController)
+                 .WithAuthenticatedUser("test");
+
             using (_mock.Record())
             {
                 Expect.Call(_profileService.GetByName("test")).Return(_profile);
@@ -98,7 +101,8 @@ namespace NHibernateTests.MVCTests.Controllers.UserProfile
 		public void Gets_profile_of_current_user_and_set_as_inactive_then_redirects_to_log_off_action()
 		{
             #region Arrange
-
+            _userProfileController.ControllerContext = TestHelper.MockControllerContext(_userProfileController)
+                .WithAuthenticatedUser("test");
             using (_mock.Record())
             {
                 Expect.Call(_profileService.SetAsInactiveByName("test")).Return(true);
@@ -127,7 +131,8 @@ namespace NHibernateTests.MVCTests.Controllers.UserProfile
         public void If_set_as_inactive_fails_then_redirects_to_details_view()
         {
             #region Arrange
-
+            _userProfileController.ControllerContext = TestHelper.MockControllerContext(_userProfileController)
+                .WithAuthenticatedUser("test");
             using (_mock.Record())
             {
                 Expect.Call(_profileService.SetAsInactiveByName("test")).Return(false);
@@ -160,7 +165,8 @@ namespace NHibernateTests.MVCTests.Controllers.UserProfile
         public void Gets_profile_of_current_user_then_return_default_view()
         {
             #region Arrange
-
+            _userProfileController.ControllerContext = TestHelper.MockControllerContext(_userProfileController)
+                 .WithAuthenticatedUser("test");
             using (_mock.Record())
             {
                 Expect.Call(_profileService.GetByName("test")).Return(_profile);
@@ -189,7 +195,8 @@ namespace NHibernateTests.MVCTests.Controllers.UserProfile
         {
             #region Arrange
 
-            _userProfileController.ControllerContext = TestHelper.MockControllerContext(_userProfileController);
+            _userProfileController.ControllerContext = TestHelper.MockControllerContext(_userProfileController)
+                .WithAuthenticatedUser("test");
             _userProfileController.ValueProvider = new FormCollection().ToValueProvider();
 
             using (_mock.Record())
@@ -221,8 +228,8 @@ namespace NHibernateTests.MVCTests.Controllers.UserProfile
         {
             #region Arrange
 
-            _userProfileController.ControllerContext = TestHelper.MockControllerContext(_userProfileController);
-            
+            _userProfileController.ControllerContext = TestHelper.MockControllerContext(_userProfileController).WithAuthenticatedUser("test");
+
             //Values that will fail
             _userProfileController.ValueProvider = new FormCollection()
                 {
@@ -260,7 +267,7 @@ namespace NHibernateTests.MVCTests.Controllers.UserProfile
         {
             #region Arrange
 
-            _userProfileController.ControllerContext = TestHelper.MockControllerContext(_userProfileController);
+            _userProfileController.ControllerContext = TestHelper.MockControllerContext(_userProfileController).WithAuthenticatedUser("test");
             _userProfileController.ValueProvider = new FormCollection().ToValueProvider();
 
             using (_mock.Record())
