@@ -110,6 +110,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataAccesTests.cs" />
+    <Compile Include="MVCTests\Controllers\Course\CourseControllerTests.cs" />
     <Compile Include="MVCTests\Controllers\UserProfile\UserProfileControllerTests.cs" />
     <Compile Include="MVCTests\Controllers\Profile\ProfileControllerTests.cs" />
     <Compile Include="MVCTests\TestHelper.cs" />

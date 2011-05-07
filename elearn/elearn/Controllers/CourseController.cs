@@ -4,46 +4,58 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using NHiberanteDal.DTO;
+using elearn.CourseService;
 
 namespace elearn.Controllers
 {
     public class CourseController : Controller
     {
+        ICourseService _service;
+
+        private int _limit;
+
+        public int Limit
+        {
+            get
+            {
+                if (_limit == null)
+                    _limit = 10;
+
+                return _limit;
+            }
+            set
+            {
+                _limit = value;
+            }
+        }
+
+        public CourseController(ICourseService service)
+        {
+            _service = service;
+        }
+
+
         //
         // GET: /Course/
 
         public ActionResult Index()
         {
-            CourseService.CourseServiceClient client = new CourseService.CourseServiceClient();
-            List<CourseSignatureDto> courses = client.GetAllSignatures().ToList();
-            client.Close();
-
-            return View(courses);
+            return RedirectToAction("List", new { id = 1 });
         }
 
         // GET: /Course/Details/id
         public ActionResult Details(int id)
         {
-            CourseService.CourseServiceClient client = new CourseService.CourseServiceClient();
-            CourseDto course = client.GetById(id);
-            client.Close();
-
+            var course = _service.GetById(id);
             return View(course);
         }
 
-        // GET: /Course/Tests/id
-        public ActionResult Tests(int id)
-        {
-            CourseService.CourseServiceClient client = new CourseService.CourseServiceClient();
-            var tests = client.GetAllTestsSignatures(id);
-            return View(tests);
-        }
 
-        // GET: /Course/Surveys/id
-        public ActionResult Surveys(int id)
+        // GET: /Course/List/id
+        public ActionResult List(int id)
         {
-            return View();
+            var courses = _service.GetAllSignatures().Skip((id - 1) * Limit).Take(Limit).ToArray();
+            return View(courses);
         }
-
     }
 }
