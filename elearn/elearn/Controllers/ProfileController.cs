@@ -59,15 +59,17 @@ namespace elearn.Controllers
             var profile = _service.GetProfile(id);
             if (profile != null)
             {
-                var roles = _service.GetAllRoles();
-                var list = roles.ToList();
-                list.Insert(0,"----");
-                if (list.Contains(profile.Role))
+                var roles = _service.GetAllRoles().ToList();
+                if (roles.Count <= 0)
                 {
-                    list.Remove(profile.Role);
-                    list.Insert(0, profile.Role);
+                    roles.Insert(0, Common.Strings.NoRoleValue);
                 }
-                ViewData["Role"] = new SelectList(list);
+                if (roles.Contains(profile.Role))
+                {
+                    roles.Remove(profile.Role);
+                    roles.Insert(0, profile.Role);
+                }
+                ViewBag.Role = new SelectList(roles);
 
                 return View(profile);
             }
@@ -93,7 +95,7 @@ namespace elearn.Controllers
                         {
                             return RedirectToAction("Details", new { id = profile.ID });
                         }
-                        ViewData["Error"] = "Problem Updating Role";
+                        ViewBag.Error = Common.ErrorMessages.Profile.RoleUpdateFail;
                         return View(profile);
                     }
                     else
@@ -101,22 +103,22 @@ namespace elearn.Controllers
                         return RedirectToAction("Details", new { id = profile.ID });
                     }
                 }
-                ViewData["Error"] = "Problem Updating Profile";
+                ViewBag.Error = Common.ErrorMessages.Profile.ProfileUpdateFail;
                 return View(profile);
             }
-            ViewData["Error"] = "Validation Error";
             return View(profile);
         }
 
 
         //
-        // GET: /Profile/Delete/id
+        // POST: /Profile/Delete/id
 
         [AuthorizeAttributeWCF(Roles = "admin")]
+        [HttpPost]
         public ActionResult Delete(int id)
         {
             if (!_service.SetAsInactive(id))
-                ViewData["Error"] = "Problem updating profile";
+                ViewBag.Error = Common.ErrorMessages.Profile.SetAsInactiveFailed;
 
             return RedirectToAction("List");
         }

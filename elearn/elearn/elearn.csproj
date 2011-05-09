@@ -64,6 +64,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthorizeAttributeWCF.cs" />
+    <Compile Include="Common\ErrorMessages.cs" />
+    <Compile Include="Common\Strings.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
