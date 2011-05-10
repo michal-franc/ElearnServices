@@ -28,7 +28,7 @@
             @Html.LabelFor(model => model.Role)
         </div>
         <div class="editor-field">
-            @Html.DropDownListFor(model => model.Role,ViewData["Role"] as SelectList)
+            @Html.DropDownListFor(model => model.Role,ViewBag.Role as SelectList)
             @Html.ValidationMessageFor(model => model.Role)
         </div>
 
