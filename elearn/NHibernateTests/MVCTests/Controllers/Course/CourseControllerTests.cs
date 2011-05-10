@@ -93,7 +93,7 @@ namespace NHibernateTests.MVCTests.Controllers.Course
 				
 
         [Test]
-        public void Post_adds_course_then_redirects_to_details_view()
+        public void Post_adds_course_then_redirects_to_details_action()
         {
             #region Arrange
 
@@ -139,15 +139,15 @@ namespace NHibernateTests.MVCTests.Controllers.Course
 
             #region Assert
             Assert.That(view.ViewName,Is.EqualTo("Error"));
-            Assert.That(view.ViewData["Error"], Is.EqualTo(elearn.Common.ErrorMessages.Course.CourseAddToDbError));
+            Assert.That(view.ViewBag.Error, Is.EqualTo(elearn.Common.ErrorMessages.Course.AddToDbError));
             #endregion
         }
 
         [Test]
-        public void Post_if_model_state_invalid_failes_then_return_error_view()
+        public void Post_if_model_state_invalid_then_return_error_view()
         {
             #region Arrange
-            //Creating Error ModelState
+            //Faking ModelState.IsValid = false
             Controller.ModelState.Add("testError", new ModelState());
             Controller.ModelState.AddModelError("testError", "test");
 
@@ -168,7 +168,7 @@ namespace NHibernateTests.MVCTests.Controllers.Course
 
             #region Assert
             Assert.That(view.ViewName,Is.EqualTo("Error"));
-            Assert.That(view.ViewBag.Error, Is.EqualTo(elearn.Common.ErrorMessages.Course.CourseModelUpdateError));
+            Assert.That(view.ViewBag.Error, Is.EqualTo(elearn.Common.ErrorMessages.Course.ModelUpdateError));
             #endregion
         }
 				
@@ -180,10 +180,6 @@ namespace NHibernateTests.MVCTests.Controllers.Course
         [Test]
         public void Get_returns_delete_view()
         {
-            #region Arrange
-
-            #endregion
-
             #region Act
             var view  =(ViewResult)Controller.Delete();
             #endregion
@@ -195,7 +191,7 @@ namespace NHibernateTests.MVCTests.Controllers.Course
 
 
         [Test]
-        public void Post_deletes_course_then_redirects_to_the_list_view()
+        public void Post_deletes_course_then_redirects_to_the_list_action()
         {
             #region Arrange
 
@@ -220,7 +216,7 @@ namespace NHibernateTests.MVCTests.Controllers.Course
         }
 
         [Test]
-        public void Post_if_delete_fails_redirects_to_the_error_view()
+        public void Post_if_delete_fails_then_returns_error_view()
         {
             #region Arrange
 
@@ -241,7 +237,7 @@ namespace NHibernateTests.MVCTests.Controllers.Course
 
             #region Assert
             Assert.That(view.ViewName,Is.EqualTo("Error"));
-            Assert.That(view.ViewData["Error"],Is.EqualTo("Problem Deleting Course"));
+            Assert.That(view.ViewBag.Error, Is.EqualTo(elearn.Common.ErrorMessages.Course.DeleteError));
             #endregion
         }
     }
@@ -276,15 +272,11 @@ namespace NHibernateTests.MVCTests.Controllers.Course
 
 
         [Test]
-        public void Post_updates_course_then_redirects_to_the_details_view()
+        public void Post_updates_course_then_redirects_to_the_details_action()
         {
             #region Arrange
-            Controller.ControllerContext = TestHelper.MockControllerContext(Controller);
-            Controller.ValueProvider = TestHelper.ConvertEntityToFormCollection(Course).ToValueProvider();
-
             using (Mock.Record())
             {
-                Expect.Call(Service.GetById(1)).Return(Course);
                 Expect.Call(Service.Update(Course)).Return(true);
             }
             #endregion
@@ -293,7 +285,7 @@ namespace NHibernateTests.MVCTests.Controllers.Course
             RedirectToRouteResult redirect;
             using (Mock.Playback())
             {
-                redirect = (RedirectToRouteResult)Controller.Edit(1,null);
+                redirect = (RedirectToRouteResult)Controller.Edit(Course);
             }
 
             #endregion
@@ -304,15 +296,11 @@ namespace NHibernateTests.MVCTests.Controllers.Course
         }
 
         [Test]
-        public void Post_if_updates_fails_then_return_error_view()
+        public void Post_if_update_to_db_fails_then_return_error_view()
         {
             #region Arrange
-            Controller.ControllerContext = TestHelper.MockControllerContext(Controller);
-            Controller.ValueProvider = TestHelper.ConvertEntityToFormCollection(Course).ToValueProvider();
-
             using (Mock.Record())
             {
-                Expect.Call(Service.GetById(1)).Return(Course);
                 Expect.Call(Service.Update(Course)).Return(false);
             }
             #endregion
@@ -321,27 +309,27 @@ namespace NHibernateTests.MVCTests.Controllers.Course
             ViewResult view;
             using (Mock.Playback())
             {
-                view = (ViewResult)Controller.Edit(1, null);
+                view = (ViewResult)Controller.Edit(Course);
             }
 
             #endregion
 
             #region Assert
             Assert.That(view.ViewName,Is.EqualTo("Error"));
-            Assert.That(view.ViewData["Error"],Is.EqualTo("Problem Updating Course in DB"));
+            Assert.That(view.ViewBag.Error,Is.EqualTo(elearn.Common.ErrorMessages.Course.UpdateToDbError));
             #endregion
         }
 
-        [Test]
-        public void Post_if_validation_fails_then_return_edit_view()
+        [Test] public void Post_if_model_state_false_then_return_edit_view()
         {
             #region Arrange
-            Controller.ControllerContext = TestHelper.MockControllerContext(Controller);
-            Controller.ValueProvider = TestHelper.ConvertEntityToFormCollection(ErrorCourse).ToValueProvider();
+
+            //Faking ModelState.IsValid = false
+            Controller.ModelState.Add("testError", new ModelState());
+            Controller.ModelState.AddModelError("testError", "test");
 
             using (Mock.Record())
             {
-                Expect.Call(Service.GetById(1)).Return(ErrorCourse);
                 Expect.Call(Service.Update(ErrorCourse)).Repeat.Never();
             }
             #endregion
@@ -350,14 +338,14 @@ namespace NHibernateTests.MVCTests.Controllers.Course
             ViewResult view;
             using (Mock.Playback())
             {
-                view = (ViewResult)Controller.Edit(1, null);
+                view = (ViewResult)Controller.Edit(Course);
             }
 
             #endregion
 
             #region Assert
             Assert.IsEmpty(view.ViewName);
-            Assert.That(view.ViewData["Error"], Is.EqualTo("Problem Updating Course"));
+            Assert.That(view.ViewBag.Error, Is.EqualTo(elearn.Common.ErrorMessages.Course.ModelUpdateError));
             #endregion
         }
     }
@@ -367,7 +355,7 @@ namespace NHibernateTests.MVCTests.Controllers.Course
     {
         
         [Test]
-        public void If_author_or_admin_gets_coursedto_by_id_then_return_details_view()
+        public void Get_if_author_or_admin_gets_coursedto_by_id_then_return_details_view()
         {
             #region Arrange
 
@@ -394,7 +382,7 @@ namespace NHibernateTests.MVCTests.Controllers.Course
 
 
         [Test]
-        public void If_not_author_and_not_admin_then_redirects_to_noacces_view()
+        public void Get_if_not_author_and_not_admin_then_redirects_to_noacces_view()
         {
             #region Arrange
 
@@ -427,7 +415,7 @@ namespace NHibernateTests.MVCTests.Controllers.Course
     public class List : BaseTest
     {
         [Test]
-        public void Gets_courses_dto_signatures_and_returns_list_view()
+        public void Get_gets_courses_dto_signatures_and_returns_list_view()
         {
             #region Arrange
             using (Mock.Record())
@@ -452,7 +440,7 @@ namespace NHibernateTests.MVCTests.Controllers.Course
         }
 
         [Test]
-        public void Can_page_courses_dto_signature_list()
+        public void Get_can_page_courses_dto_signature_list()
         {
             #region Arrange
 

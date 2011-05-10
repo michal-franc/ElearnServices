@@ -283,6 +283,7 @@
     <Content Include="Views\Course\List.cshtml" />
     <Content Include="Views\Shared\NoAcces.cshtml" />
     <Content Include="Views\Course\Create.cshtml" />
+    <Content Include="Views\Course\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

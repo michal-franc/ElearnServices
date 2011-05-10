@@ -77,13 +77,13 @@ namespace elearn.Controllers
                     return RedirectToAction("Details", new { id = id });
                 else
                 {
-                    ViewBag.Error = Common.ErrorMessages.Course.CourseAddToDbError;
+                    ViewBag.Error = Common.ErrorMessages.Course.AddToDbError;
                     return View("Error");
                 }
             }
             else
             {
-                ViewBag.Error = Common.ErrorMessages.Course.CourseModelUpdateError;
+                ViewBag.Error = Common.ErrorMessages.Course.ModelUpdateError;
                 return View("Error");
             }
         }
@@ -118,24 +118,23 @@ namespace elearn.Controllers
 
         //Post: /Course/Edit/id
         [HttpPost]
-        public ActionResult Edit(int id , FormCollection formValues)
+        public ActionResult Edit(CourseDto course)
         {
-            var course = _service.GetById(id);
-            if (TryUpdateModel<CourseDto>(course))
+            if (ModelState.IsValid)
             {
                 if (_service.Update(course))
                 {
-                    return RedirectToAction("Details", new {id=id});
+                    return RedirectToAction("Details", new { id = course.ID });
                 }
                 else
                 {
-                    ViewData["Error"] = "Problem Updating Course in DB";
+                    ViewBag.Error = Common.ErrorMessages.Course.UpdateToDbError;
                     return View("Error");
                 }
             }
             else
             {
-                ViewData["Error"] = "Problem Updating Course";
+                ViewBag.Error = Common.ErrorMessages.Course.ModelUpdateError;
                 return View();
             }
         }
