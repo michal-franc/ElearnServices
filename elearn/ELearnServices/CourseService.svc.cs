@@ -113,5 +113,11 @@ namespace ELearnServices
                 return false;
             }
         }
+
+
+        public List<CourseTypeModelDto> GetAllCourseTypes()
+        {
+            return CourseTypeModelDto.Map(new Repository<CourseTypeModel>().GetAll().ToList());
+        }
     }
 }

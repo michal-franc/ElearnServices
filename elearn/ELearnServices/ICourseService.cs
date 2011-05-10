@@ -38,5 +38,8 @@ namespace ELearnServices
 
         [OperationContract]
         int AddCourse(CourseDto newCourse);
+
+        [OperationContract]
+        List<CourseTypeModelDto> GetAllCourseTypes();
     }
 }
