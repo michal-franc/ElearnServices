@@ -21,6 +21,7 @@ namespace elearn.Controllers
         // GET: /Profile/
 
         [AuthorizeAttributeWCF(Roles = "admin")]
+        [HttpGet]
         public ActionResult Index()
         {
             return RedirectToAction("List");
@@ -30,6 +31,7 @@ namespace elearn.Controllers
         // GET: /Profile/Details/id
 
         [AuthorizeAttributeWCF(Roles = "admin")]
+        [HttpGet]
         public ActionResult Details(int id)
         {
             var profile = _service.GetProfile(id);
@@ -43,6 +45,7 @@ namespace elearn.Controllers
         // GET: /Profile/List
 
         [AuthorizeAttributeWCF(Roles = "admin")]
+        [HttpGet]
         public ActionResult List()
         {
             var profiles = _service.GetAllProfiles();
@@ -54,6 +57,7 @@ namespace elearn.Controllers
         // GET: /Profile/Edit/id
 
         [AuthorizeAttributeWCF(Roles = "admin")]
+        [HttpGet]
         public ActionResult Edit(int id)
         {
             var profile = _service.GetProfile(id);
