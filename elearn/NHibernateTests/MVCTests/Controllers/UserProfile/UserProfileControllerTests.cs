@@ -79,7 +79,7 @@ namespace NHibernateTests.MVCTests.Controllers.UserProfile
 
             #region Act
 
-            ViewResult view = null;
+            ViewResult view;
             using (_mock.Playback())
             {
                 view = (ViewResult)_userProfileController.Details();
@@ -112,7 +112,7 @@ namespace NHibernateTests.MVCTests.Controllers.UserProfile
 
             #region Act
 
-            RedirectToRouteResult redirect = null;
+            RedirectToRouteResult redirect;
             using (_mock.Playback())
             {
                 redirect = (RedirectToRouteResult)_userProfileController.Delete();
@@ -142,7 +142,7 @@ namespace NHibernateTests.MVCTests.Controllers.UserProfile
 
             #region Act
 
-            RedirectToRouteResult redirect = null;
+            RedirectToRouteResult redirect;
             using (_mock.Playback())
             {
                 redirect = (RedirectToRouteResult)_userProfileController.Delete();
@@ -176,7 +176,7 @@ namespace NHibernateTests.MVCTests.Controllers.UserProfile
 
             #region Act
 
-            ViewResult view = null;
+            ViewResult view;
             using (_mock.Playback())
             {
                 view = (ViewResult)_userProfileController.Edit();
@@ -209,7 +209,7 @@ namespace NHibernateTests.MVCTests.Controllers.UserProfile
 
             #region Act
 
-            RedirectToRouteResult redirect = null;
+            RedirectToRouteResult redirect;
             using (_mock.Playback())
             {
                 redirect = (RedirectToRouteResult)_userProfileController.Edit(null);

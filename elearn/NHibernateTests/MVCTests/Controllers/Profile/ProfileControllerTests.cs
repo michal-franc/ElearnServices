@@ -1,41 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using NUnit.Framework;
 using Rhino.Mocks;
 using elearn.Controllers;
-using elearn;
 using System.Web.Mvc;
-using Ninject.Modules;
 using NHiberanteDal.DTO;
 using elearn.ProfileService;
 using MvcContrib.TestHelper;
-using System.Web;
-using System.Web.Routing;
 
 namespace NHibernateTests.MVCTests.Controllers.Profile
 {
 
     class BaseTest
     {
-        protected MockRepository _mock;
-        protected IProfileService _profileService;
-        protected ProfileController _profileController;
-        protected ProfileModelDto _profile;
-        protected ProfileModelDto[] _profileList;
+        protected MockRepository Mock;
+        protected IProfileService ProfileService;
+        protected ProfileController ProfileController;
+        protected ProfileModelDto Profile;
+        protected ProfileModelDto[] ProfileList;
 
         [SetUp]
         public  void SetUp()
         {
-            _mock = new MockRepository();
-            _profileService = _mock.DynamicMock<IProfileService>();
-            _profileController = new ProfileController(_profileService);
-            _profile = new ProfileModelDto() { ID = 1, Email = "test@test.com", Role = "admin", Name = "testuser" };
-            _profileList = new ProfileModelDto[]
+            Mock = new MockRepository();
+            ProfileService = Mock.DynamicMock<IProfileService>();
+            ProfileController = new ProfileController(ProfileService);
+            Profile = new ProfileModelDto { ID = 1, Email = "test@test.com", Role = "admin", Name = "testuser" };
+            ProfileList = new[]
                 {
-                    new ProfileModelDto(){ ID=1},
-                    new ProfileModelDto(){ ID=2}
+                    new ProfileModelDto { ID=1},
+                    new ProfileModelDto { ID=2}
                 };
 
         }
@@ -48,7 +41,7 @@ namespace NHibernateTests.MVCTests.Controllers.Profile
         public void Redirects_to_lists()
         {
             #region Arrange
-            var profileController = new ProfileController(_profileService);
+            var profileController = new ProfileController(ProfileService);
             #endregion
 
             #region Act
@@ -69,9 +62,9 @@ namespace NHibernateTests.MVCTests.Controllers.Profile
         public void Get_gets_profile_then_returns_details_view()
         {
             #region Arrange
-            using (_mock.Record())
+            using (Mock.Record())
             {
-                Expect.Call(_profileService.GetProfile(1)).Return(_profile);
+                Expect.Call(ProfileService.GetProfile(1)).Return(Profile);
             }
 
             #endregion
@@ -79,15 +72,15 @@ namespace NHibernateTests.MVCTests.Controllers.Profile
             #region Act
 
 
-            ViewResult view = null;
-            using (_mock.Playback())
+            ViewResult view;
+            using (Mock.Playback())
             {
-                view = (ViewResult)_profileController.Details(1);
+                view = (ViewResult)ProfileController.Details(1);
             }
             #endregion
 
             #region Assert
-            Assert.That(view.ViewData.Model, Is.EqualTo(_profile));
+            Assert.That(view.ViewData.Model, Is.EqualTo(Profile));
             Assert.IsEmpty(view.ViewName);
             #endregion
         }
@@ -96,19 +89,19 @@ namespace NHibernateTests.MVCTests.Controllers.Profile
         public void Get_if_wrong_profile_id_then_return_not_found_view()
         {
             #region Arrange
-            using (_mock.Record())
+            using (Mock.Record())
             {
-                Expect.Call(_profileService.GetProfile(1)).Return(null);
+                Expect.Call(ProfileService.GetProfile(1)).Return(null);
             }
 
             #endregion
 
             #region Act
 
-            ViewResult view = null;
-            using (_mock.Playback())
+            ViewResult view;
+            using (Mock.Playback())
             {
-                view = (ViewResult)_profileController.Details(1);
+                view = (ViewResult)ProfileController.Details(1);
             }
 
             #endregion
@@ -124,27 +117,27 @@ namespace NHibernateTests.MVCTests.Controllers.Profile
     class List : BaseTest
     {
         [Test]
-        public void Get_gets_allProfiles_then_returns_list_view()
+        public void Get_gets_all_profiles_then_returns_list_view()
         {
             #region Arrange
-            using (_mock.Record())
+            using (Mock.Record())
             {
-                Expect.Call(_profileService.GetAllProfiles()).Return(_profileList);
+                Expect.Call(ProfileService.GetAllProfiles()).Return(ProfileList);
             }
 
             #endregion
 
             #region Act
-            ViewResult view = null;
-            using (_mock.Playback())
+            ViewResult view;
+            using (Mock.Playback())
             {
-                view = (ViewResult)_profileController.List();
+                view = (ViewResult)ProfileController.List();
             }
             #endregion
 
             #region Assert
             Assert.IsEmpty(view.ViewName);
-            Assert.That(view.ViewData.Model, Is.EqualTo(_profileList));
+            Assert.That(view.ViewData.Model, Is.EqualTo(ProfileList));
             #endregion
         }
 
@@ -157,19 +150,19 @@ namespace NHibernateTests.MVCTests.Controllers.Profile
         public void Post_sets_profile_as_inactive_then_redirects_to_list_view()
         {
             #region Arrange
-            using (_mock.Record())
+            using (Mock.Record())
             {
-                Expect.Call(_profileService.SetAsInactive(1)).Return(true);
+                Expect.Call(ProfileService.SetAsInactive(1)).Return(true);
             }
 
             #endregion
 
             #region Act
 
-            RedirectToRouteResult redirect = null;
-            using (_mock.Playback())
+            RedirectToRouteResult redirect;
+            using (Mock.Playback())
             {
-                redirect = (RedirectToRouteResult)_profileController.Delete(1);
+                redirect = (RedirectToRouteResult)ProfileController.Delete(1);
             }
             #endregion
 
@@ -182,26 +175,26 @@ namespace NHibernateTests.MVCTests.Controllers.Profile
         public void Post_if_set_as_inactive_profile_fails_then_redirect_to_list_with_error()
         {
             #region Arrange
-            using (_mock.Record())
+            using (Mock.Record())
             {
-                Expect.Call(_profileService.SetAsInactive(1)).Return(false);
+                Expect.Call(ProfileService.SetAsInactive(1)).Return(false);
             }
 
             #endregion
 
             #region Act
 
-            RedirectToRouteResult redirect = null;
-            using (_mock.Playback())
+            RedirectToRouteResult redirect;
+            using (Mock.Playback())
             {
-                redirect = (RedirectToRouteResult)_profileController.Delete(1);
+                redirect = (RedirectToRouteResult)ProfileController.Delete(1);
             }
             #endregion
 
             #region Assert
             redirect.AssertActionRedirect().ToAction("List");
-            Assert.That(_profileController.ViewBag.Error, Is.Not.Null);
-            Assert.That(_profileController.ViewBag.Error, Is.EqualTo(elearn.Common.ErrorMessages.Profile.SetAsInactiveFailed));
+            Assert.That(ProfileController.ViewBag.Error, Is.Not.Null);
+            Assert.That(ProfileController.ViewBag.Error, Is.EqualTo(elearn.Common.ErrorMessages.Profile.SetAsInactiveFailed));
             #endregion
         }
     }
@@ -213,19 +206,19 @@ namespace NHibernateTests.MVCTests.Controllers.Profile
         public void Get_if_wrong_id_then_return_not_found_view()
         {
             #region Arrange
-            using (_mock.Record())
+            using (Mock.Record())
             {
-                Expect.Call(_profileService.GetProfile(1)).Return(null);
+                Expect.Call(ProfileService.GetProfile(1)).Return(null);
             }
 
             #endregion
 
             #region Act
 
-            ViewResult view = null;
-            using (_mock.Playback())
+            ViewResult view;
+            using (Mock.Playback())
             {
-                view = (ViewResult)_profileController.Edit(1);
+                view = (ViewResult)ProfileController.Edit(1);
             }
 
             #endregion
@@ -240,27 +233,27 @@ namespace NHibernateTests.MVCTests.Controllers.Profile
         public void Get_gets_profile_and_roles_then_returns_default_view()
         {
             #region Arrange
-            var roles = new string[] { "admin" };
+            var roles = new[] { "admin" };
 
-            using (_mock.Record())
+            using (Mock.Record())
             {
-                Expect.Call(_profileService.GetAllRoles()).Return(roles);
-                Expect.Call(_profileService.GetProfile(1)).Return(_profile);
+                Expect.Call(ProfileService.GetAllRoles()).Return(roles);
+                Expect.Call(ProfileService.GetProfile(1)).Return(Profile);
             }
             #endregion
 
             #region Act
 
-            ViewResult view = null;
-            using (_mock.Playback())
+            ViewResult view;
+            using (Mock.Playback())
             {
-                view = (ViewResult)_profileController.Edit(1);
+                view = (ViewResult)ProfileController.Edit(1);
             }
             #endregion
 
             #region Assert
             Assert.IsEmpty(view.ViewName);
-            Assert.That(view.ViewData.Model, Is.EqualTo(_profile));
+            Assert.That(view.ViewData.Model, Is.EqualTo(Profile));
             Assert.That(view.ViewBag.Role, Is.InstanceOf(typeof(SelectList)));
             #endregion
         }
@@ -269,29 +262,29 @@ namespace NHibernateTests.MVCTests.Controllers.Profile
         public void Get_sets_profile_current_role_as_first_selected_and_dont_duplicate_roles()
         {
             #region Arrange
-            var roles = new string[] { "user", "admin" , "basicuser" };
+            var roles = new[] { "user", "admin" , "basicuser" };
 
-            using (_mock.Record())
+            using (Mock.Record())
             {
-                Expect.Call(_profileService.GetAllRoles()).Return(roles);
-                Expect.Call(_profileService.GetProfile(1)).Return(_profile);
+                Expect.Call(ProfileService.GetAllRoles()).Return(roles);
+                Expect.Call(ProfileService.GetProfile(1)).Return(Profile);
             }
 
             #endregion
 
             #region Act
 
-            ViewResult view = null;
-            using (_mock.Playback())
+            ViewResult view;
+            using (Mock.Playback())
             {
-                view = (ViewResult)_profileController.Edit(1);
+                view = (ViewResult)ProfileController.Edit(1);
             }
 
             #endregion
 
             #region Assert
             Assert.IsEmpty(view.ViewName);
-            Assert.That(view.ViewData.Model, Is.EqualTo(_profile));
+            Assert.That(view.ViewData.Model, Is.EqualTo(Profile));
             Assert.That(view.ViewBag.Role, Is.InstanceOf(typeof(SelectList)));
 
             //Check if first role in the list is the profile one
@@ -308,27 +301,27 @@ namespace NHibernateTests.MVCTests.Controllers.Profile
             #region Arrange
             var roles = new string[] {};
 
-            using (_mock.Record())
+            using (Mock.Record())
             {
-                Expect.Call(_profileService.GetAllRoles()).Return(roles);
-                Expect.Call(_profileService.GetProfile(1)).Return(_profile);
+                Expect.Call(ProfileService.GetAllRoles()).Return(roles);
+                Expect.Call(ProfileService.GetProfile(1)).Return(Profile);
             }
 
             #endregion
 
             #region Act
 
-            ViewResult view = null;
-            using (_mock.Playback())
+            ViewResult view;
+            using (Mock.Playback())
             {
-                view = (ViewResult)_profileController.Edit(1);
+                view = (ViewResult)ProfileController.Edit(1);
             }
 
             #endregion
 
             #region Assert
             Assert.IsEmpty(view.ViewName);
-            Assert.That(view.ViewData.Model, Is.EqualTo(_profile));
+            Assert.That(view.ViewData.Model, Is.EqualTo(Profile));
             Assert.That(view.ViewBag.Role, Is.InstanceOf(typeof(SelectList)));
             Assert.That(((SelectList)view.ViewBag.Role).Count(), Is.EqualTo(1));
             Assert.That(((SelectList)view.ViewBag.Role).First().Text, Is.EqualTo(elearn.Common.Strings.NoRoleValue));
@@ -340,29 +333,29 @@ namespace NHibernateTests.MVCTests.Controllers.Profile
         public void Post_updates_model_if_no_roles_selected_dont_update_roles_then_redirects_to_details_view()
         {
             #region Arrange
-            _profileController.ControllerContext = TestHelper.MockControllerContext(_profileController).WithAuthenticatedUser("test");
+            ProfileController.ControllerContext = TestHelper.MockControllerContext(ProfileController).WithAuthenticatedUser("test");
 
             //Values that will simulate no role value
-            _profileController.ValueProvider = new FormCollection()
-                {
+            ProfileController.ValueProvider = new FormCollection
+                                                  {
                     {"Role",elearn.Common.Strings.NoRoleValue}
                 }
                 .ToValueProvider();
 
-            using (_mock.Record())
+            using (Mock.Record())
             {
-                Expect.Call(_profileService.GetProfile(1)).Return(_profile);
-                Expect.Call(_profileService.UpdateRole(_profile, true)).Repeat.Never();
-                Expect.Call(_profileService.UpdateProfile(_profile)).Return(true);
+                Expect.Call(ProfileService.GetProfile(1)).Return(Profile);
+                Expect.Call(ProfileService.UpdateRole(Profile, true)).Repeat.Never();
+                Expect.Call(ProfileService.UpdateProfile(Profile)).Return(true);
             }
 
             #endregion
 
             #region Act
             RedirectToRouteResult redirect;
-            using (_mock.Playback())
+            using (Mock.Playback())
             {
-                redirect = (RedirectToRouteResult)_profileController.Edit(1, null);
+                redirect = (RedirectToRouteResult)ProfileController.Edit(1, null);
             }
 
             #endregion
@@ -376,23 +369,23 @@ namespace NHibernateTests.MVCTests.Controllers.Profile
         public void Post_updates_model_and_updates_role_then_redirects_to_details_view()
         {
             #region Arrange
-            _profileController.ControllerContext = TestHelper.MockControllerContext(_profileController);
-            _profileController.ValueProvider = new FormCollection().ToValueProvider();
+            ProfileController.ControllerContext = TestHelper.MockControllerContext(ProfileController);
+            ProfileController.ValueProvider = new FormCollection().ToValueProvider();
 
-            using (_mock.Record())
+            using (Mock.Record())
             {
-                Expect.Call(_profileService.GetProfile(1)).Return(_profile);
-                Expect.Call(_profileService.UpdateRole(_profile, true)).Return(true);
-                Expect.Call(_profileService.UpdateProfile(_profile)).Return(true);
+                Expect.Call(ProfileService.GetProfile(1)).Return(Profile);
+                Expect.Call(ProfileService.UpdateRole(Profile, true)).Return(true);
+                Expect.Call(ProfileService.UpdateProfile(Profile)).Return(true);
             }
 
             #endregion
 
             #region Act
             RedirectToRouteResult redirect;
-            using (_mock.Playback())
+            using (Mock.Playback())
             {
-                redirect = (RedirectToRouteResult)_profileController.Edit(1, null);
+                redirect = (RedirectToRouteResult)ProfileController.Edit(1, null);
             }
 
             #endregion
@@ -406,23 +399,23 @@ namespace NHibernateTests.MVCTests.Controllers.Profile
         public void Post_if_update_to_db_fails_then_return_edit_view_with_error()
         {
             #region Arrange
-            _profileController.ControllerContext = TestHelper.MockControllerContext(_profileController);
-            _profileController.ValueProvider = new FormCollection().ToValueProvider();
+            ProfileController.ControllerContext = TestHelper.MockControllerContext(ProfileController);
+            ProfileController.ValueProvider = new FormCollection().ToValueProvider();
 
-            using (_mock.Record())
+            using (Mock.Record())
             {
-                Expect.Call(_profileService.GetProfile(1)).Return(_profile);
-                Expect.Call(_profileService.UpdateRole(_profile, true)).Repeat.Never();
-                Expect.Call(_profileService.UpdateProfile(_profile)).Return(false);
+                Expect.Call(ProfileService.GetProfile(1)).Return(Profile);
+                Expect.Call(ProfileService.UpdateRole(Profile, true)).Repeat.Never();
+                Expect.Call(ProfileService.UpdateProfile(Profile)).Return(false);
             }
 
             #endregion
 
             #region Act
             ViewResult view;
-            using (_mock.Playback())
+            using (Mock.Playback())
             {
-                view = (ViewResult)_profileController.Edit(1, null);
+                view = (ViewResult)ProfileController.Edit(1, null);
             }
 
             #endregion
@@ -440,23 +433,23 @@ namespace NHibernateTests.MVCTests.Controllers.Profile
         public void Post_if_update_role_fails_then_return_edit_view_with_error()
         {
             #region Arrange
-            _profileController.ControllerContext = TestHelper.MockControllerContext(_profileController);
-            _profileController.ValueProvider = new FormCollection().ToValueProvider();
+            ProfileController.ControllerContext = TestHelper.MockControllerContext(ProfileController);
+            ProfileController.ValueProvider = new FormCollection().ToValueProvider();
 
-            using (_mock.Record())
+            using (Mock.Record())
             {
-                Expect.Call(_profileService.GetProfile(1)).Return(_profile);
-                Expect.Call(_profileService.UpdateRole(_profile, true)).Return(false);
-                Expect.Call(_profileService.UpdateProfile(_profile)).Return(true);
+                Expect.Call(ProfileService.GetProfile(1)).Return(Profile);
+                Expect.Call(ProfileService.UpdateRole(Profile, true)).Return(false);
+                Expect.Call(ProfileService.UpdateProfile(Profile)).Return(true);
             }
 
             #endregion
 
             #region Act
             ViewResult view;
-            using (_mock.Playback())
+            using (Mock.Playback())
             {
-                view = (ViewResult)_profileController.Edit(1, null);
+                view = (ViewResult)ProfileController.Edit(1, null);
             }
 
             #endregion
@@ -473,29 +466,29 @@ namespace NHibernateTests.MVCTests.Controllers.Profile
         public void If_model_update_false_dont_update_profile_role_then_return_default_view()
         {
             #region Arrange
-            _profileController.ControllerContext = TestHelper.MockControllerContext(_profileController);
+            ProfileController.ControllerContext = TestHelper.MockControllerContext(ProfileController);
             
             //Values that will fail
-            _profileController.ValueProvider = new FormCollection()
-                {
+            ProfileController.ValueProvider = new FormCollection
+                                                  {
                     {"Email",""}
                 }
                 .ToValueProvider();
 
-            using (_mock.Record())
+            using (Mock.Record())
             {
-                Expect.Call(_profileService.GetProfile(1)).Return(_profile);
-                Expect.Call(_profileService.UpdateRole(_profile, true)).Repeat.Never();
-                Expect.Call(_profileService.UpdateProfile(_profile)).Repeat.Never();
+                Expect.Call(ProfileService.GetProfile(1)).Return(Profile);
+                Expect.Call(ProfileService.UpdateRole(Profile, true)).Repeat.Never();
+                Expect.Call(ProfileService.UpdateProfile(Profile)).Repeat.Never();
             }
 
             #endregion
 
             #region Act
             ViewResult view;
-            using (_mock.Playback())
+            using (Mock.Playback())
             {
-                view = (ViewResult)_profileController.Edit(1, null);
+                view = (ViewResult)ProfileController.Edit(1, null);
             }
 
             #endregion

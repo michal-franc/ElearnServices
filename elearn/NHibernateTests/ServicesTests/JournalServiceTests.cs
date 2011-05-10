@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using NUnit.Framework;
 using ELearnServices;
 using NHiberanteDal.DataAccess;
@@ -14,20 +11,19 @@ namespace NHibernateTests.ServicesTests
     class JournalServiceTest : InMemoryWithSampleData
     {
         [Test]
-        public void Can_Add_Mark()
+        public void Can_add_mark()
         {
             #region Arrange
-            JournalMarkModelDto markDto = new JournalMarkModelDto() { Name="test mark", Value="0" };
+            var markDto = new JournalMarkModelDto{ Name="test mark", Value="0" };
             #endregion
 
             #region Act
 
             bool addOk = new JournalService().AddMark(1,markDto);
 
-            JournalModel journal = null;
             using (var session = DataAccess.OpenSession())
             {
-                journal = session.Get<JournalModel>(1);
+            var journal = session.Get<JournalModel>(1);
 
             #endregion
 
@@ -35,11 +31,11 @@ namespace NHibernateTests.ServicesTests
             Assert.That(addOk, Is.True);
             Assert.That(journal.Marks.Count,Is.EqualTo(1));
             #endregion
-            };
+            }
         }
 
         [Test]
-        public void Can_Get_Journal_Details()
+        public void Can_get_journal_details()
         {
             #region Arrange
             #endregion
