@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using NUnit.Framework;
 using Rhino.Mocks;
 using elearn.CourseService;
@@ -15,40 +13,45 @@ namespace NHibernateTests.MVCTests.Controllers.Course
 
     public class BaseTest
     {
-        protected MockRepository _mock;
-        protected ICourseService _service;
-        protected CourseController _controller;
+        protected MockRepository Mock;
+        protected ICourseService Service;
+        protected CourseController Controller;
 
 
         // 13 courses
-        protected CourseSignatureDto[] _courseList = new CourseSignatureDto[]
-        {
-            new CourseSignatureDto(),
-            new CourseSignatureDto(),
-            new CourseSignatureDto(),
-            new CourseSignatureDto(),
-            new CourseSignatureDto(),
-            new CourseSignatureDto(),
-            new CourseSignatureDto(),
-            new CourseSignatureDto(),
-            new CourseSignatureDto(),
-            new CourseSignatureDto(),
-            new CourseSignatureDto(),
-            new CourseSignatureDto(),
-            new CourseSignatureDto()
-        };
+        protected readonly CourseSignatureDto[] CourseList;
 
-        protected CourseDto _course = new CourseDto() { ID=1,Name="test" };
-        protected CourseDto _errorCourse = new CourseDto() { ID = 1, Name = String.Empty };
+        protected readonly CourseDto Course = new CourseDto { ID=1,Name="test" };
+        protected readonly CourseDto ErrorCourse = new CourseDto { ID = 1, Name = String.Empty };
+
+        protected BaseTest()
+        {
+
+            CourseList = new[]
+                             {
+                                 new CourseSignatureDto(),
+                                 new CourseSignatureDto(),
+                                 new CourseSignatureDto(),
+                                 new CourseSignatureDto(),
+                                 new CourseSignatureDto(),
+                                 new CourseSignatureDto(),
+                                 new CourseSignatureDto(),
+                                 new CourseSignatureDto(),
+                                 new CourseSignatureDto(),
+                                 new CourseSignatureDto(),
+                                 new CourseSignatureDto(),
+                                 new CourseSignatureDto(),
+                                 new CourseSignatureDto()
+                             };
+        }
 
 
         [SetUp]
         public void SetUp()
         {
-            _mock = new MockRepository();
-            _service =  _mock.DynamicMock<ICourseService>();
-            _controller = new CourseController(_service);
-            _controller.Limit = 10;
+            Mock = new MockRepository();
+            Service =  Mock.DynamicMock<ICourseService>();
+            Controller = new CourseController(Service) {Limit = 10};
         }
     }
 
@@ -56,16 +59,11 @@ namespace NHibernateTests.MVCTests.Controllers.Course
     [TestFixture]
     public class Index : BaseTest
     {
-
         [Test]
         public void Redirects_to_the_list()
         {
-            #region Arrange
-
-            #endregion
-
             #region Act
-            RedirectToRouteResult redirect = (RedirectToRouteResult)_controller.Index();
+            var redirect = (RedirectToRouteResult)Controller.Index();
             #endregion
 
             #region Assert
@@ -81,40 +79,35 @@ namespace NHibernateTests.MVCTests.Controllers.Course
         [Test]
         public void Get_creates_empty_course_then_returns_create_view()
         {
-            #region Arrange
-
-            #endregion
-
             #region Act
-            var view = (ViewResult)_controller.Create();
+            var view = (ViewResult)Controller.Create();
 
             #endregion
 
             #region Assert
             Assert.IsEmpty(view.ViewName);
+            Assert.That(view.ViewData.Model, Is.Not.Null);
+            Assert.That(view.ViewData.Model,Is.InstanceOf(typeof(CourseDto)));
             #endregion
         }
 				
 
         [Test]
-        public void Post_creates_new_course_then_redirects_to_details_view()
+        public void Post_adds_course_then_redirects_to_details_view()
         {
             #region Arrange
 
-            _controller.ControllerContext = TestHelper.MockControllerContext(_controller);
-            _controller.ValueProvider = TestHelper.ConvertEntityToFormCollection(_course).ToValueProvider();
-
-            using (_mock.Record())
+            using (Mock.Record())
             {
-                Expect.Call(_service.AddCourse(_course)).IgnoreArguments().Return(1);
+                Expect.Call(Service.AddCourse(Course)).IgnoreArguments().Return(1);
             }
             #endregion
 
             #region Act
             RedirectToRouteResult redirect;
-            using (_mock.Playback())
+            using (Mock.Playback())
             {
-                redirect = (RedirectToRouteResult)_controller.Create(null);
+                redirect = (RedirectToRouteResult)Controller.Create(new CourseDto());
             }
 
             #endregion
@@ -126,58 +119,56 @@ namespace NHibernateTests.MVCTests.Controllers.Course
 
 
         [Test]
-        public void Post_if_creates_new_course_failes_then_display_error_view_with_error_message()
+        public void Post_if_create_in_db_course_failes_then_return_error_view()
         {
             #region Arrange
-            _controller.ControllerContext = TestHelper.MockControllerContext(_controller);
-            _controller.ValueProvider = TestHelper.ConvertEntityToFormCollection(_course).ToValueProvider();
-
-            using (_mock.Record())
+            using (Mock.Record())
             {
-                Expect.Call(_service.AddCourse(_course)).IgnoreArguments().Return(-1);
+                Expect.Call(Service.AddCourse(Course)).IgnoreArguments().Return(-1);
             }
             #endregion
 
             #region Act
             ViewResult view;
-            using (_mock.Playback())
+            using (Mock.Playback())
             {
-                view = (ViewResult)_controller.Create(null);
+                view = (ViewResult)Controller.Create(null);
             }
 
             #endregion
 
             #region Assert
             Assert.That(view.ViewName,Is.EqualTo("Error"));
-            Assert.That(view.ViewData["Error"],Is.EqualTo("Problem in DB while creating Course"));
+            Assert.That(view.ViewData["Error"], Is.EqualTo(elearn.Common.ErrorMessages.Course.CourseAddToDbError));
             #endregion
         }
 
         [Test]
-        public void Post_if_update_of_model_failes_then_display_error_view_with_error()
+        public void Post_if_model_state_invalid_failes_then_return_error_view()
         {
             #region Arrange
-            _controller.ControllerContext = TestHelper.MockControllerContext(_controller);
-            _controller.ValueProvider = TestHelper.ConvertEntityToFormCollection(_errorCourse).ToValueProvider();
+            //Creating Error ModelState
+            Controller.ModelState.Add("testError", new ModelState());
+            Controller.ModelState.AddModelError("testError", "test");
 
-            using (_mock.Record())
+            using (Mock.Record())
             {
-                Expect.Call(_service.AddCourse(_course)).Repeat.Never();
+                Expect.Call(Service.AddCourse(Course)).Repeat.Never();
             }
             #endregion
 
             #region Act
             ViewResult view;
-            using (_mock.Playback())
+            using (Mock.Playback())
             {
-                view = (ViewResult)_controller.Create(null);
+                view = (ViewResult)Controller.Create(null);
             }
 
             #endregion
 
             #region Assert
             Assert.That(view.ViewName,Is.EqualTo("Error"));
-            Assert.That(view.ViewData["Error"], Is.EqualTo("Update model error"));
+            Assert.That(view.ViewBag.Error, Is.EqualTo(elearn.Common.ErrorMessages.Course.CourseModelUpdateError));
             #endregion
         }
 				
@@ -187,14 +178,14 @@ namespace NHibernateTests.MVCTests.Controllers.Course
     public class Delete : BaseTest
     {
         [Test]
-        public void Get_returns_delete_View()
+        public void Get_returns_delete_view()
         {
             #region Arrange
 
             #endregion
 
             #region Act
-            var view  =(ViewResult)_controller.Delete();
+            var view  =(ViewResult)Controller.Delete();
             #endregion
 
             #region Assert
@@ -208,17 +199,17 @@ namespace NHibernateTests.MVCTests.Controllers.Course
         {
             #region Arrange
 
-            using (_mock.Record())
+            using (Mock.Record())
             {
-                Expect.Call(_service.Remove(1)).Return(true);
+                Expect.Call(Service.Remove(1)).Return(true);
             }
             #endregion
 
             #region Act
             RedirectToRouteResult redirect;
-            using (_mock.Playback())
+            using (Mock.Playback())
             {
-                redirect = (RedirectToRouteResult)_controller.Delete(1, null);
+                redirect = (RedirectToRouteResult)Controller.Delete(1, null);
             }
 
             #endregion
@@ -233,17 +224,17 @@ namespace NHibernateTests.MVCTests.Controllers.Course
         {
             #region Arrange
 
-            using (_mock.Record())
+            using (Mock.Record())
             {
-                Expect.Call(_service.Remove(1)).Return(false);
+                Expect.Call(Service.Remove(1)).Return(false);
             }
             #endregion
 
             #region Act
             ViewResult view;
-            using (_mock.Playback())
+            using (Mock.Playback())
             {
-                view = (ViewResult)_controller.Delete(1,null);
+                view = (ViewResult)Controller.Delete(1,null);
             }
 
             #endregion
@@ -263,17 +254,17 @@ namespace NHibernateTests.MVCTests.Controllers.Course
         {
             #region Arrange
 
-            using (_mock.Record())
+            using (Mock.Record())
             {
-                Expect.Call(_service.GetById(1)).Return(_course);
+                Expect.Call(Service.GetById(1)).Return(Course);
             }
             #endregion
 
             #region Act
             ViewResult view;
-            using (_mock.Playback())
+            using (Mock.Playback())
             {
-                view = (ViewResult)_controller.Edit(1);
+                view = (ViewResult)Controller.Edit(1);
             }
 
             #endregion
@@ -288,21 +279,21 @@ namespace NHibernateTests.MVCTests.Controllers.Course
         public void Post_updates_course_then_redirects_to_the_details_view()
         {
             #region Arrange
-            _controller.ControllerContext = TestHelper.MockControllerContext(_controller);
-            _controller.ValueProvider = TestHelper.ConvertEntityToFormCollection(_course).ToValueProvider();
+            Controller.ControllerContext = TestHelper.MockControllerContext(Controller);
+            Controller.ValueProvider = TestHelper.ConvertEntityToFormCollection(Course).ToValueProvider();
 
-            using (_mock.Record())
+            using (Mock.Record())
             {
-                Expect.Call(_service.GetById(1)).Return(_course);
-                Expect.Call(_service.Update(_course)).Return(true);
+                Expect.Call(Service.GetById(1)).Return(Course);
+                Expect.Call(Service.Update(Course)).Return(true);
             }
             #endregion
 
             #region Act
             RedirectToRouteResult redirect;
-            using (_mock.Playback())
+            using (Mock.Playback())
             {
-                redirect = (RedirectToRouteResult)_controller.Edit(1,null);
+                redirect = (RedirectToRouteResult)Controller.Edit(1,null);
             }
 
             #endregion
@@ -316,21 +307,21 @@ namespace NHibernateTests.MVCTests.Controllers.Course
         public void Post_if_updates_fails_then_return_error_view()
         {
             #region Arrange
-            _controller.ControllerContext = TestHelper.MockControllerContext(_controller);
-            _controller.ValueProvider = TestHelper.ConvertEntityToFormCollection(_course).ToValueProvider();
+            Controller.ControllerContext = TestHelper.MockControllerContext(Controller);
+            Controller.ValueProvider = TestHelper.ConvertEntityToFormCollection(Course).ToValueProvider();
 
-            using (_mock.Record())
+            using (Mock.Record())
             {
-                Expect.Call(_service.GetById(1)).Return(_course);
-                Expect.Call(_service.Update(_course)).Return(false);
+                Expect.Call(Service.GetById(1)).Return(Course);
+                Expect.Call(Service.Update(Course)).Return(false);
             }
             #endregion
 
             #region Act
             ViewResult view;
-            using (_mock.Playback())
+            using (Mock.Playback())
             {
-                view = (ViewResult)_controller.Edit(1, null);
+                view = (ViewResult)Controller.Edit(1, null);
             }
 
             #endregion
@@ -345,21 +336,21 @@ namespace NHibernateTests.MVCTests.Controllers.Course
         public void Post_if_validation_fails_then_return_edit_view()
         {
             #region Arrange
-            _controller.ControllerContext = TestHelper.MockControllerContext(_controller);
-            _controller.ValueProvider = TestHelper.ConvertEntityToFormCollection(_errorCourse).ToValueProvider();
+            Controller.ControllerContext = TestHelper.MockControllerContext(Controller);
+            Controller.ValueProvider = TestHelper.ConvertEntityToFormCollection(ErrorCourse).ToValueProvider();
 
-            using (_mock.Record())
+            using (Mock.Record())
             {
-                Expect.Call(_service.GetById(1)).Return(_errorCourse);
-                Expect.Call(_service.Update(_errorCourse)).Repeat.Never();
+                Expect.Call(Service.GetById(1)).Return(ErrorCourse);
+                Expect.Call(Service.Update(ErrorCourse)).Repeat.Never();
             }
             #endregion
 
             #region Act
             ViewResult view;
-            using (_mock.Playback())
+            using (Mock.Playback())
             {
-                view = (ViewResult)_controller.Edit(1, null);
+                view = (ViewResult)Controller.Edit(1, null);
             }
 
             #endregion
@@ -380,17 +371,17 @@ namespace NHibernateTests.MVCTests.Controllers.Course
         {
             #region Arrange
 
-            using (_mock.Record())
+            using (Mock.Record())
             {
-                Expect.Call(_service.GetById(1)).Return(_course);
+                Expect.Call(Service.GetById(1)).Return(Course);
             }
             #endregion
 
             #region Act
             ViewResult view;
-            using (_mock.Playback())
+            using (Mock.Playback())
             {
-                view = (ViewResult)_controller.Details(1);
+                view = (ViewResult)Controller.Details(1);
             }
 
             #endregion
@@ -407,17 +398,17 @@ namespace NHibernateTests.MVCTests.Controllers.Course
         {
             #region Arrange
 
-            using (_mock.Record())
+            using (Mock.Record())
             {
-                Expect.Call(_service.GetById(1)).Return(_course);
+                Expect.Call(Service.GetById(1)).Return(Course);
             }
             #endregion
 
             #region Act
             ViewResult view;
-            using (_mock.Playback())
+            using (Mock.Playback())
             {
-                view = (ViewResult)_controller.Details(1);
+                view = (ViewResult)Controller.Details(1);
             }
 
             #endregion
@@ -439,17 +430,17 @@ namespace NHibernateTests.MVCTests.Controllers.Course
         public void Gets_courses_dto_signatures_and_returns_list_view()
         {
             #region Arrange
-            using (_mock.Record())
+            using (Mock.Record())
             {
-                Expect.Call(_service.GetAllSignatures()).Return(_courseList);
+                Expect.Call(Service.GetAllSignatures()).Return(CourseList);
             }
             #endregion
 
             #region Act
             ViewResult view;
-            using (_mock.Playback())
+            using (Mock.Playback())
             {
-                view = (ViewResult)_controller.List(1);
+                view = (ViewResult)Controller.List(1);
             }
 
             #endregion
@@ -465,17 +456,17 @@ namespace NHibernateTests.MVCTests.Controllers.Course
         {
             #region Arrange
 
-            using (_mock.Record())
+            using (Mock.Record())
             {
-                Expect.Call(_service.GetAllSignatures()).Return(_courseList);
+                Expect.Call(Service.GetAllSignatures()).Return(CourseList);
             }
             #endregion
 
             #region Act
             ViewResult view;
-            using (_mock.Playback())
+            using (Mock.Playback())
             {
-                view = (ViewResult)_controller.List(2);
+                view = (ViewResult)Controller.List(2);
             }
 
             #endregion

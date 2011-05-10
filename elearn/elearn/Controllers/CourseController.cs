@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
 using NHiberanteDal.DTO;
 using elearn.CourseService;
@@ -10,7 +7,7 @@ namespace elearn.Controllers
 {
     public class CourseController : Controller
     {
-        ICourseService _service;
+        readonly ICourseService _service;
 
         private int _limit = -1;
 
@@ -37,13 +34,14 @@ namespace elearn.Controllers
 
         //
         // GET: /Course/
-
+        [HttpGet]
         public ActionResult Index()
         {
             return RedirectToAction("List", new { id = 1 });
         }
 
         // GET: /Course/Details/id
+        [HttpGet]
         public ActionResult Details(int id)
         {
             var course = _service.GetById(id);
@@ -52,6 +50,7 @@ namespace elearn.Controllers
 
 
         // GET: /Course/List/id
+        [HttpGet]
         public ActionResult List(int id)
         {
             var courses = _service.GetAllSignatures().Skip((id - 1) * Limit).Take(Limit).ToArray();
@@ -59,17 +58,18 @@ namespace elearn.Controllers
         }
 
         // GET: /Course/Add/
+        [HttpGet]
         public ActionResult Create()
         {
-            return View();
+            var course = new CourseDto();
+            return View(course);
         }
 
         // Post: /Course/Create/
         [HttpPost]
-        public ActionResult Create(FormCollection formValues)
+        public ActionResult Create(CourseDto course)
         {
-            var course = new CourseDto();
-            if (TryUpdateModel<CourseDto>(course))
+            if (ModelState.IsValid)
             {
                 var id = _service.AddCourse(course);
 
@@ -77,13 +77,13 @@ namespace elearn.Controllers
                     return RedirectToAction("Details", new { id = id });
                 else
                 {
-                    ViewData["Error"] = "Problem in DB while creating Course";
+                    ViewBag.Error = Common.ErrorMessages.Course.CourseAddToDbError;
                     return View("Error");
                 }
             }
             else
             {
-                ViewData["Error"] = "Update model error";
+                ViewBag.Error = Common.ErrorMessages.Course.CourseModelUpdateError;
                 return View("Error");
             }
         }
