@@ -64,7 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthorizeAttributeWCF.cs" />
-    <Compile Include="Common\ErrorMessages.cs" />
+    <Compile Include="Common\ErrorMessages\ErrorMessages.cs" />
     <Compile Include="Common\Strings.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
@@ -282,6 +282,7 @@
     <Content Include="Views\Shared\NotFound.cshtml" />
     <Content Include="Views\Course\List.cshtml" />
     <Content Include="Views\Shared\NoAcces.cshtml" />
+    <Content Include="Views\Course\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
