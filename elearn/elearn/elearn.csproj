@@ -111,6 +111,7 @@
     <Content Include="Global.asax" />
     <None Include="Properties\DataSources\NHiberanteDal.DTO.CourseDto.datasource" />
     <None Include="Properties\DataSources\NHiberanteDal.DTO.CourseSignatureDto.datasource" />
+    <None Include="Properties\DataSources\NHiberanteDal.DTO.CourseTypeModelDto.datasource" />
     <None Include="Properties\DataSources\NHiberanteDal.DTO.GroupModelDto.datasource" />
     <None Include="Properties\DataSources\NHiberanteDal.DTO.JournalModelDto.datasource" />
     <None Include="Properties\DataSources\NHiberanteDal.DTO.ProfileModelDto.datasource" />

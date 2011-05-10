@@ -62,6 +62,12 @@ namespace elearn.Controllers
         public ActionResult Create()
         {
             var course = new CourseDto();
+            var courseTypes = _service.GetAllCourseTypes().ToList();
+            if (courseTypes.Count <= 0)
+            {
+                courseTypes.Add(new CourseTypeModelDto{TypeName = "None"});
+            }
+            ViewBag.CourseType = new SelectList(courseTypes);
             return View(course);
         }
 
