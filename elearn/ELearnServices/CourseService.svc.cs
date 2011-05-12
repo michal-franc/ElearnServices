@@ -69,7 +69,7 @@ namespace ELearnServices
             List<CourseDto> returnedList = null;
             using (var session = DataAccess.OpenSession())
             {
-                returnedList =CourseDto.Map((List<CourseModel>)session.CreateQuery(new QueryCourseByName("test").Query).List<CourseModel>());
+                returnedList =CourseDto.Map((List<CourseModel>)session.CreateQuery(new QueryCourseByName(value).Query).List<CourseModel>());
             }
             return returnedList;
         }
@@ -103,8 +103,9 @@ namespace ELearnServices
             {
                 using (var session = DataAccess.OpenSession())
                 {
-                    var course = session.Get<CourseDto>(id);
+                    var course = session.Get<CourseModel>(id);
                     session.Delete(course);
+                    session.Flush();
                 }
                 return true;
             }
