@@ -109,46 +109,13 @@ namespace NHibernateTests.MVCTests.Controllers.Course
 
             #region Assert
             Assert.IsEmpty(view.ViewName);
-            Assert.That(view.ViewBag.CourseType, Is.Not.Null);
-            Assert.That(view.ViewBag.CourseType, Is.InstanceOf(typeof(SelectList)));
-            Assert.That(view.ViewData.Model, Is.Not.Null);
+            Assert.IsNotNull(view.ViewBag.CourseTypes);
+            Assert.That(view.ViewBag.CourseTypes, Is.InstanceOf(typeof(SelectList)));
+            Assert.IsNotNull(view.ViewData.Model);
             Assert.That(view.ViewData.Model,Is.InstanceOf(typeof(CourseDto)));
             #endregion
         }
-
-
-
-        [Test]
-        public void Get_if_no_course_types_then_create_default_none_type()
-        {
-            #region Arrange
-
-            using (Mock.Record())
-            {
-                Expect.Call(CourseService.GetAllCourseTypes()).Return(new CourseTypeModelDto[0]);
-            }
-            #endregion
-
-            #region Act
-            ViewResult view;
-            using (Mock.Playback())
-            {
-                view = (ViewResult)CourseController.Create();
-            }
-
-            #endregion
-
-            #region Assert
-            Assert.IsEmpty(view.ViewName);
-            Assert.That(view.ViewBag.CourseType, Is.Not.Null);
-            Assert.That(view.ViewBag.CourseType, Is.InstanceOf(typeof(SelectList)));
-            Assert.That(((SelectList)view.ViewBag.CourseType).First(), Is.EqualTo(new CourseTypeModelDto { TypeName = "None" }));
-            Assert.That(view.ViewData.Model, Is.Not.Null);
-            Assert.That(view.ViewData.Model, Is.InstanceOf(typeof(CourseDto)));
-            #endregion
-        }
-				
-				
+			
 
         [Test]
         public void Post_adds_course_then_redirects_to_details_action()
@@ -219,7 +186,7 @@ namespace NHibernateTests.MVCTests.Controllers.Course
             ViewResult view;
             using (Mock.Playback())
             {
-                view = (ViewResult)CourseController.Create(null);
+                view = (ViewResult)CourseController.Create(Course);
             }
 
             #endregion
@@ -236,14 +203,15 @@ namespace NHibernateTests.MVCTests.Controllers.Course
     public class Delete : BaseTest
     {
         [Test]
-        public void Get_returns_delete_view()
+        public void Get_returns_delete_view_with_id_as_a_model()
         {
             #region Act
-            var view  =(ViewResult)CourseController.Delete();
+            var view  =(ViewResult)CourseController.Delete(1);
             #endregion
 
             #region Assert
             Assert.IsEmpty(view.ViewName);
+            Assert.That(view.ViewData.Model,Is.EqualTo(1));
             #endregion
         }
 
@@ -263,7 +231,7 @@ namespace NHibernateTests.MVCTests.Controllers.Course
             RedirectToRouteResult redirect;
             using (Mock.Playback())
             {
-                redirect = (RedirectToRouteResult)CourseController.Delete(1, null);
+                redirect = (RedirectToRouteResult)CourseController.DeleteCourse(1);
             }
 
             #endregion
@@ -288,7 +256,7 @@ namespace NHibernateTests.MVCTests.Controllers.Course
             ViewResult view;
             using (Mock.Playback())
             {
-                view = (ViewResult)CourseController.Delete(1,null);
+                view = (ViewResult)CourseController.DeleteCourse(1);
             }
 
             #endregion
@@ -304,7 +272,7 @@ namespace NHibernateTests.MVCTests.Controllers.Course
     public class Edit : BaseTest
     {
         [Test]
-        public void Returns_edit_view()
+        public void Get_gets_course_types_and_returns_edit_view_with_coruse_model()
         {
             #region Arrange
 
@@ -325,6 +293,9 @@ namespace NHibernateTests.MVCTests.Controllers.Course
 
             #region Assert
             Assert.IsEmpty(view.ViewName);
+            Assert.IsNotNull(view.ViewBag.CourseTypes);
+            Assert.IsNotNull(view.ViewData.Model);
+            Assert.That(view.ViewData.Model,Is.InstanceOf(typeof(CourseDto)));
             #endregion
         }
 
