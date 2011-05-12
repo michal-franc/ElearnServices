@@ -21,6 +21,10 @@ namespace NHiberanteDal.Models
         //Many
         public virtual IList<TestQuestionModel> Questions { get; set; }
 
+        public TestModel()
+        {
+            Questions = new List<TestQuestionModel>();
+        }
 
     }
 }
