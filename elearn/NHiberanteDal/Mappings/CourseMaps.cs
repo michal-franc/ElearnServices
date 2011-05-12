@@ -20,15 +20,15 @@ namespace NHiberanteDal.Mappings
             
 
             //One
-            References(x => x.Group).Not.Nullable().Cascade.SaveUpdate().Not.LazyLoad();
-            References(x => x.CourseType).Not.Nullable().Cascade.SaveUpdate().Not.LazyLoad();
-            References(x => x.Forum).Not.Nullable().Cascade.SaveUpdate().Not.LazyLoad();
-            References(x => x.ShoutBox).Not.Nullable().Cascade.SaveUpdate().Not.LazyLoad();
+            References(x => x.Group).Not.Nullable().Cascade.All().Not.LazyLoad();
+            References(x => x.CourseType).Not.Nullable().Not.LazyLoad();
+            References(x => x.Forum).Not.Nullable().Cascade.All().Not.LazyLoad();
+            References(x => x.ShoutBox).Not.Nullable().Cascade.All().Not.LazyLoad();
 
             //Many
-            HasMany(x => x.Contents).KeyColumns.Add("CourseId").Cascade.SaveUpdate().LazyLoad();
-            HasMany(x => x.Surveys).KeyColumns.Add("CourseId").Cascade.SaveUpdate().LazyLoad();
-            HasMany(x => x.Tests).KeyColumns.Add("CourseId").Cascade.SaveUpdate().LazyLoad();
+            HasMany(x => x.Contents).KeyColumns.Add("CourseId").Cascade.All().LazyLoad();
+            HasMany(x => x.Surveys).KeyColumns.Add("CourseId").Cascade.All().LazyLoad();
+            HasMany(x => x.Tests).KeyColumns.Add("CourseId").Cascade.All().LazyLoad();
         }
     }
 
