@@ -39,5 +39,10 @@
         {
             get { return "Problem Updating Course in DB"; }
         }
+
+        public static string GroupTypeError
+        {
+            get { return "No course group type error."; }
+        }
     }
 }
