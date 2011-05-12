@@ -26,5 +26,11 @@ namespace ELearnServices
 
         [OperationContract]
         bool UpdateGroup(GroupModelDto groupModelDto);
+
+        [OperationContract]
+        IList<GroupTypeModelDto> GetGroupTypes();
+
+        [OperationContract]
+        IList<GroupTypeModelDto> GetGroupTypeByName(string typeName);
     }
 }

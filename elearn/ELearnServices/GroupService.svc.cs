@@ -7,6 +7,7 @@ using System.Text;
 using NHiberanteDal.DTO;
 using NHiberanteDal.Models;
 using NHiberanteDal.DataAccess;
+using NHiberanteDal.DataAccess.QueryObjects;
 
 namespace ELearnServices
 {
@@ -70,6 +71,21 @@ namespace ELearnServices
             {
                 return false;
             }
+        }
+
+        public IList<GroupTypeModelDto> GetGroupTypes()
+        {
+            return GroupTypeModelDto.Map(new Repository<GroupTypeModel>().GetAll().ToList());
+        }
+
+        public IList<GroupTypeModelDto> GetGroupTypeByName(string typeName)
+        {
+            List<GroupTypeModelDto> types = null;
+            using (var session = DataAccess.OpenSession())
+            {
+                types = GroupTypeModelDto.Map((List<GroupTypeModel>)session.CreateQuery(new QueryGroupTypesByName(typeName).Query).List<GroupTypeModel>());
+            }
+            return types;
         }
     }
 }
