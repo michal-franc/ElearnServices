@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using NHiberanteDal.Models;
-using AutoMapper;
 using System.Runtime.Serialization;
 using System.ComponentModel.DataAnnotations;
 
@@ -12,6 +8,10 @@ namespace NHiberanteDal.DTO
     [DataContract]
     public class CourseDto : DtoBaseClass<CourseDto,CourseModel>
     {
+
+        public static int DefaultGroupTypeId = 2;
+        public static int DefaultCourseTypeId = 3;
+
         [DataMember]
         public int ID { get; set; }
         [DataMember]
@@ -26,12 +26,33 @@ namespace NHiberanteDal.DTO
         [DataMember]
         public CourseTypeModelDto CourseType { get; set; }
         [DataMember]
-        public virtual GroupModelDto Group { get; set; }
+        public  GroupModelDto Group { get; set; }
         [DataMember]
-        public virtual ForumModelDto Forum { get; set; }
+        public  ForumModelDto Forum { get; set; }
         [DataMember]
         public ShoutboxModelDto ShoutBox { get; set; }
         [DataMember]
         public SurveyModel LatestSurvey {get;set;}
+
+
+         public CourseDto()
+	     {
+            CreationDate = DateTime.Now;
+            ShoutBox = new ShoutboxModelDto();
+            Forum = new ForumModelDto()
+            {
+                Author = "DefaultForumAuthorName",
+                Name = "DefaultCourseForumName"
+            };
+
+            CourseType = new CourseTypeModelDto{ID=DefaultCourseTypeId};
+
+            Group = new GroupModelDto()
+            {
+                GroupName = "DefaultCourseGroupName",
+                GroupType = new GroupTypeModelDto { ID = DefaultGroupTypeId }       
+            };
+	     }
     }
+
 }
