@@ -11,7 +11,7 @@ namespace NHiberanteDal.DTO
     public class GroupTypeModelDto : DtoBaseClass<GroupTypeModelDto,GroupTypeModel>
     {
         [DataMember]
-        public int ID { get; private set; }
+        public int ID { get; set; }
         [DataMember]
         public string TypeName { get; set; }
     }

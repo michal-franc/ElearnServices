@@ -17,5 +17,6 @@ namespace NHiberanteDal.DTO
         [DataMember]
         public  GroupTypeModelDto GroupType { get; set; }
         public  IList<ProfileModel> Users { get; set; }
+
     }
 }
