@@ -68,6 +68,7 @@
     <Compile Include="Common\Strings.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
+    <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JournalController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
@@ -113,6 +114,7 @@
     <None Include="Properties\DataSources\NHiberanteDal.DTO.CourseSignatureDto.datasource" />
     <None Include="Properties\DataSources\NHiberanteDal.DTO.CourseTypeModelDto.datasource" />
     <None Include="Properties\DataSources\NHiberanteDal.DTO.GroupModelDto.datasource" />
+    <None Include="Properties\DataSources\NHiberanteDal.DTO.GroupTypeModelDto.datasource" />
     <None Include="Properties\DataSources\NHiberanteDal.DTO.JournalModelDto.datasource" />
     <None Include="Properties\DataSources\NHiberanteDal.DTO.ProfileModelDto.datasource" />
     <None Include="Properties\DataSources\NHiberanteDal.DTO.TestDto.datasource" />
@@ -285,6 +287,7 @@
     <Content Include="Views\Shared\NoAcces.cshtml" />
     <Content Include="Views\Course\Create.cshtml" />
     <Content Include="Views\Course\Edit.cshtml" />
+    <Content Include="Views\Course\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -322,7 +325,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>29852</DevelopmentServerPort>
+          <DevelopmentServerPort>38442</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

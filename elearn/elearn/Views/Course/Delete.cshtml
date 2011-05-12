@@ -1,0 +1,11 @@
+﻿
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Are you sure ??</h2>
+
+@Html.ActionLink("Yes", "DeleteCourse", new { id = ViewData.Model, })
+@Html.ActionLink("No","List")
+

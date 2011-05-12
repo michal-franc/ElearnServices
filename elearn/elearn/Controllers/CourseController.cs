@@ -57,17 +57,14 @@ namespace elearn.Controllers
             return View(courses);
         }
 
+
         // GET: /Course/Add/
         [HttpGet]
         public ActionResult Create()
         {
             var course = new CourseDto();
             var courseTypes = _service.GetAllCourseTypes().ToList();
-            if (courseTypes.Count <= 0)
-            {
-                courseTypes.Add(new CourseTypeModelDto{TypeName = "None"});
-            }
-            ViewBag.CourseType = new SelectList(courseTypes);
+            ViewBag.CourseTypes = new SelectList(courseTypes,"ID","TypeName");
             return View(course);
         }
 
@@ -75,50 +72,56 @@ namespace elearn.Controllers
         [HttpPost]
         public ActionResult Create(CourseDto course)
         {
+            //Fixing ModelState Valid Error
+            if (ModelState.ContainsKey("CourseType"))
+            {
+                var courseTypeId = System.Int32.Parse(ModelState["CourseType"].Value.AttemptedValue);
+                course.CourseType = new CourseTypeModelDto { ID = courseTypeId };
+                ModelState.Remove("CourseType");
+            }
+
             if (ModelState.IsValid)
             {
+
                 var id = _service.AddCourse(course);
 
                 if (id > 0)
-                    return RedirectToAction("Details", new { id = id });
-                else
-                {
-                    ViewBag.Error = Common.ErrorMessages.Course.AddToDbError;
-                    return View("Error");
-                }
-            }
-            else
-            {
-                ViewBag.Error = Common.ErrorMessages.Course.ModelUpdateError;
+                    return RedirectToAction("Details", new {id});
+                
+                ViewBag.Error = Common.ErrorMessages.Course.AddToDbError;
                 return View("Error");
             }
+            
+            ViewBag.Error = Common.ErrorMessages.Course.ModelUpdateError;
+            return View("Error");
         }
 
         // GET: /Course/Delete/id
-        public ActionResult Delete()
+        [HttpGet]
+        public ActionResult Delete(int id)
         {
-            return View();
+            return View(id);
         }
 
-        // Post: /Course/Delete/id
-        [HttpPost]
-        public ActionResult Delete(int id,FormCollection formValues)
+        //Get: /Course/Delete/id
+        [HttpGet]
+        public ActionResult DeleteCourse(int id)
         {
             if (_service.Remove(id))
             {
-                return RedirectToAction("List");
+                return RedirectToAction("List",new{id=1});
             }
-            else
-            {
-                ViewData["Error"] = "Problem Deleting Course";
-                return View("Error");
-            }
+            ViewBag.Error = Common.ErrorMessages.Course.DeleteError;
+            return View("Error");
         }
 
         //Get: /Course/Edit/id
+        [HttpGet]
         public ActionResult Edit(int id)
         {
             var course = _service.GetById(id);
+            var courseTypes = _service.GetAllCourseTypes().ToList();
+            ViewBag.CourseTypes = new SelectList(courseTypes, "ID", "TypeName");
             return View(course);
         }
 
@@ -126,23 +129,27 @@ namespace elearn.Controllers
         [HttpPost]
         public ActionResult Edit(CourseDto course)
         {
+            //Fixing ModelState Valid Error
+            if (ModelState.ContainsKey("CourseType"))
+            {
+                int courseTypeId = System.Int32.Parse(ModelState["CourseType"].Value.AttemptedValue);
+                course.CourseType = new CourseTypeModelDto { ID = courseTypeId };
+                ModelState.Remove("CourseType");
+            }
+
             if (ModelState.IsValid)
             {
                 if (_service.Update(course))
                 {
                     return RedirectToAction("Details", new { id = course.ID });
                 }
-                else
-                {
-                    ViewBag.Error = Common.ErrorMessages.Course.UpdateToDbError;
-                    return View("Error");
-                }
+                
+                ViewBag.Error = Common.ErrorMessages.Course.UpdateToDbError;
+                return View("Error");
             }
-            else
-            {
-                ViewBag.Error = Common.ErrorMessages.Course.ModelUpdateError;
-                return View();
-            }
+            
+            ViewBag.Error = Common.ErrorMessages.Course.ModelUpdateError;
+            return View();
         }
     }
 }
