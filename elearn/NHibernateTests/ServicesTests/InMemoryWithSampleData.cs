@@ -14,6 +14,7 @@ namespace NHibernateTests.ServicesTests
     {
         protected CourseTypeModel _testCourseType;
         protected CourseTypeModel _testCourseType1;
+        protected ContentTypeModel _testContentType;
         protected GroupTypeModel _testGroupType;
         protected GroupModel _testGroup;
         protected ForumModel _testForum;
@@ -31,6 +32,8 @@ namespace NHibernateTests.ServicesTests
         protected TestQuestionModel _testQuestion;
         protected JournalModel _testJournal;
         protected JournalMarkModel _testJournalMark;
+        protected GroupTypeModel _testGroupType1;
+        protected ContentModel _testContent;
 
 
         [SetUp]
@@ -50,6 +53,7 @@ namespace NHibernateTests.ServicesTests
             _testCourseType = new CourseTypeModel() { TypeName = "Fizyka" };
             _testCourseType1 = new CourseTypeModel() { TypeName = "Matematyka" };
             _testGroupType = new GroupTypeModel() { TypeName = "test" };
+            _testGroupType1 = new GroupTypeModel() { TypeName = "test1" };
             _testGroup = new GroupModel() { GroupType = _testGroupType, GroupName = "test" };
             _testForum = new ForumModel() { Author = "test", Name = "test" };
             _testShoutBox = new ShoutboxModel() { };
@@ -92,6 +96,16 @@ namespace NHibernateTests.ServicesTests
                 Name = "test1",
 
             };
+            _testContentType = new ContentTypeModel(){TypeName = "test"};
+            _testContent = new ContentModel()
+                               {
+                                   ContentUrl = "test",
+                                   CreationDate = DateTime.Now,
+                                   DownloadNumber = 0,
+                                   Name="test",
+                                   Text = "test",
+                                   Type = _testContentType
+                               };
             _testJournalMark = new JournalMarkModel() { Name = "Zaliczenie", Value = "5" };
             _testJournal = new JournalModel() { Course = _testCourse3, AverageMark = 0, Marks = new List<JournalMarkModel>() { _testJournalMark }, Name = "test journal" };
 
@@ -101,6 +115,7 @@ namespace NHibernateTests.ServicesTests
                 session.Save(_testPofile);
                 session.Save(_testCourseType);
                 session.Save(_testGroupType);
+                session.Save(_testGroupType1);
                 session.Save(_testGroup);
                 session.Save(_testForum);
                 session.Save(_testShoutBox);
@@ -117,6 +132,8 @@ namespace NHibernateTests.ServicesTests
                 session.Save(_testCourse3);
                 session.Save(_testJournalMark);
                 session.Save(_testJournal);
+                session.Save(_testContentType);
+                session.Save(_testContent);
                 session.Flush();
             }
         }
