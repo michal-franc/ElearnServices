@@ -60,7 +60,7 @@ namespace NHibernateTests.ServicesTests
         }
 
         [Test]
-        public void Can_get_course_latest_Test()
+        public void Can_get_course_latest_test()
         {
             #region Arrange
             using (var session = DataAccess.OpenSession())
@@ -86,7 +86,7 @@ namespace NHibernateTests.ServicesTests
         }
 
         [Test]
-        public void Can_get_course_all_TestsSignatures()
+        public void Can_get_course_all_testssignatures()
         {
             #region Arrange
             using (var session = DataAccess.OpenSession())
@@ -125,7 +125,7 @@ namespace NHibernateTests.ServicesTests
             #endregion
 
             #region Assert
-            Assert.That(filteredCourses.Count,Is.EqualTo(1));
+            Assert.That(filteredCourses.Count,Is.EqualTo(2));
             #endregion
         }
 
@@ -218,6 +218,114 @@ namespace NHibernateTests.ServicesTests
             Assert.That(updateOk,Is.True);
             Assert.That(course.CourseType.TypeName, Is.EqualTo("Matematyka"));
             #endregion
-        }	
+        }
+
+
+        [Test]
+        public void Can_remove_course_by_id()
+        {
+            #region Arrange
+
+            int id = -1;
+            DataAccess.InTransaction(session=>
+            {
+                id = (int)session.Save(_testCourse3);
+            });
+
+            #endregion
+
+            #region Act
+
+            bool ok = new CourseService().Remove(id);
+
+            #endregion
+
+            #region Assert
+            Assert.IsTrue(ok);
+            #endregion
+        }
+
+        [Test]
+        public void Can_remove_with_nested_tests_by_id()
+        {
+            #region Arrange
+
+            _testQuestion.Answers.Add(_testQuestionAnswer);
+            _testTest.Questions.Add(_testQuestion);
+            _testCourse3.Tests.Add(_testTest);
+
+            int id = -1;
+            DataAccess.InTransaction(session =>
+            {
+                id = (int)session.Save(_testCourse3);
+            });
+
+            #endregion
+
+            #region Act
+
+            bool ok = new CourseService().Remove(id);
+
+            #endregion
+
+            #region Assert
+            Assert.IsTrue(ok);
+            #endregion
+        }
+
+
+        [Test]
+        public void Can_remove_with_nested_contents_by_id()
+        {
+            #region Arrange
+
+            _testCourse3.Contents.Add(_testContent);
+
+            int id = -1;
+            DataAccess.InTransaction(session =>
+            {
+                id = (int)session.Save(_testCourse3);
+            });
+
+            #endregion
+
+            #region Act
+
+            bool ok = new CourseService().Remove(id);
+
+            #endregion
+
+            #region Assert
+            Assert.IsTrue(ok);
+            #endregion
+        }
+
+        [Test]
+        public void Can_remove_with_nested_surveys_by_id()
+        {
+            #region Arrange
+
+            _testCourse3.Surveys.Add(_testSurvey);
+
+            int id = -1;
+            DataAccess.InTransaction(session =>
+            {
+                id = (int)session.Save(_testCourse3);
+            });
+
+            #endregion
+
+            #region Act
+
+            bool ok = new CourseService().Remove(id);
+
+            #endregion
+
+            #region Assert
+            Assert.IsTrue(ok);
+            #endregion
+        }
+				
+				
     }
 }
