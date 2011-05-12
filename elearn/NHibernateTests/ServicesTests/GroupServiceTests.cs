@@ -18,10 +18,7 @@ namespace NHibernateTests.ServicesTests
         {
             #region Arrange
             var group = new GroupModel() { GroupName="test", GroupType=_testGroupType};
-            DataAccess.InTransaction(session =>
-            {
-                session.Save(group);
-            });
+            DataAccess.InTransaction(session => session.Save(group));
             #endregion
 
             #region Act
@@ -138,6 +135,42 @@ namespace NHibernateTests.ServicesTests
             Assert.That(deleteOk, Is.True);
             Assert.That(groups.Count, Is.EqualTo(1));
             #endregion
-        }			
+        }
+
+
+        [Test]
+        public void Can_get_group_types()
+        {
+            #region Arrange
+            #endregion
+
+            #region Act
+
+            var courses = new GroupService().GetGroupTypes();
+
+            #endregion
+
+            #region Assert
+            Assert.That(courses.Count,Is.EqualTo(2));
+            #endregion
+        }
+
+
+        [Test]
+        public void Can_get_group_type_by_name()
+        {
+            #region Arrange
+            #endregion
+
+            #region Act
+
+            var course = new GroupService().GetGroupTypeByName("test");
+
+            #endregion
+
+            #region Assert
+            Assert.IsNotNull(course);
+            #endregion
+        }				
     }
 }
