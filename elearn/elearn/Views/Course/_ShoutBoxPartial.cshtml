@@ -1,1 +1,13 @@
 ﻿
+
+@model NHiberanteDal.DTO.CourseDto
+
+ShoutBox ID = @ViewData.Model.ShoutBox.ID
+
+
+@{
+    foreach (var message in ViewData.Model.ShoutBox.Messages)
+    {
+        Write(message.TimePosted + ":" + message.Message);
+    }
+}
