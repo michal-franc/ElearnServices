@@ -14,7 +14,7 @@ namespace NHiberanteDal.Mappings
             Id(x => x.ID);
 
             //Many
-            HasMany(x => x.Messages).KeyColumns.Add("ShoutboxId");
+            HasMany(x => x.Messages).Cascade.All().Not.LazyLoad().KeyColumns.Add("ShoutboxId");
 
         }
     }

@@ -102,6 +102,7 @@
     <Compile Include="DTO\JournalMarkModelDto.cs" />
     <Compile Include="DTO\JournalModelDto.cs" />
     <Compile Include="DTO\ProfileModelDto.cs" />
+    <Compile Include="DTO\ShoutBoxMessageModelDto.cs" />
     <Compile Include="DTO\ShoutboxModelDto.cs" />
     <Compile Include="DTO\SurveyModelDto.cs" />
     <Compile Include="DTO\SurveyQuestionModelDto.cs" />

@@ -11,5 +11,11 @@ namespace NHiberanteDal.Models
        
         //Many
         public virtual IList<ShoutBoxMessageModel> Messages { get; set; }
+
+
+        public ShoutboxModel()
+        {
+                Messages = new List<ShoutBoxMessageModel>();
+        }
     }
 }

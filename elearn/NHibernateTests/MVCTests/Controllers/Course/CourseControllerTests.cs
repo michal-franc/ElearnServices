@@ -279,6 +279,7 @@ namespace NHibernateTests.MVCTests.Controllers.Course
             using (Mock.Record())
             {
                 Expect.Call(CourseService.GetById(1)).Return(Course);
+                Expect.Call(CourseService.GetAllCourseTypes()).Return(CourseTypesList);
             }
             #endregion
 
