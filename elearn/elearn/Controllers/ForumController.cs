@@ -6,17 +6,17 @@ using System.Web.Mvc;
 
 namespace elearn.Controllers
 {
-    public class GroupController : Controller
+    public class ForumController : Controller
     {
         //
-        // GET: /Group/
+        // GET: /Forum/
 
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult Details()
+        public ActionResult Show()
         {
             return View();
         }

@@ -2,6 +2,8 @@
     ViewBag.Title = "Kurs";
 }
 
+@using System.Web.Mvc.Html
+
 @model NHiberanteDal.DTO.CourseDto
 
 
@@ -19,6 +21,12 @@
 
     <li>Course Type : @Model.CourseType.TypeName</li>
     <li>DateCreated : @Model.CreationDate.ToShortDateString()</li>
+    <li>@Html.ActionLink("Forum", "Show", "Forum")</li>
+    <li>@Html.ActionLink("Group", "Details", "Group")</li>
+
+
+    @Html.RenderPartial("_ShoutBoxPartial");
+
     <br />
 </ul>
 
