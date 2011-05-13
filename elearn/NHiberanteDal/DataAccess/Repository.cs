@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using NHibernate;
 using NHibernate.Criterion;
 
@@ -77,7 +75,7 @@ namespace NHiberanteDal.DataAccess
 
         public bool Update(T item)
         {
-            bool ok = false;
+            bool ok;
             using (var session = DataAccess.OpenSession())
             {
                 using (ITransaction transaction = session.BeginTransaction())
@@ -104,7 +102,7 @@ namespace NHiberanteDal.DataAccess
 
         public int GetCount()
         {
-            int count = 0;
+            int count;
             using (var session = DataAccess.OpenSession())
             {
                 count = session.CreateCriteria(typeof(T))
@@ -114,7 +112,7 @@ namespace NHiberanteDal.DataAccess
         }
         public IList<T> GetAll()
         {
-            IList<T> returnedList = null;
+            IList<T> returnedList;
             using (var session = DataAccess.OpenSession())
             {
                 returnedList = session.CreateCriteria(typeof(T)).List<T>();
@@ -124,17 +122,17 @@ namespace NHiberanteDal.DataAccess
 
         public IList<T> GetByParameterEqualsFilter(string parameterName, object value)
         {
-            IList<T> returnedList = null;
+            IList<T> returnedList;
             using (var session = DataAccess.OpenSession())
             {
-                returnedList = session.CreateCriteria(typeof(T)).Add(Expression.Eq(parameterName, value)).List<T>();
+                returnedList = session.CreateCriteria(typeof(T)).Add(Restrictions.Eq(parameterName, value)).List<T>();
             }
             return returnedList;
         }
 
         public IList<T> GetByQuery(string query)
         {
-            IList<T> returnedList = null;
+            IList<T> returnedList;
             using (var session = DataAccess.OpenSession())
             {
                 returnedList = session.CreateQuery(query).List<T>();
