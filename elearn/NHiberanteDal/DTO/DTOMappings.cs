@@ -39,6 +39,8 @@ namespace NHiberanteDal.DTO
                     Mapper.CreateMap<TestTypeModelDto, TestTypeModel>();
                     Mapper.CreateMap<ShoutboxModel, ShoutboxModelDto>();
                     Mapper.CreateMap<ShoutboxModelDto, ShoutboxModel>();
+                    Mapper.CreateMap<ShoutBoxMessageModel,ShoutBoxMessageModelDto>();
+                    Mapper.CreateMap<ShoutBoxMessageModelDto,ShoutBoxMessageModel>();
                     Mapper.CreateMap<ForumModel, ForumModelDto>();
                     Mapper.CreateMap<ForumModelDto, ForumModel>();
                     Mapper.CreateMap<CourseTypeModel, CourseTypeModelDto>();

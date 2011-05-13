@@ -13,6 +13,8 @@ namespace NHiberanteDal.DTO
         [DataMember]
         public  int ID { get; private set; }
         //Many
-        public  IList<ShoutBoxMessageModel> Messages { get; set; }
+        [DataMember]
+        public List<ShoutBoxMessageModelDto> Messages { get; set; }
+
     }
 }
