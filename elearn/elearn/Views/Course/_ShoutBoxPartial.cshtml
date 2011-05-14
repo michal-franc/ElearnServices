@@ -2,39 +2,106 @@
 
 @model NHiberanteDal.DTO.CourseDto
 
-ShoutBox ID = @ViewData.Model.ShoutBox.ID
-
-
-@{
-    foreach (var message in ViewData.Model.ShoutBox.Messages)
-    {
-        Write(message.TimePosted + ":" + message.Message);
-    }
-}
-
+ShoutBox 
+<div id="shoutBoxMessages"></div>
 <input id="shoutBoxText" type="text"/>
+<div id="markGood" hidden="hidden" >Good</div>
+<div id="markFail" hidden="hidden">Fail</div>
+<div id="markLoading" hidden="hidden">Loading</div>
 
-<script type="text/javascript">
+<script type="text/javascript"> 
+
+
+    function reloadShoutBox() {
+        $("#markLoading").show();
+        $.ajax({
+            type : "POST",
+                url: "@Url.Action("GetMessages", "ShoutBox", new { id = ViewData.Model.ShoutBox.ID})",
+                success: function(msg) {
+                        if (msg.IsSuccess) {
+                            var messageBox = $("#shoutBoxMessages");
+                            messageBox.html("");
+                            for (var i = 0;i<msg.Data.length;i++) {
+                                messageBox.append(FormatMessage(msg.Data[i]));
+                            }
+                            $("#markGood").show();
+                            $("#markLoading").hide();
+                    }
+                    else {
+                        $("#markFail").show();
+                        $("#markLoading").hide();
+                    }
+                },
+                failure : function () {
+                    $("#markFail").show();
+                    $("#markLoading").hide();
+                }
+            });
+    };
+
+
 
     $().ready(function () {
+        reloadShoutBox();
         $("#shoutBoxText").bind('keypress', function (e) {
 
             var code = (e.keyCode ? e.keyCode : e.which);
             //enter code
             if (code == 13) {
                var shoutBoxtext = $("#shoutBoxText").val();
+                $("#markGood").hide();
+                $("#markFail").hide();
+                $("#markLoading").show();
                 $.ajax({
                     type : "POST",
                     url: "@Url.Action("Add", "ShoutBox", new { id = ViewData.Model.ShoutBox.ID})",
                     data: "message="+shoutBoxtext,
                     success: function(msg) {
-                        alert('chodzi');
+                            if (msg.IsSuccess) {
+                                reloadShoutBox();
+                                $("#shoutBoxText").val("");
+                                $("#markGood").show();
+                        }
+                        else {
+                            $("#markFail").show();
+                            $("#markLoading").hide();
+                       }
+                    },
+                    failure : function () {
+                        $("#markFail").show();
+                        $("#markLoading").hide();
                     }
                 });
             }
         });
 
     });
+    
+    
+    function FormatMessage(data) {
+        var formatedMessage = 
+        FormatDate(JsonToDate(data.TimePosted)) + " "
+            + data.Author + " "
+                + data.Message + "<br />";
+        return formatedMessage;
+    }
+    
+    
+    function FormatDate(date) {
+        var hours = date.getHours();
+        if (hours <10)
+            hours = "0" + hours;
+        
+        var minutes = date.getMinutes();
+        if (minutes<10)
+            minutes = "0" + minutes;
+        return hours + ":" + minutes;
+    }
+    
+    function JsonToDate(date) {
+        var returnedDate = eval(date.replace(/\/Date\((\d+)\)\//gi, "new Date($1)"));
+        return returnedDate;
+    }
    
 
 </script>

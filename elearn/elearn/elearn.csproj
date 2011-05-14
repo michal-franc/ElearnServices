@@ -120,6 +120,7 @@
     <None Include="Properties\DataSources\NHiberanteDal.DTO.GroupTypeModelDto.datasource" />
     <None Include="Properties\DataSources\NHiberanteDal.DTO.JournalModelDto.datasource" />
     <None Include="Properties\DataSources\NHiberanteDal.DTO.ProfileModelDto.datasource" />
+    <None Include="Properties\DataSources\NHiberanteDal.DTO.ShoutBoxMessageModelDto.datasource" />
     <None Include="Properties\DataSources\NHiberanteDal.DTO.TestDto.datasource" />
     <None Include="Properties\DataSources\NHiberanteDal.DTO.TestSignatureDto.datasource" />
     <None Include="Properties\DataSources\NHiberanteDal.Models.ForumModel.datasource" />
