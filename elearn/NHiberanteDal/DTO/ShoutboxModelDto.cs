@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using NHiberanteDal.Models;
 using System.Runtime.Serialization;
 
@@ -15,6 +12,5 @@ namespace NHiberanteDal.DTO
         //Many
         [DataMember]
         public List<ShoutBoxMessageModelDto> Messages { get; set; }
-
     }
 }
