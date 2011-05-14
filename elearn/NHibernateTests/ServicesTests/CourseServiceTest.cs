@@ -344,16 +344,41 @@ namespace NHibernateTests.ServicesTests
             using (var session = DataAccess.OpenSession())
             {
                 shoutbox = session.Get<ShoutboxModel>(1);
+
+
+                #endregion
+
+                #region Assert
+
+                Assert.IsNotNull(id);
+                Assert.IsNotNull(shoutbox);
+                Assert.That(shoutbox.Messages.First().Message, Is.EqualTo("test"));
+
+                #endregion
             }
+        }
+
+        [Test]
+        public void Can_get_shoutbox_messages()
+        {
+            #region Arrange
+
+            #endregion
+
+            #region Act
+
+            var msgs = new CourseService().GetLatestShoutBoxMessages(1);
+
 
             #endregion
 
             #region Assert
-            Assert.IsNotNull(id);
-            Assert.IsNotNull(shoutbox);
-            Assert.That(shoutbox.Messages.First().Message,Is.EqualTo("test"));
+            Assert.IsNotNull(msgs);
+            Assert.That(msgs.Count,Is.EqualTo(2));
             #endregion
         }
+
+
 				
 				
 				

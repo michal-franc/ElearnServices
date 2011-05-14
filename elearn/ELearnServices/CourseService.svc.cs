@@ -125,5 +125,15 @@ namespace ELearnServices
         {
             return new Repository<ShoutBoxMessageModel>().Add(ShoutBoxMessageModelDto.UnMap(msg));
         }
+
+        public IList<ShoutBoxMessageModelDto> GetLatestShoutBoxMessages(int shoutBoxId)
+        {
+            var msgs=new List<ShoutBoxMessageModel>();
+            using (var session = DataAccess.OpenSession())
+            {
+                msgs = session.Get<ShoutboxModel>(shoutBoxId).Messages.ToList();
+            }
+            return ShoutBoxMessageModelDto.Map(msgs);
+        }
     }
 }

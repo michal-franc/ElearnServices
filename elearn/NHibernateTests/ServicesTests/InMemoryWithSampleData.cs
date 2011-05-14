@@ -12,6 +12,8 @@ namespace NHibernateTests.ServicesTests
     [SetUpFixture]
     public class InMemoryWithSampleData : InMemoryTest
     {
+        protected ShoutBoxMessageModel _testShoutBoxMessage;
+        protected ShoutBoxMessageModel _testShoutBoxMessage1;
         protected CourseTypeModel _testCourseType;
         protected CourseTypeModel _testCourseType1;
         protected ContentTypeModel _testContentType;
@@ -44,6 +46,8 @@ namespace NHibernateTests.ServicesTests
 
 
             //Initializing Data
+            _testShoutBoxMessage = new ShoutBoxMessageModel{Author = "test",Message = "test",ShoutBoxId = 1,TimePosted = DateTime.Now};
+            _testShoutBoxMessage1 = new ShoutBoxMessageModel { Author = "test", Message = "test",ShoutBoxId = 1, TimePosted = DateTime.Now };
             _testQuestionAnswer = new TestQuestionAnswer(){Correct = true,NumberSelected = 0, Text = "test"};
             _testQuestion = new TestQuestionModel() { QuestionText = "test question", Answers = new List<TestQuestionAnswer>() { _testQuestionAnswer } };
             _testTestType = new TestTypeModel() { TypeName = "test" };
@@ -57,6 +61,8 @@ namespace NHibernateTests.ServicesTests
             _testGroup = new GroupModel() { GroupType = _testGroupType, GroupName = "test" };
             _testForum = new ForumModel() { Author = "test", Name = "test" };
             _testShoutBox = new ShoutboxModel() { };
+            _testShoutBox.Messages.Add(_testShoutBoxMessage);
+            _testShoutBox.Messages.Add(_testShoutBoxMessage1);
             _testSurvey = new SurveyModel() { SurveyText = "Smiga chodzi fruwa ?", DateCreated = new DateTime(2010, 1, 1) };
             _testLatestSurvey = new SurveyModel() { SurveyText = "Smiga chodzi fruwa ?", DateCreated = new DateTime(2011, 1, 1) };
             _testCourse1 = new CourseModel()
@@ -113,6 +119,8 @@ namespace NHibernateTests.ServicesTests
             using (var session = DataAccess.OpenSession())
             {
                 session.Save(_testPofile);
+                session.Save(_testShoutBoxMessage);
+                session.Save(_testShoutBoxMessage1);
                 session.Save(_testCourseType);
                 session.Save(_testGroupType);
                 session.Save(_testGroupType1);

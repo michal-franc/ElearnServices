@@ -44,5 +44,8 @@ namespace ELearnServices
 
         [OperationContract]
         int? AddShoutBoxMessage(ShoutBoxMessageModelDto msg);
+
+        [OperationContract]
+        IList<ShoutBoxMessageModelDto> GetLatestShoutBoxMessages(int shoutBoxId);
     }
 }
