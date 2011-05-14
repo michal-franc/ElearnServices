@@ -332,14 +332,13 @@ namespace NHibernateTests.ServicesTests
         {
             #region Arrange
 
-            var msg = new ShoutBoxMessageModelDto()
+            var msg = new ShoutBoxMessageModelDto
             {Author = "test", Message = "test", TimePosted = DateTime.Now,ShoutBoxId = 1};
-            const int shoutboxId = 1;
             #endregion
 
             #region Act
 
-            int? id = new CourseService().AddShoutBoxMessage(shoutboxId, msg);
+            int? id = new CourseService().AddShoutBoxMessage(msg);
 
             ShoutboxModel shoutbox;
             using (var session = DataAccess.OpenSession())

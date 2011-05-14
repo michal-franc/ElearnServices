@@ -16,7 +16,7 @@ namespace elearn.Controllers
             return View();
         }
 
-        public ActionResult Show()
+        public ActionResult Show(int id)
         {
             return View();
         }
