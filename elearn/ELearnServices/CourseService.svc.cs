@@ -121,7 +121,7 @@ namespace ELearnServices
             return CourseTypeModelDto.Map(new Repository<CourseTypeModel>().GetAll().ToList());
         }
 
-        public int? AddShoutBoxMessage(int shoutboxId, ShoutBoxMessageModelDto msg)
+        public int? AddShoutBoxMessage(ShoutBoxMessageModelDto msg)
         {
             return new Repository<ShoutBoxMessageModel>().Add(ShoutBoxMessageModelDto.UnMap(msg));
         }
