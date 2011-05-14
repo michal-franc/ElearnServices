@@ -60,7 +60,7 @@ namespace NHibernateTests
         }
 
         [Test]
-        public void Can_map_entity_CourseType()
+        public void Can_map_entity_course_type()
         {
             #region Act
             using (var session = DataAccess.OpenSession())
@@ -75,7 +75,7 @@ namespace NHibernateTests
         }
         
         [Test]
-        public void Can_map_entity_Course()
+        public void Can_map_entity_course()
         {
             #region Act
             using (var session = DataAccess.OpenSession())
@@ -123,7 +123,7 @@ namespace NHibernateTests
         }
 
         [Test]
-        public void Can_map_entity_Content()
+        public void Can_map_entity_content()
         {
             #region Act
             using (var session = DataAccess.OpenSession())
@@ -144,7 +144,7 @@ namespace NHibernateTests
         }
 
         [Test]
-        public void Can_map_entity_ContentType()
+        public void Can_map_entity_content_type()
         {
             #region Act
             using (var session = DataAccess.OpenSession())
@@ -159,7 +159,7 @@ namespace NHibernateTests
         }
 
         [Test]
-        public void Can_map_entity_Forum()
+        public void Can_map_entity_forum()
         {
             #region Act
             using (var session = DataAccess.OpenSession())
@@ -181,7 +181,7 @@ namespace NHibernateTests
         }
 
         [Test]
-        public void Can_map_entity_Topic()
+        public void Can_map_entity_topic()
         {
             #region Act
             using (var session = DataAccess.OpenSession())
@@ -202,7 +202,7 @@ namespace NHibernateTests
         }
 
         [Test]
-        public void Can_map_entity_Post()
+        public void Can_map_entity_post()
         {
             #region Act
             using (var session = DataAccess.OpenSession())
@@ -218,7 +218,7 @@ namespace NHibernateTests
 
 
         [Test]
-        public void Can_map_entity_Group()
+        public void Can_map_entity_group()
         {
             #region Act
 
@@ -242,7 +242,7 @@ namespace NHibernateTests
         }
 
         [Test]
-        public void Can_map_entity_GroupType()
+        public void Can_map_entity_group_type()
         {
             #region Act
 
@@ -258,7 +258,7 @@ namespace NHibernateTests
         }
 
         [Test]
-        public void Can_map_entity_Profile()
+        public void Can_map_entity_profile()
         {
             #region Act
 
@@ -275,7 +275,7 @@ namespace NHibernateTests
         }
 
         [Test]
-        public void Can_map_entity_ProfileType()
+        public void Can_map_entity_profile_type()
         {
             #region Act
 
@@ -291,7 +291,7 @@ namespace NHibernateTests
         }
 
         [Test]
-        public void Can_map_entity_PrivateMessage()
+        public void Can_map_entity_private_message()
         {
             #region Act
             using (var session = DataAccess.OpenSession())
@@ -310,7 +310,7 @@ namespace NHibernateTests
         }
 
         [Test]
-        public void Can_map_entity_Journal()
+        public void Can_map_entity_journal()
         {
             #region Act
 
@@ -341,7 +341,7 @@ namespace NHibernateTests
         }
 
         [Test]
-        public void Can_map_entity_Mark()
+        public void Can_map_entity_mark()
         {
             #region Act
 
@@ -357,7 +357,7 @@ namespace NHibernateTests
         }
 
         [Test]
-        public void Can_map_entity_ShoutBox()
+        public void Can_map_entity_shoutBox()
         {
             #region Act
 
@@ -377,7 +377,7 @@ namespace NHibernateTests
         }
 
         [Test]
-        public void Can_map_entity_ShoutBoxMessage()
+        public void Can_map_entity_shoutbox_message()
         {
             #region Act
 
@@ -386,6 +386,7 @@ namespace NHibernateTests
                 new PersistenceSpecification<ShoutBoxMessageModel>(session)
                    .CheckProperty(c => c.Author, "test")
                    .CheckProperty(c => c.Message, "1")
+                   .CheckProperty(c => c.ShoutBoxId, 1)
                    .CheckProperty(c => c.TimePosted,new DateTime(2010,1,1))
                    .VerifyTheMappings();
             }
@@ -394,7 +395,7 @@ namespace NHibernateTests
         }
 
         [Test]
-        public void Can_map_entity_Survey()
+        public void Can_map_entity_survey()
         {
             #region Act
 
@@ -417,7 +418,7 @@ namespace NHibernateTests
         }
 
         [Test]
-        public void Can_map_entity_SurveyQuestion()
+        public void Can_map_entity_survey_question()
         {
             #region Act
 
@@ -433,7 +434,7 @@ namespace NHibernateTests
         }
 
         [Test]
-        public void Can_map_entity_Test()
+        public void Can_map_entity_test()
         {
             #region Act
 
@@ -459,7 +460,7 @@ namespace NHibernateTests
         }
 
         [Test]
-        public void Can_map_entity_TestType()
+        public void Can_map_entity_test_type()
         {
             #region Act
 
@@ -474,7 +475,7 @@ namespace NHibernateTests
         }
 
         [Test]
-        public void Can_map_entity_TestQuestion()
+        public void Can_map_entity_test_question()
         {
             #region Act
 
@@ -496,7 +497,7 @@ namespace NHibernateTests
         }
 
         [Test]
-        public void Can_map_entity_TestQuestionAnswer()
+        public void Can_map_entity_test_question_answer()
         {
             #region Act
 

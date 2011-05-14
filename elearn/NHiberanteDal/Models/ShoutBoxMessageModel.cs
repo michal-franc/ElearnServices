@@ -8,6 +8,7 @@ namespace NHiberanteDal.Models
     public class ShoutBoxMessageModel : IModel
     {
         public virtual int ID { get; private set; }
+        public virtual int ShoutBoxId { get; set; }
         public virtual string Author { get; set; }
         public virtual DateTime TimePosted { get; set; }
         public virtual string Message { get; set; }
