@@ -25,11 +25,11 @@ namespace elearn.Controllers
         // Post: /ShoutBox/Add/id?message=test&author=test
 
         [HttpPost]
-        public ActionResult Add(int id,string message,string author)
+        public ActionResult Add(int id,string message)
         {
             int? returnedId = _courseService.AddShoutBoxMessage(new ShoutBoxMessageModelDto
             {
-                Author =author,
+                Author =User.Identity.Name,
                 Message = message,
                 ShoutBoxId = id,
                 TimePosted = DateTime.Now 

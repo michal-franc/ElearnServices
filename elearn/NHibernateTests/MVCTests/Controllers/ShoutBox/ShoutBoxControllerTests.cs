@@ -47,6 +47,8 @@ namespace NHibernateTests.MVCTests.Controllers.ShoutBox
         {
             #region Arrange
 
+            ShoutBoxController.ControllerContext =
+                TestHelper.MockControllerContext(ShoutBoxController).WithAuthenticatedUser("test");
             using (Mock.Record())
             {
                 Expect.Call(CourseService.AddShoutBoxMessage(SampleMessage)).IgnoreArguments().Return(1);
@@ -58,7 +60,7 @@ namespace NHibernateTests.MVCTests.Controllers.ShoutBox
             JsonResult result;
             using (Mock.Playback())
             {
-             result =(JsonResult)ShoutBoxController.Add(1, "test", "test");
+             result =(JsonResult)ShoutBoxController.Add(1, "test");
             }
 
             #endregion
@@ -73,6 +75,9 @@ namespace NHibernateTests.MVCTests.Controllers.ShoutBox
         public void Post_if_adds_message_fails_then_return_failed_json_msg()
         {
             #region Arrange
+            ShoutBoxController.ControllerContext =
+                TestHelper.MockControllerContext(ShoutBoxController).WithAuthenticatedUser("test");
+
 
             using (Mock.Record())
             {
@@ -85,7 +90,7 @@ namespace NHibernateTests.MVCTests.Controllers.ShoutBox
             JsonResult result;
             using (Mock.Playback())
             {
-                result = (JsonResult)ShoutBoxController.Add(1, "test", "test");
+                result = (JsonResult)ShoutBoxController.Add(1, "test");
             }
 
             #endregion

@@ -11,3 +11,30 @@ ShoutBox ID = @ViewData.Model.ShoutBox.ID
         Write(message.TimePosted + ":" + message.Message);
     }
 }
+
+<input id="shoutBoxText" type="text"/>
+
+<script type="text/javascript">
+
+    $().ready(function () {
+        $("#shoutBoxText").bind('keypress', function (e) {
+
+            var code = (e.keyCode ? e.keyCode : e.which);
+            //enter code
+            if (code == 13) {
+               var shoutBoxtext = $("#shoutBoxText").val();
+                $.ajax({
+                    type : "POST",
+                    url: "@Url.Action("Add", "ShoutBox", new { id = ViewData.Model.ShoutBox.ID})",
+                    data: "message="+shoutBoxtext,
+                    success: function(msg) {
+                        alert('chodzi');
+                    }
+                });
+            }
+        });
+
+    });
+   
+
+</script>
