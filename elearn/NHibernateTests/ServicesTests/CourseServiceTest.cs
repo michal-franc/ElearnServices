@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using NUnit.Framework;
 using NHiberanteDal.Models;
 using NHiberanteDal.DataAccess;
@@ -152,19 +151,20 @@ namespace NHibernateTests.ServicesTests
         {
             new CourseService();
             #region Arrange
-            CourseDto newCourse = new CourseDto()
-            {
+            var newCourse = new CourseDto
+                                {
                 CreationDate = DateTime.Now,
                 CourseType = CourseTypeModelDto.Map(_testCourseType),
-                Forum = new ForumModelDto() { Author = "test", Name = "added forum" },
-                Group = new GroupModelDto() {
+                Forum = new ForumModelDto { Author = "test", Name = "added forum" },
+                Group = new GroupModelDto
+                            {
                     GroupName = "added test",
                     GroupType = GroupTypeModelDto.Map(_testGroupType)
                     },
                 Logo = "test/jpg",
                 Name = "test add",
-                ShoutBox = new ShoutboxModelDto() {  }
-            }; 
+                ShoutBox = new ShoutboxModelDto()
+                                }; 
             #endregion
 
             #region Act
@@ -325,6 +325,37 @@ namespace NHibernateTests.ServicesTests
             Assert.IsTrue(ok);
             #endregion
         }
+				
+
+        [Test]
+        public void Can_add_new_shoutbox_message()
+        {
+            #region Arrange
+
+            var msg = new ShoutBoxMessageModelDto()
+            {Author = "test", Message = "test", TimePosted = DateTime.Now,ShoutBoxId = 1};
+            const int shoutboxId = 1;
+            #endregion
+
+            #region Act
+
+            int? id = new CourseService().AddShoutBoxMessage(shoutboxId, msg);
+
+            ShoutboxModel shoutbox;
+            using (var session = DataAccess.OpenSession())
+            {
+                shoutbox = session.Get<ShoutboxModel>(1);
+            }
+
+            #endregion
+
+            #region Assert
+            Assert.IsNotNull(id);
+            Assert.IsNotNull(shoutbox);
+            Assert.That(shoutbox.Messages.First().Message,Is.EqualTo("test"));
+            #endregion
+        }
+				
 				
 				
     }

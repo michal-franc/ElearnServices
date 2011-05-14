@@ -41,5 +41,8 @@ namespace ELearnServices
 
         [OperationContract]
         List<CourseTypeModelDto> GetAllCourseTypes();
+
+        [OperationContract]
+        int? AddShoutBoxMessage(int shoutboxId, ShoutBoxMessageModelDto msg);
     }
 }
