@@ -272,7 +272,7 @@ namespace NHibernateTests.MVCTests.Controllers.Course
     public class Edit : BaseTest
     {
         [Test]
-        public void Get_gets_course_types_and_returns_edit_view_with_coruse_model()
+        public void Get_gets_course_types_and_returns_edit_view_with_course_model()
         {
             #region Arrange
 
@@ -295,6 +295,7 @@ namespace NHibernateTests.MVCTests.Controllers.Course
             #region Assert
             Assert.IsEmpty(view.ViewName);
             Assert.IsNotNull(view.ViewBag.CourseTypes);
+            Assert.That(view.ViewBag.CourseTypes, Is.InstanceOf(typeof(SelectList)));
             Assert.IsNotNull(view.ViewData.Model);
             Assert.That(view.ViewData.Model,Is.InstanceOf(typeof(CourseDto)));
             #endregion
