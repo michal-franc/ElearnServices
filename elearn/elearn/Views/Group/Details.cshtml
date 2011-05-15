@@ -1,4 +1,7 @@
-﻿@model NHiberanteDal.DTO.GroupModelDto
+﻿
+@model GroupModelDto
+           
+@using NHiberanteDal.DTO
 
 @{
     ViewBag.Title = "Details";
@@ -11,9 +14,11 @@
 
     <div class="display-label">GroupName</div>
     <div class="display-field">@Model.GroupName</div>
+
+        @foreach ( ProfileModelDto profile in ViewData.Model.Users)
+        {
+            <li>@Html.ActionLink(profile.Name,"Details","Profile",new {id=profile.ID})</li>
+        }
 </fieldset>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
 
