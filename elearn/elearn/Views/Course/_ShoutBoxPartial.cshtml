@@ -99,7 +99,7 @@ ShoutBox
     }
     
     function JsonToDate(date) {
-        var returnedDate = eval(date.replace(/\/Date\((\d+)\)\//gi, "new Date($1)"));
+        var returnedDate = new Date(parseInt(date.substr(6)));
         return returnedDate;
     }
    
