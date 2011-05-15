@@ -111,6 +111,8 @@
   <ItemGroup>
     <Compile Include="DataAccesTests.cs" />
     <Compile Include="MVCTests\Controllers\Course\CourseControllerTests.cs" />
+    <Compile Include="MVCTests\Controllers\Forum\ForumControllerTests.cs" />
+    <Compile Include="MVCTests\Controllers\Group\GroupControllerTests.cs" />
     <Compile Include="MVCTests\Controllers\ShoutBox\ShoutBoxControllerTests.cs" />
     <Compile Include="MVCTests\Controllers\UserProfile\UserProfileControllerTests.cs" />
     <Compile Include="MVCTests\Controllers\Profile\ProfileControllerTests.cs" />
@@ -121,6 +123,7 @@
     <Compile Include="RepositoryTests.cs" />
     <Compile Include="SerializerTests\DataSerializationTests.cs" />
     <Compile Include="ServicesTests\CourseServiceTest.cs" />
+    <Compile Include="ServicesTests\ForumServiceTests.cs" />
     <Compile Include="ServicesTests\GroupServiceTests.cs" />
     <Compile Include="ServicesTests\InMemoryWithSampleData.cs" />
     <Compile Include="ServicesTests\JournalServiceTests.cs" />
