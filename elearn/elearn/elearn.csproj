@@ -295,8 +295,8 @@
     <Content Include="Views\Group\Details.cshtml" />
     <Content Include="Views\Group\Index.cshtml" />
     <Content Include="Views\Forum\Index.cshtml" />
-    <Content Include="Views\Forum\Show.cshtml" />
     <Content Include="Views\Course\_ShoutBoxPartial.cshtml" />
+    <Content Include="Views\Forum\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
