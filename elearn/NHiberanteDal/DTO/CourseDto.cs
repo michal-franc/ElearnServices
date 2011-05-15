@@ -37,21 +37,7 @@ namespace NHiberanteDal.DTO
 
          public CourseDto()
 	     {
-            CreationDate = DateTime.Now;
-            ShoutBox = new ShoutboxModelDto();
-            Forum = new ForumModelDto()
-            {
-                Author = "DefaultForumAuthorName",
-                Name = "DefaultCourseForumName"
-            };
 
-            CourseType = new CourseTypeModelDto{ID=DefaultCourseTypeId};
-
-            Group = new GroupModelDto()
-            {
-                GroupName = "DefaultCourseGroupName",
-                GroupType = new GroupTypeModelDto { ID = DefaultGroupTypeId }       
-            };
 	     }
     }
 

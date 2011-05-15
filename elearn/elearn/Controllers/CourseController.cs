@@ -1,8 +1,8 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
 using NHiberanteDal.DTO;
 using elearn.CourseService;
+using System;
 
 namespace elearn.Controllers
 {
@@ -73,6 +73,23 @@ namespace elearn.Controllers
         [HttpPost]
         public ActionResult Create(CourseDto course)
         {
+
+            course.CreationDate = DateTime.Now;
+            course.ShoutBox = new ShoutboxModelDto();
+            course.Forum = new ForumModelDto()
+            {
+                Author = "DefaultForumAuthorName",
+                Name = "DefaultCourseForumName"
+            };
+
+            course.CourseType = new CourseTypeModelDto { ID = CourseDto.DefaultCourseTypeId };
+
+            course.Group = new GroupModelDto()
+            {
+                GroupName = "DefaultCourseGroupName",
+                GroupType = new GroupTypeModelDto { ID = CourseDto.DefaultGroupTypeId }
+            };
+
             //Fixing ModelState Valid Error
             if (ModelState.ContainsKey("CourseType"))
             {
