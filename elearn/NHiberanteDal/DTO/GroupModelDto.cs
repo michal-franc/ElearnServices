@@ -16,7 +16,8 @@ namespace NHiberanteDal.DTO
         public  string GroupName { get; set; }
         [DataMember]
         public  GroupTypeModelDto GroupType { get; set; }
-        public  IList<ProfileModel> Users { get; set; }
+        [DataMember]
+        public  IList<ProfileModelDto> Users { get; set; }
 
     }
 }

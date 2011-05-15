@@ -19,8 +19,7 @@ namespace NHiberanteDal.Mappings
             References(x => x.GroupType).Not.LazyLoad();
 
             //Many
-
-            HasMany(x=>x.Users);           
+            HasManyToMany(x => x.Users).Not.LazyLoad();      
         }
     }
 

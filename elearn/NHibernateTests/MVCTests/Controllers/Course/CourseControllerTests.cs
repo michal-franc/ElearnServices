@@ -157,7 +157,7 @@ namespace NHibernateTests.MVCTests.Controllers.Course
             ViewResult view;
             using (Mock.Playback())
             {
-                view = (ViewResult)CourseController.Create(null);
+                view = (ViewResult)CourseController.Create(Course);
             }
 
             #endregion
