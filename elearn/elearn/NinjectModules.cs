@@ -5,6 +5,7 @@ using System.Web;
 using Ninject.Modules;
 using elearn.ProfileService;
 using elearn.CourseService;
+using elearn.GroupService;
 
 namespace elearn
 {
@@ -14,6 +15,7 @@ namespace elearn
         {
             Bind<IProfileService>().To<ProfileServiceClient>().InRequestScope();
             Bind<ICourseService>().To<CourseServiceClient>().InRequestScope();
+            Bind<IGroupService>().To<GroupServiceClient>().InRequestScope();
         }
     }
 }
