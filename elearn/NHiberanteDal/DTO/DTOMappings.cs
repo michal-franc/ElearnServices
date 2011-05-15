@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using AutoMapper;
 using NHiberanteDal.Models;
 
@@ -9,10 +6,10 @@ namespace NHiberanteDal.DTO
 {
     public static class DTOMappings
     {
-        private static bool initialized = false;
+        private static bool _initialized;
         public static bool Initialize()
         {
-            if (!initialized)
+            if (!_initialized)
             {
                 //try
                 {
@@ -68,7 +65,7 @@ namespace NHiberanteDal.DTO
                          .ForMember(dest => dest.Forum, opt => opt.Ignore())
                          .ForMember(dest => dest.ShoutBox, opt => opt.Ignore());
                     Mapper.AssertConfigurationIsValid();
-                    initialized = true;
+                    _initialized = true;
                     return true;
                 }
                 //catch (AutoMapperConfigurationException)
