@@ -1,25 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using elearn.GroupService;
 
 namespace elearn.Controllers
 {
     public class GroupController : Controller
     {
-        //
-        // GET: /Group/
 
-        public ActionResult Index()
+        private IGroupService _service;
+
+        public GroupController(IGroupService service)
         {
-            return View();
+            _service = service;
         }
 
+        //
+        // Get: /Group/Details/id
         public ActionResult Details(int id)
         {
-            return View();
+            var group = _service.GetGroup(id);
+            return View(group);
         }
-
     }
 }
