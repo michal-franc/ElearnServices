@@ -37,9 +37,9 @@ namespace NHibernateTests.ServicesTests
             #region Arrange
             using (var session = DataAccess.OpenSession())
             {
-                _testCourse1.Surveys.Add(_testSurvey);
-                _testCourse1.Surveys.Add(_testLatestSurvey);
-                session.SaveOrUpdate(_testCourse1);
+                TestCourse1.Surveys.Add(TestSurvey);
+                TestCourse1.Surveys.Add(TestLatestSurvey);
+                session.SaveOrUpdate(TestCourse1);
                 session.Flush();
             }
             #endregion
@@ -64,9 +64,9 @@ namespace NHibernateTests.ServicesTests
             #region Arrange
             using (var session = DataAccess.OpenSession())
             {
-                _testCourse1.Tests.Add(_testTest);
-                _testCourse1.Tests.Add(_latestTest);
-                session.SaveOrUpdate(_testCourse1);
+                TestCourse1.Tests.Add(TestTest);
+                TestCourse1.Tests.Add(LatestTest);
+                session.SaveOrUpdate(TestCourse1);
                 session.Flush();
             }
             #endregion
@@ -90,9 +90,9 @@ namespace NHibernateTests.ServicesTests
             #region Arrange
             using (var session = DataAccess.OpenSession())
             {
-                _testCourse1.Tests.Add(_testTest);
-                _testCourse1.Tests.Add(_latestTest);
-                session.SaveOrUpdate(_testCourse1);
+                TestCourse1.Tests.Add(TestTest);
+                TestCourse1.Tests.Add(LatestTest);
+                session.SaveOrUpdate(TestCourse1);
                 session.Flush();
             }
             #endregion
@@ -136,7 +136,7 @@ namespace NHibernateTests.ServicesTests
 
             #region Act
 
-            List<CourseDto> filteredCourses = new CourseService().GetByCourseType(CourseTypeModelDto.Map(_testCourseType));
+            List<CourseDto> filteredCourses = new CourseService().GetByCourseType(CourseTypeModelDto.Map(TestCourseType));
 
 
             #endregion
@@ -154,12 +154,12 @@ namespace NHibernateTests.ServicesTests
             var newCourse = new CourseDto
                                 {
                 CreationDate = DateTime.Now,
-                CourseType = CourseTypeModelDto.Map(_testCourseType),
+                CourseType = CourseTypeModelDto.Map(TestCourseType),
                 Forum = new ForumModelDto { Author = "test", Name = "added forum" },
                 Group = new GroupModelDto
                             {
                     GroupName = "added test",
-                    GroupType = GroupTypeModelDto.Map(_testGroupType)
+                    GroupType = GroupTypeModelDto.Map(TestGroupType)
                     },
                 Logo = "test/jpg",
                 Name = "test add",
@@ -206,7 +206,7 @@ namespace NHibernateTests.ServicesTests
         {
             #region Arrange
             var course = new CourseService().GetById(1);
-            course.CourseType = CourseTypeModelDto.Map(_testCourseType1);
+            course.CourseType = CourseTypeModelDto.Map(TestCourseType1);
             #endregion
 
             #region Act
@@ -229,7 +229,7 @@ namespace NHibernateTests.ServicesTests
             int id = -1;
             DataAccess.InTransaction(session=>
             {
-                id = (int)session.Save(_testCourse3);
+                id = (int)session.Save(TestCourse3);
             });
 
             #endregion
@@ -250,14 +250,14 @@ namespace NHibernateTests.ServicesTests
         {
             #region Arrange
 
-            _testQuestion.Answers.Add(_testQuestionAnswer);
-            _testTest.Questions.Add(_testQuestion);
-            _testCourse3.Tests.Add(_testTest);
+            TestQuestion.Answers.Add(TestQuestionAnswer);
+            TestTest.Questions.Add(TestQuestion);
+            TestCourse3.Tests.Add(TestTest);
 
             int id = -1;
             DataAccess.InTransaction(session =>
             {
-                id = (int)session.Save(_testCourse3);
+                id = (int)session.Save(TestCourse3);
             });
 
             #endregion
@@ -279,12 +279,12 @@ namespace NHibernateTests.ServicesTests
         {
             #region Arrange
 
-            _testCourse3.Contents.Add(_testContent);
+            TestCourse3.Contents.Add(TestContent);
 
             int id = -1;
             DataAccess.InTransaction(session =>
             {
-                id = (int)session.Save(_testCourse3);
+                id = (int)session.Save(TestCourse3);
             });
 
             #endregion
@@ -305,12 +305,12 @@ namespace NHibernateTests.ServicesTests
         {
             #region Arrange
 
-            _testCourse3.Surveys.Add(_testSurvey);
+            TestCourse3.Surveys.Add(TestSurvey);
 
             int id = -1;
             DataAccess.InTransaction(session =>
             {
-                id = (int)session.Save(_testCourse3);
+                id = (int)session.Save(TestCourse3);
             });
 
             #endregion

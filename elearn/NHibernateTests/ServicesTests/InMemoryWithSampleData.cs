@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using NUnit.Framework;
 using NHiberanteDal.Models;
 using NHiberanteDal.DataAccess;
@@ -12,30 +10,30 @@ namespace NHibernateTests.ServicesTests
     [SetUpFixture]
     public class InMemoryWithSampleData : InMemoryTest
     {
-        protected ShoutBoxMessageModel _testShoutBoxMessage;
-        protected ShoutBoxMessageModel _testShoutBoxMessage1;
-        protected CourseTypeModel _testCourseType;
-        protected CourseTypeModel _testCourseType1;
-        protected ContentTypeModel _testContentType;
-        protected GroupTypeModel _testGroupType;
-        protected GroupModel _testGroup;
-        protected ForumModel _testForum;
-        protected ShoutboxModel _testShoutBox;
-        protected SurveyModel _testSurvey;
-        protected SurveyModel _testLatestSurvey;
-        protected CourseModel _testCourse1;
-        protected CourseModel _testCourse2;
-        protected CourseModel _testCourse3;
-        protected TestModel _testTest;
-        protected TestModel _latestTest;
-        protected TestTypeModel _testTestType;
-        protected ProfileModel _testPofile;
-        protected TestQuestionAnswer _testQuestionAnswer;
-        protected TestQuestionModel _testQuestion;
-        protected JournalModel _testJournal;
-        protected JournalMarkModel _testJournalMark;
-        protected GroupTypeModel _testGroupType1;
-        protected ContentModel _testContent;
+        protected ShoutBoxMessageModel TestShoutBoxMessage;
+        protected ShoutBoxMessageModel TestShoutBoxMessage1;
+        protected CourseTypeModel TestCourseType;
+        protected CourseTypeModel TestCourseType1;
+        protected ContentTypeModel TestContentType;
+        protected GroupTypeModel TestGroupType;
+        protected GroupModel TestGroup;
+        protected ForumModel TestForum;
+        protected ShoutboxModel TestShoutBox;
+        protected SurveyModel TestSurvey;
+        protected SurveyModel TestLatestSurvey;
+        protected CourseModel TestCourse1;
+        protected CourseModel TestCourse2;
+        protected CourseModel TestCourse3;
+        protected TestModel TestTest;
+        protected TestModel LatestTest;
+        protected TestTypeModel TestTestType;
+        protected ProfileModel TestPofile;
+        protected TestQuestionAnswer TestQuestionAnswer;
+        protected TestQuestionModel TestQuestion;
+        protected JournalModel TestJournal;
+        protected JournalMarkModel TestJournalMark;
+        protected GroupTypeModel TestGroupType1;
+        protected ContentModel TestContent;
 
 
         [SetUp]
@@ -46,43 +44,49 @@ namespace NHibernateTests.ServicesTests
 
 
             //Initializing Data
-            _testShoutBoxMessage = new ShoutBoxMessageModel{Author = "test",Message = "test",ShoutBoxId = 1,TimePosted = DateTime.Now};
-            _testShoutBoxMessage1 = new ShoutBoxMessageModel { Author = "test", Message = "test",ShoutBoxId = 1, TimePosted = DateTime.Now };
-            _testQuestionAnswer = new TestQuestionAnswer(){Correct = true,NumberSelected = 0, Text = "test"};
-            _testQuestion = new TestQuestionModel() { QuestionText = "test question", Answers = new List<TestQuestionAnswer>() { _testQuestionAnswer } };
-            _testTestType = new TestTypeModel() { TypeName = "test" };
-            _testPofile = new ProfileModel() { Name = "test", Email="test@test.com",IsActive=true };
-            _testTest = new TestModel() { Author = _testPofile, CreationDate = new DateTime(2010, 1, 1), Name = "test", TestType = _testTestType };
-            _latestTest = new TestModel() { Author = _testPofile, CreationDate = new DateTime(2011, 1, 1), Name = "test", TestType = _testTestType };
-            _testCourseType = new CourseTypeModel() { TypeName = "Fizyka" };
-            _testCourseType1 = new CourseTypeModel() { TypeName = "Matematyka" };
-            _testGroupType = new GroupTypeModel() { TypeName = "test" };
-            _testGroupType1 = new GroupTypeModel() { TypeName = "test1" };
-            _testGroup = new GroupModel() { GroupType = _testGroupType, GroupName = "test" };
-            _testForum = new ForumModel() { Author = "test", Name = "test" };
-            _testShoutBox = new ShoutboxModel() { };
-            _testShoutBox.Messages.Add(_testShoutBoxMessage);
-            _testShoutBox.Messages.Add(_testShoutBoxMessage1);
-            _testSurvey = new SurveyModel() { SurveyText = "Smiga chodzi fruwa ?", DateCreated = new DateTime(2010, 1, 1) };
-            _testLatestSurvey = new SurveyModel() { SurveyText = "Smiga chodzi fruwa ?", DateCreated = new DateTime(2011, 1, 1) };
-            _testCourse1 = new CourseModel()
-            {
-                CourseType = _testCourseType,
-                ShoutBox = _testShoutBox,
-                Forum = _testForum,
-                Group = _testGroup,
+            TestShoutBoxMessage = new ShoutBoxMessageModel{Author = "test",Message = "test",ShoutBoxId = 1,TimePosted = DateTime.Now};
+            TestShoutBoxMessage1 = new ShoutBoxMessageModel { Author = "test", Message = "test",ShoutBoxId = 1, TimePosted = DateTime.Now };
+            TestQuestionAnswer = new TestQuestionAnswer {Correct = true,NumberSelected = 0, Text = "test"};
+            TestQuestion = new TestQuestionModel
+                                { QuestionText = "test question", Answers = new List<TestQuestionAnswer>
+                                                                                { TestQuestionAnswer } };
+            TestTestType = new TestTypeModel { TypeName = "test" };
+            TestPofile = new ProfileModel { Name = "test", Email="test@test.com",IsActive=true };
+            TestTest = new TestModel
+                            { Author = TestPofile, CreationDate = new DateTime(2010, 1, 1), Name = "test", TestType = TestTestType };
+            LatestTest = new TestModel
+                              { Author = TestPofile, CreationDate = new DateTime(2011, 1, 1), Name = "test", TestType = TestTestType };
+            TestCourseType = new CourseTypeModel { TypeName = "Fizyka" };
+            TestCourseType1 = new CourseTypeModel { TypeName = "Matematyka" };
+            TestGroupType = new GroupTypeModel { TypeName = "test" };
+            TestGroupType1 = new GroupTypeModel { TypeName = "test1" };
+            TestGroup = new GroupModel { GroupType = TestGroupType, GroupName = "test" };
+            TestForum = new ForumModel { Author = "test", Name = "test" };
+            TestShoutBox = new ShoutboxModel();
+            TestShoutBox.Messages.Add(TestShoutBoxMessage);
+            TestShoutBox.Messages.Add(TestShoutBoxMessage1);
+            TestSurvey = new SurveyModel
+                              { SurveyText = "Smiga chodzi fruwa ?", DateCreated = new DateTime(2010, 1, 1) };
+            TestLatestSurvey = new SurveyModel
+                                    { SurveyText = "Smiga chodzi fruwa ?", DateCreated = new DateTime(2011, 1, 1) };
+            TestCourse1 = new CourseModel
+                               {
+                CourseType = TestCourseType,
+                ShoutBox = TestShoutBox,
+                Forum = TestForum,
+                Group = TestGroup,
                 CreationDate = DateTime.Now,
                 Description = "test",
                 Logo = "/test.jpg",
                 Name = "test",
             };
 
-            _testCourse2 = new CourseModel()
-            {
-                CourseType = _testCourseType1,
-                ShoutBox = _testShoutBox,
-                Forum = _testForum,
-                Group = _testGroup,
+            TestCourse2 = new CourseModel
+                               {
+                CourseType = TestCourseType1,
+                ShoutBox = TestShoutBox,
+                Forum = TestForum,
+                Group = TestGroup,
                 CreationDate = DateTime.Now,
                 Description = "test1",
                 Logo = "/test1.jpg",
@@ -90,58 +94,60 @@ namespace NHibernateTests.ServicesTests
 
             };
 
-            _testCourse3 = new CourseModel()
-            {
-                CourseType = _testCourseType1,
-                ShoutBox = _testShoutBox,
-                Forum = _testForum,
-                Group = _testGroup,
+            TestCourse3 = new CourseModel
+                               {
+                CourseType = TestCourseType1,
+                ShoutBox = TestShoutBox,
+                Forum = TestForum,
+                Group = TestGroup,
                 CreationDate = DateTime.Now,
                 Description = "test1",
                 Logo = "/test1.jpg",
                 Name = "test1",
 
             };
-            _testContentType = new ContentTypeModel(){TypeName = "test"};
-            _testContent = new ContentModel()
+            TestContentType = new ContentTypeModel {TypeName = "test"};
+            TestContent = new ContentModel
                                {
                                    ContentUrl = "test",
                                    CreationDate = DateTime.Now,
                                    DownloadNumber = 0,
                                    Name="test",
                                    Text = "test",
-                                   Type = _testContentType
+                                   Type = TestContentType
                                };
-            _testJournalMark = new JournalMarkModel() { Name = "Zaliczenie", Value = "5" };
-            _testJournal = new JournalModel() { Course = _testCourse3, AverageMark = 0, Marks = new List<JournalMarkModel>() { _testJournalMark }, Name = "test journal" };
+            TestJournalMark = new JournalMarkModel { Name = "Zaliczenie", Value = "5" };
+            TestJournal = new JournalModel
+                               { Course = TestCourse3, AverageMark = 0, Marks = new List<JournalMarkModel>
+                                                                                     { TestJournalMark }, Name = "test journal" };
 
 
             using (var session = DataAccess.OpenSession())
             {
-                session.Save(_testPofile);
-                session.Save(_testShoutBoxMessage);
-                session.Save(_testShoutBoxMessage1);
-                session.Save(_testCourseType);
-                session.Save(_testGroupType);
-                session.Save(_testGroupType1);
-                session.Save(_testGroup);
-                session.Save(_testForum);
-                session.Save(_testShoutBox);
-                session.Save(_testCourseType1);
-                session.Save(_testSurvey);
-                session.Save(_testLatestSurvey);
-                session.Save(_testTestType);
-                session.Save(_testTest);
-                session.Save(_latestTest);
-                session.Save(_testCourse1);
-                session.Save(_testCourse2);
-                session.Save(_testQuestionAnswer);
-                session.Save(_testQuestion);
-                session.Save(_testCourse3);
-                session.Save(_testJournalMark);
-                session.Save(_testJournal);
-                session.Save(_testContentType);
-                session.Save(_testContent);
+                session.Save(TestPofile);
+                session.Save(TestShoutBoxMessage);
+                session.Save(TestShoutBoxMessage1);
+                session.Save(TestCourseType);
+                session.Save(TestGroupType);
+                session.Save(TestGroupType1);
+                session.Save(TestGroup);
+                session.Save(TestForum);
+                session.Save(TestShoutBox);
+                session.Save(TestCourseType1);
+                session.Save(TestSurvey);
+                session.Save(TestLatestSurvey);
+                session.Save(TestTestType);
+                session.Save(TestTest);
+                session.Save(LatestTest);
+                session.Save(TestCourse1);
+                session.Save(TestCourse2);
+                session.Save(TestQuestionAnswer);
+                session.Save(TestQuestion);
+                session.Save(TestCourse3);
+                session.Save(TestJournalMark);
+                session.Save(TestJournal);
+                session.Save(TestContentType);
+                session.Save(TestContent);
                 session.Flush();
             }
         }

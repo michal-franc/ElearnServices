@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using elearn.ProfileService;
 
 namespace elearn.Controllers
 {
     public class UserProfileController : Controller
     {
-
-        IProfileService _service;
+        readonly IProfileService _service;
 
         public string UserName
         {
@@ -52,8 +47,7 @@ namespace elearn.Controllers
             {         
                 return RedirectToAction("Details");
             }
-            else
-                return RedirectToAction("LogOff", "Account");
+            return RedirectToAction("LogOff", "Account");
         }
 
 
