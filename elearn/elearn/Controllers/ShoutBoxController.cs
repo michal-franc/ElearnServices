@@ -11,11 +11,6 @@ namespace elearn.Controllers
     {
         private readonly ICourseService _courseService;
 
-        public ShoutBoxController():this(new CourseServiceClient())
-        {
-                
-        }
-
         public ShoutBoxController(ICourseService courseService)
         {
             _courseService = courseService;
