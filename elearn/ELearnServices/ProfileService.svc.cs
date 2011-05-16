@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.Text;
 using NHiberanteDal.DTO;
 using NHiberanteDal.DataAccess;
 using NHiberanteDal.Models;
@@ -15,7 +12,7 @@ namespace ELearnServices
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "ProfileService" in code, svc and config file together.
     public class ProfileService : IProfileService
     {
-        IRoleProvider _roleProvider;
+        private readonly IRoleProvider _roleProvider;
 
         public ProfileService() : this(new MembershipRoleProvider())
         {
@@ -41,7 +38,7 @@ namespace ELearnServices
 
         public ProfileModelDto GetProfile(int id)
         {
-            ProfileModel profile = null;
+            ProfileModel profile;
             using (var session = DataAccess.OpenSession())
             {
                 profile = session.Get<ProfileModel>(id);
@@ -59,13 +56,10 @@ namespace ELearnServices
         {
             try
             {
-                DataAccess.InTransaction(session =>
-                    {
-                        session.Delete(ProfileModelDto.UnMap(profile));
-                    });
+                DataAccess.InTransaction(session => session.Delete(ProfileModelDto.UnMap(profile)));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -75,13 +69,10 @@ namespace ELearnServices
         {
             try
             {
-                DataAccess.InTransaction(session =>
-                    {
-                        session.Update(ProfileModelDto.UnMap(profile));
-                    });
+                DataAccess.InTransaction(session => session.Update(ProfileModelDto.UnMap(profile)));
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -115,7 +106,7 @@ namespace ELearnServices
                 }
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -132,9 +123,9 @@ namespace ELearnServices
 
         public MembershipCreateStatus CreateUser(string userName, string password, string email)
         {
-            var profile = new ProfileModelDto() { Name=userName, Email=email , Role="basicuser" };
-            this.AddProfile(profile);
-            this.UpdateRole(profile,false);
+            var profile = new ProfileModelDto { Name=userName, Email=email , Role="basicuser" };
+            AddProfile(profile);
+            UpdateRole(profile,false);
 
             MembershipCreateStatus status;
             if(Membership.Provider.RequiresQuestionAndAnswer)
@@ -151,10 +142,9 @@ namespace ELearnServices
 
         public void ResetPassword(string userName)
         {
-            string newPassword = Membership.Provider.ResetPassword(userName, null);
+            Membership.Provider.ResetPassword(userName, null);
             //email newPassword
         }
-
 
 
         public bool ChangePassword(string userName, string oldPassword, string newPassword)
@@ -176,19 +166,13 @@ namespace ELearnServices
 
         public bool IsUserInRoles(string userName,string[] roles)
         {
-            foreach (string s in roles)
-            {
-                if (_roleProvider.IsUserInRole(userName, s))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return roles.Any(s => _roleProvider.IsUserInRole(userName, s));
         }
 
         public bool IsActiveByName(string userName)
         {
-            return new Repository<ProfileModel>().GetByQueryObject(new QueryProfilesByName(userName)).FirstOrDefault().IsActive;
+            var profile = new Repository<ProfileModel>().GetByQueryObject(new QueryProfilesByName(userName)).FirstOrDefault();
+            return profile != null && profile.IsActive;
         }
 
 
@@ -211,12 +195,12 @@ namespace ELearnServices
                     });
                     return true;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     return false;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -229,12 +213,15 @@ namespace ELearnServices
                 DataAccess.InTransaction(session =>
                 {
                     var profile = new Repository<ProfileModel>().GetByQueryObject(new QueryProfilesByName(userName)).FirstOrDefault();
-                    profile.IsActive = false;
-                    session.Update(profile);
+                    if (profile != null)
+                    {
+                        profile.IsActive = false;
+                        session.Update(profile);
+                    }
                 });
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -245,11 +232,8 @@ namespace ELearnServices
         {
             if (_roleProvider.RoleExists(roleName))
                 return false;
-            else
-            {
-                _roleProvider.CreateRole(roleName);
-                return true;
-            }
+            _roleProvider.CreateRole(roleName);
+            return true;
         }
     }
 }

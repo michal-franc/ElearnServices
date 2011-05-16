@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
-using NHiberanteDal.Models;
 using elearn.ProfileService;
 
 namespace elearn.Controllers
 {
     public class ProfileController : Controller
     {
-        private IProfileService _service;
+        private readonly IProfileService _service;
         
         public ProfileController(IProfileService service)
         {
@@ -20,7 +16,7 @@ namespace elearn.Controllers
         //
         // GET: /Profile/
 
-        [AuthorizeAttributeWCF(Roles = "admin")]
+        [AuthorizeAttributeWcf(Roles = "admin")]
         [HttpGet]
         public ActionResult Index()
         {
@@ -30,21 +26,20 @@ namespace elearn.Controllers
         //
         // GET: /Profile/Details/id
 
-        [AuthorizeAttributeWCF(Roles = "admin")]
+        [AuthorizeAttributeWcf(Roles = "admin")]
         [HttpGet]
         public ActionResult Details(int id)
         {
             var profile = _service.GetProfile(id);
             if(profile!=null)
                 return View(profile);
-            else
-                return View("NotFound");
+            return View("NotFound");
         }
 
         //
         // GET: /Profile/List
 
-        [AuthorizeAttributeWCF(Roles = "admin")]
+        [AuthorizeAttributeWcf(Roles = "admin")]
         [HttpGet]
         public ActionResult List()
         {
@@ -56,7 +51,7 @@ namespace elearn.Controllers
         //
         // GET: /Profile/Edit/id
 
-        [AuthorizeAttributeWCF(Roles = "admin")]
+        [AuthorizeAttributeWcf(Roles = "admin")]
         [HttpGet]
         public ActionResult Edit(int id)
         {
@@ -77,14 +72,13 @@ namespace elearn.Controllers
 
                 return View(profile);
             }
-            else
-                return View("NotFound");
+            return View("NotFound");
         }
 
         //
         // POST: /Profile/Edit/id
 
-        [AuthorizeAttributeWCF(Roles = "admin")]
+        [AuthorizeAttributeWcf(Roles = "admin")]
         [HttpPost]
         public ActionResult Edit(int id,FormCollection formValues)
         {
@@ -102,10 +96,7 @@ namespace elearn.Controllers
                         ViewBag.Error = Common.ErrorMessages.Profile.RoleUpdateFail;
                         return View(profile);
                     }
-                    else
-                    {
-                        return RedirectToAction("Details", new { id = profile.ID });
-                    }
+                    return RedirectToAction("Details", new { id = profile.ID });
                 }
                 ViewBag.Error = Common.ErrorMessages.Profile.ProfileUpdateFail;
                 return View(profile);
@@ -117,7 +108,7 @@ namespace elearn.Controllers
         //
         // POST: /Profile/Delete/id
 
-        [AuthorizeAttributeWCF(Roles = "admin")]
+        [AuthorizeAttributeWcf(Roles = "admin")]
         [HttpPost]
         public ActionResult Delete(int id)
         {

@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.Text;
 using NHiberanteDal.Models;
 using NHiberanteDal.DTO;
 using NHiberanteDal.DataAccess;
@@ -37,18 +33,12 @@ namespace ELearnServices
 
         public void DeleteTest(TestDto test)
         {
-            DataAccess.InTransaction(session =>
-            {
-                session.Delete(TestDto.UnMap(test));
-            });
+            DataAccess.InTransaction(session => session.Delete(TestDto.UnMap(test)));
         }
 
         public bool UpdateTest(TestDto test)
         {
-            DataAccess.InTransaction(session =>
-            {
-                session.Update(TestDto.UnMap(test));
-            });
+            DataAccess.InTransaction(session => session.Update(TestDto.UnMap(test)));
 
             return true;
         }

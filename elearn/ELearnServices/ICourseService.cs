@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
+﻿using System.Collections.Generic;
 using System.ServiceModel;
-using System.Text;
 using NHiberanteDal.DTO;
 
 namespace ELearnServices
@@ -31,7 +27,7 @@ namespace ELearnServices
         List<CourseDto> GetByName(string value);
 
         [OperationContract]
-        List<CourseDto> GetByCourseType(CourseTypeModelDto _testCourseType);
+        List<CourseDto> GetByCourseType(CourseTypeModelDto testCourseType);
 
         [OperationContract]
         bool Update(CourseDto updatedCourse);

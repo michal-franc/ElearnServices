@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using NHiberanteDal.Models;
 
 namespace NHiberanteDal.DataAccess.QueryObjects
 {
     public class QueryCourseByCourseType : IQueryObject
     {
-        private CourseTypeModel _testCourseType;
+        private readonly CourseTypeModel _testCourseType;
 
-        public QueryCourseByCourseType(CourseTypeModel _testCourseType)
+        public QueryCourseByCourseType(CourseTypeModel testCourseType)
         {
             // TODO: Complete member initialization
-            this._testCourseType = _testCourseType;
+            _testCourseType = testCourseType;
         }
 
         public string Query

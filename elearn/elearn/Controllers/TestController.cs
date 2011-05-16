@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using NHiberanteDal.DTO;
 using elearn.TestService;
@@ -11,14 +8,14 @@ namespace elearn.Controllers
 {
     public class TestController : Controller
     {
-        ITestService _testService;
-        ICourseService _courseService;
+        private readonly ITestService _testService;
+        private readonly ICourseService _courseService;
 
 
-        public TestController(ITestService _tService,ICourseService _cService)
+        public TestController(ITestService tService,ICourseService cService)
         {
-            _testService=_tService;
-            _courseService = _cService;
+            _testService=tService;
+            _courseService = cService;
         }
 
         //
@@ -41,7 +38,7 @@ namespace elearn.Controllers
         // GET: /Test/Create
         public ActionResult Create()
         {
-            TestDto test = new TestDto();
+            var test = new TestDto();
             var courses = _courseService.GetAllSignatures();
             ViewData["Courses"] = new SelectList(courses);
             return View(test);
@@ -75,5 +72,9 @@ namespace elearn.Controllers
             return View();
         }
 
+        public ActionResult List()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

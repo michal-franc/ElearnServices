@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.Text;
-using NHiberanteDal.DTO;
+﻿using NHiberanteDal.DTO;
 using NHiberanteDal.DataAccess;
 using NHiberanteDal.Models;
 
@@ -20,7 +14,7 @@ namespace ELearnServices
 
         public JournalModelDto GetJournalDetails(int id)
         {
-            JournalModelDto modelDto = null;
+            JournalModelDto modelDto;
             using (var session = DataAccess.OpenSession())
             {
                  var model = session.Get<JournalModel>(id);

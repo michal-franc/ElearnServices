@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using NHibernate;
 using FluentNHibernate.Cfg.Db;
 using FluentNHibernate.Cfg;
@@ -15,21 +12,23 @@ namespace NHiberanteDal.DataAccess
     public static class DataAccess
     {
         private static ISessionFactory _sessionFactory;
-        private static readonly object _syncRoot = new object();
+        private static readonly object SyncRoot = new object();
         private static Configuration _configuration;
 
-        private static readonly Func<ISession> _defaultOpenSession = () =>
+        private static readonly Func<ISession> DefaultOpenSession = () =>
         {
             if (_sessionFactory == null)
             {
-                lock (_syncRoot)
+                lock (SyncRoot)
                 {
                     if (_sessionFactory == null)
                         Configure();
                 }
-            }
 
-            return _sessionFactory.OpenSession();
+            }
+            else
+                return _sessionFactory.OpenSession();
+            return null;
         };
 
         private static void Configure()
@@ -62,7 +61,7 @@ namespace NHiberanteDal.DataAccess
         public static Func<ISession> OpenSession
         {
             set { _openSession = value; }
-            get { return _openSession ?? _defaultOpenSession; }
+            get { return _openSession ?? DefaultOpenSession; }
         }
 
         public static void InTransaction(Action<ISession> operation)

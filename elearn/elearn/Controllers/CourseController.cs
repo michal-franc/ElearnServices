@@ -76,16 +76,16 @@ namespace elearn.Controllers
 
             course.CreationDate = DateTime.Now;
             course.ShoutBox = new ShoutboxModelDto();
-            course.Forum = new ForumModelDto()
-            {
+            course.Forum = new ForumModelDto
+                               {
                 Author = "DefaultForumAuthorName",
                 Name = "DefaultCourseForumName"
             };
 
             course.CourseType = new CourseTypeModelDto { ID = CourseDto.DefaultCourseTypeId };
 
-            course.Group = new GroupModelDto()
-            {
+            course.Group = new GroupModelDto
+                               {
                 GroupName = "DefaultCourseGroupName",
                 GroupType = new GroupTypeModelDto { ID = CourseDto.DefaultGroupTypeId }
             };
@@ -93,7 +93,7 @@ namespace elearn.Controllers
             //Fixing ModelState Valid Error
             if (ModelState.ContainsKey("CourseType"))
             {
-                var courseTypeId = System.Int32.Parse(ModelState["CourseType"].Value.AttemptedValue);
+                var courseTypeId = Int32.Parse(ModelState["CourseType"].Value.AttemptedValue);
                 course.CourseType = new CourseTypeModelDto { ID = courseTypeId };
                 ModelState.Remove("CourseType");
             }
@@ -150,7 +150,7 @@ namespace elearn.Controllers
             //Fixing ModelState Valid Error
             if (ModelState.ContainsKey("CourseType"))
             {
-                int courseTypeId = System.Int32.Parse(ModelState["CourseType"].Value.AttemptedValue);
+                int courseTypeId = Int32.Parse(ModelState["CourseType"].Value.AttemptedValue);
                 course.CourseType = new CourseTypeModelDto { ID = courseTypeId };
                 ModelState.Remove("CourseType");
             }

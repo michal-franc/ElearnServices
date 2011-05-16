@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace NHiberanteDal.DataAccess.QueryObjects
 {
     public class QueryGroupTypesByName : IQueryObject
     {
-        private string _value;
+        private readonly string _value;
         public QueryGroupTypesByName(string value)
         {
             _value = value;

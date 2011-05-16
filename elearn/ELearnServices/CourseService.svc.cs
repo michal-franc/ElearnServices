@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.Text;
 using NHiberanteDal.DTO;
 using NHiberanteDal.DataAccess;
 using NHiberanteDal.Models;
@@ -11,7 +8,6 @@ using NHiberanteDal.DataAccess.QueryObjects;
 
 namespace ELearnServices
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "CourseService" in code, svc and config file together.
     public class CourseService : ICourseService
     {
         public CourseService()
@@ -31,7 +27,7 @@ namespace ELearnServices
 
         public CourseDto GetById(int id)
         {
-            CourseDto course = null;
+            CourseDto course;
             using (var session = DataAccess.OpenSession())
             {
                course=  CourseDto.Map(session.Get<CourseModel>(id));
@@ -41,7 +37,7 @@ namespace ELearnServices
 
         public TestDto GetLatestTest(int id)
         {
-            TestDto test = null;
+            TestDto test;
             using(var session = DataAccess.OpenSession())
             {
                 test = TestDto.Map(
@@ -54,7 +50,7 @@ namespace ELearnServices
 
         public IList<TestSignatureDto> GetAllTestsSignatures(int id)
         {
-            IList<TestSignatureDto> tests = null;
+            IList<TestSignatureDto> tests;
             using (var session = DataAccess.OpenSession())
             {
                 tests = TestSignatureDto.Map(
@@ -66,7 +62,7 @@ namespace ELearnServices
 
         public List<CourseDto> GetByName(string value)
         {
-            List<CourseDto> returnedList = null;
+            List<CourseDto> returnedList;
             using (var session = DataAccess.OpenSession())
             {
                 returnedList =CourseDto.Map((List<CourseModel>)session.CreateQuery(new QueryCourseByName(value).Query).List<CourseModel>());
@@ -74,12 +70,12 @@ namespace ELearnServices
             return returnedList;
         }
 
-        public List<CourseDto> GetByCourseType(CourseTypeModelDto _testCourseType)
+        public List<CourseDto> GetByCourseType(CourseTypeModelDto testCourseType)
         {
-            List<CourseDto> returnedList = null;
+            List<CourseDto> returnedList;
             using (var session = DataAccess.OpenSession())
             {
-                returnedList = CourseDto.Map((List<CourseModel>)session.CreateQuery(new QueryCourseByCourseType(CourseTypeModelDto.UnMap(_testCourseType)).Query).List<CourseModel>());
+                returnedList = CourseDto.Map((List<CourseModel>)session.CreateQuery(new QueryCourseByCourseType(CourseTypeModelDto.UnMap(testCourseType)).Query).List<CourseModel>());
             }
             return returnedList;
         }
@@ -109,7 +105,7 @@ namespace ELearnServices
                 }
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -128,7 +124,7 @@ namespace ELearnServices
 
         public IList<ShoutBoxMessageModelDto> GetLatestShoutBoxMessages(int shoutBoxId)
         {
-            var msgs=new List<ShoutBoxMessageModel>();
+            List<ShoutBoxMessageModel> msgs;
             using (var session = DataAccess.OpenSession())
             {
                 msgs = session.Get<ShoutboxModel>(shoutBoxId).Messages.ToList();

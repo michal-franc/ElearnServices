@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -7,7 +6,7 @@ using System.Security.Principal;
 
 namespace elearn
 {
-    public class AuthorizeAttributeWCF : AuthorizeAttribute
+    public class AuthorizeAttributeWcf : AuthorizeAttribute
     {
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
@@ -20,13 +19,13 @@ namespace elearn
             {
                 return false;
             }
-            if (this.Users.Length > 0 && !Enumerable.Contains<string>(this.Users.Split(','), user.Identity.Name, StringComparer.OrdinalIgnoreCase))
+            if (Users.Length > 0 && !Users.Split(',').Contains(user.Identity.Name, StringComparer.OrdinalIgnoreCase))
             {
                 return false;
             }
-            if (this.Roles.Length > 0)
+            if (Roles.Length > 0)
             {
-                string [] roles = this.Roles.Split(','); 
+                string [] roles = Roles.Split(','); 
                 var service = new ProfileService.ProfileServiceClient();
                 return service.IsUserInRoles(user.Identity.Name,roles);
             }
