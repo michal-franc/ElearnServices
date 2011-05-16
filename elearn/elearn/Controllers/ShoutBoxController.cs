@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using NHiberanteDal.DTO;
 using elearn.JsonMessages;
 using elearn.CourseService;
+using System.Linq;
 
 namespace elearn.Controllers
 {
@@ -43,8 +44,7 @@ namespace elearn.Controllers
         [HttpPost]
         public ActionResult GetMessages(int id)
         {
-            var messages = _courseService.GetLatestShoutBoxMessages(id);
-
+            var messages = _courseService.GetLatestShoutBoxMessages(id).OrderByDescending(c => c.TimePosted).ToList();
             return Json(messages != null ?
                 new ResponseMessage(true,messages) : 
                 new ResponseMessage(false, new object[0]));

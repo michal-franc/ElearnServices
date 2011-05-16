@@ -26,9 +26,8 @@ namespace NHiberanteDal.DataAccess
                 }
 
             }
-            else
-                return _sessionFactory.OpenSession();
-            return null;
+
+            return _sessionFactory.OpenSession();
         };
 
         private static void Configure()
