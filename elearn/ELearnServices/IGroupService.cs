@@ -32,5 +32,11 @@ namespace ELearnServices
 
         [OperationContract]
         IList<GroupTypeModelDto> GetGroupTypeByName(string typeName);
+
+        [OperationContract]
+        bool AddProfileToGroup(int groupId,int profileId);
+
+        [OperationContract]
+        bool RemoveProfileFromGroup(int groupId, int profileId);
     }
 }

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using NUnit.Framework;
 using NHiberanteDal.Models;
 using NHiberanteDal.DataAccess;
@@ -14,10 +12,10 @@ namespace NHibernateTests.ServicesTests
     class GroupServiceTests : InMemoryWithSampleData
     {
         [Test]
-        public void Can_Get_All_Groups()
+        public void Can_get_all_groups()
         {
             #region Arrange
-            var group = new GroupModel() { GroupName="test", GroupType=_testGroupType};
+            var group = new GroupModel { GroupName="test", GroupType=TestGroupType};
             DataAccess.InTransaction(session => session.Save(group));
             #endregion
 
@@ -35,7 +33,7 @@ namespace NHibernateTests.ServicesTests
 
 
         [Test]
-        public void Can_Get_Group()
+        public void Can_get_group()
         {
             #region Arrange
             #endregion
@@ -52,10 +50,10 @@ namespace NHibernateTests.ServicesTests
 
 
         [Test]
-        public void Can_Add_Group()
+        public void Can_add_group()
         {
             #region Arrange
-            var group = new GroupModel() { GroupName = "new group", GroupType=_testGroupType };
+            var group = new GroupModel { GroupName = "new group", GroupType=TestGroupType };
             #endregion
 
             #region Act
@@ -76,7 +74,7 @@ namespace NHibernateTests.ServicesTests
 
 
         [Test]
-        public void Can_Update_Group()
+        public void Can_update_group()
         {
             #region Arrange
             GroupModel group = null;
@@ -106,10 +104,10 @@ namespace NHibernateTests.ServicesTests
 
 
         [Test]
-        public void Can_Delete_Group()
+        public void Can_delete_group()
         {
             #region Arrange
-            var group = new GroupModel() { GroupName = "delete test", GroupType=_testGroupType };
+            var group = new GroupModel { GroupName = "delete test", GroupType=TestGroupType };
             int id = -1;
             DataAccess.InTransaction(session =>
             {
@@ -171,6 +169,64 @@ namespace NHibernateTests.ServicesTests
             #region Assert
             Assert.IsNotNull(course);
             #endregion
-        }				
+        }
+
+
+        [Test]
+        public void Can_add_profile_to_group()
+        {
+            #region Arrange
+            #endregion
+
+            #region Act
+
+            var ok  =new GroupService().AddProfileToGroup(1, 1);
+
+            ProfileModel profile;
+            using (var session = DataAccess.OpenSession())
+            {
+                var group = session.Get<GroupModel>(1);
+                profile = group.Users.First();
+            }
+            #endregion
+
+            #region Assert
+            Assert.IsTrue(ok);
+            Assert.That(profile.ID,Is.EqualTo(1));
+            #endregion
+        }
+
+
+        [Test]
+        public void Can_remove_profile_from_group()
+        {
+            #region Arrange
+            using (var session = DataAccess.OpenSession())
+            {
+                var group = session.Get<GroupModel>(1);
+                group.Users.Add(TestPofile);
+                session.Flush();
+            }
+            #endregion
+
+            #region Act
+
+            var ok = new GroupService().RemoveProfileFromGroup(1,1);
+
+            ProfileModel profile;
+            using (var session = DataAccess.OpenSession())
+            {
+                var group = session.Get<GroupModel>(1);
+                profile = group.Users.FirstOrDefault();
+            }
+            #endregion
+
+            #region Assert
+            Assert.IsTrue(ok);
+            Assert.IsNull(profile);
+            #endregion
+        }
+				
+				
     }
 }

@@ -84,5 +84,56 @@ namespace ELearnServices
             }
             return types;
         }
+
+
+        public bool AddProfileToGroup(int groupId, int profileId)
+        {
+            var group = new Repository<GroupModel>().GetById(groupId);
+            var profile = new Repository<ProfileModel>().GetById(profileId);
+
+            var index = -1;
+
+            foreach (var p in group.Users)
+            {
+                if (p.ID == profile.ID)
+                {
+                    index = group.Users.IndexOf(p);
+                    break;
+                }
+            }
+
+            if (index == -1)
+            {
+                group.Users.Add(profile);
+                if (new Repository<GroupModel>().Update(group))
+                    return true;
+            }
+            return false;
+        }
+
+        public bool RemoveProfileFromGroup(int groupId, int profileId)
+        {
+            var group = new Repository<GroupModel>().GetById(groupId);
+            var profile = new Repository<ProfileModel>().GetById(profileId);
+
+            var index = -1;
+
+            foreach (var p in group.Users)
+            {
+                if (p.ID == profile.ID)
+                {
+                    index = group.Users.IndexOf(p);
+                    break;
+                }
+            }
+
+            if (index >= 0)
+            {
+                group.Users.RemoveAt(index);
+                if (new Repository<GroupModel>().Update(group))
+                    return true;
+            }
+            return false;
+        }
     }
 }
