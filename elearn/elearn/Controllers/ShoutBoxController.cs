@@ -9,6 +9,7 @@ namespace elearn.Controllers
 {
     public class ShoutBoxController : Controller
     {
+        private const int NumberOfMessages = 10;
         private readonly ICourseService _courseService;
 
         public ShoutBoxController(ICourseService courseService)
@@ -39,10 +40,8 @@ namespace elearn.Controllers
         [HttpPost]
         public ActionResult GetMessages(int id)
         {
-            var messages = _courseService.GetLatestShoutBoxMessages(id).OrderByDescending(c => c.TimePosted).ToList();
-            return Json(messages != null ?
-                new ResponseMessage(true,messages) : 
-                new ResponseMessage(false, new object[0]));
+            var messages = _courseService.GetLatestShoutBoxMessages(id,NumberOfMessages);
+            return Json(messages != null ? new ResponseMessage(true, messages) : new ResponseMessage(false, new object[0]));
         }
 
     }

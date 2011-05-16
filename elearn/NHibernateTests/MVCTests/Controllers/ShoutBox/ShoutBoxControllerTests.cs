@@ -117,7 +117,7 @@ namespace NHibernateTests.MVCTests.Controllers.ShoutBox
             #region Arrange
             using (Mock.Record())
             {
-                Expect.Call(CourseService.GetLatestShoutBoxMessages(1)).Return(SampleMessages);
+                Expect.Call(CourseService.GetLatestShoutBoxMessages(1,10)).Return(SampleMessages);
             }
             #endregion
 
@@ -144,7 +144,7 @@ namespace NHibernateTests.MVCTests.Controllers.ShoutBox
             #region Arrange
             using (Mock.Record())
             {
-                Expect.Call(CourseService.GetLatestShoutBoxMessages(1)).Return(null);
+                Expect.Call(CourseService.GetLatestShoutBoxMessages(1,10)).Return(null);
             }
             #endregion
 

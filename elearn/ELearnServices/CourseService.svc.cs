@@ -122,12 +122,12 @@ namespace ELearnServices
             return new Repository<ShoutBoxMessageModel>().Add(ShoutBoxMessageModelDto.UnMap(msg));
         }
 
-        public IList<ShoutBoxMessageModelDto> GetLatestShoutBoxMessages(int shoutBoxId)
+        public IList<ShoutBoxMessageModelDto> GetLatestShoutBoxMessages(int shoutBoxId,int numberOfMessages)
         {
             List<ShoutBoxMessageModel> msgs;
             using (var session = DataAccess.OpenSession())
             {
-                msgs = session.Get<ShoutboxModel>(shoutBoxId).Messages.ToList();
+                msgs = session.Get<ShoutboxModel>(shoutBoxId).Messages.OrderByDescending(c => c.TimePosted).Take(numberOfMessages).ToList();
             }
             return ShoutBoxMessageModelDto.Map(msgs);
         }

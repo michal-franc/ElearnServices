@@ -44,8 +44,8 @@ namespace NHibernateTests.ServicesTests
 
 
             //Initializing Data
-            TestShoutBoxMessage = new ShoutBoxMessageModel{Author = "test",Message = "test",ShoutBoxId = 1,TimePosted = DateTime.Now};
-            TestShoutBoxMessage1 = new ShoutBoxMessageModel { Author = "test", Message = "test",ShoutBoxId = 1, TimePosted = DateTime.Now };
+            TestShoutBoxMessage = new ShoutBoxMessageModel{Author = "test",Message = "test",ShoutBoxId = 1,TimePosted = new DateTime(2010,10,10,10,10,10)};
+            TestShoutBoxMessage1 = new ShoutBoxMessageModel { Author = "test", Message = "testLatest", ShoutBoxId = 1, TimePosted = new DateTime(2011, 10, 10, 10, 10, 10) };
             TestQuestionAnswer = new TestQuestionAnswer {Correct = true,NumberSelected = 0, Text = "test"};
             TestQuestion = new TestQuestionModel
                                 { QuestionText = "test question", Answers = new List<TestQuestionAnswer>

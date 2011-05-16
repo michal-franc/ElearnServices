@@ -367,7 +367,7 @@ namespace NHibernateTests.ServicesTests
 
             #region Act
 
-            var msgs = new CourseService().GetLatestShoutBoxMessages(1);
+            var msgs = new CourseService().GetLatestShoutBoxMessages(1,10);
 
 
             #endregion
@@ -379,6 +379,25 @@ namespace NHibernateTests.ServicesTests
         }
 
 
+
+        [Test]
+        public void Can_get_last_message()
+        {
+            #region Arrange
+            #endregion
+
+            #region Act
+
+            var msgs = new CourseService().GetLatestShoutBoxMessages(1,1);
+
+            #endregion
+
+            #region Assert
+            Assert.That(msgs,Is.Not.Null);
+            Assert.That(msgs.Count, Is.EqualTo(1));
+            Assert.That(msgs.First().Message, Is.EqualTo("testLatest"));
+            #endregion
+        }
 				
 				
 				
