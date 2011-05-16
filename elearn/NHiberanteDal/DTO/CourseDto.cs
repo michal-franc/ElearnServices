@@ -33,12 +33,6 @@ namespace NHiberanteDal.DTO
         public ShoutboxModelDto ShoutBox { get; set; }
         [DataMember]
         public SurveyModel LatestSurvey {get;set;}
-
-
-         public CourseDto()
-	     {
-
-	     }
     }
 
 }

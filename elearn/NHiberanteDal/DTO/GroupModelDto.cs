@@ -19,5 +19,10 @@ namespace NHiberanteDal.DTO
         [DataMember]
         public  IList<ProfileModelDto> Users { get; set; }
 
+
+        public GroupModelDto()
+        {
+                Users = new List<ProfileModelDto>();
+        }
     }
 }

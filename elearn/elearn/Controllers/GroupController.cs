@@ -1,7 +1,9 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Web.Mvc;
 using elearn.GroupService;
 using elearn.ProfileService;
 using elearn.JsonMessages;
+using NHiberanteDal.DTO;
 
 namespace elearn.Controllers
 {
@@ -26,25 +28,57 @@ namespace elearn.Controllers
             return View(group);
         }
 
+
+        //
+        //Get: /Group/Join/id
+        [HttpGet]
+        public ActionResult Join(GroupModelDto groupModel)
+        {
+            if (groupModel.Users.Any(p => p.Name == User.Identity.Name))
+            {
+                return PartialView("_AlreadyInGroup");
+            }
+            return PartialView("_Join",new {groupModel.ID});
+        }
+
+        //
+        //Get: /Group/Leave/id
+        [HttpGet]
+        public ActionResult Leave(GroupModelDto groupModel)
+        {
+            if (groupModel.Users.Any(p => p.Name == User.Identity.Name))
+            {
+                return PartialView("_Leave", new { groupModel.ID });
+            }
+            return PartialView("_NotInGroup");
+        }
+
+
         //
         //Post: /Group/Join/id
         [HttpPost]
-        public ActionResult Join(int id)
+        public ActionResult Join(int groupId )
         {
             var profile = _profileService.GetByName(User.Identity.Name);
-            if (_groupService.AddProfileToGroup(id, profile.ID))
-                return Json(new ResponseMessage(true,string.Empty));
+            if (profile != null)
+            {
+                if (_groupService.AddProfileToGroup(groupId, profile.ID))
+                    return Json(new ResponseMessage(true, string.Empty));
+            }
             return Json(new ResponseMessage(false, string.Empty));
         }
 
         //
         //Post: /Group/Leave/id
         [HttpPost]
-        public ActionResult Leave(int id)
+        public ActionResult Leave(int groupId)
         {
             var profile = _profileService.GetByName(User.Identity.Name);
-            if (_groupService.RemoveProfileFromGroup(id, profile.ID))
-                return Json(new ResponseMessage(true, string.Empty));
+            if (profile != null)
+            {
+                if (_groupService.RemoveProfileFromGroup(groupId, profile.ID))
+                    return Json(new ResponseMessage(true, string.Empty));
+            }
             return Json(new ResponseMessage(false, string.Empty));
         }
 
