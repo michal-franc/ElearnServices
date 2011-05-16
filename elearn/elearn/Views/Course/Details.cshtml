@@ -19,7 +19,7 @@
 
     <li>Course Type : @Model.CourseType.TypeName</li>
     <li>DateCreated : @Model.CreationDate.ToShortDateString()</li>
-    <li>@Html.ActionLink("Forum", "Show", "Forum",new {id=Model.ID})</li>
+    <li>@Html.ActionLink("Forum", "Details", "Forum",new {id=Model.ID})</li>
     <li>@Html.ActionLink("Group", "Details", "Group", new { id = Model.ID })</li>
 
 

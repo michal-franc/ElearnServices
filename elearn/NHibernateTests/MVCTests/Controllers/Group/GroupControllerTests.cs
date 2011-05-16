@@ -5,6 +5,8 @@ using NUnit.Framework;
 using NHiberanteDal.DTO;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using elearn.ProfileService;
+using elearn.JsonMessages;
 
 namespace NHibernateTests.MVCTests.Controllers.Group
 {
@@ -13,20 +15,25 @@ namespace NHibernateTests.MVCTests.Controllers.Group
     {
         protected MockRepository Mock;
         protected IGroupService GroupService;
+        protected IProfileService ProfileService;
         protected GroupController GroupController;
 
         protected GroupModelDto SampleGroup;
+        protected ProfileModelDto SampleProfile;
 
         protected List<GroupModelDto> SampleGroupList;
 
         public BaseTest()
         {
-                SampleGroup = new GroupModelDto{GroupName = "test"};
+            SampleGroup = new GroupModelDto{GroupName = "test"};
+            SampleProfile = new ProfileModelDto{ID=1};
             SampleGroupList = new List<GroupModelDto>
                                   {
                                       new GroupModelDto(),
                                       new GroupModelDto()
                                   };
+
+
         }
 
         [SetUp]
@@ -34,7 +41,8 @@ namespace NHibernateTests.MVCTests.Controllers.Group
         {
             Mock = new MockRepository();
             GroupService = Mock.DynamicMock<IGroupService>();
-            GroupController = new GroupController(GroupService);
+            ProfileService = Mock.DynamicMock<IProfileService>();
+            GroupController = new GroupController(GroupService, ProfileService);
         }
     }
 
@@ -69,6 +77,144 @@ namespace NHibernateTests.MVCTests.Controllers.Group
             #endregion
         }
 				
+    }
+
+    [TestFixture]
+    public class Join : BaseTest
+    {
+
+        [Test]
+        public void Post_adds_profile_to_group_then_returns_succes_msg()
+        {
+            #region Arrange
+
+            GroupController.ControllerContext =
+                TestHelper.MockControllerContext(GroupController).WithAuthenticatedUser("test");
+
+            using (Mock.Record())
+            {
+                Expect.Call(ProfileService.GetByName("test")).Return(SampleProfile);
+                Expect.Call(GroupService.AddProfileToGroup(1,1)).Return(true);
+            }
+            #endregion
+
+            #region Act
+
+            JsonResult result;
+            using (Mock.Playback())
+            {
+               result = (JsonResult)GroupController.Join(1);
+            }
+
+            #endregion
+
+            #region Assert
+            Assert.That(result.Data,Is.Not.Null);
+            Assert.That(((ResponseMessage)result.Data).IsSuccess, Is.True);
+
+            #endregion
+        }
+
+        [Test]
+        public void Post_if_adds_profile_fails_then_return_error_msg()
+        {
+            #region Arrange
+
+            GroupController.ControllerContext =
+                    TestHelper.MockControllerContext(GroupController).WithAuthenticatedUser("test");
+
+
+            using (Mock.Record())
+            {
+                Expect.Call(ProfileService.GetByName("test")).Return(SampleProfile);
+                Expect.Call(GroupService.AddProfileToGroup(1, 1)).Return(false);
+            }
+            #endregion
+
+            #region Act
+
+            JsonResult result;
+            using (Mock.Playback())
+            {
+                result = (JsonResult)GroupController.Join(1);
+            }
+
+            #endregion
+
+            #region Assert
+            Assert.That(result.Data, Is.Not.Null);
+            Assert.That(((ResponseMessage)result.Data).IsSuccess, Is.False);
+            #endregion
+        }
+				
+    }
+
+    [TestFixture]
+    public class Leave : BaseTest
+    {
+        [Test]
+        public void Post_removes_profile_from_group_then_returns_succes_msg()
+        {
+            #region Arrange
+
+            GroupController.ControllerContext =
+                TestHelper.MockControllerContext(GroupController).WithAuthenticatedUser("test");
+
+            using (Mock.Record())
+            {
+                Expect.Call(ProfileService.GetByName("test")).Return(SampleProfile);
+                Expect.Call(GroupService.RemoveProfileFromGroup(1,1)).Return(true);
+            }
+            #endregion
+
+            #region Act
+
+            JsonResult result;
+            using (Mock.Playback())
+            {
+                result = (JsonResult)GroupController.Leave(1);
+            }
+
+            #endregion
+
+            #region Assert
+            Assert.That(result.Data, Is.Not.Null);
+            Assert.That(((ResponseMessage)result.Data).IsSuccess, Is.True);
+
+            #endregion
+        }
+
+        [Test]
+        public void Post_if_removing_profile_fails_then_return_error_msg()
+        {
+            #region Arrange
+
+            GroupController.ControllerContext =
+                TestHelper.MockControllerContext(GroupController).WithAuthenticatedUser("test");
+
+            using (Mock.Record())
+            {
+                Expect.Call(ProfileService.GetByName("test")).Return(SampleProfile);
+                Expect.Call(GroupService.RemoveProfileFromGroup(1, 1)).Return(false);
+            }
+            #endregion
+
+            #region Act
+
+            JsonResult result;
+            using (Mock.Playback())
+            {
+                result = (JsonResult)GroupController.Leave(1);
+            }
+
+            #endregion
+
+            #region Assert
+            Assert.That(result.Data, Is.Not.Null);
+            Assert.That(((ResponseMessage)result.Data).IsSuccess, Is.False);
+
+            #endregion
+        }
     }
 
 }
