@@ -299,8 +299,7 @@
     <Content Include="Views\Forum\Details.cshtml" />
     <Content Include="Views\Group\_Join.cshtml" />
     <Content Include="Views\Group\_Leave.cshtml" />
-    <Content Include="Views\Group\_NotInGroup.cshtml" />
-    <Content Include="Views\Group\_AlreadyInGroup.cshtml" />
+    <Content Include="Views\Shared\_Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
