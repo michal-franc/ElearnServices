@@ -1,4 +1,7 @@
-﻿@{
+﻿<link href="../../Content/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+
+
+@{
     ViewBag.Title = "Kurs";
 }
 
@@ -26,17 +29,72 @@
     @{ Html.RenderPartial("_ShoutBoxPartial",ViewData); }
 
 
-    <label id="lblJoin">Join</label>
-    <label id="lblLeave">Leave</label>
+
     <br />
 </ul>
+
+        @if(Model.Group.Users.Any(c=>c.Name == User.Identity.Name))
+        {
+            <button id="btnLeave">Leave</button>
+        }
+        else
+        {
+            <button id="btnJoin">Join</button>
+        }
 
 
 <script type="text/javascript">
 
-//    $("#lblJoin").click(function() {
-//        $("<div id='modalPopup'/>").
-//    });
+    $(function()
+        {
+        $("#btnJoin").click(function() {
+            $("<div id='createEventModal'/>").dialog({
+                    modal: true,
+                    open: function() {
+                        $.ajax({
+                                url:
+                                    "@Url.Action("Join","Group",new {groupId = Model.Group.ID})",
+                                cache: false,
+                                dataType: "html",
+                                success: function(data) {
+                                    $("#createEventModal").html(data);
+                                }
+                            });
+                    },
+                    close: function() {
+                        $("#createEventModal").remove();
+                    },
+                    height: 500,
+                    width: 900,
+                    title: 'Join Course'
+                });
+            return false;
+        });
+
+        $("#btnLeave").click(function() {
+            $("<div id='createEventModal'/>").dialog({
+                    modal: true,
+                    open: function() {
+                        $.ajax({
+                                url:
+                                    "@Url.Action("Leave","Group",new {groupId = Model.Group.ID})",
+                                cache: false,
+                                dataType: "html",
+                                success: function(data) {
+                                    $("#createEventModal").html(data);
+                                }
+                            });
+                    },
+                    close: function() {
+                        $("#createEventModal").remove();
+                    },
+                    height: 500,
+                    width: 900,
+                    title: 'Leave Course'
+                });
+            return false;
+        });
+    });
 
 </script>
 

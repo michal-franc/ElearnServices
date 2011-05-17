@@ -3,7 +3,6 @@ using System.Web.Mvc;
 using NHiberanteDal.DTO;
 using elearn.JsonMessages;
 using elearn.CourseService;
-using System.Linq;
 
 namespace elearn.Controllers
 {

@@ -86,41 +86,57 @@ namespace NHibernateTests.MVCTests.Controllers.Group
 
             GroupController.ControllerContext =
                 TestHelper.MockControllerContext(GroupController).WithAuthenticatedUser("test");
+
+            using (Mock.Record())
+            {
+                Expect.Call(ProfileService.GetByName("test")).Return(SampleProfile).IgnoreArguments();
+            }
             #endregion
 
             #region Act
 
-            var partialView = (PartialViewResult)GroupController.Join(SampleGroup);
+            PartialViewResult partialView;
+            using (Mock.Playback())
+            {
+                partialView = (PartialViewResult) GroupController.Join(1);
+            }
 
             #endregion
 
             #region Assert
             Assert.That(partialView,Is.InstanceOf<PartialViewResult>());
             Assert.That(partialView.ViewName, Is.EqualTo("_Join"));
-            Assert.That(partialView.ViewData.Model.ToString(), Is.EqualTo(new { ID=1 }.ToString()));
+            Assert.That(partialView.ViewData.Model.ToString(), Is.EqualTo(new { groupId = 1, profileId = 1}.ToString()));
             #endregion
         }
 
 
         [Test]
-        public void Get_if_profile_in_group_return_partial_already_in_group()
+        public void Get_if_profile_null_then_return_partial_error()
         {
             #region Arrange
-            SampleGroup.Users.Add(SampleProfile);
             GroupController.ControllerContext =
-                TestHelper.MockControllerContext(GroupController).WithAuthenticatedUser("test");
+                 TestHelper.MockControllerContext(GroupController).WithAuthenticatedUser("test");
+            using (Mock.Record())
+            {
+                Expect.Call(ProfileService.GetByName("test")).Return(null);
+            }
             #endregion
 
             #region Act
 
-            var partialView = (PartialViewResult)GroupController.Join(SampleGroup);
+            PartialViewResult view;
+            using (Mock.Playback())
+            {
+                view = (PartialViewResult)GroupController.Join(1);
+            }
 
             #endregion
 
             #region Assert
-            Assert.That(partialView, Is.InstanceOf<PartialViewResult>());
-            Assert.That(partialView.ViewName, Is.EqualTo("_AlreadyInGroup"));
-            Assert.That(partialView.ViewData.Model, Is.Null);
+            Assert.That(view.ViewName, Is.EqualTo("_Error"));
+            Assert.That(view.ViewBag.Error, Is.Not.Null);
+            Assert.That(view.ViewData["Error"], Is.EqualTo(elearn.Common.ErrorMessages.Group.ProfileJoinError));
             #endregion
         }
 				
@@ -129,11 +145,8 @@ namespace NHibernateTests.MVCTests.Controllers.Group
         public void Post_adds_profile_to_group_then_returns_succes_msg()
         {
             #region Arrange
-            GroupController.ControllerContext =
-                    TestHelper.MockControllerContext(GroupController).WithAuthenticatedUser("test");
             using (Mock.Record())
             {
-                Expect.Call(ProfileService.GetByName("test")).Return(SampleProfile);
                 Expect.Call(GroupService.AddProfileToGroup(1,1)).Return(true);
             }
             #endregion
@@ -143,7 +156,7 @@ namespace NHibernateTests.MVCTests.Controllers.Group
             JsonResult result;
             using (Mock.Playback())
             {
-               result = (JsonResult)GroupController.Join(1);
+               result = (JsonResult)GroupController.Join(1,1);
             }
 
             #endregion
@@ -159,11 +172,8 @@ namespace NHibernateTests.MVCTests.Controllers.Group
         public void Post_if_adds_profile_fails_then_return_error_msg()
         {
             #region Arrange
-            GroupController.ControllerContext =
-                    TestHelper.MockControllerContext(GroupController).WithAuthenticatedUser("test");
             using (Mock.Record())
             {
-                Expect.Call(ProfileService.GetByName("test")).Return(SampleProfile);
                 Expect.Call(GroupService.AddProfileToGroup(1, 1)).Return(false);
             }
             #endregion
@@ -173,7 +183,7 @@ namespace NHibernateTests.MVCTests.Controllers.Group
             JsonResult result;
             using (Mock.Playback())
             {
-                result = (JsonResult)GroupController.Join(1);
+                result = (JsonResult)GroupController.Join(1,1);
             }
 
             #endregion
@@ -184,34 +194,6 @@ namespace NHibernateTests.MVCTests.Controllers.Group
             #endregion
         }
 
-        [Test]
-        public void Post_if_profile_null_then_dont_update_and_return_error_msg()
-        {
-            #region Arrange
-            GroupController.ControllerContext =
-                 TestHelper.MockControllerContext(GroupController).WithAuthenticatedUser("test");
-            using (Mock.Record())
-            {
-                Expect.Call(ProfileService.GetByName("test")).Return(null);
-                Expect.Call(GroupService.AddProfileToGroup(1, 1)).Repeat.Never();
-            }
-            #endregion
-
-            #region Act
-
-            JsonResult result;
-            using (Mock.Playback())
-            {
-                result = (JsonResult)GroupController.Join(1);
-            }
-
-            #endregion
-
-            #region Assert
-            Assert.That(result.Data, Is.Not.Null);
-            Assert.That(((ResponseMessage)result.Data).IsSuccess, Is.False);
-            #endregion
-        }
 				
     }
 
@@ -219,47 +201,65 @@ namespace NHibernateTests.MVCTests.Controllers.Group
     public class Leave : BaseTest
     {
         [Test]
-        public void Get_if_profile_not_in_group_return_partial_not_in_group()
-        {
-            #region Arrange
-            GroupController.ControllerContext =
-                TestHelper.MockControllerContext(GroupController).WithAuthenticatedUser("test");
-            #endregion
-
-            #region Act
-
-            var partialView = (PartialViewResult)GroupController.Leave(SampleGroup);
-
-            #endregion
-
-            #region Assert
-            Assert.That(partialView,Is.InstanceOf<PartialViewResult>());
-            Assert.That(partialView.ViewName, Is.EqualTo("_NotInGroup"));
-            Assert.That(partialView.ViewData.Model,Is.Null);
-            #endregion
-        }
-
-
-        [Test]
-        public void Get_if_profile_in_group_return_partial_leave_group()
+        public void Get_gets_profile_then_return_partial_leave()
         {
             #region Arrange
             SampleGroup.Users.Add(SampleProfile);
 
             GroupController.ControllerContext =
                 TestHelper.MockControllerContext(GroupController).WithAuthenticatedUser("test");
+
+            using (Mock.Record())
+            {
+                Expect.Call(ProfileService.GetByName("test")).Return(SampleProfile).IgnoreArguments();
+            }
             #endregion
 
             #region Act
 
-            var partialView = (PartialViewResult)GroupController.Leave(SampleGroup);
+            PartialViewResult partialView;
+            using (Mock.Playback())
+            {
+                partialView = (PartialViewResult) GroupController.Leave(1);
+            }
 
             #endregion
 
             #region Assert
             Assert.That(partialView, Is.InstanceOf<PartialViewResult>());
             Assert.That(partialView.ViewName, Is.EqualTo("_Leave"));
-            Assert.That(partialView.ViewData.Model.ToString(), Is.EqualTo(new { ID = 1 }.ToString()));
+            Assert.That(partialView.ViewData.Model.ToString(), Is.EqualTo(new { groupId = 1, profileId = 1 }.ToString()));
+            #endregion
+        }
+
+
+        [Test]
+        public void Get_if_profile_null_then_dont_update_and_return_error_msg()
+        {
+            #region Arrange
+            GroupController.ControllerContext =
+                    TestHelper.MockControllerContext(GroupController).WithAuthenticatedUser("test");
+            using (Mock.Record())
+            {
+                Expect.Call(ProfileService.GetByName("test")).Return(null);
+            }
+            #endregion
+
+            #region Act
+
+            PartialViewResult view;
+            using (Mock.Playback())
+            {
+                view = (PartialViewResult)GroupController.Leave(1);
+            }
+
+            #endregion
+
+            #region Assert
+            Assert.That(view.ViewBag.Error, Is.Not.Null);
+            Assert.That(view.ViewData["Error"], Is.EqualTo(elearn.Common.ErrorMessages.Group.ProfileLeaveError));
+            Assert.That(view.ViewName, Is.EqualTo("_Error"));
+
             #endregion
         }
 
@@ -267,11 +267,8 @@ namespace NHibernateTests.MVCTests.Controllers.Group
         public void Post_removes_profile_from_group_then_returns_succes_msg()
         {
             #region Arrange
-            GroupController.ControllerContext =
-                 TestHelper.MockControllerContext(GroupController).WithAuthenticatedUser("test");
             using (Mock.Record())
             {
-                Expect.Call(ProfileService.GetByName("test")).Return(SampleProfile);
                 Expect.Call(GroupService.RemoveProfileFromGroup(1,1)).Return(true);
             }
             #endregion
@@ -281,7 +278,7 @@ namespace NHibernateTests.MVCTests.Controllers.Group
             JsonResult result;
             using (Mock.Playback())
             {
-                result = (JsonResult)GroupController.Leave(1);
+                result = (JsonResult)GroupController.Leave(1,1);
             }
 
             #endregion
@@ -297,11 +294,8 @@ namespace NHibernateTests.MVCTests.Controllers.Group
         public void Post_if_removing_profile_fails_then_return_error_msg()
         {
             #region Arrange
-            GroupController.ControllerContext =
-                TestHelper.MockControllerContext(GroupController).WithAuthenticatedUser("test");
             using (Mock.Record())
             {
-                Expect.Call(ProfileService.GetByName("test")).Return(SampleProfile);
                 Expect.Call(GroupService.RemoveProfileFromGroup(1, 1)).Return(false);
             }
             #endregion
@@ -311,7 +305,7 @@ namespace NHibernateTests.MVCTests.Controllers.Group
             JsonResult result;
             using (Mock.Playback())
             {
-                result = (JsonResult)GroupController.Leave(1);
+                result = (JsonResult)GroupController.Leave(1,1);
             }
 
             #endregion
@@ -323,35 +317,6 @@ namespace NHibernateTests.MVCTests.Controllers.Group
             #endregion
         }
 
-        [Test]
-        public void Post_if_profile_null_then_dont_update_and_return_error_msg()
-        {
-            #region Arrange
-            GroupController.ControllerContext =
-                    TestHelper.MockControllerContext(GroupController).WithAuthenticatedUser("test");
-            using (Mock.Record())
-            {
-                Expect.Call(ProfileService.GetByName("test")).Return(null);
-                Expect.Call(GroupService.RemoveProfileFromGroup(1, 1)).Repeat.Never();
-            }
-            #endregion
-
-            #region Act
-
-            JsonResult result;
-            using (Mock.Playback())
-            {
-                result = (JsonResult)GroupController.Leave(1);
-            }
-
-            #endregion
-
-            #region Assert
-            Assert.That(result.Data, Is.Not.Null);
-            Assert.That(((ResponseMessage)result.Data).IsSuccess, Is.False);
-
-            #endregion
-        }
     }
 
 }

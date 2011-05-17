@@ -32,53 +32,50 @@ namespace elearn.Controllers
         //
         //Get: /Group/Join/id
         [HttpGet]
-        public ActionResult Join(GroupModelDto groupModel)
+        public ActionResult Join(int groupId)
         {
-            if (groupModel.Users.Any(p => p.Name == User.Identity.Name))
+            var profile = _profileService.GetByName(User.Identity.Name);
+            if (profile != null)
             {
-                return PartialView("_AlreadyInGroup");
+                return PartialView("_Join", new {groupId, profileId = profile.ID});
             }
-            return PartialView("_Join",new {groupModel.ID});
+            ViewBag.Error = Common.ErrorMessages.Group.ProfileJoinError;
+            return PartialView("_Error");
         }
 
         //
         //Get: /Group/Leave/id
         [HttpGet]
-        public ActionResult Leave(GroupModelDto groupModel)
+        public ActionResult Leave(int groupId)
         {
-            if (groupModel.Users.Any(p => p.Name == User.Identity.Name))
+            var profile = _profileService.GetByName(User.Identity.Name);
+            if (profile != null)
             {
-                return PartialView("_Leave", new { groupModel.ID });
+                return PartialView("_Leave", new {groupId, profileId = profile.ID});
             }
-            return PartialView("_NotInGroup");
+            ViewBag.Error = Common.ErrorMessages.Group.ProfileLeaveError;
+            return PartialView("_Error");
+
         }
 
 
         //
         //Post: /Group/Join/id
         [HttpPost]
-        public ActionResult Join(int groupId )
+        public ActionResult Join(int groupId,int profileId)
         {
-            var profile = _profileService.GetByName(User.Identity.Name);
-            if (profile != null)
-            {
-                if (_groupService.AddProfileToGroup(groupId, profile.ID))
-                    return Json(new ResponseMessage(true, string.Empty));
-            }
-            return Json(new ResponseMessage(false, string.Empty));
+            if (_groupService.AddProfileToGroup(groupId, profileId))
+                return Json(new ResponseMessage(true, string.Empty));
+             return Json(new ResponseMessage(false, string.Empty));
         }
 
         //
         //Post: /Group/Leave/id
         [HttpPost]
-        public ActionResult Leave(int groupId)
+        public ActionResult Leave(int groupId, int profileID)
         {
-            var profile = _profileService.GetByName(User.Identity.Name);
-            if (profile != null)
-            {
-                if (_groupService.RemoveProfileFromGroup(groupId, profile.ID))
-                    return Json(new ResponseMessage(true, string.Empty));
-            }
+            if (_groupService.RemoveProfileFromGroup(groupId, profileID))
+                return Json(new ResponseMessage(true, string.Empty));
             return Json(new ResponseMessage(false, string.Empty));
         }
 

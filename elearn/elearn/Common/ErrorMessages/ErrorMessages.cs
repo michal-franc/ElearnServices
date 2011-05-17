@@ -45,4 +45,17 @@
             get { return "No course group type error."; }
         }
     }
+
+    public static class Group
+    {
+        public static string ProfileJoinError
+        {
+            get { return "Null Profile"; }
+        }
+
+        public static string ProfileLeaveError
+        {
+            get { return "Null Profile"; }
+        }
+    }
 }
