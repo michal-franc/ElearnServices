@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using elearn.ProfileService;
 using elearn.JsonMessages;
+using elearn.Models;
 
 namespace NHibernateTests.MVCTests.Controllers.Group
 {
@@ -106,7 +107,7 @@ namespace NHibernateTests.MVCTests.Controllers.Group
             #region Assert
             Assert.That(partialView,Is.InstanceOf<PartialViewResult>());
             Assert.That(partialView.ViewName, Is.EqualTo("_Join"));
-            Assert.That(partialView.ViewData.Model.ToString(), Is.EqualTo(new { groupId = 1, profileId = 1}.ToString()));
+            Assert.That(partialView.ViewData.Model.ToString(), Is.EqualTo(new ProfileIDGroupIDModel(1,1).ToString()));
             #endregion
         }
 
@@ -228,7 +229,7 @@ namespace NHibernateTests.MVCTests.Controllers.Group
             #region Assert
             Assert.That(partialView, Is.InstanceOf<PartialViewResult>());
             Assert.That(partialView.ViewName, Is.EqualTo("_Leave"));
-            Assert.That(partialView.ViewData.Model.ToString(), Is.EqualTo(new { groupId = 1, profileId = 1 }.ToString()));
+            Assert.That(partialView.ViewData.Model.ToString(), Is.EqualTo(new ProfileIDGroupIDModel(1,1).ToString()));
             #endregion
         }
 

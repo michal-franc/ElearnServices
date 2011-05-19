@@ -169,7 +169,7 @@ namespace NHibernateTests.MVCTests.Controllers.Course
         }
 
         [Test]
-        public void Post_if_model_state_invalid_then_return_error_view()
+        public void Post_if_model_state_invalid_then_dont_add_course_and_return_error_view()
         {
             #region Arrange
             //Faking ModelState.IsValid = false
