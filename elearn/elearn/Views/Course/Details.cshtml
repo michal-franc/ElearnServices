@@ -35,11 +35,13 @@
 
         @if(Model.Group.Users.Any(c=>c.Name == User.Identity.Name))
         {
-            <button id="btnLeave">Leave</button>
+            <button id="btnLeaveModal">Leave</button>
+            <button id="btnJoinModal" hidden="hidden">Join</button>
         }
         else
         {
-            <button id="btnJoin">Join</button>
+            <button id="btnLeaveModal"hidden="hidden">Leave</button>
+            <button id="btnJoinModal">Join</button>
         }
 
 
@@ -47,21 +49,30 @@
 
     $(function()
         {
-        $("#btnJoin").click(function() {
+        $("#btnJoinModal").click(function() {
             $("<div id='createEventModal'/>").dialog({
                     modal: true,
                     open: function() {
                         $.ajax({
+                                type : "GET",
                                 url:
-                                    "@Url.Action("Join","Group",new {groupId = Model.Group.ID})",
+                                    "@Url.Action("Join", "Group", new { groupId = Model.Group.ID })",
                                 cache: false,
                                 dataType: "html",
                                 success: function(data) {
                                     $("#createEventModal").html(data);
+                                },
+                                error : function (data) {
+                                    $("#createEventModal").html(data);
                                 }
                             });
                     },
-                    close: function() {
+                    close: function(data) {
+                        if($("#modalResult").text() == "true")
+                        {
+                            $("#btnJoinModal").hide();
+                            $("#btnLeaveModal").show();
+                        }
                         $("#createEventModal").remove();
                     },
                     height: 500,
@@ -71,11 +82,12 @@
             return false;
         });
 
-        $("#btnLeave").click(function() {
+        $("#btnLeaveModal").click(function() {
             $("<div id='createEventModal'/>").dialog({
                     modal: true,
                     open: function() {
                         $.ajax({
+                                type : "GET",
                                 url:
                                     "@Url.Action("Leave","Group",new {groupId = Model.Group.ID})",
                                 cache: false,
@@ -85,7 +97,12 @@
                                 }
                             });
                     },
-                    close: function() {
+                    close: function(data) {
+                        if($("#modalResult").text() == "true")
+                        {
+                            $("#btnJoinModal").show();
+                            $("#btnLeaveModal").hide();
+                        }
                         $("#createEventModal").remove();
                     },
                     height: 500,

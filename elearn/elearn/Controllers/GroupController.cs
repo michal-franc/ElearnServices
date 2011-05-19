@@ -4,6 +4,7 @@ using elearn.GroupService;
 using elearn.ProfileService;
 using elearn.JsonMessages;
 using NHiberanteDal.DTO;
+using elearn.Models;
 
 namespace elearn.Controllers
 {
@@ -37,7 +38,7 @@ namespace elearn.Controllers
             var profile = _profileService.GetByName(User.Identity.Name);
             if (profile != null)
             {
-                return PartialView("_Join", new {groupId, profileId = profile.ID});
+                return PartialView("_Join", new ProfileIDGroupIDModel(profile.ID,groupId));
             }
             ViewBag.Error = Common.ErrorMessages.Group.ProfileJoinError;
             return PartialView("_Error");
@@ -51,7 +52,7 @@ namespace elearn.Controllers
             var profile = _profileService.GetByName(User.Identity.Name);
             if (profile != null)
             {
-                return PartialView("_Leave", new {groupId, profileId = profile.ID});
+                return PartialView("_Leave", new ProfileIDGroupIDModel(profile.ID, groupId));
             }
             ViewBag.Error = Common.ErrorMessages.Group.ProfileLeaveError;
             return PartialView("_Error");

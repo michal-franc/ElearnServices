@@ -82,6 +82,7 @@
     </Compile>
     <Compile Include="JsonMessages\ResponseMessage.cs" />
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\ProfileIDGroupIDModel.cs" />
     <Compile Include="NinjectDependencyResolver.cs" />
     <Compile Include="NinjectModules.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -337,7 +338,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>38442</DevelopmentServerPort>
+          <DevelopmentServerPort>14869</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

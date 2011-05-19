@@ -1,1 +1,32 @@
-﻿JOIN
+﻿
+@model  elearn.Models.ProfileIDGroupIDModel
+<button id="btnJoin">Join</button>
+<label id="summary"></label>
+<label id="modalResult" hidden="hidden">false</label>
+<script type="text/javascript">
+
+    $(function()
+        {
+        $("#btnJoin").click(function() {
+            $.ajax({
+                    type : "POST",
+                    url: "@Url.Action("Join","Group")",
+                    data : "groupId=" + @Model.GroupId +"&profileId="+ @Model.ProfileId,
+                    cache: false,
+                    dataType: "json",
+                    success: function(data) {
+                        if (data.IsSuccess) {
+                            $("#summary").text("Success");
+                            $("#modalResult").text("true");
+                        }
+                        else {
+                                $("#summary").text("Failed");
+                            }
+                    },
+                    error : function() {
+                        $("#summary").text("Error");
+                    }
+                });
+            });
+        });
+ </script>
