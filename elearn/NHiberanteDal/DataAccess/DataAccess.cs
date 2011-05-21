@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web.Configuration;
 using NHibernate;
 using FluentNHibernate.Cfg.Db;
 using FluentNHibernate.Cfg;
@@ -11,6 +12,20 @@ namespace NHiberanteDal.DataAccess
 {
     public static class DataAccess
     {
+        private  const string TestConnString =  "Data Source=.\\SQL2008;Initial Catalog=elearntest;Integrated Security=SSPI";
+
+
+        private  static string ConnectionString
+        {
+            get
+            {
+                if (WebConfigurationManager.ConnectionStrings["DBConString"] != null)
+                {
+                    return WebConfigurationManager.ConnectionStrings["DBConString"].ConnectionString;
+                }
+                return TestConnString;
+            }
+        }
         private static ISessionFactory _sessionFactory;
         private static readonly object SyncRoot = new object();
         private static Configuration _configuration;
@@ -42,7 +57,7 @@ namespace NHiberanteDal.DataAccess
                 if (_configuration == null)
                 {
                     _configuration = Fluently.Configure().
-                            Database(MsSqlConfiguration.MsSql2008.ConnectionString("Data Source=LaM-PC\\SQL2008;Initial Catalog=elearntest;Integrated Security=SSPI;"))
+                            Database(MsSqlConfiguration.MsSql2008.ConnectionString(ConnectionString))
                             .Mappings(x => x.FluentMappings.AddFromAssembly(System.Reflection.Assembly.GetExecutingAssembly())).BuildConfiguration();
                 }
                 return _configuration;

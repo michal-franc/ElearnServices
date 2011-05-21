@@ -12,5 +12,6 @@ namespace NHiberanteDal.Models
         public virtual double AverageMark { get; set; }
         public virtual CourseModel Course { get; set; }
         public virtual IList<JournalMarkModel> Marks { get; set; }
+        public virtual bool IsActive { get; set; }
     }
 }

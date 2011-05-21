@@ -53,9 +53,9 @@ namespace NHiberanteDal.DTO
                             c.Surveys.OrderByDescending(s => s.DateCreated).FirstOrDefault())
                         );
                     Mapper.CreateMap<CourseDto, CourseModel>()
-                         .ForMember(dest => dest.Tests, opt => opt.Ignore())
-                         .ForMember(dest => dest.Surveys, opt => opt.Ignore())
-                         .ForMember(dest => dest.Contents, opt => opt.Ignore());
+                        .ForMember(dest => dest.Tests, opt => opt.Ignore())
+                        .ForMember(dest => dest.Surveys, opt => opt.Ignore())
+                        .ForMember(dest => dest.Contents, opt => opt.Ignore());
                     Mapper.CreateMap<CourseModel, CourseSignatureDto>();
                     Mapper.CreateMap<CourseSignatureDto, CourseModel>()
                          .ForMember(dest => dest.Tests, opt => opt.Ignore())
@@ -63,7 +63,8 @@ namespace NHiberanteDal.DTO
                          .ForMember(dest => dest.Contents, opt => opt.Ignore())
                          .ForMember(dest => dest.Group, opt => opt.Ignore())
                          .ForMember(dest => dest.Forum, opt => opt.Ignore())
-                         .ForMember(dest => dest.ShoutBox, opt => opt.Ignore());
+                         .ForMember(dest => dest.ShoutBox, opt => opt.Ignore())
+                         .ForMember(dest => dest.Password, opt => opt.Ignore());;
                     Mapper.AssertConfigurationIsValid();
                     _initialized = true;
                     return true;

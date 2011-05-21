@@ -71,9 +71,9 @@ namespace elearn.Controllers
         //
         //Post: /Group/Leave/id
         [HttpPost]
-        public ActionResult Leave(int groupId, int profileID)
+        public ActionResult Leave(int groupId, int profileId)
         {
-            return Json(_groupService.RemoveProfileFromGroup(groupId, profileID) 
+            return Json(_groupService.RemoveProfileFromGroup(groupId, profileId) 
                 ? new ResponseMessage(true, string.Empty) : 
                  new ResponseMessage(false, string.Empty));
         }

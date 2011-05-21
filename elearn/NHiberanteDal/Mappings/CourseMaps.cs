@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NHiberanteDal.Models;
+﻿using NHiberanteDal.Models;
 using FluentNHibernate.Mapping;
 
 
@@ -17,6 +13,7 @@ namespace NHiberanteDal.Mappings
             Map(x => x.Name).Not.Nullable();
             Map(x => x.CreationDate).Not.Nullable();
             Map(x => x.Description);
+            Map(x=>x.Password).Nullable();
             
 
             //One

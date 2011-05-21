@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using FluentNHibernate.Mapping;
+﻿using FluentNHibernate.Mapping;
 using NHiberanteDal.Models;
 
 namespace NHiberanteDal.Mappings
@@ -78,6 +74,7 @@ namespace NHiberanteDal.Mappings
             Id(x => x.ID);
             Map(x => x.Name).Not.Nullable();
             Map(x=>x.AverageMark);
+            Map(x=>x.IsActive);
 
             //One
             References(x => x.Course).Not.Nullable().Not.LazyLoad();

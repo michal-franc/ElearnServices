@@ -33,6 +33,8 @@ namespace NHiberanteDal.DTO
         public ShoutboxModelDto ShoutBox { get; set; }
         [DataMember]
         public SurveyModel LatestSurvey {get;set;}
+        [DataMember]
+        public string Password { get; set; }
     }
 
 }

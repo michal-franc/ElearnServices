@@ -6,7 +6,7 @@ namespace elearn.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Message = "Welcome to ASP.NET MVC!";
+            ViewBag.Message = "Tu bedzie jakas powitalna tresc";
 
             return View();
         }

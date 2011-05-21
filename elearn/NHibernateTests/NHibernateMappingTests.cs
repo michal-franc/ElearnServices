@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using NUnit.Framework;
 using FluentNHibernate.Testing;
 using NHiberanteDal.Models;
@@ -39,11 +37,11 @@ namespace NHibernateTests
     [TestFixture]
     class NHibernateMappingTests : InMemoryTest
     {
-        GroupTypeModel _groupType = new GroupTypeModel() { TypeName = "test" };
-        ContentTypeModel _contentType = new ContentTypeModel() { TypeName="test" };
-        CourseTypeModel _courseType = new CourseTypeModel() { TypeName = "test" };
-        TestTypeModel _testType = new TestTypeModel() { TypeName = "test" };
-        ProfileModel _testProfile = new ProfileModel() { Email="test", Name = "test" };
+        readonly GroupTypeModel _groupType = new GroupTypeModel { TypeName = "test" };
+        readonly ContentTypeModel _contentType = new ContentTypeModel { TypeName="test" };
+        readonly CourseTypeModel _courseType = new CourseTypeModel { TypeName = "test" };
+        readonly TestTypeModel _testType = new TestTypeModel { TypeName = "test" };
+        readonly ProfileModel _testProfile = new ProfileModel { Email="test", Name = "test" };
 
         
         [SetUp]
@@ -85,31 +83,33 @@ namespace NHibernateTests
                    .CheckProperty(c => c.Description, "test")
                    .CheckProperty(c => c.CreationDate, new DateTime(2010, 10, 1))
                    .CheckProperty(c => c.Name, "test")
+                   .CheckProperty(c=>c.Password ,"dasdsad2832021939")
                    .CheckReference(c => c.CourseType, _courseType)
-                   .CheckReference(c => c.Group, new GroupModel()
-                   {
+                   .CheckReference(c => c.Group, new GroupModel
+                                                     {
                        GroupName = "test",
                        GroupType = _groupType
                    })
-                   .CheckReference(c => c.Forum, new ForumModel() { Name = "test", Author = "test" })
-                   .CheckReference(c => c.ShoutBox, new ShoutboxModel() { })
-                   .CheckList<ContentModel>(c => c.Contents,
-                   new List<ContentModel>() 
-                        { 
-                            new ContentModel(){ Name="test", CreationDate=new DateTime(2010,10,1), ContentUrl="test" , Type=_contentType} 
+                   .CheckReference(c => c.Forum, new ForumModel { Name = "test", Author = "test" })
+                   .CheckReference(c => c.ShoutBox, new ShoutboxModel())
+                   .CheckList(c => c.Contents,
+                   new List<ContentModel>
+                       { 
+                            new ContentModel
+                                { Name="test", CreationDate=new DateTime(2010,10,1), ContentUrl="test" , Type=_contentType} 
                         }
                    )
-                   .CheckList<SurveyModel>(c => c.Surveys,
-                   new List<SurveyModel>() 
-                        { 
-                            new SurveyModel(){ SurveyText="test"} 
+                   .CheckList(c => c.Surveys,
+                   new List<SurveyModel>
+                       { 
+                            new SurveyModel { SurveyText="test"} 
                         }
                    )
-                   .CheckList<TestModel>(c => c.Tests,
-                   new List<TestModel>() 
-                        { 
-                            new TestModel()
-                            { 
+                   .CheckList(c => c.Tests,
+                   new List<TestModel>
+                       { 
+                            new TestModel
+                                { 
                                 Author=_testProfile, Name="test", 
                                 CreationDate= new DateTime(2010,10,1) ,
                                 TestType=_testType
@@ -168,10 +168,10 @@ namespace NHibernateTests
                 new PersistenceSpecification<ForumModel>(session, new IDEqualityComparer())
                    .CheckProperty(c => c.Name, "test")
                    .CheckProperty(c => c.Author, "test")
-                   .CheckList<TopicModel>(c => c.Topics,
-                   new List<TopicModel>() 
-                        { 
-                            new TopicModel(){ Text="test"}
+                   .CheckList(c => c.Topics,
+                   new List<TopicModel>
+                       { 
+                            new TopicModel { Text="test"}
                         }
                    )
                    .VerifyTheMappings();
@@ -189,10 +189,10 @@ namespace NHibernateTests
 
                 new PersistenceSpecification<TopicModel>(session, new IDEqualityComparer())
                    .CheckProperty(c => c.Text, "test")
-                   .CheckList<PostModel>(c => c.Posts,
-                   new List<PostModel>() 
-                        { 
-                            new PostModel(){ Text="test"}
+                   .CheckList(c => c.Posts,
+                   new List<PostModel>
+                       { 
+                            new PostModel { Text="test"}
                         }
                    )
                    .VerifyTheMappings();
@@ -228,10 +228,10 @@ namespace NHibernateTests
                 new PersistenceSpecification<GroupModel>(session, new IDEqualityComparer())
                    .CheckProperty(c => c.GroupName, "test")
                    .CheckReference(c => c.GroupType, _groupType)
-                   .CheckList<ProfileModel>(c => c.Users,
-                   new List<ProfileModel>() 
-                        { 
-                            new ProfileModel(){ Email="test", Name="test"}
+                   .CheckList(c => c.Users,
+                   new List<ProfileModel>
+                       { 
+                            new ProfileModel { Email="test", Name="test"}
                         }
                    )
                    .VerifyTheMappings();
@@ -319,19 +319,20 @@ namespace NHibernateTests
                 new PersistenceSpecification<JournalModel>(session, new IDEqualityComparer())
                    .CheckProperty(c => c.Name, "test")
                    .CheckProperty(c => c.AverageMark, 3.45)
-                   .CheckReference(c => c.Course, new CourseModel()
-                   {
-                       Name = "test",
-                       CourseType = _courseType,
-                       CreationDate = DateTime.Now,
-                       Forum = new ForumModel() { Name = "test", Author = "test" },
-                       Group = new GroupModel() { GroupName = "test", GroupType = _groupType },
-                       ShoutBox = new ShoutboxModel() { }
-                   })
-                   .CheckList<JournalMarkModel>(c => c.Marks,
-                   new List<JournalMarkModel>() 
-                        { 
-                            new JournalMarkModel(){ Value="1.2",Name="test"}
+                   .CheckProperty(c=>c.IsActive,true)
+                   .CheckReference(c => c.Course, new CourseModel
+                            {
+                            Name = "test",
+                            CourseType = _courseType,
+                            CreationDate = DateTime.Now,
+                            Forum = new ForumModel { Name = "test", Author = "test" },
+                            Group = new GroupModel { GroupName = "test", GroupType = _groupType },
+                            ShoutBox = new ShoutboxModel()
+                            })
+                   .CheckList(c => c.Marks,
+                   new List<JournalMarkModel>
+                       { 
+                            new JournalMarkModel { Value="1.2",Name="test"}
                         }
                    )
                    .VerifyTheMappings();
@@ -357,17 +358,17 @@ namespace NHibernateTests
         }
 
         [Test]
-        public void Can_map_entity_shoutBox()
+        public void Can_map_entity_shoutbox()
         {
             #region Act
 
             using (var session = DataAccess.OpenSession())
             {
                 new PersistenceSpecification<ShoutboxModel>(session, new IDEqualityComparer())
-                   .CheckList<ShoutBoxMessageModel>(c => c.Messages,
-                   new List<ShoutBoxMessageModel>() 
-                        { 
-                            new ShoutBoxMessageModel(){ Message="test", Author="test", TimePosted=new DateTime(2010,1,1)}
+                   .CheckList(c => c.Messages,
+                   new List<ShoutBoxMessageModel>
+                       { 
+                            new ShoutBoxMessageModel { Message="test", Author="test", TimePosted=new DateTime(2010,1,1)}
                         }
                    )
                    .VerifyTheMappings();
@@ -405,10 +406,10 @@ namespace NHibernateTests
                    .CheckProperty(c => c.SurveyText, "test")
                    .CheckProperty(c => c.EndDate , new DateTime(2010,10,10))
                    .CheckProperty(c => c.DateCreated, new DateTime(2010, 10, 10))
-                   .CheckList<SurveyQuestionModel>(c => c.Questions,
-                   new List<SurveyQuestionModel>() 
-                        { 
-                            new SurveyQuestionModel(){ QuestionText="test", TimesSelected  = 1}
+                   .CheckList(c => c.Questions,
+                   new List<SurveyQuestionModel>
+                       { 
+                            new SurveyQuestionModel { QuestionText="test", TimesSelected  = 1}
                         }
                    )
                    .VerifyTheMappings();
@@ -446,10 +447,10 @@ namespace NHibernateTests
                    .CheckProperty(c => c.EditDate, new DateTime(2010, 10, 1))
                    .CheckReference(c => c.Author, _testProfile)
                    .CheckReference(c => c.TestType, _testType)
-                   .CheckList<TestQuestionModel>(c => c.Questions,
-                   new List<TestQuestionModel>() 
-                        { 
-                            new TestQuestionModel(){ QuestionText="test"}
+                   .CheckList(c => c.Questions,
+                   new List<TestQuestionModel>
+                       { 
+                            new TestQuestionModel { QuestionText="test"}
                         }
                    )
 
@@ -483,10 +484,10 @@ namespace NHibernateTests
             {
                 new PersistenceSpecification<TestQuestionModel>(session, new IDEqualityComparer())
                    .CheckProperty(c => c.QuestionText, "test")
-                   .CheckList<TestQuestionAnswer>(c => c.Answers,
-                   new List<TestQuestionAnswer>() 
-                        { 
-                            new TestQuestionAnswer(){ NumberSelected=1, Text="test", Correct=true}
+                   .CheckList(c => c.Answers,
+                   new List<TestQuestionAnswer>
+                       { 
+                            new TestQuestionAnswer { NumberSelected=1, Text="test", Correct=true}
                         }
                    )
 
