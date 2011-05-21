@@ -1,3 +1,7 @@
+*.suo
+
+
+
 obj
 bin
 Bin
@@ -9,3 +13,7 @@ WCFNHibernate
 GenericTransaction
 Properties
 _ReSharper*
+packages
+packages.config
+elearn.suo
+App_Readme

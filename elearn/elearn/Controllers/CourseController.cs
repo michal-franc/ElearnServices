@@ -103,7 +103,7 @@ namespace elearn.Controllers
 
                 var id = _service.AddCourse(course);
 
-                if (id > 0)
+                if (id.HasValue)
                     return RedirectToAction("Details", new {id});
                 
                 ViewBag.Error = Common.ErrorMessages.Course.AddToDbError;

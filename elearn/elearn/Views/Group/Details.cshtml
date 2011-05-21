@@ -15,9 +15,11 @@
     <div class="display-label">GroupName</div>
     <div class="display-field">@Model.GroupName</div>
 
-        @foreach ( ProfileModelDto profile in ViewData.Model.Users)
+        @foreach ( var profile in ViewData.Model.Users)
         {
-            <li>@Html.ActionLink(profile.Name,"Details","Profile",new {id=profile.ID})</li>
+            <li style="list-style-type: none">
+            <label style="color: red;" id="deleteProfile.@profile.ID" class="deleteProfile">x</label>  @Html.ActionLink(profile.Name,"Details","Profile",new {id=profile.ID},null)
+            </li>
         }
 </fieldset>
 

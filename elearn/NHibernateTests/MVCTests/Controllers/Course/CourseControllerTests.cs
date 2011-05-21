@@ -149,7 +149,7 @@ namespace NHibernateTests.MVCTests.Controllers.Course
             #region Arrange
             using (Mock.Record())
             {
-                Expect.Call(CourseService.AddCourse(Course)).IgnoreArguments().Return(-1);
+                Expect.Call(CourseService.AddCourse(Course)).IgnoreArguments().Return(null);
             }
             #endregion
 

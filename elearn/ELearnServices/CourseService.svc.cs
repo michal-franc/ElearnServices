@@ -86,7 +86,7 @@ namespace ELearnServices
             return new Repository<CourseModel>().Update(course);
         }
 
-        public int AddCourse(CourseDto newCourse)
+        public int? AddCourse(CourseDto newCourse)
         {
             var course = CourseDto.UnMap(newCourse);
             return new Repository<CourseModel>().Add(course);

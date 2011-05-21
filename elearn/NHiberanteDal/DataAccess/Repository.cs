@@ -18,9 +18,9 @@ namespace NHiberanteDal.DataAccess
 
             return obj;
         }
-        public int Add(T item)
+        public int? Add(T item)
         {
-            int addedItemId;
+            int? addedItemId;
 
             using (var session = DataAccess.OpenSession())
             {
@@ -34,7 +34,7 @@ namespace NHiberanteDal.DataAccess
                     catch(Exception)
                     {
                         transaction.Rollback();
-                        addedItemId = -1;
+                        addedItemId = null;
                     }
 
                     finally

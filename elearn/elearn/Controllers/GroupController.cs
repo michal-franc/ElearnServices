@@ -1,9 +1,7 @@
-﻿using System.Linq;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using elearn.GroupService;
 using elearn.ProfileService;
 using elearn.JsonMessages;
-using NHiberanteDal.DTO;
 using elearn.Models;
 
 namespace elearn.Controllers
@@ -65,9 +63,9 @@ namespace elearn.Controllers
         [HttpPost]
         public ActionResult Join(int groupId,int profileId)
         {
-            if (_groupService.AddProfileToGroup(groupId, profileId))
-                return Json(new ResponseMessage(true, string.Empty));
-             return Json(new ResponseMessage(false, string.Empty));
+            return Json(_groupService.AddProfileToGroup(groupId, profileId) 
+                ? new ResponseMessage(true, string.Empty) :
+                 new ResponseMessage(false, string.Empty));
         }
 
         //
@@ -75,10 +73,9 @@ namespace elearn.Controllers
         [HttpPost]
         public ActionResult Leave(int groupId, int profileID)
         {
-            if (_groupService.RemoveProfileFromGroup(groupId, profileID))
-                return Json(new ResponseMessage(true, string.Empty));
-            return Json(new ResponseMessage(false, string.Empty));
+            return Json(_groupService.RemoveProfileFromGroup(groupId, profileID) 
+                ? new ResponseMessage(true, string.Empty) : 
+                 new ResponseMessage(false, string.Empty));
         }
-
     }
 }

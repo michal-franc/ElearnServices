@@ -22,8 +22,8 @@
 
     <li>Course Type : @Model.CourseType.TypeName</li>
     <li>DateCreated : @Model.CreationDate.ToShortDateString()</li>
-    <li>@Html.ActionLink("Forum", "Details", "Forum",new {id=Model.ID})</li>
-    <li>@Html.ActionLink("Group", "Details", "Group", new { id = Model.ID })</li>
+    <li>@Html.ActionLink("Forum", "Details", "Forum", new { id = Model.Forum.ID },null)</li>
+    <li>@Html.ActionLink("Group", "Details", "Group", new { id = Model.Group.ID },null)</li>
 
 
     @{ Html.RenderPartial("_ShoutBoxPartial",ViewData); }

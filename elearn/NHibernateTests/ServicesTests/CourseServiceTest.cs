@@ -169,15 +169,24 @@ namespace NHibernateTests.ServicesTests
 
             #region Act
 
-            int id = new CourseService().AddCourse(newCourse);
-            var testingAddedCourse = new CourseService().GetById(id);
+            int? id = new CourseService().AddCourse(newCourse);
+            CourseDto testingAddedCourse=null;
+            if (id.HasValue)
+            {
+                 testingAddedCourse = new CourseService().GetById(id.Value);
+            }
+
             #endregion
 
             #region Assert
             Assert.That(testingAddedCourse,Is.Not.Null);
-            Assert.That(testingAddedCourse.Name, Is.EqualTo("test add"));
-            Assert.That(testingAddedCourse.Group.GroupName, Is.EqualTo("added test"));
-            Assert.That(testingAddedCourse.Forum.Name, Is.EqualTo("added forum"));
+            if (testingAddedCourse != null)
+            {
+                Assert.That(testingAddedCourse.Name, Is.EqualTo("test add"));
+                Assert.That(testingAddedCourse.Group.GroupName, Is.EqualTo("added test"));
+                Assert.That(testingAddedCourse.Forum.Name, Is.EqualTo("added forum"));
+            }
+
             #endregion
         }
 
@@ -340,10 +349,9 @@ namespace NHibernateTests.ServicesTests
 
             int? id = new CourseService().AddShoutBoxMessage(msg);
 
-            ShoutboxModel shoutbox;
             using (var session = DataAccess.OpenSession())
             {
-                shoutbox = session.Get<ShoutboxModel>(1);
+                var shoutbox = session.Get<ShoutboxModel>(1);
 
 
                 #endregion
