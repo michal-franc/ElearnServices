@@ -1,32 +1,62 @@
 ﻿
-@model  elearn.Models.ProfileIDGroupIDModel
-<button id="btnJoin">Join</button>
+@model  elearn.Models.JoinGroupModel
+@if (Model.IsPasswordProtected)
+{
+    @Html.TextBox("Password", "", new { id = "txtBoxPassword", type = "Password" })
+}
+ <button id="btnJoin" >Join</button>
 <label id="summary"></label>
 <label id="modalResult" hidden="hidden">false</label>
 <script type="text/javascript">
 
     $(function()
         {
-        $("#btnJoin").click(function() {
-            $.ajax({
-                    type : "POST",
-                    url: "@Url.Action("Join","Group")",
-                    data : "groupId=" + @Model.GroupId +"&profileId="+ @Model.ProfileId,
-                    cache: false,
-                    dataType: "json",
-                    success: function(data) {
-                        if (data.IsSuccess) {
-                            $("#summary").text("Success");
-                            $("#modalResult").text("true");
+        $("#btnJoin").click(function() {           
+            var pass = $("#txtBoxPassword").val();
+            var passOk = false;
+            if (@Convert.ToInt32(Model.IsPasswordProtected)){
+                $.ajax({
+                        type: "POST",
+                        url: "@Html.Raw(Url.Action("CheckPassword", "Course", new { courseId = Model.CourseId}))",
+                        async:false,
+                        data: "password=" + pass,
+                        success: function(msg) {
+                            if (msg.IsSuccess) {
+                                passOk = true;
+                            }
+                            else {
+                                $("#summary").text("Wrong Password");
+                            }
+                        },
+                        failure: function() {
+                            $("#summary").text("Error");
                         }
-                        else {
+                    });
+            }
+            else {
+                passOk = true;
+            }
+            if (passOk)
+            {
+                $.ajax({
+                        type: "POST",
+                        url: "@Html.Raw(Url.Action("Join", "Group", new { groupId = Model.GroupId, profileId = Model.ProfileId }))",
+                        cache: false,
+                        dataType: "json",
+                        success: function(data) {
+                            if (data.IsSuccess) {
+                                $("#summary").text("Success");
+                                $("#modalResult").text("true");
+                            }
+                            else {
                                 $("#summary").text("Failed");
                             }
-                    },
-                    error : function() {
-                        $("#summary").text("Error");
-                    }
-                });
-            });
+                        },
+                        error: function() {
+                            $("#summary").text("Error");
+                        }
+                 });
+            }
         });
+       });
  </script>

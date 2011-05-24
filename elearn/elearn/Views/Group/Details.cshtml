@@ -1,5 +1,4 @@
-﻿
-@model GroupModelDto
+﻿@model GroupModelDto
            
 @using NHiberanteDal.DTO
 
@@ -18,9 +17,46 @@
         @foreach ( var profile in ViewData.Model.Users)
         {
             <li style="list-style-type: none">
-            <label style="color: red;" id="deleteProfile.@profile.ID" class="deleteProfile">x</label>  @Html.ActionLink(profile.Name,"Details","Profile",new {id=profile.ID},null)
+            <label style="color: red;" id="deleteProfile_@{@profile.ID}" class="label-profile-ok">x</label>  @Html.ActionLink(profile.Name,"Details","Profile",new {id=profile.ID},null)
             </li>
         }
 </fieldset>
+
+
+
+
+<script type="text/javascript" >
+
+    $(function () {
+        $(".label-profile-ok").click(function () {
+            var profileId = GetId(this.id);
+            $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("Leave","Group")",
+                    data: "groupId=" + @Model.ID + "&profileId=" + profileId ,
+                    cache: false,
+                    dataType: "json",
+                    success: function(data) {
+                        if (data.IsSuccess) {
+                            $(this).remove();
+                        }
+                        else {
+                        }
+                    },
+                    error: function() {
+                    }
+                });
+        });
+    });
+    
+    
+    function GetId(data) {
+        var index = data.toString().indexOf('_');
+        var id = data.toString().substring(index + 1, data.length);
+        return id;
+    }
+
+
+</script>
 
 

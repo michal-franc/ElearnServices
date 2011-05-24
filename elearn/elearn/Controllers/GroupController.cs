@@ -31,12 +31,12 @@ namespace elearn.Controllers
         //
         //Get: /Group/Join/id
         [HttpGet]
-        public ActionResult Join(int groupId)
+        public ActionResult Join(int groupId,int courseId, bool isPasswordProtected)
         {
             var profile = _profileService.GetByName(User.Identity.Name);
             if (profile != null)
             {
-                return PartialView("_Join", new ProfileIDGroupIDModel(profile.ID,groupId));
+                return PartialView("_Join", new JoinGroupModel(profile.ID, groupId,courseId,isPasswordProtected));
             }
             ViewBag.Error = Common.ErrorMessages.Group.ProfileJoinError;
             return PartialView("_Error");

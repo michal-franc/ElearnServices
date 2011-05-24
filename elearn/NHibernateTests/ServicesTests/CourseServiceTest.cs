@@ -406,6 +406,60 @@ namespace NHibernateTests.ServicesTests
             Assert.That(msgs.First().Message, Is.EqualTo("testLatest"));
             #endregion
         }
+
+
+
+        [Test]
+        public void Can_test_if_password_is_correct()
+        {
+            #region Arrange
+            #endregion
+
+            #region Act
+
+            var correct = new CourseService().CheckPassword(1, "test");
+
+            #endregion
+
+            #region Assert
+            Assert.That(correct,Is.True);
+            #endregion
+        }
+
+        [Test]
+        public void Can_test_if_password_is_wrong()
+        {
+            #region Arrange
+            #endregion
+
+            #region Act
+
+            var correct = new CourseService().CheckPassword(1, "notcorrect");
+
+            #endregion
+
+            #region Assert
+            Assert.That(correct, Is.False);
+            #endregion
+        }
+
+        [Test]
+        public void Can_test_if_password_is_null_then_true()
+        {
+            #region Arrange
+            #endregion
+
+            #region Act
+
+            var correct = new CourseService().CheckPassword(3, "notcorrect");
+
+            #endregion
+
+            #region Assert
+            Assert.That(correct, Is.True);
+            #endregion
+        }
+				
 				
 				
 				

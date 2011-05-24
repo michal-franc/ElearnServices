@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using NHiberanteDal.DTO;
 using elearn.CourseService;
 using System;
+using elearn.JsonMessages;
 
 namespace elearn.Controllers
 {
@@ -168,6 +169,16 @@ namespace elearn.Controllers
             
             ViewBag.Error = Common.ErrorMessages.Course.ModelUpdateError;
             return View();
+        }
+
+
+        //Post: /Course/CheckPassword
+        [HttpPost]
+        public ActionResult CheckPassword(int courseId,string password)
+        {
+            if(_service.CheckPassword(courseId, password))
+                return Json(new ResponseMessage(true, String.Empty));
+            return Json(new ResponseMessage(false, String.Empty));
         }
     }
 }

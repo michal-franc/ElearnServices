@@ -34,7 +34,7 @@ namespace NHiberanteDal.DTO
         [DataMember]
         public SurveyModel LatestSurvey {get;set;}
         [DataMember]
-        public string Password { get; set; }
+        public bool IsPasswordProtected { get; set; }
     }
 
 }

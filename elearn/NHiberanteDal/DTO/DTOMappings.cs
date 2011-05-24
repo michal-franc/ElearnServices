@@ -48,14 +48,19 @@ namespace NHiberanteDal.DTO
                     Mapper.CreateMap<GroupModelDto, GroupModel>();
                     Mapper.CreateMap<CourseModel, CourseDto>()
                         .ForMember(
-                        dest => dest.LatestSurvey,
-                        opt => opt.MapFrom(c =>
-                            c.Surveys.OrderByDescending(s => s.DateCreated).FirstOrDefault())
+                            dest => dest.LatestSurvey,
+                            opt => opt.MapFrom(c =>
+                                               c.Surveys.OrderByDescending(s => s.DateCreated).FirstOrDefault())
+                        )
+                        .ForMember(
+                            dest => dest.IsPasswordProtected,
+                            opt => opt.MapFrom(c => c.Password != null)
                         );
                     Mapper.CreateMap<CourseDto, CourseModel>()
                         .ForMember(dest => dest.Tests, opt => opt.Ignore())
                         .ForMember(dest => dest.Surveys, opt => opt.Ignore())
-                        .ForMember(dest => dest.Contents, opt => opt.Ignore());
+                        .ForMember(dest => dest.Contents, opt => opt.Ignore())
+                        .ForMember(dest => dest.Password, opt => opt.Ignore());
                     Mapper.CreateMap<CourseModel, CourseSignatureDto>();
                     Mapper.CreateMap<CourseSignatureDto, CourseModel>()
                          .ForMember(dest => dest.Tests, opt => opt.Ignore())

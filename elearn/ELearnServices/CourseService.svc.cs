@@ -131,5 +131,21 @@ namespace ELearnServices
             }
             return ShoutBoxMessageModelDto.Map(msgs);
         }
+
+        public bool CheckPassword(int courseId, string password)
+        {
+            List<ShoutBoxMessageModel> msgs;
+            string pass;
+            using (var session = DataAccess.OpenSession())
+            {
+                pass = session.Get<CourseModel>(courseId).Password;
+            }
+
+            if (pass == null)
+            {
+                return true;
+            }
+            return password == pass;
+        }
     }
 }

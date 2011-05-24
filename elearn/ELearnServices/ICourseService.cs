@@ -43,5 +43,8 @@ namespace ELearnServices
 
         [OperationContract]
         IList<ShoutBoxMessageModelDto> GetLatestShoutBoxMessages(int shoutBoxId, int numberOfMessage);
+
+        [OperationContract]
+        bool CheckPassword(int courseId, string password);
     }
 }

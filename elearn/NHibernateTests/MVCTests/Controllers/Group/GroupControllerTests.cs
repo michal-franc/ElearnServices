@@ -99,7 +99,7 @@ namespace NHibernateTests.MVCTests.Controllers.Group
             PartialViewResult partialView;
             using (Mock.Playback())
             {
-                partialView = (PartialViewResult) GroupController.Join(1);
+                partialView = (PartialViewResult) GroupController.Join(1,1,true);
             }
 
             #endregion
@@ -107,7 +107,8 @@ namespace NHibernateTests.MVCTests.Controllers.Group
             #region Assert
             Assert.That(partialView,Is.InstanceOf<PartialViewResult>());
             Assert.That(partialView.ViewName, Is.EqualTo("_Join"));
-            Assert.That(partialView.ViewData.Model.ToString(), Is.EqualTo(new ProfileIDGroupIDModel(1,1).ToString()));
+            Assert.That(partialView.ViewData.Model, Is.InstanceOf<JoinGroupModel>());
+
             #endregion
         }
 
@@ -129,7 +130,7 @@ namespace NHibernateTests.MVCTests.Controllers.Group
             PartialViewResult view;
             using (Mock.Playback())
             {
-                view = (PartialViewResult)GroupController.Join(1);
+                view = (PartialViewResult)GroupController.Join(1,1, true);
             }
 
             #endregion

@@ -79,6 +79,7 @@ namespace NHibernateTests.ServicesTests
                 Description = "test",
                 Logo = "/test.jpg",
                 Name = "test",
+                Password = "test"
             };
 
             TestCourse2 = new CourseModel
@@ -91,6 +92,7 @@ namespace NHibernateTests.ServicesTests
                 Description = "test1",
                 Logo = "/test1.jpg",
                 Name = "test1",
+                Password ="test"
 
             };
 
@@ -104,6 +106,7 @@ namespace NHibernateTests.ServicesTests
                 Description = "test1",
                 Logo = "/test1.jpg",
                 Name = "test1",
+                Password = null
 
             };
             TestContentType = new ContentTypeModel {TypeName = "test"};

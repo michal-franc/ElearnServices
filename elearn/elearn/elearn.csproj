@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="dotless.Core">
+      <HintPath>..\packages\dotless.1.1.0\lib\dotless.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Elmah">
       <HintPath>..\packages\elmah.corelibrary.1.2\lib\Elmah.dll</HintPath>
     </Reference>
@@ -120,6 +123,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Readme\glimpse.readme.txt" />
+    <Content Include="Content\Html5CssReset.css" />
+    <Content Include="Content\MvcViews.css" />
     <Content Include="Global.asax" />
     <Content Include="packages.config" />
     <None Include="Properties\DataSources\NHiberanteDal.DTO.CourseDto.datasource" />
