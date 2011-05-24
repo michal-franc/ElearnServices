@@ -11,8 +11,45 @@ ShoutBox
 
 <script type="text/javascript"> 
 
+    $().ready(function () {
+        reloadShoutBox();
+        $("#shoutBoxText").bind('keypress', function (e) {
 
-    function reloadShoutBox() {
+            var code = (e.keyCode ? e.keyCode : e.which);
+            //enter code
+            if (code == 13) {
+                
+                $("#markGood").hide();
+                $("#markFail").hide();
+                $("#markLoading").show();
+                var shoutBoxtext = $("#shoutBoxText").val();
+                $.ajax({
+                    type : "POST",
+                    url: "@Html.Raw(Url.Action("Add", "ShoutBox", new { id =Model.ShoutBox.ID}))",
+                    data: "message="+shoutBoxtext,
+                    success: function(msg) {
+                            if (msg.IsSuccess) {
+                                reloadShoutBox();
+                                $("#shoutBoxText").val("");
+                                $("#markGood").show();
+                        }
+                        else {
+                            $("#markFail").show();
+                            $("#markLoading").hide();
+                       }
+                    },
+                    failure : function () {
+                        $("#markFail").show();
+                        $("#markLoading").hide();
+                    }
+                });
+            }
+        });
+
+    });
+    
+    
+        function reloadShoutBox() {
         $("#markLoading").show();
         $.ajax({
             type : "POST",
@@ -39,43 +76,6 @@ ShoutBox
             });
     };
 
-
-
-    $().ready(function () {
-        reloadShoutBox();
-        $("#shoutBoxText").bind('keypress', function (e) {
-
-            var code = (e.keyCode ? e.keyCode : e.which);
-            //enter code
-            if (code == 13) {
-               var shoutBoxtext = $("#shoutBoxText").val();
-                $("#markGood").hide();
-                $("#markFail").hide();
-                $("#markLoading").show();
-                $.ajax({
-                    type : "POST",
-                    url: "@Url.Action("Add", "ShoutBox", new { id = ViewData.Model.ShoutBox.ID})",
-                    data: "message="+shoutBoxtext,
-                    success: function(msg) {
-                            if (msg.IsSuccess) {
-                                reloadShoutBox();
-                                $("#shoutBoxText").val("");
-                                $("#markGood").show();
-                        }
-                        else {
-                            $("#markFail").show();
-                            $("#markLoading").hide();
-                       }
-                    },
-                    failure : function () {
-                        $("#markFail").show();
-                        $("#markLoading").hide();
-                    }
-                });
-            }
-        });
-
-    });
     
     
     function FormatMessage(data) {
