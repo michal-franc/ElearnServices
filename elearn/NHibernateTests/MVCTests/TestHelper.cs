@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Web.Mvc;
 using Rhino.Mocks;
-using System.Web;
 using System.Web.Routing;
-using System.Security.Principal;
-using MvcContrib.TestHelper;
 using MvcContrib.TestHelper.Fakes;
 using System.Reflection;
 using NUnit.Framework;
-using NHiberanteDal.Models;
 using NHiberanteDal.DTO;
+using System.Web;
 
 namespace NHibernateTests.MVCTests
 {
@@ -42,7 +36,7 @@ namespace NHibernateTests.MVCTests
 
         public static FormCollection ConvertEntityToFormCollection(object entity)
         {
-            FormCollection form = new FormCollection();
+            var form = new FormCollection();
             foreach (PropertyInfo prop in entity.GetType().GetProperties())
             {
                 if (!prop.PropertyType.IsGenericType)
@@ -66,7 +60,7 @@ namespace NHibernateTests.MVCTests
         public void Can_convert_entity_to_form_collection()
         {
             #region Arrange
-            var profile = new ProfileModelDto() { Email = "test@test.com", ID = 1, IsActive = true, Name = "test", Role = "test" };
+            var profile = new ProfileModelDto { Email = "test@test.com", ID = 1, IsActive = true, Name = "test", Role = "test" };
             #endregion
 
             #region Act

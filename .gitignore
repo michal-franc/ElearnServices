@@ -12,7 +12,5 @@ WCFNHibernate
 *UnitOfWork*
 GenericTransaction
 _ReSharper*
-packages
-packages.config
 elearn.suo
 App_Readme
