@@ -65,9 +65,6 @@
     <Reference Include="NHibernate.Linq, Version=1.0.0.4000, Culture=neutral, PublicKeyToken=444cf6a87fdab271, processorArchitecture=MSIL">
       <HintPath>..\..\libs\NHibernate.Linq.dll</HintPath>
     </Reference>
-    <Reference Include="NHibernateTests, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
-      <HintPath>..\..\libs\NHibernateTests.dll</HintPath>
-    </Reference>
     <Reference Include="Ninject, Version=2.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\..\libs\Ninject.dll</HintPath>
     </Reference>
@@ -128,6 +125,10 @@
     <Compile Include="UndisposableSession.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ELearnServices\ELearnServices.csproj">
+      <Project>{C1EB3150-9BEB-4CDC-812E-2A51410B1D64}</Project>
+      <Name>ELearnServices</Name>
+    </ProjectReference>
     <ProjectReference Include="..\elearn\elearn.csproj">
       <Project>{655BF403-5DD2-4EC1-B5D3-EA7DB2496277}</Project>
       <Name>elearn</Name>

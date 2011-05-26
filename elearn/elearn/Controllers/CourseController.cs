@@ -4,6 +4,7 @@ using NHiberanteDal.DTO;
 using elearn.CourseService;
 using System;
 using elearn.JsonMessages;
+using elearn.Helpers;
 
 namespace elearn.Controllers
 {
@@ -176,7 +177,7 @@ namespace elearn.Controllers
         [HttpPost]
         public ActionResult CheckPassword(int courseId,string password)
         {
-            if(_service.CheckPassword(courseId, password))
+            if (_service.CheckPassword(courseId, Md5Hash.EncodePassword(password)))
                 return Json(new ResponseMessage(true, String.Empty));
             return Json(new ResponseMessage(false, String.Empty));
         }
