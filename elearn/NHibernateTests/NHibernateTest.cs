@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using NHiberanteDal.DataAccess;
 
 namespace NHibernateTests
@@ -11,7 +7,7 @@ namespace NHibernateTests
     class NHibernateTest
     {
         [Test]
-        public  void Reset_Schema()
+        public  void Reset_schema()
         {
             DataAccess.ResetDb();
         }

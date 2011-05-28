@@ -7,7 +7,7 @@ using System;
 using System.Web.Mvc;
 using elearn.JsonMessages;
 
-namespace NHibernateTests.MVCTests.Controllers.ShoutBox
+namespace elearnTests.MVCTests.Controllers.ShoutBox
 {
 
     public class BaseTest

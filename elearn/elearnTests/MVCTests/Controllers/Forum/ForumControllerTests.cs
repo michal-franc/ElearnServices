@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Rhino.Mocks;
+﻿using Rhino.Mocks;
 using elearn.Controllers;
 
-namespace NHibernateTests.MVCTests.Controllers.Forum
+namespace elearnTests.MVCTests.Controllers.Forum
 {
     public class BaseTest
     {

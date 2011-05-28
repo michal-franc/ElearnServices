@@ -31,6 +31,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MvcContrib.TestHelper, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\libs\MvcContrib.TestHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate, Version=2.1.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\libs\NHibernate.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.core">
       <HintPath>..\..\libs\nunit.core.dll</HintPath>
     </Reference>
@@ -45,6 +52,10 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,7 +64,28 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Md5HashTests.cs" />
+    <Compile Include="MVCTests\Controllers\Course\CourseControllerTests.cs" />
+    <Compile Include="MVCTests\Controllers\Forum\ForumControllerTests.cs" />
+    <Compile Include="MVCTests\Controllers\Group\GroupControllerTests.cs" />
+    <Compile Include="MVCTests\Controllers\Profile\ProfileControllerTests.cs" />
+    <Compile Include="MVCTests\Controllers\ShoutBox\ShoutBoxControllerTests.cs" />
+    <Compile Include="MVCTests\Controllers\UserProfile\UserProfileControllerTests.cs" />
+    <Compile Include="MVCTests\TestHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ELearnServices\ELearnServices.csproj">
+      <Project>{C1EB3150-9BEB-4CDC-812E-2A51410B1D64}</Project>
+      <Name>ELearnServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\elearn\elearn.csproj">
+      <Project>{655BF403-5DD2-4EC1-B5D3-EA7DB2496277}</Project>
+      <Name>elearn</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NHiberanteDal\NHiberanteDal.csproj">
+      <Project>{843D2C18-032C-42E3-A212-161BDC81A56C}</Project>
+      <Name>NHiberanteDal</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

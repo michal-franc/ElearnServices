@@ -7,7 +7,7 @@ using NHiberanteDal.DTO;
 using elearn.ProfileService;
 using MvcContrib.TestHelper;
 
-namespace NHibernateTests.MVCTests.Controllers.Profile
+namespace elearnTests.MVCTests.Controllers.Profile
 {
 
     class BaseTest

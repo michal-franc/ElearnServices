@@ -101,13 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataAccesTests.cs" />
-    <Compile Include="MVCTests\Controllers\Course\CourseControllerTests.cs" />
-    <Compile Include="MVCTests\Controllers\Forum\ForumControllerTests.cs" />
-    <Compile Include="MVCTests\Controllers\Group\GroupControllerTests.cs" />
-    <Compile Include="MVCTests\Controllers\ShoutBox\ShoutBoxControllerTests.cs" />
-    <Compile Include="MVCTests\Controllers\UserProfile\UserProfileControllerTests.cs" />
-    <Compile Include="MVCTests\Controllers\Profile\ProfileControllerTests.cs" />
-    <Compile Include="MVCTests\TestHelper.cs" />
+    <Compile Include="InMemoryTest.cs" />
     <Compile Include="NHibernateMappingTests.cs" />
     <Compile Include="NHibernateTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -121,7 +115,6 @@
     <Compile Include="ServicesTests\ProfileServiceTest.cs" />
     <Compile Include="ServicesTests\TestServiceTest.cs" />
     <Compile Include="SQLiteDBAccess.cs" />
-    <Compile Include="InMemoryTest.cs" />
     <Compile Include="UndisposableSession.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using NHiberanteDal.Models;
 using NHiberanteDal.DataAccess;
 using System.Runtime.Serialization;
@@ -13,33 +11,32 @@ namespace NHibernateTests.SerializerTests
     [TestFixture]    
     class DataSerializationTests : InMemoryTest
     {
-
         [SetUp]
         public void SetUp()
         {
             using(var session = DataAccess.OpenSession())
             {
-                session.Save(new ForumModel() { Author="test", Name="test" });
+                session.Save(new ForumModel { Author="test", Name="test" });
             }
         }
 
         [Test]
-        public void DataContractSerialization_will_change_the_type_of_a_Collection()
+        public void Data_contract_serialization_will_change_the_type_of_a_collection()
         {
-            ForumModel forum; 
             using (var session = DataAccess.OpenSession())
             {
-                forum = session.Get<ForumModel>(1);
+                var forum = session.Get<ForumModel>(1);
 
 
             Assert.AreEqual(typeof(NHibernate.Collection.Generic.PersistentGenericBag<TopicModel>), forum.Topics.GetType());
 
-            List<Type> knownTypes = new List<Type>();
-            knownTypes.Add(typeof(TopicModel));
-            knownTypes.Add(typeof(NHibernate.Collection.Generic.PersistentGenericBag<TopicModel>));
-            knownTypes.Add(typeof(NHibernate.Impl.CollectionFilterImpl));
-            DataContractSerializer serializer = new
-                     DataContractSerializer(typeof(ForumModel), knownTypes);
+            var knownTypes = new List<Type>
+                                 {
+                                     typeof (TopicModel),
+                                     typeof (NHibernate.Collection.Generic.PersistentGenericBag<TopicModel>),
+                                     typeof (NHibernate.Impl.CollectionFilterImpl)
+                                 };
+                var serializer = new   DataContractSerializer(typeof(ForumModel), knownTypes);
 
             //serialize company to a memory stream
             Stream stream = new MemoryStream();
@@ -55,18 +52,17 @@ namespace NHibernateTests.SerializerTests
         }
 
         [Test]
-        public void NetDataContractSerialization_will_Not_change_the_type_of_a_Collection()
+        public void Net_data_contract_serialization_will_not_change_the_type_of_a_collection()
         {
-            ForumModel forum;
             using (var session = DataAccess.OpenSession())
             {
-                forum = session.Get<ForumModel>(1);
+                var forum = session.Get<ForumModel>(1);
 
                 //company.EmployeesList made public for the purpose of 
                 //this demo
                 Assert.AreEqual(typeof(NHibernate.Collection.Generic.PersistentGenericBag<TopicModel>), forum.Topics.GetType());
 
-                NetDataContractSerializer serializer = new NetDataContractSerializer();
+                var serializer = new NetDataContractSerializer();
 
                 //serialize company to a memory stream
                 Stream stream = new MemoryStream();

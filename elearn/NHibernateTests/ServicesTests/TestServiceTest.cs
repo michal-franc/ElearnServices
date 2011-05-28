@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using NUnit.Framework;
 using ELearnServices;
 using NHiberanteDal.DTO;
@@ -15,10 +14,11 @@ namespace NHibernateTests.ServicesTests
     {
 
         [Test]
-        public void Can_Add_Test()
+        public void Can_add_test()
         {
             #region Arrange
-            var test = new TestDto() { Author= ProfileModelDto.Map(TestPofile), CreationDate=DateTime.Now, Name="new test" , TestType= TestTypeModelDto.Map(TestTestType)};
+            var test = new TestDto
+             { Author= ProfileModelDto.Map(TestPofile), CreationDate=DateTime.Now, Name="new test" , TestType= TestTypeModelDto.Map(TestTestType)};
             #endregion
 
             #region Act
@@ -34,10 +34,10 @@ namespace NHibernateTests.ServicesTests
 
 
         [Test]
-        public void Can_delete_Test()
+        public void Can_delete_test()
         {
             #region Arrange         
-            var test = new TestDto() { Author = ProfileModelDto.Map(TestPofile), CreationDate = DateTime.Now, Name = "new test", TestType = TestTypeModelDto.Map(TestTestType) };
+            var test = new TestDto{ Author = ProfileModelDto.Map(TestPofile), CreationDate = DateTime.Now, Name = "new test", TestType = TestTypeModelDto.Map(TestTestType) };
             test.ID =  new TestService().AddTest(1, test);
             var tests = new CourseService().GetAllTestsSignatures(1);
             Assert.That(tests.Count, Is.EqualTo(1));
@@ -56,10 +56,10 @@ namespace NHibernateTests.ServicesTests
         }
 
         [Test]
-        public void Can_Update_Test()
+        public void Can_update_test()
         {
             #region Arrange
-            var test = new TestDto() { Author = ProfileModelDto.Map(TestPofile), CreationDate = DateTime.Now, Name = "new test", TestType = TestTypeModelDto.Map(TestTestType) };
+            var test = new TestDto { Author = ProfileModelDto.Map(TestPofile), CreationDate = DateTime.Now, Name = "new test", TestType = TestTypeModelDto.Map(TestTestType) };
             using (var session = DataAccess.OpenSession())
             {
                 var course = session.Get<CourseModel>(1);
@@ -93,14 +93,14 @@ namespace NHibernateTests.ServicesTests
 
 
         [Test]
-        public void Can_Add_Test_Question()
+        public void Can_add_test_question()
         {
             #region Arrange
-            TestQuestionModelDto question = new TestQuestionModelDto() 
+            var question = new TestQuestionModelDto 
             { 
                 QuestionText = "test question", 
-                Answers = new List<TestQuestionAnswerDto>()
-                {new TestQuestionAnswerDto(){ Correct=false, NumberSelected=0, Text="test answer"} } };
+                Answers = new List<TestQuestionAnswerDto>
+                {new TestQuestionAnswerDto{ Correct=false, NumberSelected=0, Text="test answer"} } };
             #endregion
 
             #region Act
@@ -125,7 +125,7 @@ namespace NHibernateTests.ServicesTests
 
 
         [Test]
-        public void Can_get_All_tests()
+        public void Can_get_all_tests()
         {
             #region Arrange
             #endregion
@@ -143,16 +143,16 @@ namespace NHibernateTests.ServicesTests
 				
 
         [Test]
-        public void Can_Get_Test_Details()
+        public void Can_get_test_details()
         {
             #region Arrange
-            var test = new TestDto()
+            var test = new TestDto
             {
                 Author = ProfileModelDto.Map(TestPofile),
                 CreationDate = DateTime.Now,
                 Name = "new test",
                 TestType = TestTypeModelDto.Map(TestTestType),
-                Questions =new List<TestQuestionModelDto>(){ TestQuestionModelDto.Map(TestQuestion)}
+                Questions =new List<TestQuestionModelDto>{ TestQuestionModelDto.Map(TestQuestion)}
             };
             using (var session = DataAccess.OpenSession())
             {

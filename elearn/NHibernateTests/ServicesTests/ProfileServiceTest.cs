@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using NUnit.Framework;
 using ELearnServices;
 using NHiberanteDal.Models;
@@ -9,24 +7,20 @@ using NHiberanteDal.DataAccess;
 using NHiberanteDal.DTO;
 using Rhino.Mocks;
 
-
 namespace NHibernateTests.ServicesTests
 {
 
     [TestFixture]
     class ProfileServiceTest : InMemoryWithSampleData
     {
-        MockRepository mocker = new MockRepository();
+        readonly MockRepository _mocker = new MockRepository();
 
         [Test]
-        public void Can_Get_All_Profiles()
+        public void Can_get_all_profiles()
         {
             #region Arrange
-            var profile = new ProfileModel() { Name = "test1", Email = "test@test.com", IsActive = true };
-            DataAccess.InTransaction(session =>
-                {
-                    session.Save(profile);
-                });
+            var profile = new ProfileModel { Name = "test1", Email = "test@test.com", IsActive = true };
+            DataAccess.InTransaction(session => session.Save(profile));
             #endregion
 
             #region Act
@@ -43,10 +37,10 @@ namespace NHibernateTests.ServicesTests
 
 
         [Test]
-        public void Can_Get_Profile_by_UserName()
+        public void Can_get_profile_by_username()
         {
             #region Arrange
-            var profile = new ProfileModel() { Name = "test profile", Email = "test@test.com", IsActive = true };
+            var profile = new ProfileModel { Name = "test profile", Email = "test@test.com", IsActive = true };
             #endregion
 
             #region Act
@@ -66,7 +60,7 @@ namespace NHibernateTests.ServicesTests
 				
 
         [Test]
-        public void Can_Get_Profile()
+        public void Can_get_profile()
         {
             #region Arrange
             #endregion
@@ -82,10 +76,10 @@ namespace NHibernateTests.ServicesTests
         }
 
         [Test]
-        public void Can_Add_Profile()
+        public void Can_add_profile()
         {
             #region Arrange
-            var profile = new ProfileModelDto() { Name = "new profile", Email = "test@test.com" };
+            var profile = new ProfileModelDto { Name = "new profile", Email = "test@test.com" };
             #endregion
 
             #region Act
@@ -131,7 +125,7 @@ namespace NHibernateTests.ServicesTests
         }
 
         [Test]
-        public void Can_set_profile_as_inactive_by_userName()
+        public void Can_set_profile_as_inactive_by_username()
         {
             #region Arrange
 
@@ -157,7 +151,7 @@ namespace NHibernateTests.ServicesTests
 				
 
         [Test]
-        public void Can_Update_Profile()
+        public void Can_update_profile()
         {
             #region Arrange
             ProfileModel profile = null;
@@ -205,10 +199,10 @@ namespace NHibernateTests.ServicesTests
 				
 
         [Test]
-        public void Can_Delete_Profile()
+        public void Can_delete_profile()
         {
             #region Arrange
-            var profile = new ProfileModel() { Name = "delete test", Email = "test@test.com", IsActive = true };
+            var profile = new ProfileModel { Name = "delete test", Email = "test@test.com", IsActive = true };
             int id = -1;
             DataAccess.InTransaction(session =>
             {
@@ -238,32 +232,27 @@ namespace NHibernateTests.ServicesTests
 
 
         [Test]
-        public void Updates_Role_deletes_user_from_existing_roles()
+        public void Updates_role_deletes_user_from_existing_roles()
         {
             #region Arrange
 
-            var roleProvider = mocker.DynamicMock<IRoleProvider>();
-            var profile = new ProfileModelDto() { Role="admin", Name="user" };
+            var roleProvider = _mocker.DynamicMock<IRoleProvider>();
+            var profile = new ProfileModelDto { Role="admin", Name="user" };
             var service = new ProfileService(roleProvider);
 
             #endregion
 
             #region Act
-            using (mocker.Record())
+            using (_mocker.Record())
             {
                 Expect.Call(roleProvider.RoleExists("admin")).Return(true);
                 Expect.Call(roleProvider.IsUserInRole("user", "admin")).Return(false);
-                Expect.Call(roleProvider.GetRolesForUser("user")).Return(new string[] { "unusedRole" });
-                Expect.Call(delegate {
-                    roleProvider.RemoveUserFromRole("user", "unusedRole");
-                }).Repeat.Once();
-                Expect.Call(delegate 
-                {
-                    roleProvider.AddUserToRole("user", "admin");
-                });
+                Expect.Call(roleProvider.GetRolesForUser("user")).Return(new[] { "unusedRole" });
+                Expect.Call(() => roleProvider.RemoveUserFromRole("user", "unusedRole")).Repeat.Once();
+                Expect.Call(() => roleProvider.AddUserToRole("user", "admin"));
             }
 
-            using (mocker.Playback())
+            using (_mocker.Playback())
             {
                 service.UpdateRole(profile, false);
             }
@@ -276,36 +265,28 @@ namespace NHibernateTests.ServicesTests
 
 
         [Test]
-        public void Is_No_Role_Create_New_Role()
+        public void Is_no_role_create_new_role()
         {
             #region Arrange
 
-            var roleProvider = mocker.DynamicMock<IRoleProvider>();
-            var profile = new ProfileModelDto() { Role = "admin", Name = "user" };
+            var roleProvider = _mocker.DynamicMock<IRoleProvider>();
+            var profile = new ProfileModelDto { Role = "admin", Name = "user" };
             var service = new ProfileService(roleProvider);
 
             #endregion
 
             #region Act
-            using (mocker.Record())
+            using (_mocker.Record())
             {
                 Expect.Call(roleProvider.RoleExists("admin")).Return(false);
-                Expect.Call(delegate {
-                    roleProvider.CreateRole("admin");
-                });
+                Expect.Call(() => roleProvider.CreateRole("admin"));
                 Expect.Call(roleProvider.IsUserInRole("user", "admin")).Repeat.Never();
-                Expect.Call(roleProvider.GetRolesForUser("user")).Return(new string[] { "unusedRole" });
-                Expect.Call(delegate
-                {
-                    roleProvider.RemoveUserFromRole("user", "unusedRole");
-                }).Repeat.Once();
-                Expect.Call(delegate
-                {
-                    roleProvider.AddUserToRole("user", "admin");
-                });
+                Expect.Call(roleProvider.GetRolesForUser("user")).Return(new[] { "unusedRole" });
+                Expect.Call(() => roleProvider.RemoveUserFromRole("user", "unusedRole")).Repeat.Once();
+                Expect.Call(() => roleProvider.AddUserToRole("user", "admin"));
             }
 
-            using (mocker.Playback())
+            using (_mocker.Playback())
             {
                 service.UpdateRole(profile, true);
             }
@@ -315,31 +296,25 @@ namespace NHibernateTests.ServicesTests
 
 
         [Test]
-        public void If_No_Role_Dont_Update()
+        public void If_no_role_dont_update()
         {
             #region Arrange
 
-            var roleProvider = mocker.DynamicMock<IRoleProvider>();
-            var profile = new ProfileModelDto() { Role = "admin", Name = "user" };
+            var roleProvider = _mocker.DynamicMock<IRoleProvider>();
+            var profile = new ProfileModelDto { Role = "admin", Name = "user" };
             var service = new ProfileService(roleProvider);
 
             #endregion
 
             #region Act
-            using (mocker.Record())
+            using (_mocker.Record())
             {
                 Expect.Call(roleProvider.RoleExists("admin")).Return(false);
-                Expect.Call(delegate
-                {
-                    roleProvider.AddUserToRole("user", "admin");
-                }).Repeat.Never();
-                Expect.Call(delegate
-                {
-                    roleProvider.RemoveUserFromRole("user", "unusedRole");
-                }).Repeat.Never().IgnoreArguments();
+                Expect.Call(() => roleProvider.AddUserToRole("user", "admin")).Repeat.Never();
+                Expect.Call(() => roleProvider.RemoveUserFromRole("user", "unusedRole")).Repeat.Never().IgnoreArguments();
             }
 
-            using (mocker.Playback())
+            using (_mocker.Playback())
             {
                 service.UpdateRole(profile, false);
             }
@@ -348,27 +323,24 @@ namespace NHibernateTests.ServicesTests
         }
 
         [Test]
-        public void If_Role_Parameter_Empty_Reset_User_Roles()
+        public void If_role_parameter_empty_reset_user_roles()
         {
             #region Arrange
 
-            var roleProvider = mocker.DynamicMock<IRoleProvider>();
-            var profile = new ProfileModelDto() { Role = "", Name = "user" };
+            var roleProvider = _mocker.DynamicMock<IRoleProvider>();
+            var profile = new ProfileModelDto { Role = "", Name = "user" };
             var service = new ProfileService(roleProvider);
 
             #endregion
 
             #region Act
-            using (mocker.Record())
+            using (_mocker.Record())
             {
-                Expect.Call(roleProvider.GetRolesForUser("user")).Return(new string[] { "unusedRole" });
-                Expect.Call(delegate
-                {
-                    roleProvider.RemoveUserFromRole("user", "unusedRole");
-                });
+                Expect.Call(roleProvider.GetRolesForUser("user")).Return(new[] { "unusedRole" });
+                Expect.Call(() => roleProvider.RemoveUserFromRole("user", "unusedRole"));
             }
 
-            using (mocker.Playback())
+            using (_mocker.Playback())
             {
                 service.UpdateRole(profile, false);
             }

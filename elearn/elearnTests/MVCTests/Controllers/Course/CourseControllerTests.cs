@@ -2,13 +2,13 @@
 using System.Linq;
 using NUnit.Framework;
 using Rhino.Mocks;
-using elearn.CourseService;
 using elearn.Controllers;
 using System.Web.Mvc;
 using NHiberanteDal.DTO;
 using MvcContrib.TestHelper;
+using elearn.CourseService;
 
-namespace NHibernateTests.MVCTests.Controllers.Course
+namespace elearnTests.MVCTests.Controllers.Course
 {
 
     public class BaseTest

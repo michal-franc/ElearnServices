@@ -9,7 +9,7 @@ using elearn.ProfileService;
 using elearn.JsonMessages;
 using elearn.Models;
 
-namespace NHibernateTests.MVCTests.Controllers.Group
+namespace elearnTests.MVCTests.Controllers.Group
 {
 
     public class BaseTest
