@@ -61,8 +61,9 @@ namespace elearn.Controllers
         }
 
 
-        // GET: /Course/Add/
+        // GET: /Course/Create/
         [HttpGet]
+        //[AuthorizeAttributeWcf(Roles = "collaborator")]
         public ActionResult Create()
         {
             var course = new CourseDto();
@@ -73,6 +74,7 @@ namespace elearn.Controllers
 
         // Post: /Course/Create/
         [HttpPost]
+        //[AuthorizeAttributeWcf(Roles = "collaborator")]
         public ActionResult Create(CourseDto course)
         {
 

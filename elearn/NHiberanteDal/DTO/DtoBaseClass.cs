@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using AutoMapper;
 using System.Runtime.Serialization;
 
 namespace NHiberanteDal.DTO
 {
     [DataContract]
-    public class DtoBaseClass <T,Y>
+    public class DtoBaseClass <T,Y> 
+        where T : class 
+        where Y : class
     {
         public static T Map(Y mappedModel)
         {

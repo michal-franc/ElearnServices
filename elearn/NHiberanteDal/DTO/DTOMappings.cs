@@ -1,17 +1,18 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using AutoMapper;
 using NHiberanteDal.Models;
 
 namespace NHiberanteDal.DTO
 {
-    public static class DTOMappings
+    public static class DtoMappings
     {
         private static bool _initialized;
         public static bool Initialize()
         {
             if (!_initialized)
             {
-                //try
+                try
                 {
                     Mapper.CreateMap<JournalModelDto, JournalModel>();
                     Mapper.CreateMap<JournalModel, JournalModelDto>();
@@ -69,15 +70,15 @@ namespace NHiberanteDal.DTO
                          .ForMember(dest => dest.Group, opt => opt.Ignore())
                          .ForMember(dest => dest.Forum, opt => opt.Ignore())
                          .ForMember(dest => dest.ShoutBox, opt => opt.Ignore())
-                         .ForMember(dest => dest.Password, opt => opt.Ignore());;
+                         .ForMember(dest => dest.Password, opt => opt.Ignore());
                     Mapper.AssertConfigurationIsValid();
                     _initialized = true;
                     return true;
                 }
-                //catch (AutoMapperConfigurationException)
-                //{
-                   //throw new Exception("Problem initializing DTO mappings!");
-                //}
+                catch (AutoMapperConfigurationException)
+                {
+                   throw new Exception("Problem initializing DTO mappings!");
+                }
             }
             return false;
         }

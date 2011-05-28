@@ -12,7 +12,7 @@ namespace ELearnServices
     {
         public CourseService()
         {
-            DTOMappings.Initialize();
+            DtoMappings.Initialize();
         }
 
         public IList<CourseDto> GetAll()

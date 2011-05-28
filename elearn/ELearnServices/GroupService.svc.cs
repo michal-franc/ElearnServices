@@ -12,7 +12,7 @@ namespace ELearnServices
     {
         public GroupService()
         {
-            DTOMappings.Initialize();
+            DtoMappings.Initialize();
         }
 
         public List<GroupModelDto> GetAllGroups()

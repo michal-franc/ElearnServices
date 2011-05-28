@@ -40,7 +40,7 @@ namespace NHibernateTests.ServicesTests
         public void SetUp()
         {
             //Initializaing Mappings
-            DTOMappings.Initialize();
+            DtoMappings.Initialize();
 
 
             //Initializing Data

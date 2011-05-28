@@ -11,7 +11,7 @@ namespace ELearnServices
     {
         public TestService()
         {
-            DTOMappings.Initialize();
+            DtoMappings.Initialize();
         }
 
         public int AddTest(int courseId,TestDto test)

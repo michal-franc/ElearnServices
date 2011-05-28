@@ -22,7 +22,7 @@ namespace ELearnServices
         public ProfileService(IRoleProvider provider)
         {
             _roleProvider = provider;
-            DTOMappings.Initialize();
+            DtoMappings.Initialize();
         }
 
         public int AddProfile(ProfileModelDto profile)
@@ -183,22 +183,16 @@ namespace ELearnServices
 
         public bool SetAsInactive(int id)
         {
+
             try
             {
-                try
+                DataAccess.InTransaction(session =>
                 {
-                    DataAccess.InTransaction(session =>
-                    {
-                        var profile = session.Get<ProfileModel>(id);
-                        profile.IsActive = false;
-                        session.Update(profile);
-                    });
-                    return true;
-                }
-                catch (Exception)
-                {
-                    return false;
-                }
+                    var profile = session.Get<ProfileModel>(id);
+                    profile.IsActive = false;
+                    session.Update(profile);
+                });
+            return true;
             }
             catch (Exception)
             {

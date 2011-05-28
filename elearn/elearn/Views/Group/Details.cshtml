@@ -17,9 +17,10 @@
         @foreach ( var profile in ViewData.Model.Users)
         {
             <li style="list-style-type: none">
-            <label style="color: red;" id="deleteProfile_@{@profile.ID}" class="label-profile-ok">x</label>  @Html.ActionLink(profile.Name,"Details","Profile",new {id=profile.ID},null)
+            <label style="color: red;font-weight:bold;" id="deleteProfile_@{@profile.ID}" class="label-profile-ok">x</label>  @Html.ActionLink(profile.Name,"Details","Profile",new {id=profile.ID},null)
             </li>
         }
+
 </fieldset>
 
 

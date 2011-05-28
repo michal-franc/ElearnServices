@@ -9,7 +9,7 @@ namespace ELearnServices
     {
         public JournalService()
         {
-            DTOMappings.Initialize();
+            DtoMappings.Initialize();
         }
 
         public JournalModelDto GetJournalDetails(int id)
