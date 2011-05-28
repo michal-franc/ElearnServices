@@ -1,12 +1,13 @@
-﻿using NHiberanteDal.DTO;
+﻿using System;
+using NHiberanteDal.DTO;
 using NHiberanteDal.DataAccess;
 using NHiberanteDal.Models;
 
 namespace ELearnServices
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "JournalService" in code, svc and config file together.
     public class JournalService : IJournalService
     {
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         public JournalService()
         {
             DtoMappings.Initialize();
@@ -14,23 +15,39 @@ namespace ELearnServices
 
         public JournalModelDto GetJournalDetails(int id)
         {
-            JournalModelDto modelDto;
-            using (var session = DataAccess.OpenSession())
+            try
             {
-                 var model = session.Get<JournalModel>(id);
-                 modelDto = JournalModelDto.Map(model);
+                JournalModelDto modelDto;
+                using (var session = DataAccess.OpenSession())
+                {
+                    var model = session.Get<JournalModel>(id);
+                    modelDto = JournalModelDto.Map(model);
+                }
+                return modelDto;
             }
-            return modelDto;
+            catch (Exception ex)
+            {
+                Logger.Error("Error : CourseService.GetJournalDetails - {0}", ex.Message);
+                return null;
+            }
         }
 
         public bool AddMark(int journalId, JournalMarkModelDto markDto)
         {
-            using (var session = DataAccess.OpenSession())
+            try
             {
-                var model = session.Get<JournalModel>(journalId);
-                model.Marks.Add(JournalMarkModelDto.UnMap(markDto));
+                using (var session = DataAccess.OpenSession())
+                {
+                    var model = session.Get<JournalModel>(journalId);
+                    model.Marks.Add(JournalMarkModelDto.UnMap(markDto));
+                }
+                return true;
             }
-            return true;
+            catch (Exception ex)
+            {
+                Logger.Error("Error : CourseService.AddMark - {0}", ex.Message);
+                return false;
+            }
         }
     }
 }

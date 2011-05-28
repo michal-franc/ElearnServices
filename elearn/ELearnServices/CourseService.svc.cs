@@ -5,7 +5,6 @@ using NHiberanteDal.DTO;
 using NHiberanteDal.DataAccess;
 using NHiberanteDal.Models;
 using NHiberanteDal.DataAccess.QueryObjects;
-using NHibernate.Collection.Generic;
 
 namespace ELearnServices
 {
@@ -236,7 +235,6 @@ namespace ELearnServices
         {
             try
             {
-                List<ShoutBoxMessageModel> msgs;
                 string pass;
                 using (var session = DataAccess.OpenSession())
                 {
