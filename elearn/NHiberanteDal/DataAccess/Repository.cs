@@ -87,7 +87,7 @@ namespace NHiberanteDal.DataAccess
             bool ok;
             using (var session = DataAccess.OpenSession())
             {
-                using (ITransaction transaction = session.BeginTransaction())
+                using (var transaction = session.BeginTransaction())
                 {
                     try
                     {
