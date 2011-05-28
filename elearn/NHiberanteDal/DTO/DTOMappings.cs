@@ -7,11 +7,13 @@ namespace NHiberanteDal.DTO
 {
     public static class DtoMappings
     {
+        private static NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         private static bool _initialized;
         public static bool Initialize()
         {
             if (!_initialized)
             {
+                Logger.Info("DTO Mappings Initialized");
                 try
                 {
                     Mapper.CreateMap<JournalModelDto, JournalModel>();
@@ -75,9 +77,9 @@ namespace NHiberanteDal.DTO
                     _initialized = true;
                     return true;
                 }
-                catch (AutoMapperConfigurationException)
+                catch (AutoMapperConfigurationException ex)
                 {
-                   throw new Exception("Problem initializing DTO mappings!");
+                    Logger.Error("Problem initializing DTO mappings! - {0}",ex.Message);
                 }
             }
             return false;
