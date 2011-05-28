@@ -27,7 +27,7 @@ namespace ELearnServices
             }
             catch (Exception ex)
             {
-                Logger.Error("Error : CourseService.GetJournalDetails - {0}", ex.Message);
+                Logger.Error("Error : JournalService.GetJournalDetails - {0}", ex.Message);
                 return null;
             }
         }
@@ -45,7 +45,7 @@ namespace ELearnServices
             }
             catch (Exception ex)
             {
-                Logger.Error("Error : CourseService.AddMark - {0}", ex.Message);
+                Logger.Error("Error : JournalService.AddMark - {0}", ex.Message);
                 return false;
             }
         }

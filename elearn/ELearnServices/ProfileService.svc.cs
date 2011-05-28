@@ -9,9 +9,10 @@ using NHiberanteDal.DataAccess.QueryObjects;
 
 namespace ELearnServices
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "ProfileService" in code, svc and config file together.
     public class ProfileService : IProfileService
     {
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+
         private readonly IRoleProvider _roleProvider;
 
         public ProfileService() : this(new MembershipRoleProvider())
@@ -27,29 +28,54 @@ namespace ELearnServices
 
         public int AddProfile(ProfileModelDto profile)
         {
-            int id = -1;
-            DataAccess.InTransaction(session =>
-                {
-                    id = (int)session.Save(ProfileModelDto.UnMap(profile));
-                });
+            try
+            {
+                int id = -1;
+                DataAccess.InTransaction(session =>
+                    {
+                        id = (int)session.Save(ProfileModelDto.UnMap(profile));
+                    });
 
-            return id;
+                return id;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Error : ProfileService.AddProfile - {0}", ex.Message);
+                return -1;
+            }
         }
 
         public ProfileModelDto GetProfile(int id)
         {
-            ProfileModel profile;
-            using (var session = DataAccess.OpenSession())
+            try
             {
-                profile = session.Get<ProfileModel>(id);
+                ProfileModel profile;
+                using (var session = DataAccess.OpenSession())
+                {
+                    profile = session.Get<ProfileModel>(id);
+                }
+                return ProfileModelDto.Map(profile);
             }
-            return ProfileModelDto.Map(profile);
+            catch (Exception ex)
+            {
+                Logger.Error("Error : ProfileService.GetProfile- {0}", ex.Message);
+                return null;
+            }
         }
 
         public List<ProfileModelDto> GetAllProfiles()
         {
-            var profiles = new Repository<ProfileModel>().GetAll().ToList();
-            return ProfileModelDto.Map(profiles);
+            try
+            {
+                var profiles = new Repository<ProfileModel>().GetAll().ToList();
+                return ProfileModelDto.Map(profiles);
+
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Error : ProfileService.GetAllProfiles - {0}", ex.Message);
+                return null;
+            }
         }
 
         public bool DeleteProfile(ProfileModelDto profile)
@@ -59,8 +85,9 @@ namespace ELearnServices
                 DataAccess.InTransaction(session => session.Delete(ProfileModelDto.UnMap(profile)));
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Logger.Error("Error : ProfileService.DeleteProfile - {0}", ex.Message);
                 return false;
             }
         }
@@ -72,8 +99,9 @@ namespace ELearnServices
                 DataAccess.InTransaction(session => session.Update(ProfileModelDto.UnMap(profile)));
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Logger.Error("Error : ProfileService.UpdateProfile - {0}", ex.Message);
                 return false;
             }
         }
@@ -106,84 +134,163 @@ namespace ELearnServices
                 }
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Logger.Error("Error : ProfileService.UpdateRole - {0}", ex.Message);
                 return false;
             }
         }
 
         private void DeleteUserFromRoles(string userName)
         {
-            var roles = _roleProvider.GetRolesForUser(userName);
-            foreach (string r in roles)
+            try
             {
-                _roleProvider.RemoveUserFromRole(userName, r);
+                var roles = _roleProvider.GetRolesForUser(userName);
+                foreach (string r in roles)
+                {
+                    _roleProvider.RemoveUserFromRole(userName, r);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Error : ProfileService.DeleteUserFromRoles - {0}", ex.Message);
             }
         }
 
         public MembershipCreateStatus CreateUser(string userName, string password, string email)
         {
-            var profile = new ProfileModelDto { Name=userName, Email=email , Role="basicuser" };
-            AddProfile(profile);
-            UpdateRole(profile,false);
+            try
+            {
+                var profile = new ProfileModelDto { Name = userName, Email = email, Role = "basicuser" };
+                AddProfile(profile);
+                UpdateRole(profile, false);
 
-            MembershipCreateStatus status;
-            if(Membership.Provider.RequiresQuestionAndAnswer)
-                Membership.Provider.CreateUser(profile.Name, password, email, "this is sample question", "this is answer", true, null, out status);
-            else
-                Membership.Provider.CreateUser(profile.Name, password, email, null, null, true, null, out status);
-            return status;
+                MembershipCreateStatus status;
+                if (Membership.Provider.RequiresQuestionAndAnswer)
+                    Membership.Provider.CreateUser(profile.Name, password, email, "this is sample question", "this is answer", true, null, out status);
+                else
+                    Membership.Provider.CreateUser(profile.Name, password, email, null, null, true, null, out status);
+                return status;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Error : ProfileService.CreateUser - {0}", ex.Message);
+                return MembershipCreateStatus.ProviderError;
+            }
         }
 
         public bool ValidateUser(string userName, string password)
         {
-            return Membership.Provider.ValidateUser(userName, password);
+            try
+            {
+                return Membership.Provider.ValidateUser(userName, password);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Error : ProfileService.ValidateUser - {0}", ex.Message);
+                return false;
+            }
         }
 
         public void ResetPassword(string userName)
         {
-            Membership.Provider.ResetPassword(userName, null);
-            //email newPassword
+            try
+            {
+                Membership.Provider.ResetPassword(userName, null);
+                //email newPassword
+
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Error : ProfileService.ResetPassword - {0}", ex.Message);
+            }
         }
 
 
         public bool ChangePassword(string userName, string oldPassword, string newPassword)
         {
-            return Membership.Provider.ChangePassword(userName, oldPassword, newPassword);
+            try
+            {
+                return Membership.Provider.ChangePassword(userName, oldPassword, newPassword);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Error : ProfileService.ChangePassword - {0}", ex.Message);
+                return false;
+            }
         }
 
         public int GetMinPasswordLength()
         {
-            return Membership.Provider.MinRequiredPasswordLength;
-
+            try
+            {
+                return Membership.Provider.MinRequiredPasswordLength;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Error : ProfileService.GetMinPasswodLength - {0}", ex.Message);
+                return -1;
+            }
         }
 
         public ProfileModelDto GetByName(string userName)
         {
-            return ProfileModelDto.Map(new Repository<ProfileModel>().GetByQueryObject(new QueryProfilesByName(userName)).FirstOrDefault());
+            try
+            {
+                return ProfileModelDto.Map(new Repository<ProfileModel>().GetByQueryObject(new QueryProfilesByName(userName)).FirstOrDefault());
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Error : ProfileService.GetByName - {0}", ex.Message);
+                return null;
+            }
         }
 
 
         public bool IsUserInRoles(string userName,string[] roles)
         {
-            return roles.Any(s => _roleProvider.IsUserInRole(userName, s));
+            try
+            {
+                return roles.Any(s => _roleProvider.IsUserInRole(userName, s));
+
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Error : ProfileService.IsUserInRoles - {0}", ex.Message);
+                return false;
+            }
         }
 
         public bool IsActiveByName(string userName)
         {
-            var profile = new Repository<ProfileModel>().GetByQueryObject(new QueryProfilesByName(userName)).FirstOrDefault();
-            return profile != null && profile.IsActive;
+            try
+            {
+                var profile = new Repository<ProfileModel>().GetByQueryObject(new QueryProfilesByName(userName)).FirstOrDefault();
+                return profile != null && profile.IsActive;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Error : ProfileService.IsActiveByName - {0}", ex.Message);
+                return false;
+            }
         }
 
 
         public  string[] GetAllRoles()
         {
-            return _roleProvider.GetAllRoles();
+            try
+            {
+                return _roleProvider.GetAllRoles();
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Error : ProfileService.GetAllRoles - {0}", ex.Message);
+                return new string[0];
+            }
         }
 
         public bool SetAsInactive(int id)
         {
-
             try
             {
                 DataAccess.InTransaction(session =>
@@ -194,8 +301,9 @@ namespace ELearnServices
                 });
             return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Logger.Error("Error : ProfileService.SetAsInactive - {0}", ex.Message);
                 return false;
             }
         }
@@ -215,8 +323,9 @@ namespace ELearnServices
                 });
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Logger.Error("Error : ProfileService.SetAsInactiveByName - {0}", ex.Message);
                 return false;
             }
         }
