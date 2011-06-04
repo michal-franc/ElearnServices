@@ -1,5 +1,5 @@
 /*!
- * Note: While Microsoft is not the author of this file, Microsoft is
+ * : While Microsoft is not the author of this file, Microsoft is
  * offering you a license subject to the terms of the Microsoft Software
  * License Terms for Microsoft ASP.NET Model View Controller 3.
  * Microsoft reserves all other rights. The notices below are provided
@@ -607,7 +607,7 @@ jQuery.extend({
 				script.text = data;
 			}
 
-			// Use insertBefore instead of appendChild to circumvent an IE6 bug.
+			// Use insertBefore instead of appendChild to circumvent an IE6 .
 			// This arises when a base node is used (#2709).
 			head.insertBefore( script, head.firstChild );
 			head.removeChild( script );
@@ -1069,7 +1069,7 @@ return (window.jQuery = window.$ = jQuery);
 		// table row; if so, offsetWidth/Height are not reliable for use when
 		// determining if an element has been hidden directly using
 		// display:none (it is still safe to use offsets if a parent element is
-		// hidden; don safety goggles and see bug #4512 for more information).
+		// hidden; don safety goggles and see  #4512 for more information).
 		// (only IE 8 fails this test)
 		jQuery.support.reliableHiddenOffsets = tds[0].offsetHeight === 0;
 
@@ -1839,7 +1839,7 @@ jQuery.event = {
 		if ( handler === false ) {
 			handler = returnFalse;
 		} else if ( !handler ) {
-			// Fixes bug #7229. Fix recommended by jdalton
+			// Fixes  #7229. Fix recommended by jdalton
 		  return;
 		}
 
@@ -1865,7 +1865,7 @@ jQuery.event = {
 		}
 
 		// Use a key less likely to result in collisions for plain JS objects.
-		// Fixes bug #7150.
+		// Fixes  #7150.
 		var eventKey = elem.nodeType ? "events" : "__events__",
 			events = elemData[ eventKey ],
 			eventHandle = elemData.handle;
@@ -2334,7 +2334,7 @@ jQuery.event = {
 		}
 
 		// Add which for click: 1 === left; 2 === middle; 3 === right
-		// Note: button is not normalized, so don't use it
+		// : button is not normalized, so don't use it
 		if ( !event.which && event.button !== undefined ) {
 			event.which = (event.button & 1 ? 1 : ( event.button & 2 ? 3 : ( event.button & 4 ? 2 : 0 ) ));
 		}
@@ -2411,7 +2411,7 @@ jQuery.Event = function( src ) {
 		this.type = src;
 	}
 
-	// timeStamp is buggy for some events on Firefox(#3843)
+	// timeStamp is gy for some events on Firefox(#3843)
 	// So we won't rely on the native value
 	this.timeStamp = jQuery.now();
 
@@ -3508,7 +3508,7 @@ var Expr = Sizzle.selectors = {
 				match[3] = test[3] - 0;
 			}
 
-			// TODO: Move to normal caching system
+			// : Move to normal caching system
 			match[0] = done++;
 
 			return match;
@@ -4322,7 +4322,7 @@ jQuery.contains = Sizzle.contains;
 
 var runtil = /Until$/,
 	rparentsprev = /^(?:parents|prevUntil|prevAll)/,
-	// Note: This RegExp should be improved, or likely pulled from Sizzle
+	// : This RegExp should be improved, or likely pulled from Sizzle
 	rmultiselector = /,/,
 	isSimple = /^.[^:#\[\.,]*$/,
 	slice = Array.prototype.slice,
@@ -5324,7 +5324,7 @@ jQuery.extend({
 			// If a hook was provided, use that value, otherwise just set the specified value
 			if ( !hooks || !("set" in hooks) || (value = hooks.set( elem, value )) !== undefined ) {
 				// Wrapped to prevent IE from throwing errors when 'invalid' values are provided
-				// Fixes bug #5509
+				// Fixes  #5509
 				try {
 					style[ name ] = value;
 				} catch(e) {}
@@ -5883,7 +5883,7 @@ jQuery.extend({
 				};
 			}
 
-			// Use insertBefore instead of appendChild  to circumvent an IE6 bug.
+			// Use insertBefore instead of appendChild  to circumvent an IE6 .
 			// This arises when a base node is used (#2709 and #4378).
 			head.insertBefore( script, head.firstChild );
 
@@ -6113,7 +6113,7 @@ function buildParams( prefix, obj, traditional, add ) {
 			} else {
 				// If array item is non-scalar (array or object), encode its
 				// numeric index to resolve deserialization ambiguity issues.
-				// Note that rack (as of 1.0.0) can't currently deserialize
+				//  that rack (as of 1.0.0) can't currently deserialize
 				// nested arrays properly, and attempting to do so may cause
 				// a server error. Possible fixes are to modify rack's
 				// deserialization algorithm or to provide an option or flag
@@ -7034,7 +7034,7 @@ jQuery.fn.extend({
 		parentOffset = rroot.test(offsetParent[0].nodeName) ? { top: 0, left: 0 } : offsetParent.offset();
 
 		// Subtract element margins
-		// note: when an element has margin: auto the offsetLeft and marginLeft
+		// : when an element has margin: auto the offsetLeft and marginLeft
 		// are the same in Safari causing offset.left to incorrectly be 0
 		offset.top  -= parseFloat( jQuery.css(elem, "marginTop") ) || 0;
 		offset.left -= parseFloat( jQuery.css(elem, "marginLeft") ) || 0;

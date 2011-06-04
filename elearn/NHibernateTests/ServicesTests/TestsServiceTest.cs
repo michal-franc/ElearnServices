@@ -10,7 +10,7 @@ using NHiberanteDal.Models;
 namespace NHibernateTests.ServicesTests
 {
     [TestFixture]
-    public class TestServiceTest : InMemoryWithSampleData
+     class TestsServiceTest : InMemoryWithSampleData
     {
 
         [Test]
@@ -172,6 +172,24 @@ namespace NHibernateTests.ServicesTests
             Assert.That(test.Name, Is.EqualTo("new test"));
             Assert.That(test.Questions.Count,Is.EqualTo(1));
             Assert.That(test.Questions.First().Answers.Count, Is.EqualTo(1));
+            #endregion
+        }
+
+        [Test]
+        public void Can_get_test_types()
+        {
+            #region Arrange
+
+            #endregion
+
+            #region Act
+
+            var testTypes = new TestService().GetAllTests();
+
+            #endregion
+
+            #region Assert
+            Assert.That(testTypes.Count, Is.EqualTo(2));
             #endregion
         }
 				

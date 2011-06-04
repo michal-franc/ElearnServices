@@ -1,4 +1,4 @@
-﻿// Name:        MicrosoftAjax.debug.js
+﻿// Name:        MicrosoftAjax.de.js
 // Assembly:    System.Web.Extensions
 // Version:     4.0.0.0
 // FileVersion: 4.0.20526.0
@@ -1317,7 +1317,7 @@ Sys.Browser.Firefox = {};
 Sys.Browser.Safari = {};
 Sys.Browser.Opera = {};
 Sys.Browser.agent = null;
-Sys.Browser.hasDebuggerStatement = false;
+Sys.Browser.hasDegerStatement = false;
 Sys.Browser.name = navigator.appName;
 Sys.Browser.version = parseFloat(navigator.appVersion);
 Sys.Browser.documentMode = 0;
@@ -1329,13 +1329,13 @@ if (navigator.userAgent.indexOf(' MSIE ') > -1) {
             Sys.Browser.documentMode = document.documentMode;    
         }
     }
-    Sys.Browser.hasDebuggerStatement = true;
+    Sys.Browser.hasDegerStatement = true;
 }
 else if (navigator.userAgent.indexOf(' Firefox/') > -1) {
     Sys.Browser.agent = Sys.Browser.Firefox;
     Sys.Browser.version = parseFloat(navigator.userAgent.match(/ Firefox\/(\d+\.\d+)/)[1]);
     Sys.Browser.name = 'Firefox';
-    Sys.Browser.hasDebuggerStatement = true;
+    Sys.Browser.hasDegerStatement = true;
 }
 else if (navigator.userAgent.indexOf(' AppleWebKit/') > -1) {
     Sys.Browser.agent = Sys.Browser.Safari;
@@ -1376,14 +1376,14 @@ Sys.CancelEventArgs.prototype = {
 Sys.CancelEventArgs.registerClass('Sys.CancelEventArgs', Sys.EventArgs);
 Type.registerNamespace('Sys.UI');
  
-Sys._Debug = function Sys$_Debug() {
-    /// <summary locid="M:J#Sys.Debug.#ctor" />
-    /// <field name="isDebug" type="Boolean" locid="F:J#Sys.Debug.isDebug"></field>
+Sys._De = function Sys$_De() {
+    /// <summary locid="M:J#Sys.De.#ctor" />
+    /// <field name="isDe" type="Boolean" locid="F:J#Sys.De.isDe"></field>
     if (arguments.length !== 0) throw Error.parameterCount();
 }
-    function Sys$_Debug$_appendConsole(text) {
-        if ((typeof(Debug) !== 'undefined') && Debug.writeln) {
-            Debug.writeln(text);
+    function Sys$_De$_appendConsole(text) {
+        if ((typeof(De) !== 'undefined') && De.writeln) {
+            De.writeln(text);
         }
         if (window.console && window.console.log) {
             window.console.log(text);
@@ -1391,18 +1391,18 @@ Sys._Debug = function Sys$_Debug() {
         if (window.opera) {
             window.opera.postError(text);
         }
-        if (window.debugService) {
-            window.debugService.trace(text);
+        if (window.deService) {
+            window.deService.trace(text);
         }
     }
-    function Sys$_Debug$_appendTrace(text) {
+    function Sys$_De$_appendTrace(text) {
         var traceElement = document.getElementById('TraceConsole');
         if (traceElement && (traceElement.tagName.toUpperCase() === 'TEXTAREA')) {
             traceElement.value += text + '\n';
         }
     }
-    function Sys$_Debug$assert(condition, message, displayCaller) {
-        /// <summary locid="M:J#Sys.Debug.assert" />
+    function Sys$_De$assert(condition, message, displayCaller) {
+        /// <summary locid="M:J#Sys.De.assert" />
         /// <param name="condition" type="Boolean"></param>
         /// <param name="message" type="String" optional="true" mayBeNull="true"></param>
         /// <param name="displayCaller" type="Boolean" optional="true"></param>
@@ -1416,33 +1416,33 @@ Sys._Debug = function Sys$_Debug() {
             message = (displayCaller && this.assert.caller) ?
                 String.format(Sys.Res.assertFailedCaller, message, this.assert.caller) :
                 String.format(Sys.Res.assertFailed, message);
-            if (confirm(String.format(Sys.Res.breakIntoDebugger, message))) {
+            if (confirm(String.format(Sys.Res.breakIntoDeger, message))) {
                 this.fail(message);
             }
         }
     }
-    function Sys$_Debug$clearTrace() {
-        /// <summary locid="M:J#Sys.Debug.clearTrace" />
+    function Sys$_De$clearTrace() {
+        /// <summary locid="M:J#Sys.De.clearTrace" />
         if (arguments.length !== 0) throw Error.parameterCount();
         var traceElement = document.getElementById('TraceConsole');
         if (traceElement && (traceElement.tagName.toUpperCase() === 'TEXTAREA')) {
             traceElement.value = '';
         }
     }
-    function Sys$_Debug$fail(message) {
-        /// <summary locid="M:J#Sys.Debug.fail" />
+    function Sys$_De$fail(message) {
+        /// <summary locid="M:J#Sys.De.fail" />
         /// <param name="message" type="String" mayBeNull="true"></param>
         var e = Function._validateParams(arguments, [
             {name: "message", type: String, mayBeNull: true}
         ]);
         if (e) throw e;
         this._appendConsole(message);
-        if (Sys.Browser.hasDebuggerStatement) {
-            eval('debugger');
+        if (Sys.Browser.hasDegerStatement) {
+            eval('deger');
         }
     }
-    function Sys$_Debug$trace(text) {
-        /// <summary locid="M:J#Sys.Debug.trace" />
+    function Sys$_De$trace(text) {
+        /// <summary locid="M:J#Sys.De.trace" />
         /// <param name="text"></param>
         var e = Function._validateParams(arguments, [
             {name: "text"}
@@ -1451,8 +1451,8 @@ Sys._Debug = function Sys$_Debug() {
         this._appendConsole(text);
         this._appendTrace(text);
     }
-    function Sys$_Debug$traceDump(object, name) {
-        /// <summary locid="M:J#Sys.Debug.traceDump" />
+    function Sys$_De$traceDump(object, name) {
+        /// <summary locid="M:J#Sys.De.traceDump" />
         /// <param name="object" mayBeNull="true"></param>
         /// <param name="name" type="String" mayBeNull="true" optional="true"></param>
         var e = Function._validateParams(arguments, [
@@ -1462,7 +1462,7 @@ Sys._Debug = function Sys$_Debug() {
         if (e) throw e;
         var text = this._traceDump(object, name, true);
     }
-    function Sys$_Debug$_traceDump(object, name, recursive, indentationPadding, loopArray) {
+    function Sys$_De$_traceDump(object, name, recursive, indentationPadding, loopArray) {
         name = name? name : 'traceDump';
         indentationPadding = indentationPadding? indentationPadding : '';
         if (object === null) {
@@ -1523,19 +1523,19 @@ Sys._Debug = function Sys$_Debug() {
                 Array.remove(loopArray, object);
         }
     }
-Sys._Debug.prototype = {
-    _appendConsole: Sys$_Debug$_appendConsole,
-    _appendTrace: Sys$_Debug$_appendTrace,
-    assert: Sys$_Debug$assert,
-    clearTrace: Sys$_Debug$clearTrace,
-    fail: Sys$_Debug$fail,
-    trace: Sys$_Debug$trace,
-    traceDump: Sys$_Debug$traceDump,
-    _traceDump: Sys$_Debug$_traceDump
+Sys._De.prototype = {
+    _appendConsole: Sys$_De$_appendConsole,
+    _appendTrace: Sys$_De$_appendTrace,
+    assert: Sys$_De$assert,
+    clearTrace: Sys$_De$clearTrace,
+    fail: Sys$_De$fail,
+    trace: Sys$_De$trace,
+    traceDump: Sys$_De$traceDump,
+    _traceDump: Sys$_De$_traceDump
 }
-Sys._Debug.registerClass('Sys._Debug');
-Sys.Debug = new Sys._Debug();
-    Sys.Debug.isDebug = true;
+Sys._De.registerClass('Sys._De');
+Sys.De = new Sys._De();
+    Sys.De.isDe = true;
  
 function Sys$Enum$parse(value, ignoreCase) {
     /// <summary locid="M:J#Sys.Enum.parse" />
@@ -2382,7 +2382,7 @@ Date._getParseRegExp = function Date$_getParseRegExp(dtf, format) {
                 regexp.append("(\\" + dtf.DateSeparator + ")");
                 break;
             default:
-                Sys.Debug.fail("Invalid date format pattern");
+                Sys.De.fail("Invalid date format pattern");
         }
         Array.add(groups, match[0]);
     }
@@ -2804,7 +2804,7 @@ Date.prototype._toFormattedString = function Date$_toFormattedString(format, cul
             ret.append(dtf.DateSeparator);
             break;
         default:
-            Sys.Debug.fail("Invalid date format pattern");
+            Sys.De.fail("Invalid date format pattern");
         }
     }
     return ret.toString();
@@ -2941,7 +2941,7 @@ Number._parseNumberNegativePattern = function Number$_parseNumberNegativePattern
             }
             break;
         default:
-            Sys.Debug.fail("");
+            Sys.De.fail("");
     }
     return ['', value];
 }
@@ -2988,7 +2988,7 @@ Number.prototype._toFormattedString = function Number$_toFormattedString(format,
     }
     
     function expandNumber(number, precision, groupSizes, sep, decimalChar) {
-        Sys.Debug.assert(groupSizes.length > 0, "groupSizes must be an array of at least 1");
+        Sys.De.assert(groupSizes.length > 0, "groupSizes must be an array of at least 1");
         var curSize = groupSizes[0];
         var curGroupIndex = 1;
         var factor = Math.pow(10, precision);
@@ -3119,7 +3119,7 @@ Number.prototype._toFormattedString = function Number$_toFormattedString(format,
             ret += nf.PercentSymbol;
             break;
         default:
-            Sys.Debug.fail("Invalid number format pattern");
+            Sys.De.fail("Invalid number format pattern");
         }
     }
     return ret;
@@ -6636,7 +6636,7 @@ Sys._ScriptLoaderTask.prototype = {
 }
 Sys._ScriptLoaderTask.registerClass("Sys._ScriptLoaderTask", null, Sys.IDisposable);
 Sys._ScriptLoaderTask._clearScript = function Sys$_ScriptLoaderTask$_clearScript(scriptElement) {
-    if (!Sys.Debug.isDebug) {
+    if (!Sys.De.isDe) {
         scriptElement.parentNode.removeChild(scriptElement);
     }
 }
@@ -7033,7 +7033,7 @@ Sys.Res={
 'observableConflict':'Object already contains a member with the name \'{0}\'.',
 'historyCannotEnableHistory':'Cannot set enableHistory after initialization.',
 'eventHandlerInvalid':'Handler was not added through the Sys.UI.DomEvent.addHandler method.',
-'scriptLoadFailedDebug':'The script \'{0}\' failed to load. Check for:\r\n Inaccessible path.\r\n Script errors. (IE) Enable \'Display a notification about every script error\' under advanced settings.',
+'scriptLoadFailedDe':'The script \'{0}\' failed to load. Check for:\r\n Inaccessible path.\r\n Script errors. (IE) Enable \'Display a notification about every script error\' under advanced settings.',
 'propertyNotWritable':'\'{0}\' is not a writable property.',
 'enumInvalidValueName':'\'{0}\' is not a valid name for an enum value.',
 'controlAlreadyDefined':'A control is already associated with the element.',
@@ -7113,5 +7113,5 @@ Sys.Res={
 'notImplemented':'The method or operation is not implemented.',
 'assertFailed':'Assertion Failed: {0}',
 'invalidOperation':'Operation is not valid due to the current state of the object.',
-'breakIntoDebugger':'{0}\r\n\r\nBreak into debugger?'
+'breakIntoDeger':'{0}\r\n\r\nBreak into deger?'
 };

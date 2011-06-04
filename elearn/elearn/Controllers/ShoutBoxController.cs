@@ -18,7 +18,7 @@ namespace elearn.Controllers
 
 
         //
-        // Post: /ShoutBox/Add/id?message=test&author=test
+        // Post: /ShoutBox/Add/id?message=test
 
         [HttpPost]
         public ActionResult Add(int id,string message)

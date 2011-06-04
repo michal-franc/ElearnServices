@@ -14,6 +14,7 @@ namespace ELearnServices
 
         public CourseService()
         {
+            Logger.Info("Created CourseService");
             DtoMappings.Initialize();
         }
 

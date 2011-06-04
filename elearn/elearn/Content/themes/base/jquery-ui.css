@@ -1,5 +1,5 @@
 /*
- * Note: While Microsoft is not the author of this file, Microsoft is
+ * : While Microsoft is not the author of this file, Microsoft is
  * offering you a license subject to the terms of the Microsoft Software
  * License Terms for Microsoft ASP.NET Model View Controller 3.
  * Microsoft reserves all other rights. The notices below are provided
@@ -45,7 +45,7 @@
 /* Overlays */
 .ui-widget-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 /*
- * Note: While Microsoft is not the author of this file, Microsoft is
+ * : While Microsoft is not the author of this file, Microsoft is
  * offering you a license subject to the terms of the Microsoft Software
  * License Terms for Microsoft ASP.NET Model View Controller 3.
  * Microsoft reserves all other rights. The notices below are provided
@@ -58,7 +58,7 @@
  *
  * http://docs.jquery.com/UI/Accordion#theming
  */
-/* IE/Win - Fix animation bug - #4615 */
+/* IE/Win - Fix animation  - #4615 */
 .ui-accordion { width: 100%; }
 .ui-accordion .ui-accordion-header { cursor: pointer; position: relative; margin-top: 1px; zoom: 1; }
 .ui-accordion .ui-accordion-li-fix { display: inline; }
@@ -68,7 +68,7 @@
 .ui-accordion .ui-accordion-header .ui-icon { position: absolute; left: .5em; top: 50%; margin-top: -8px; }
 .ui-accordion .ui-accordion-content { padding: 1em 2.2em; border-top: 0; margin-top: -2px; position: relative; top: 1px; margin-bottom: 2px; overflow: auto; display: none; zoom: 1; }
 .ui-accordion .ui-accordion-content-active { display: block; }/*
- * Note: While Microsoft is not the author of this file, Microsoft is
+ * : While Microsoft is not the author of this file, Microsoft is
  * offering you a license subject to the terms of the Microsoft Software
  * License Terms for Microsoft ASP.NET Model View Controller 3.
  * Microsoft reserves all other rights. The notices below are provided
@@ -87,7 +87,7 @@
 * html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% in IE6 */
 
 /*
- * Note: While Microsoft is not the author of this file, Microsoft is
+ * : While Microsoft is not the author of this file, Microsoft is
  * offering you a license subject to the terms of the Microsoft Software
  * License Terms for Microsoft ASP.NET Model View Controller 3.
  * Microsoft reserves all other rights. The notices below are provided
@@ -131,7 +131,7 @@
 	margin: -1px;
 }
 /*
- * Note: While Microsoft is not the author of this file, Microsoft is
+ * : While Microsoft is not the author of this file, Microsoft is
  * offering you a license subject to the terms of the Microsoft Software
  * License Terms for Microsoft ASP.NET Model View Controller 3.
  * Microsoft reserves all other rights. The notices below are provided
@@ -174,7 +174,7 @@ input.ui-button { padding: .4em 1em; }
 /* workarounds */
 button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra padding in Firefox */
 /*
- * Note: While Microsoft is not the author of this file, Microsoft is
+ * : While Microsoft is not the author of this file, Microsoft is
  * offering you a license subject to the terms of the Microsoft Software
  * License Terms for Microsoft ASP.NET Model View Controller 3.
  * Microsoft reserves all other rights. The notices below are provided
@@ -246,7 +246,7 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
     width: 200px; /*must have*/
     height: 200px; /*must have*/
 }/*
- * Note: While Microsoft is not the author of this file, Microsoft is
+ * : While Microsoft is not the author of this file, Microsoft is
  * offering you a license subject to the terms of the Microsoft Software
  * License Terms for Microsoft ASP.NET Model View Controller 3.
  * Microsoft reserves all other rights. The notices below are provided
@@ -272,7 +272,7 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 .ui-dialog .ui-resizable-se { width: 14px; height: 14px; right: 3px; bottom: 3px; }
 .ui-draggable .ui-dialog-titlebar { cursor: move; }
 /*
- * Note: While Microsoft is not the author of this file, Microsoft is
+ * : While Microsoft is not the author of this file, Microsoft is
  * offering you a license subject to the terms of the Microsoft Software
  * License Terms for Microsoft ASP.NET Model View Controller 3.
  * Microsoft reserves all other rights. The notices below are provided
@@ -287,7 +287,7 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
  */
 .ui-progressbar { height:2em; text-align: left; }
 .ui-progressbar .ui-progressbar-value {margin: -1px; height:100%; }/*
- * Note: While Microsoft is not the author of this file, Microsoft is
+ * : While Microsoft is not the author of this file, Microsoft is
  * offering you a license subject to the terms of the Microsoft Software
  * License Terms for Microsoft ASP.NET Model View Controller 3.
  * Microsoft reserves all other rights. The notices below are provided
@@ -311,7 +311,7 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 .ui-resizable-sw { cursor: sw-resize; width: 9px; height: 9px; left: -5px; bottom: -5px; }
 .ui-resizable-nw { cursor: nw-resize; width: 9px; height: 9px; left: -5px; top: -5px; }
 .ui-resizable-ne { cursor: ne-resize; width: 9px; height: 9px; right: -5px; top: -5px;}/*
- * Note: While Microsoft is not the author of this file, Microsoft is
+ * : While Microsoft is not the author of this file, Microsoft is
  * offering you a license subject to the terms of the Microsoft Software
  * License Terms for Microsoft ASP.NET Model View Controller 3.
  * Microsoft reserves all other rights. The notices below are provided
@@ -326,7 +326,7 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
  */
 .ui-selectable-helper { position: absolute; z-index: 100; border:1px dotted black; }
 /*
- * Note: While Microsoft is not the author of this file, Microsoft is
+ * : While Microsoft is not the author of this file, Microsoft is
  * offering you a license subject to the terms of the Microsoft Software
  * License Terms for Microsoft ASP.NET Model View Controller 3.
  * Microsoft reserves all other rights. The notices below are provided
@@ -354,7 +354,7 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 .ui-slider-vertical .ui-slider-range { left: 0; width: 100%; }
 .ui-slider-vertical .ui-slider-range-min { bottom: 0; }
 .ui-slider-vertical .ui-slider-range-max { top: 0; }/*
- * Note: While Microsoft is not the author of this file, Microsoft is
+ * : While Microsoft is not the author of this file, Microsoft is
  * offering you a license subject to the terms of the Microsoft Software
  * License Terms for Microsoft ASP.NET Model View Controller 3.
  * Microsoft reserves all other rights. The notices below are provided
@@ -367,17 +367,17 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
  *
  * http://docs.jquery.com/UI/Tabs#theming
  */
-.ui-tabs { position: relative; padding: .2em; zoom: 1; } /* position: relative prevents IE scroll bug (element with position: relative inside container with overflow: auto appear as "fixed") */
+.ui-tabs { position: relative; padding: .2em; zoom: 1; } /* position: relative prevents IE scroll  (element with position: relative inside container with overflow: auto appear as "fixed") */
 .ui-tabs .ui-tabs-nav { margin: 0; padding: .2em .2em 0; }
 .ui-tabs .ui-tabs-nav li { list-style: none; float: left; position: relative; top: 1px; margin: 0 .2em 1px 0; border-bottom: 0 !important; padding: 0; white-space: nowrap; }
 .ui-tabs .ui-tabs-nav li a { float: left; padding: .5em 1em; text-decoration: none; }
 .ui-tabs .ui-tabs-nav li.ui-tabs-selected { margin-bottom: 0; padding-bottom: 1px; }
 .ui-tabs .ui-tabs-nav li.ui-tabs-selected a, .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .ui-tabs .ui-tabs-nav li.ui-state-processing a { cursor: text; }
-.ui-tabs .ui-tabs-nav li a, .ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a { cursor: pointer; } /* first selector in group seems obsolete, but required to overcome bug in Opera applying cursor: text overall if defined elsewhere... */
+.ui-tabs .ui-tabs-nav li a, .ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a { cursor: pointer; } /* first selector in group seems obsolete, but required to overcome  in Opera applying cursor: text overall if defined elsewhere... */
 .ui-tabs .ui-tabs-panel { display: block; border-width: 0; padding: 1em 1.4em; background: none; }
 .ui-tabs .ui-tabs-hide { display: none !important; }
 /*
- * Note: While Microsoft is not the author of this file, Microsoft is
+ * : While Microsoft is not the author of this file, Microsoft is
  * offering you a license subject to the terms of the Microsoft Software
  * License Terms for Microsoft ASP.NET Model View Controller 3.
  * Microsoft reserves all other rights. The notices below are provided

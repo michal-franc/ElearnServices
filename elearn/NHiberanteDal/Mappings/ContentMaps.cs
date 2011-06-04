@@ -5,7 +5,7 @@ using System.Text;
 using FluentNHibernate.Mapping;
 using NHiberanteDal.Models;
 
-
+//todo : add conventions to nhibernate mappings very important beacusae nhibernate is  creating weird FK
 namespace NHiberanteDal.Mappings
 {
     public class ContentMap : ClassMap<ContentModel>

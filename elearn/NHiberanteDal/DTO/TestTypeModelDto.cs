@@ -11,8 +11,14 @@ namespace NHiberanteDal.DTO
     public class TestTypeModelDto : DtoBaseClass<TestTypeModelDto,TestTypeModel>
     {
         [DataMember]
-        public  int ID { get; private set; }
+        public  int ID { get; set; }
         [DataMember]
         public  string TypeName { get; set; }
+
+        public override string ToString()
+        {
+            return String.Format("{0}:{1}", ID, TypeName);
+        }
     }
+
 }

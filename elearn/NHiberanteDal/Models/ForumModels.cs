@@ -15,7 +15,7 @@ namespace NHiberanteDal.Models
 
         public virtual IList<TopicModel> Topics { get; set; }
          
-        //Todo: Uprawnienia Forum
+        //: Uprawnienia Forum
     }
 
     public class TopicModel : IModel

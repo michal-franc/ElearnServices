@@ -14,6 +14,7 @@ namespace ELearnServices
 
         public GroupService()
         {
+            Logger.Info("Created GroupService");
             DtoMappings.Initialize();
         }
 

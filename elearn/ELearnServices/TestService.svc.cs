@@ -13,6 +13,7 @@ namespace ELearnServices
 
         public TestService()
         {
+            Logger.Info("Created TestService");
             DtoMappings.Initialize();
         }
 
@@ -20,17 +21,16 @@ namespace ELearnServices
         {
             try
             {
-                int id = -1;
+                var id = -1;
                 DataAccess.InTransaction(session =>
                 {
                     var course = session.Get<CourseModel>(courseId);
-                    TestModel model = TestDto.UnMap(test);
+                    var model = TestDto.UnMap(test);
                     id = (int)session.Save(model);
                     course.Tests.Add(model);
                     session.Save(course);
-
                 });
-
+                Logger.Trace("Created Test id - {0}", id);
                 return id;
             }
             catch (Exception ex)
@@ -115,5 +115,21 @@ namespace ELearnServices
                 return false;
             }
         }
+
+        public IList<TestTypeModelDto> GetTestTypes()
+        {
+            try
+            {
+                    var testTypes = new Repository<TestTypeModel>().GetAll().ToList();
+                    return TestTypeModelDto.Map(testTypes);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Error : CourseService.GetTestTypes - {0}", ex.Message);
+                return new List<TestTypeModelDto>();
+            }
+        }
+
     }
 }
+ 

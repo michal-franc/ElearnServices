@@ -9,7 +9,7 @@ namespace NHiberanteDal.DataAccess.QueryObjects
 
         public QueryCourseByCourseType(CourseTypeModel testCourseType)
         {
-            // TODO: Complete member initialization
+            // : Complete member initialization
             _testCourseType = testCourseType;
         }
 

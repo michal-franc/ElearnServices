@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
 using NHiberanteDal.DTO;
+using elearn.ProfileService;
 using elearn.TestService;
 using elearn.CourseService;
 
@@ -10,12 +11,15 @@ namespace elearn.Controllers
     {
         private readonly ITestService _testService;
         private readonly ICourseService _courseService;
+        private readonly IProfileService _profileService;
 
+        //todo  : add Authorize parameters
 
-        public TestController(ITestService tService,ICourseService cService)
+        public TestController(ITestService tService, ICourseService cService, IProfileService pService)
         {
             _testService=tService;
             _courseService = cService;
+            _profileService = pService;
         }
 
         //
@@ -39,8 +43,8 @@ namespace elearn.Controllers
         public ActionResult Create()
         {
             var test = new TestDto();
-            var courses = _courseService.GetAllSignatures();
-            ViewData["Courses"] = new SelectList(courses);
+            var testTypes = _testService.GetTestTypes();
+            ViewBag.TestTypes = new SelectList(testTypes,"ID","TypeName");
             return View(test);
         }
 
@@ -49,11 +53,31 @@ namespace elearn.Controllers
         [HttpPost]
         public ActionResult Create(TestDto test)
         {
+
+            //Fixing ModelState Valid Error
+            if (ModelState.ContainsKey("TestType"))
+            {
+                var testTypeId = Int32.Parse(ModelState["TestType"].Value.AttemptedValue);
+                test.TestType = new TestTypeModelDto() { ID = testTypeId };
+                ModelState.Remove("TestType");
+            }
+
+           test.Author =  _profileService.GetByName(User.Identity.Name);
+
+
             if (ModelState.IsValid)
             {
-                _testService.AddTest(1,test);
-                return RedirectToAction("Details", new {id=test.ID });
+                var newId = _testService.AddTest(35,test);
+                if (newId > 0)
+                {
+                    return RedirectToAction("Details", new { id = newId });
+                }
+                else
+                {
+                    //todo log error
+                }
             }
+            // bug : problem with null TestTypes in View , recreate TestTypes list before sending model to view
             return View(test);
         }
 
@@ -61,20 +85,36 @@ namespace elearn.Controllers
         // GET: /Test/Edit/id
         public ActionResult Edit(int id)
         {
-            return View();
+            var test = _testService.GetTestDetails(id);
+            var courses = _courseService.GetAllSignatures();
+            ViewData["Courses"] = new SelectList(courses);
+            return View(test);
         }
 
         //
         // Post: /Test/Edit/id
         [HttpPost]
-        public ActionResult Edit(int id,FormCollection formValues)
+        public ActionResult Edit(TestDto test)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                _testService.UpdateTest(test);
+                return RedirectToAction("Details", new { id = test.ID });
+            }
+            return View(test);
         }
 
+        //
+        // GET: /Test/List
+        [HttpGet]
         public ActionResult List()
         {
-            throw new NotImplementedException();
+            var tests = _testService.GetAllTests();
+            return View(tests);
         }
+
+
+        //todo : Add Question - post action
+        //todo : Add Answer - posrt action
     }
 }

@@ -140,6 +140,7 @@
     <None Include="Properties\DataSources\NHiberanteDal.DTO.ShoutBoxMessageModelDto.datasource" />
     <None Include="Properties\DataSources\NHiberanteDal.DTO.TestDto.datasource" />
     <None Include="Properties\DataSources\NHiberanteDal.DTO.TestSignatureDto.datasource" />
+    <None Include="Properties\DataSources\NHiberanteDal.DTO.TestTypeModelDto.datasource" />
     <None Include="Properties\DataSources\NHiberanteDal.Models.ForumModel.datasource" />
     <None Include="Properties\DataSources\NHiberanteDal.Models.ProfileModel.datasource" />
     <Content Include="Images\nologo.jpg" />
@@ -317,6 +318,8 @@
     <Content Include="Views\Group\_Join.cshtml" />
     <Content Include="Views\Group\_Leave.cshtml" />
     <Content Include="Views\Shared\_Error.cshtml" />
+    <Content Include="Views\Test\List.cshtml" />
+    <Content Include="Views\Test\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

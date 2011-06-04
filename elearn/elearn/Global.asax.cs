@@ -4,15 +4,17 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using NLog;
 using Ninject;
 
 namespace elearn
 {
-    // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
     // visit http://go.microsoft.com/?LinkId=9394801
 
     public class MvcApplication : System.Web.HttpApplication
     {
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
@@ -40,6 +42,13 @@ namespace elearn
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
+            Logger.Info("Application Started");
+        }
+
+        protected void Application_Error()
+        {
+            Exception lastException = Server.GetLastError();
+            Logger.Error("Application Error - {0}",lastException.Message);
         }
     }
 }

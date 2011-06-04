@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NHiberanteDal.Models;
+﻿using NHiberanteDal.Models;
 using FluentNHibernate.Mapping;
 
 namespace NHiberanteDal.Mappings
 {
-    public class TestModelMap : ClassMap<TestModel> 
+    public class TestModelMap : ClassMap<TestModel>
     {
-
         public TestModelMap()
         {
             Id(x => x.ID);
@@ -17,14 +12,12 @@ namespace NHiberanteDal.Mappings
             Map(x => x.CreationDate).Not.Nullable();
             Map(x => x.EditDate);
 
-
             //One
             References(x => x.Author).Not.Nullable().Not.LazyLoad();
             References(x => x.TestType).Not.Nullable().Not.LazyLoad();
 
             //Many
             HasMany(x => x.Questions).Cascade.All().Not.LazyLoad().KeyColumns.Add("TestId");
-
         }
     }
 

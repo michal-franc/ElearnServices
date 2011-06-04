@@ -10,6 +10,7 @@ namespace ELearnServices
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         public JournalService()
         {
+            Logger.Info("Created JournalService");
             DtoMappings.Initialize();
         }
 

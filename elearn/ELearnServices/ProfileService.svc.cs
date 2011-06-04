@@ -17,7 +17,7 @@ namespace ELearnServices
 
         public ProfileService() : this(new MembershipRoleProvider())
         {
-            
+            Logger.Info("Created ProfileService");
         }
 
         public ProfileService(IRoleProvider provider)

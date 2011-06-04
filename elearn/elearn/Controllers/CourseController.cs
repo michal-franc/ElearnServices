@@ -69,7 +69,7 @@ namespace elearn.Controllers
             var course = new CourseDto();
             var courseTypes = _service.GetAllCourseTypes().ToList();
             ViewBag.CourseTypes = new SelectList(courseTypes,"ID","TypeName");
-            return View(course);
+               return View(course);
         }
 
         // Post: /Course/Create/

@@ -113,7 +113,7 @@
     <Compile Include="ServicesTests\InMemoryWithSampleData.cs" />
     <Compile Include="ServicesTests\JournalServiceTests.cs" />
     <Compile Include="ServicesTests\ProfileServiceTest.cs" />
-    <Compile Include="ServicesTests\TestServiceTest.cs" />
+    <Compile Include="ServicesTests\TestsServiceTest.cs" />
     <Compile Include="SQLiteDBAccess.cs" />
     <Compile Include="UndisposableSession.cs" />
   </ItemGroup>
