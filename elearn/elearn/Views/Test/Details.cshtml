@@ -1,25 +1,79 @@
-﻿@model NHiberanteDal.DTO.TestDto
-
+﻿@using NHiberanteDal.DTO
+@model TestDto
 @{
     ViewBag.Title = "Details";
 }
-
-<h2>Details</h2>
-
+<h2>
+    Details</h2>
 <fieldset>
     <legend>@Model.Name</legend>
-
-    <div class="display-label">Author</div>
+    <div class="display-label">
+        Author</div>
     <div class="display-field">@String.Format("{0:g}", Model.Author.Name)</div>
-
-    <div class="display-label">CreationDate</div>
+    <div class="display-label">
+        CreationDate</div>
     <div class="display-field">@String.Format("{0:g}", Model.CreationDate)</div>
-
-    <div class="display-label">EditDate</div>
+    <div class="display-label">
+        EditDate</div>
     <div class="display-field">@String.Format("{0:g}", Model.EditDate)</div>
 </fieldset>
+<label id="btnCreateQuestion" style="color: green; font-weight: bold;">
+    +</label>Add Question
+@foreach (var q in Model.Questions)
+{
+    <p>
+        @q.QuestionText
+        @foreach (var a in q.Answers)
+        {
+            <li>
+                @a.Text
+            </li>       
+        }
+    </p> 
+}
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.ID }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+<script type="text/javascript">
 
+$(function () {
+    $("#btnCreateQuestion").click(function (){
+        $("<div id='addQuestionModal'/>").dialog({
+            modal: true,
+            open: function () {
+                $.ajax({
+                        type: "GET",
+                        url: "@Url.Action("CreateQuestion", "Test" , new {id = Model.ID})",
+                        cache: false,
+                        dataType: "html",
+                        success: function(data) {
+                            $("#addQuestionModal").html(data);
+                        },
+                        failure: function() {
+                            ShowError();
+                        },
+                        error: function() {
+                            ShowError();
+                        }
+                    });           
+            },
+            close: function () {
+                $("#addQuestionModal").remove();
+            },
+            height: 400,
+            width:  500,
+            title: 'Add Question'
+            });
+        return false;
+
+        });
+})
+
+</script>
+@*idea : load questions show only question text , add checkbox to show answers 
+  idea : test creator can check if user can see all the questions or only one question at the time 
+  idea : higlight if user selected correct anwswer : when creating test , you can select if you want to higlight bad or good answers
+  idea : test creator can setup option to give result at the submit test or test manager have to apply changes
+  idea : display sending animation when sendin ajax request with eg new question
+*@

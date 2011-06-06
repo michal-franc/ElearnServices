@@ -35,7 +35,7 @@ namespace ELearnServices
             }
             catch (Exception ex)
             {
-                Logger.Error("Error : CourseService.AddTest - {0}", ex.Message);
+                Logger.Error("Error : TestService.AddTest - {0}", ex.Message);
                 return -1;
             }
 
@@ -49,7 +49,7 @@ namespace ELearnServices
             }
             catch (Exception ex)
             {
-                Logger.Error("Error : CourseService.DeleteTest - {0}", ex.Message);
+                Logger.Error("Error : TestService.DeleteTest - {0}", ex.Message);
             }
         }
 
@@ -63,7 +63,7 @@ namespace ELearnServices
             }
             catch (Exception ex)
             {
-                Logger.Error("Error : CourseService.UpdateTest - {0}", ex.Message);
+                Logger.Error("Error : TestService.UpdateTest - {0}", ex.Message);
                 return false;
             }
         }
@@ -77,7 +77,7 @@ namespace ELearnServices
             }
             catch (Exception ex)
             {
-                Logger.Error("Error : CourseService.GetTestDetails - {0}", ex.Message);
+                Logger.Error("Error : TestService.GetTestDetails - {0}", ex.Message);
                 return null;
             }
         }
@@ -91,29 +91,56 @@ namespace ELearnServices
             }
             catch (Exception ex)
             {
-                Logger.Error("Error : CourseService.GetAllTests - {0}", ex.Message);
+                Logger.Error("Error : TestService.GetAllTests - {0}", ex.Message);
                 return new List<TestSignatureDto>();
             }
         }
 
-        public bool AddQuestion(int id, TestQuestionModelDto question)
+        public int AddQuestion(int id, TestQuestionModelDto question)
         {
             try
             {
+                var questionId = -1;
+                var unmapedQuestion = TestQuestionModelDto.UnMap(question);
                 DataAccess.InTransaction(session =>
                                              {
-                                                 var test = session.Get<TestModel>(1);
-                                                 test.Questions.Add(TestQuestionModelDto.UnMap(question));
+                                                 var test = session.Get<TestModel>(id);
+                                                 questionId = (int)session.Save(unmapedQuestion );
+                                                 test.Questions.Add(unmapedQuestion );
                                                  session.Save(test);
                                              });
 
-                return true;
+                return questionId;
             }
             catch (Exception ex)
             {
-                Logger.Error("Error : CourseService.AddQuestion - {0}", ex.Message);
+                Logger.Error("Error : TestService.AddQuestion - {0}", ex.Message,ex.Data);
+                return -1;
+            }
+        }
+
+
+        public bool AddAnswers(int questionId, List<TestQuestionAnswerDto> answers)
+        {
+
+            try
+            {
+                var question =new Repository<TestQuestionModel>().GetById(questionId);
+                if (question != null)
+                {
+                    question.Answers = TestQuestionAnswerDto.UnMap(answers);
+                    return new Repository<TestQuestionModel>().Update(question);
+                }
+                Logger.Error("Error - AddAnswers -  Wrong Question ID id = {0}", questionId);
                 return false;
             }
+            catch (Exception ex)
+            {
+                Logger.Error("Error : TestService.AddAnswers - {0}", ex.Message);
+                return false;
+            }
+
+            return true;
         }
 
         public IList<TestTypeModelDto> GetTestTypes()
@@ -125,7 +152,7 @@ namespace ELearnServices
             }
             catch (Exception ex)
             {
-                Logger.Error("Error : CourseService.GetTestTypes - {0}", ex.Message);
+                Logger.Error("Error : TestService.GetTestTypes - {0}", ex.Message);
                 return new List<TestTypeModelDto>();
             }
         }

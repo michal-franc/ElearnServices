@@ -1,0 +1,77 @@
+﻿@model NHiberanteDal.DTO.TestQuestionModelDto
+@*todo  : style form*@ @*todo  : highlight answer that is selected as correct*@
+@*todo  : dynamic test id passed to this partial View*@
+@Html.LabelFor(m => m.QuestionText)@Html.TextBoxFor(m => m.QuestionText, new { id = "txtBoxQuestionText" })
+<br />
+<label id="btnAddAnswer" style="color: green; font-weight: bold;">
+    +</label>
+<br />
+<form id="answersForm">
+<div id="Answers">
+</div>
+</form>
+<div class="custom-ui-smallButton">
+    <button id="addQuestion">
+        Create
+    </button>
+</div>
+<script type="text/javascript">
+    var id = 0;
+    $(function () {
+
+        $("#addQuestion").button({ icons: { primary: 'ui-icon-check'} });
+
+        $("#addQuestion").click(function () {
+            $.ajax({
+                url: "@Url.Action("CreateQuestion", "Test", new { id = @ViewBag.TestId })",
+                data: "QuestionText="+$("#txtBoxQuestionText").val(),
+                type: "POST",
+                dataType: 'json',
+                traditional: true,
+                success: function (result) {
+                    if (result.IsSuccess) {
+                        var answersData =decodeURI(CreateAnswerData());
+                        var questionId = result.Data;
+                        if (questionId>0)
+                        {
+                            $.ajax({
+                                    url: "@Url.Action("AddAnswers", "Test")/"+questionId,
+                                    data: answersData,
+                                    type: "POST",
+                                    dataType: 'json',
+                                    traditional: true,
+                                    success: function(result) {
+                                        if (result.IsSuccess) {
+
+                                        }
+                                    },
+                                    error: function() {
+                                    },
+                                    failure: function() {
+                                    }
+                                });
+                        }
+                    }
+                },
+                error: function () {
+                },
+                failure: function () {
+                }
+            });
+            return false;
+        });
+        
+        $("#btnAddAnswer").click(function () {
+                $("#Answers").append(
+                    "<input type='textbox' name='["+id+"].Text'></input>" +
+                    "<input type='checkbox' name='["+id+"].Correct' value='false'/>");
+            id++;
+        });
+    }); 
+    
+    function CreateAnswerData()
+    {
+        return $("#answersForm").serialize();
+    }
+
+</script>

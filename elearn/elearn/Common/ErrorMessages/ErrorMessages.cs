@@ -58,4 +58,12 @@
             get { return "Null Profile"; }
         }
     }
+
+    public static class Test
+    {
+        public static string TestIdError
+        {
+            get { return "Error - Wrong test Id Number."; }
+        }
+    }
 }

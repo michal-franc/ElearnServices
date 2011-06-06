@@ -9,7 +9,7 @@ namespace ELearnServices
     public interface ITestService
     {
         [OperationContract]
-        bool AddQuestion(int id, TestQuestionModelDto question);
+        int AddQuestion(int id, TestQuestionModelDto question);
 
         [OperationContract]
         TestDto GetTestDetails(int id);
@@ -28,5 +28,8 @@ namespace ELearnServices
 
         [OperationContract]
         IList<TestTypeModelDto> GetTestTypes();
+
+        [OperationContract]
+        bool AddAnswers(int questionId,List<TestQuestionAnswerDto> answers);
     }
 }

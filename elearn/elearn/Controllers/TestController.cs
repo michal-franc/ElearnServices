@@ -1,19 +1,26 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using NHiberanteDal.DTO;
+using NLog;
+using elearn.JsonMessages;
 using elearn.ProfileService;
 using elearn.TestService;
 using elearn.CourseService;
 
 namespace elearn.Controllers
 {
-    public class TestController : Controller
+    public class TestController : BaseController
     {
         private readonly ITestService _testService;
         private readonly ICourseService _courseService;
         private readonly IProfileService _profileService;
 
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         //todo  : add Authorize parameters
+
 
         public TestController(ITestService tService, ICourseService cService, IProfileService pService)
         {
@@ -114,7 +121,42 @@ namespace elearn.Controllers
         }
 
 
-        //todo : Add Question - post action
-        //todo : Add Answer - posrt action
+
+        //todo : write test 
+        [HttpGet]
+        public ActionResult CreateQuestion(int id)
+        {
+            if (id > 0)
+            {
+                var newQuestion = new TestQuestionModelDto();
+                ViewBag.TestId = id;
+
+                return PartialView("_CreateQuestionPartial", newQuestion);
+            }
+            logger.Error(elearn.Common.ErrorMessages.Test.TestIdError);
+            ViewBag.Error = elearn.Common.ErrorMessages.Test.TestIdError;
+            return PartialView("_Error");
+        }
+
+       //todo : write test 
+       //todo implement Create Question post action
+        [HttpPost]
+        public JsonResult CreateQuestion(int id ,TestQuestionModelDto questionModel)
+        {
+            var questionId = _testService.AddQuestion(id, questionModel);
+            return Json(new ResponseMessage(true,questionId));
+        }
+
+        //write test
+        [HttpPost]
+        public JsonResult AddAnswers(int id,List<TestQuestionAnswerDto> answers)
+        {
+            if (_testService.AddAnswers(id, answers.ToArray()))
+                return Json(new ResponseMessage(true));
+            else
+                return Json(new ResponseMessage(false));
+        }
+
+        //todo implement Edit Question action
     }
 }

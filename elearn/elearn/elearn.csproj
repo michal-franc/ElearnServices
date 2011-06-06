@@ -77,6 +77,7 @@
     <Compile Include="Common\ErrorMessages\ErrorMessages.cs" />
     <Compile Include="Common\Strings.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\ForumController.cs" />
     <Compile Include="Controllers\GroupController.cs" />
@@ -341,6 +342,7 @@
     <Content Include="Views\Shared\_Error.cshtml" />
     <Content Include="Views\Test\List.cshtml" />
     <Content Include="Views\Test\Edit.cshtml" />
+    <Content Include="Views\Test\_CreateQuestionPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

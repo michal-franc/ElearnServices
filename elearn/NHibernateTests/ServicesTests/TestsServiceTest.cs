@@ -105,12 +105,12 @@ namespace NHibernateTests.ServicesTests
 
             #region Act
 
-            bool addedQuestion = new TestService().AddQuestion(1,question);
+            var addedQuestionID = new TestService().AddQuestion(1,question);
 
             #endregion
 
             #region Assert
-            Assert.That(addedQuestion,Is.True);
+            Assert.That(addedQuestionID, Is.GreaterThan(-1));
             using (var session = DataAccess.OpenSession())
             {
                 var test = session.Get<TestModel>(1);
@@ -192,6 +192,40 @@ namespace NHibernateTests.ServicesTests
             Assert.That(testTypes.Count, Is.EqualTo(2));
             #endregion
         }
+
+
+        [Test]
+        public void Can_add_asnwers_to_question()
+        {
+            #region Arrange
+
+            var answers = new List<TestQuestionAnswerDto> {
+                new TestQuestionAnswerDto{Correct = false, Text = "test"},
+                new TestQuestionAnswerDto{Correct = false, Text = "test"},
+                new TestQuestionAnswerDto{Correct = false, Text = "test"},
+                new TestQuestionAnswerDto{Correct = false, Text = "test"}
+
+            };
+            #endregion
+
+            #region Act
+
+            var ok = new TestService().AddAnswers(1, answers);
+
+            int count = 0;
+            using (var context = DataAccess.OpenSession())
+            {
+                count = context.Get<TestQuestionModel>(1).Answers.Count;
+            }
+
+            #endregion
+
+            #region Assert
+            Assert.IsTrue(ok);
+            Assert.That(count,Is.EqualTo(4));
+            #endregion
+        }
+				
 				
 
     }
