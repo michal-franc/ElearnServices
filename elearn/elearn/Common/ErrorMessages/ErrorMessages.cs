@@ -1,4 +1,6 @@
-﻿namespace elearn.Common.ErrorMessages
+﻿using System;
+
+namespace elearn.Common.ErrorMessages
 {
     public static class Profile
     {
@@ -64,6 +66,19 @@
         public static string TestIdError
         {
             get { return "Error - Wrong test Id Number."; }
+        }
+    }
+
+    public static class Journal
+    {
+        public static string NoJournals
+        {
+            get { return "Error - No Journals found"; }
+        }
+
+        public static string NoProfile
+        {
+            get { return "Error - No Profile found";}
         }
     }
 }
