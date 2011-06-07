@@ -39,14 +39,30 @@ namespace ELearnServices
             {
                 using (var session = DataAccess.OpenSession())
                 {
-                    var model = session.Get<JournalModel>(journalId);
-                    model.Marks.Add(JournalMarkModelDto.UnMap(markDto));
+                    var journalModel = session.Get<JournalModel>(journalId);
+                    journalModel.Marks.Add(JournalMarkModelDto.UnMap(markDto));
+                    session.Save(journalModel);
                 }
                 return true;
             }
             catch (Exception ex)
             {
                 Logger.Error("Error : JournalService.AddMark - {0}", ex.Message);
+                return false;
+            }
+        }
+
+
+        public bool RemoveMark(int markId)
+        {
+            try
+            {
+                new Repository<JournalMarkModel>().Remove(new JournalMarkModel(){ID=markId});
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Error : JournalService.RemoveMark - {0}", ex.Message);
                 return false;
             }
         }

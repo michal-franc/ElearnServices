@@ -11,6 +11,9 @@ namespace ELearnServices
         bool AddMark(int journalId, JournalMarkModelDto markDto);
 
         [OperationContract]
+        bool RemoveMark(int markId);
+
+        [OperationContract]
         JournalModelDto GetJournalDetails(int id);
     }
 }
