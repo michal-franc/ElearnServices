@@ -64,14 +64,14 @@
         $("#btnAddAnswer").click(function () {
                 $("#Answers").append(
                     "<input type='textbox' name='["+id+"].Text'></input>" +
-                    "<input type='checkbox' name='["+id+"].Correct' value='false'/>");
+                    "<input type='checkbox' id='chckbox"+id+"' name='["+id+"].Correct'/>");
             id++;
         });
     }); 
-    
+
     function CreateAnswerData()
     {
-        return $("#answersForm").serialize();
+        return $("#answersForm").serialize().replace("on","true");
     }
 
 </script>

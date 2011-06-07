@@ -10,3 +10,9 @@ label-profile-delete
 {
     color: red;
 }
+
+    
+li.correct-answer
+{
+   color: green;
+}

@@ -25,9 +25,18 @@
         @q.QuestionText
         @foreach (var a in q.Answers)
         {
+            if (a.Correct)
+            {
+            <li class="correct-answer">
+                @a.Text
+            </li>
+            }
+            else
+            {
             <li>
                 @a.Text
-            </li>       
+            </li>
+            }
         }
     </p> 
 }
@@ -44,7 +53,7 @@ $(function () {
             open: function () {
                 $.ajax({
                         type: "GET",
-                        url: "@Url.Action("CreateQuestion", "Test" , new {id = Model.ID})",
+                        url: "@Url.Action("CreateQuestion", "Test", new { id = Model.ID })",
                         cache: false,
                         dataType: "html",
                         success: function(data) {
