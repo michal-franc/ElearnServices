@@ -52,6 +52,32 @@ namespace NHibernateTests.ServicesTests
             Assert.That(journal.Marks.Count, Is.EqualTo(1));
             Assert.That(journal.Marks.First().Name, Is.EqualTo("Zaliczenie"));
             #endregion
-        }			
+        }
+
+
+        [Test]
+        public void Can_delete_mark()
+        {
+            #region Arrange
+
+            JournalMarkModel markModel;
+            using (var session = DataAccess.OpenSession())
+            {
+                markModel = new JournalMarkModel() {Name = "test", Value = "5.0"};
+                session.SaveOrUpdate(markModel);
+            }
+            #endregion
+
+            #region Act
+
+            var ok = new JournalService().RemoveMark(markModel.ID);
+
+            #endregion
+
+            #region Assert
+            Assert.IsTrue(ok);
+            #endregion
+        }
+				
     }
 }

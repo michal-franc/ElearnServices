@@ -80,7 +80,7 @@ namespace NHiberanteDal.Mappings
             References(x => x.Course).Not.Nullable().Not.LazyLoad();
 
             //Many
-            HasMany(x => x.Marks).KeyColumns.Add("JournalId");
+            HasMany(x => x.Marks).Not.LazyLoad().KeyColumns.Add("JournalId");
 
         }
     }
