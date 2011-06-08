@@ -37,12 +37,14 @@ namespace ELearnServices
         {
             try
             {
-                using (var session = DataAccess.OpenSession())
-                {
-                    var journalModel = session.Get<JournalModel>(journalId);
-                    journalModel.Marks.Add(JournalMarkModelDto.UnMap(markDto));
-                    session.Save(journalModel);
-                }
+                Logger.Debug("Journal Repository : AddMark - journal id : {0} , mark :  {1} ", journalId, markDto.ToString());
+                
+                var journalModel = new Repository<JournalModel>().GetById(journalId);
+                var mark = JournalMarkModelDto.UnMap(markDto);
+                journalModel.Marks.Add(mark);
+                new Repository<JournalModel>().Update(journalModel);
+                
+                Logger.Debug("Journal Repository : Marked Added");
                 return true;
             }
             catch (Exception ex)
@@ -57,7 +59,9 @@ namespace ELearnServices
         {
             try
             {
-                new Repository<JournalMarkModel>().Remove(new JournalMarkModel(){ID=markId});
+                var repo = new Repository<JournalMarkModel>();
+                var mark = repo.GetById(markId);
+                repo.Remove(mark);
                 return true;
             }
             catch (Exception ex)

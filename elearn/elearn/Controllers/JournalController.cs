@@ -9,6 +9,9 @@ namespace elearn.Controllers
 {
     public class JournalController : Controller
     {
+
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        
         IJournalService _journalService;
         IProfileService _profileServicel;
 
@@ -49,6 +52,7 @@ namespace elearn.Controllers
             return View("Error");
         }
 
+        //todo : test
         //
         // GET: /Journal/Details/id
         [HttpGet]
@@ -63,23 +67,47 @@ namespace elearn.Controllers
             return View("Error");
         }
 
-        [HttpPost]
-        public JsonResult AddMark(int id,JournalMarkModelDto model)
+
+        //todo : test
+        [HttpGet]
+        public ActionResult AddMark(int id)
         {
-            if (_journalService.AddMark(id, model))
+            logger.Debug("Starting Add Mark [Get] with : journalId {0}",id);
+            var markModel = new JournalMarkModelDto();
+            ViewBag.JournalId = id;
+            return PartialView("_CreateMarkPartial", markModel);
+        }
+
+        //todo : test
+        [HttpPost]
+        public ActionResult AddMark(int id,JournalMarkModelDto model)
+        {
+            if (ModelState.IsValid)
             {
-                return Json(new ResponseMessage(true));
+                logger.Debug("Add Mark [Post] with : journalId {0} , model {1} ", id, model.ToString());
+                if (_journalService.AddMark(id, model))
+                {
+                    logger.Debug("Add Mark [Post] - OK");
+                    return RedirectToAction("Details", new {id = id});
+                }
+                logger.Debug("Add Mark [Post] - Failed");
+                return Json(new ResponseMessage(false));
             }
+            logger.Debug("Add Mark [Post] - Model State Invalid");
             return Json(new ResponseMessage(false));
         }
 
+        //todo : test
         [HttpPost]
-        public JsonResult RemoveMark(int id)
+        public ActionResult RemoveMark(int id,int journalId)
         {
+            logger.Debug("Remove Mark [Post] with : markdId - {0}", id);
             if (_journalService.RemoveMark(id))
             {
-                return Json(new ResponseMessage(true));
+                logger.Debug("Remove Mark [Post] OK");
+                return Json(new ResponseMessage(true))  ;
             }
+            logger.Debug("Remove Mark [Post] Failed");
             return Json(new ResponseMessage(false));
         }
 
