@@ -25,3 +25,10 @@ function ShowError(msg) {
 function ShowError() {
     ShowError("Application Error");
 }
+
+
+function GetId(data) {
+    var index = data.toString().indexOf('_');
+    var id = data.toString().substring(index + 1, data.length);
+    return id;
+}

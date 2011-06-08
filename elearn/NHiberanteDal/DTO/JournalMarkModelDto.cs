@@ -16,5 +16,11 @@ namespace NHiberanteDal.DTO
         public  string Name { get; set; }
         [DataMember]
         public  string Value { get; set; }
+
+
+        public override string ToString()
+        {
+            return "Name : " + Name + "Value : " + Value;
+        }
     }
 }
