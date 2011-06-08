@@ -344,6 +344,7 @@
     <Content Include="Views\Test\Edit.cshtml" />
     <Content Include="Views\Test\_CreateQuestionPartial.cshtml" />
     <Content Include="Views\Journal\MyJournal.cshtml" />
+    <Content Include="Views\Journal\_CreateMarkPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

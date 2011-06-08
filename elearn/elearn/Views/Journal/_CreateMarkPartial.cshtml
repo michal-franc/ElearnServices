@@ -1,0 +1,21 @@
+﻿@model NHiberanteDal.DTO.JournalMarkModelDto
+           
+@using (Html.BeginForm("AddMark", "Journal", FormMethod.Post, new { id = "addMarkForm" }))
+{
+    @Html.LabelFor(m => m.Name) @Html.TextBoxFor(m => m.Name)
+    <br />
+    @Html.LabelFor(m => m.Value) @Html.TextBoxFor(m => m.Value)
+
+    <button id="AddMarkButton" type="submit">
+    Add
+    </button>
+}
+
+
+<script type="text/javascript">
+
+    $(function () {
+        $("#AddMarkButton").button();
+    })
+
+</script>
