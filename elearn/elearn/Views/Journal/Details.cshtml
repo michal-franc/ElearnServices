@@ -55,7 +55,8 @@ AverageMark - @Model.AverageMark
         $(".btnRemoveMark").click(function () {            
             var markId = GetId(this.id);
             var element = $(this).parent();
-            element.append("<img src = '@Url.Content("~/Content/graphic/ajax-loader.gif")'/>");
+            element.append('<img src = "@Url.Content("~/Content/graphic/ajax-loader.gif")"/>');
+
             $.ajax({
                 type: "POST",
                 url: "@Url.Action("RemoveMark", "Journal")",
@@ -63,7 +64,9 @@ AverageMark - @Model.AverageMark
                 cache: false,
                 dataType: "html",
                 success: function(data) {
-                    if(data.IsSuccess == true)
+
+                    var dataObject=$.parseJSON(data);
+                    if(dataObject.IsSuccess)
                     {
                         element.remove();
                     }

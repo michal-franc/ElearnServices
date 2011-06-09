@@ -127,6 +127,8 @@
   <ItemGroup>
     <Content Include="App_Readme\glimpse.readme.txt" />
     <Content Include="Content\CustomUi.css" />
+    <Content Include="Content\graphic\ajax-loader.gif" />
+    <Content Include="Content\graphic\red-error.gif" />
     <Content Include="Content\Html5CssReset.css" />
     <Content Include="Content\MvcViews.css" />
     <Content Include="Content\themes\pepper-grinder\images\ui-bg_diagonal-maze_20_6e4f1c_10x10.png" />
