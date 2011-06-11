@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿
+using System.Web.Mvc;
 using elearn.GroupService;
 using elearn.ProfileService;
 using elearn.JsonMessages;
@@ -76,6 +77,14 @@ namespace elearn.Controllers
             return Json(_groupService.RemoveProfileFromGroup(groupId, profileId) 
                 ? new ResponseMessage(true, string.Empty) : 
                  new ResponseMessage(false, string.Empty));
+        }
+
+
+        [HttpGet]
+        public ActionResult MyGroups()
+        {
+            //todo get groups for current user
+            return View();
         }
     }
 }

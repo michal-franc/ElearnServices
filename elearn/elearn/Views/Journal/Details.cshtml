@@ -62,11 +62,9 @@ AverageMark - @Model.AverageMark
                 url: "@Url.Action("RemoveMark", "Journal")",
                 data : "&id="+markId+"&journalId="+@Model.ID,
                 cache: false,
-                dataType: "html",
+                dataType: "json",
                 success: function(data) {
-
-                    var dataObject=$.parseJSON(data);
-                    if(dataObject.IsSuccess)
+                    if(data.IsSuccess)
                     {
                         element.remove();
                     }

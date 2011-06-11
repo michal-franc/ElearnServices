@@ -183,5 +183,13 @@ namespace elearn.Controllers
                 return Json(new ResponseMessage(true, String.Empty));
             return Json(new ResponseMessage(false, String.Empty));
         }
+
+        //todo : test
+        [HttpGet]
+        public ActionResult MyCourses()
+        {
+            //todo : get courses for current user
+            return View();
+        }
     }
 }
