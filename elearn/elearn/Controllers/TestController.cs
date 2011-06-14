@@ -24,7 +24,7 @@ namespace elearn.Controllers
 
         public TestController(ITestService tService, ICourseService cService, IProfileService pService)
         {
-            _testService=tService;
+            _testService = tService;
             _courseService = cService;
             _profileService = pService;
         }
@@ -51,7 +51,7 @@ namespace elearn.Controllers
         {
             var test = new TestDto();
             var testTypes = _testService.GetTestTypes();
-            ViewBag.TestTypes = new SelectList(testTypes,"ID","TypeName");
+            ViewBag.TestTypes = new SelectList(testTypes, "ID", "TypeName");
             return View(test);
         }
 
@@ -69,12 +69,12 @@ namespace elearn.Controllers
                 ModelState.Remove("TestType");
             }
 
-           test.Author =  _profileService.GetByName(User.Identity.Name);
+            test.Author = _profileService.GetByName(User.Identity.Name);
 
 
             if (ModelState.IsValid)
             {
-                var newId = _testService.AddTest(35,test);
+                var newId = _testService.AddTest(35, test);
                 if (newId > 0)
                 {
                     return RedirectToAction("Details", new { id = newId });
@@ -122,7 +122,7 @@ namespace elearn.Controllers
 
 
 
-        //todo : write test 
+        //todotest 
         [HttpGet]
         public ActionResult CreateQuestion(int id)
         {
@@ -138,18 +138,16 @@ namespace elearn.Controllers
             return PartialView("_Error");
         }
 
-       //todo : write test 
-       //todo implement Create Question post action
         [HttpPost]
-        public JsonResult CreateQuestion(int id ,TestQuestionModelDto questionModel)
+        public JsonResult CreateQuestion(int id, TestQuestionModelDto questionModel)
         {
             var questionId = _testService.AddQuestion(id, questionModel);
-            return Json(new ResponseMessage(true,questionId));
+            return Json(new ResponseMessage(true, questionId));
         }
 
         //write test
         [HttpPost]
-        public JsonResult AddAnswers(int id,List<TestQuestionAnswerDto> answers)
+        public JsonResult AddAnswers(int id, List<TestQuestionAnswerDto> answers)
         {
             if (_testService.AddAnswers(id, answers.ToArray()))
                 return Json(new ResponseMessage(true));
@@ -158,5 +156,29 @@ namespace elearn.Controllers
         }
 
         //todo implement Edit Question action
+
+        [HttpGet]
+        public ActionResult Finished()
+        {
+            var profile = _profileService.GetByName(User.Identity.Name);
+            if (profile != null)
+            {
+                return View(profile.FinishedTests.ToList());
+            }
+            ViewBag.Error = elearn.Common.ErrorMessages.Profile.NoProfile;
+            return View("Error");
+        }
+
+        [HttpGet]
+        public ActionResult DoTest(int Id)
+        {
+            var test = _testService.GetTestDetails(Id);
+            if (test != null)
+            {
+                return View(test);
+            }
+            ViewBag.Error = elearn.Common.ErrorMessages.Test.TestIdError;
+            return View("Error");
+        }
     }
 }

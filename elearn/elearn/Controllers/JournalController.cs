@@ -21,7 +21,7 @@ namespace elearn.Controllers
             _profileServicel = profileServicel;
         }
 
-        // todo : add test
+        // todotest
         public ActionResult Index()
         {
             return RedirectToAction("MyJournal");
@@ -31,28 +31,19 @@ namespace elearn.Controllers
         // GET: /Journal/MyJournal
         [HttpGet]
         [Authorize]
-        //todo : add tests
+        //todotest
         public ActionResult MyJournal()
         {
             var profile = _profileServicel.GetByName(User.Identity.Name);
             if (profile != null)
             {
-                if (profile.Journals.Count > 0)
-                {
-                    //bug : temporary first
-                    var journal = profile.Journals.FirstOrDefault();
-
-                    var journalModel = _journalService.GetJournalDetails(journal.ID);
-                    return View(journalModel);
-                }
-                ViewBag.Error = elearn.Common.ErrorMessages.Journal.NoJournals;
-                return View("Error");
+                return View(profile.Journals);
             }
             ViewBag.Error = elearn.Common.ErrorMessages.Journal.NoProfile;
             return View("Error");
         }
 
-        //todo : test
+        //todotest
         //
         // GET: /Journal/Details/id
         [HttpGet]
@@ -67,8 +58,24 @@ namespace elearn.Controllers
             return View("Error");
         }
 
+        //todotest
+        //todo : check if course owner
+        //
+        // GET: /Journal/Edit/id
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            var journal = _journalService.GetJournalDetails(id);
+            if (journal != null)
+            {
+                return View(journal);
+            }
+            ViewBag.Error = elearn.Common.ErrorMessages.Journal.NoJournals;
+            return View("Error");
+        }
 
-        //todo : test
+
+        //todotest
         [HttpGet]
         public ActionResult AddMark(int id)
         {
@@ -78,7 +85,7 @@ namespace elearn.Controllers
             return PartialView("_CreateMarkPartial", markModel);
         }
 
-        //todo : test
+        //todotest
         [HttpPost]
         public ActionResult AddMark(int id,JournalMarkModelDto model)
         {
@@ -88,7 +95,7 @@ namespace elearn.Controllers
                 if (_journalService.AddMark(id, model))
                 {
                     logger.Debug("Add Mark [Post] - OK");
-                    return RedirectToAction("Details", new {id = id});
+                    return RedirectToAction("Edit", new {id = id});
                 }
                 logger.Debug("Add Mark [Post] - Failed");
                 return Json(new ResponseMessage(false));
@@ -97,7 +104,7 @@ namespace elearn.Controllers
             return Json(new ResponseMessage(false));
         }
 
-        //todo : test
+        //todotest
         [HttpPost]
         public ActionResult RemoveMark(int id,int journalId)
         {
@@ -110,11 +117,5 @@ namespace elearn.Controllers
             logger.Debug("Remove Mark [Post] Failed");
             return Json(new ResponseMessage(false));
         }
-
-
-
-
-
-
     }
 }
