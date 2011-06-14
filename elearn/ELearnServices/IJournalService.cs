@@ -15,5 +15,8 @@ namespace ELearnServices
 
         [OperationContract]
         JournalModelDto GetJournalDetails(int id);
+
+        [OperationContract]
+        bool CreateJournal(int courseId, int profileId);
     }
 }

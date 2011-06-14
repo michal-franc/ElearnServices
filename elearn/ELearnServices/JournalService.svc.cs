@@ -33,6 +33,25 @@ namespace ELearnServices
             }
         }
 
+        //todotest : test
+        public bool CreateJournal(int courseId,int profileId)
+        {
+            try
+            {
+                var course = new Repository<CourseModel>().GetById(courseId);
+                var profile = new Repository<ProfileModel>().GetById(profileId);
+                var newJournal = new JournalModel {Name = String.Format("{0}", course.Name), Course = course};
+                profile.Journals.Add(newJournal);
+                new Repository<ProfileModel>().Update(profile);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Error : JournalService.CreateJournal - {0}", ex.Message);
+                return false;
+            }
+        }
+
         public bool AddMark(int journalId, JournalMarkModelDto markDto)
         {
             try

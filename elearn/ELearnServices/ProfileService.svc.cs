@@ -6,6 +6,7 @@ using NHiberanteDal.DataAccess;
 using NHiberanteDal.Models;
 using System.Web.Security;
 using NHiberanteDal.DataAccess.QueryObjects;
+using NHibernate.Criterion;
 
 namespace ELearnServices
 {
@@ -237,7 +238,11 @@ namespace ELearnServices
         {
             try
             {
-                return ProfileModelDto.Map(new Repository<ProfileModel>().GetByQueryObject(new QueryProfilesByName(userName)).FirstOrDefault());
+                using (var session = DataAccess.OpenSession())
+                {
+                    var profile = session.CreateCriteria(typeof(ProfileModel)).Add(Restrictions.Eq("Name", userName)).List<ProfileModel>();
+                    return ProfileModelDto.Map(profile.First());
+                }
             }
             catch (Exception ex)
             {

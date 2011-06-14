@@ -254,5 +254,23 @@ namespace ELearnServices
                 return false;
             }
         }
+
+        public List<CourseDto> GetByProfileId(int profileId)
+        {
+            try
+            {
+                using (var session = DataAccess.OpenSession())
+                {
+                    var courses = session.CreateCriteria(typeof(CourseModel)).List<CourseModel>().Where(c => c.Group.Users.Any(p => p.ID == profileId)).ToList();
+                    return CourseDto.Map(courses);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Error : CourseService.GetByProfileId - {0}", ex.Message);
+                return new List<CourseDto>();
+            }
+        }
+
     }
 }

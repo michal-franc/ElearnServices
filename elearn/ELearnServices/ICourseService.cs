@@ -46,5 +46,8 @@ namespace ELearnServices
 
         [OperationContract]
         bool CheckPassword(int courseId, string password);
+
+        [OperationContract]
+        List<CourseDto> GetByProfileId(int profileId);
     }
 }
