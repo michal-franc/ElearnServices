@@ -2,5 +2,90 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+@model NHiberanteDal.DTO.JournalModelDto
+<ul>
+    @foreach (var mark in Model.Marks)
+    {
+        <li>@mark.Name - @mark.Value
+            <label style="color:Red;font-size:12px;" class="btnRemoveMark" type="submit" id="mark_@{@mark.ID}">
+                X</label>
+        </li>
+    }
+</ul>
 
+<label style="color: green; font-size: 12px;" id="btnAddMark">
+    +</label>
+<br />
+AverageMark - @Model.AverageMark
+<script type="text/javascript">
+
+    $(function () {
+
+        $("#btnAddMark").click(function () {
+            $("<div id='addQuestionModal'/>").dialog({
+            modal: true,
+            open: function () {
+                $.ajax({
+                        type: "GET",
+                        url: "@Url.Action("AddMark", "Journal", new { id = Model.ID })",
+                        cache: false,
+                        dataType: "html",
+                        success: function(data) {
+                            $("#addQuestionModal").html(data);
+                        },
+                        failure: function() {
+                            ShowError();
+                        },
+                        error: function() {
+                            ShowError();
+                        }
+                    });           
+            },
+            close: function () {
+                $("#addQuestionModal").remove();
+            },
+            height: 400,
+            width:  500,
+            title: 'Add Question'
+            });
+        return false;
+
+
+        });
+
+        // todo : add small loading indicator
+        $(".btnRemoveMark").click(function () {            
+            var markId = GetId(this.id);
+            var element = $(this).parent();
+            element.append('<img src = "@Url.Content("~/Content/graphic/ajax-loader.gif")"/>');
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("RemoveMark", "Journal")",
+                data : "&id="+markId+"&journalId="+@Model.ID,
+                cache: false,
+                dataType: "json",
+                success: function(data) {
+                    if(data.IsSuccess)
+                    {
+                        element.remove();
+                    }
+                    else
+                    {
+                          element.append("<img src = '@Url.Content("~/Content/graphic/red-error.gif")' />");
+                    }
+                },
+                failure: function() {
+                        //todo : create a method for this
+                      element.append("<img src = '@Url.Content("~/Content/graphic/red-error.gif")' />");
+                },
+                error: function() {
+                    ShowError();
+                }
+            });   
+
+        });
+
+    })
+
+</script>
