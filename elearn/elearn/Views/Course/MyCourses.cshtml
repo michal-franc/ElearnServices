@@ -1,7 +1,14 @@
-﻿@model NHiberanteDal.DTO.CourseSignatureDto
+﻿@model List<NHiberanteDal.DTO.CourseDto>
 
 @{
     ViewBag.Title = "MyCourses";
+}
+
+
+@foreach (var course in Model)
+{
+    @course.Name
+    <br /> 
 }
 
 <h2>MyCourses</h2>

@@ -40,7 +40,7 @@
             {
                 $.ajax({
                         type: "POST",
-                        url: "@Html.Raw(Url.Action("Join", "Group", new { groupId = Model.GroupId, profileId = Model.ProfileId }))",
+                        url: "@Html.Raw(Url.Action("Join", "Group", new { courseId = Model.CourseId, groupId = Model.GroupId, profileId = Model.ProfileId }))",
                         cache: false,
                         dataType: "json",
                         success: function(data) {
