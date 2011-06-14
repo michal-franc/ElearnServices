@@ -28,7 +28,8 @@ namespace NHiberanteDal.DTO
                     Mapper.CreateMap<SurveyQuestionModelDto, SurveyQuestionModel>();
                     Mapper.CreateMap<TestQuestionModel, TestQuestionModelDto>();
                     Mapper.CreateMap<TestQuestionModelDto, TestQuestionModel>();
-                    Mapper.CreateMap<TestQuestionAnswer, TestQuestionAnswerDto>();
+                    Mapper.CreateMap<TestQuestionAnswer, TestQuestionAnswerDto>()
+                        .ForMember(dest=>dest.IsSelected , opt=>opt.Ignore());
                     Mapper.CreateMap<TestQuestionAnswerDto, TestQuestionAnswer>();
                     Mapper.CreateMap<TestModel, TestDto>();
                     Mapper.CreateMap<TestDto, TestModel>();

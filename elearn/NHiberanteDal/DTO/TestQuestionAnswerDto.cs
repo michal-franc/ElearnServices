@@ -18,5 +18,7 @@ namespace NHiberanteDal.DTO
         public  bool Correct { get; set; }
         [DataMember]
         public  int NumberSelected { get; set; }
+
+        public bool IsSelected { get; set; }
     }
 }

@@ -133,7 +133,7 @@
     <Compile Include="Models\ShoutboxModels.cs" />
     <Compile Include="Models\SurveyModels.cs" />
     <Compile Include="Models\SurveyQuestionModel.cs" />
-    <Compile Include="Models\TestModels.cs" />
+    <Compile Include="Models\TestModel.cs" />
     <Compile Include="Models\TestQuestionAnswer.cs" />
     <Compile Include="Models\TestQuestionModel.cs" />
     <Compile Include="Models\TestTypeModel.cs" />
