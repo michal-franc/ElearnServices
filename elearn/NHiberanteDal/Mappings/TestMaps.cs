@@ -56,4 +56,16 @@ namespace NHiberanteDal.Mappings
 
         }
     }
+
+    public class FinishedTestMap : ClassMap<FinishedTestModel>
+    {
+        public FinishedTestMap()
+        {
+            Id(x => x.ID);
+            Map(x=>x.DateFinished).Not.Nullable();
+            Map(x => x.Mark).Not.Nullable();
+            References(x=>x.Test).Not.Nullable().Not.LazyLoad();
+        }
+    }
+
 }

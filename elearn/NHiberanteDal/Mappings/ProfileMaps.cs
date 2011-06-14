@@ -40,6 +40,7 @@ namespace NHiberanteDal.Mappings
             Map(x => x.IsActive).Default("FALSE");
             //Many
             HasMany(x=>x.Journals).Cascade.SaveUpdate().Not.LazyLoad();
+            HasMany(x=>x.FinishedTests).Cascade.SaveUpdate().Not.LazyLoad();
 
 	    }
     }

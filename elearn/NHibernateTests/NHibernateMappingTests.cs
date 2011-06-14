@@ -42,7 +42,13 @@ namespace NHibernateTests
         readonly CourseTypeModel _courseType = new CourseTypeModel { TypeName = "test" };
         readonly TestTypeModel _testType = new TestTypeModel { TypeName = "test" };
         readonly ProfileModel _testProfile = new ProfileModel { Email="test", Name = "test" };
-
+        private readonly List<TestModel> _tests = new List<TestModel>
+                                                      {
+                                                          new TestModel(),
+                                                          new TestModel(),
+                                                          new TestModel(),
+                                                          new TestModel()
+                                                        };
         
         [SetUp]
         public void SetUp()
@@ -268,6 +274,9 @@ namespace NHibernateTests
                 new PersistenceSpecification<ProfileModel>(session)
                    .CheckProperty(c => c.Name, "test")
                    .CheckProperty(c => c.Email, "test")
+                   .CheckProperty(c => c.Role, "test")
+                   .CheckProperty(c => c.IsActive, true)
+                   .CheckProperty(c => c.FinishedTests, _tests)
                    .VerifyTheMappings();
             }
 
@@ -508,6 +517,24 @@ namespace NHibernateTests
                    .CheckProperty(c => c.Correct, false)
                    .CheckProperty(c => c.Text, "test")
                    .CheckProperty(c => c.NumberSelected, 1)
+                   .VerifyTheMappings();
+            }
+
+            #endregion
+        }
+
+
+        [Test]
+        public void Can_map_entity_finished_test()
+        {
+            #region Act
+
+            using (var session = DataAccess.OpenSession())
+            {
+                new PersistenceSpecification<FinishedTestModel>(session)
+                   .CheckProperty(c => c.Test, _tests[0])
+                   .CheckProperty(c=>c.DateFinished,DateTime.Now)
+                   .CheckProperty(c => c.Mark, 2.0)
                    .VerifyTheMappings();
             }
 

@@ -29,5 +29,9 @@ namespace NHiberanteDal.DTO
 
         [DataMember]
         public  IList<JournalModelDto> Journals { get; set; }
+
+        [DataMember]
+        public IList<FinishedTestModelDto> FinishedTests { get; set; }
+
     }
 }

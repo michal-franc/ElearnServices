@@ -73,6 +73,13 @@ namespace NHiberanteDal.DTO
                          .ForMember(dest => dest.Forum, opt => opt.Ignore())
                          .ForMember(dest => dest.ShoutBox, opt => opt.Ignore())
                          .ForMember(dest => dest.Password, opt => opt.Ignore());
+
+                    Mapper.CreateMap<FinishedTestModel, FinishedTestModelDto>()
+                        .ForMember(dest => dest.TestId, opt => opt.MapFrom(p=>p.Test.ID))
+                        .ForMember(dest => dest.TestName, opt => opt.MapFrom(p => p.Test.Name));
+                         
+                    Mapper.CreateMap<FinishedTestModelDto,FinishedTestModel>();
+
                     Mapper.AssertConfigurationIsValid();
                     _initialized = true;
                     return true;

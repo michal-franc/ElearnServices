@@ -11,5 +11,6 @@ namespace NHiberanteDal.Models
         public virtual string Email { get; set; }
         public virtual bool IsActive { get; set; }
         public virtual IList<JournalModel> Journals { get; set; }
+        public virtual IList<FinishedTestModel> FinishedTests { get; set; }
     }
 }

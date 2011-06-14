@@ -92,6 +92,7 @@
     <Compile Include="DTO\DataTransferObject.cs" />
     <Compile Include="DTO\DtoBaseClass.cs" />
     <Compile Include="DTO\DTOMappings.cs" />
+    <Compile Include="DTO\FinishedTestModelDto.cs" />
     <Compile Include="DTO\ForumModelDto.cs" />
     <Compile Include="DTO\GroupModelDto.cs" />
     <Compile Include="DTO\GroupTypeModelDto.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="Models\ContentTypeModel.cs" />
     <Compile Include="Models\CourseModels.cs" />
     <Compile Include="Models\CourseTypeModel.cs" />
+    <Compile Include="Models\FinishedTestModel.cs" />
     <Compile Include="Models\ForumModels.cs" />
     <Compile Include="Models\GroupModel.cs" />
     <Compile Include="Models\GroupTypeModel.cs" />

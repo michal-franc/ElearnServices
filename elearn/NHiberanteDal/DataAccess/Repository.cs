@@ -84,7 +84,6 @@ namespace NHiberanteDal.DataAccess
 
         public bool Update(T item)
         {
-            bool ok;
             using (var session = DataAccess.OpenSession())
             {
                 using (var transaction = session.BeginTransaction())
@@ -93,12 +92,11 @@ namespace NHiberanteDal.DataAccess
                     {
                         session.Update(item);
                         transaction.Commit();
-                        ok = true;
+                        return true;
                     }
                     catch (Exception ex)
                     {
                         transaction.Rollback();
-                        ok = false;
                         logger.Error("Error - Repository.Update : {0}", ex.Message);
                     }
                     finally
@@ -107,7 +105,7 @@ namespace NHiberanteDal.DataAccess
                     }
                 }
             }
-            return ok;
+            return false;
         }
 
         public int GetCount()
