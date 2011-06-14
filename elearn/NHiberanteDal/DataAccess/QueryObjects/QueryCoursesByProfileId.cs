@@ -2,11 +2,11 @@
 
 namespace NHiberanteDal.DataAccess.QueryObjects
 {
-    public class QueryProfilesByName : IQueryObject
+    public class QueryCoursesByProfileId : IQueryObject
     {
         private readonly string _value;
 
-        public QueryProfilesByName(string userName)
+        public QueryCoursesByProfileId(string userName)
         {
             _value = userName;
         }
@@ -15,7 +15,9 @@ namespace NHiberanteDal.DataAccess.QueryObjects
         {
             get
             {
-                return String.Format
+                throw new NotImplementedException();
+                return 
+                    String.Format
                     ("from ProfileModel p where p.Name = '{0}'", _value);
             }
         }
