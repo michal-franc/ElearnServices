@@ -29,6 +29,12 @@ namespace elearn
                 "{controller}/{action}/{id}", // URL with parameters
                 new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
             );
+
+            routes.MapRoute(
+                "Paged", // Route name
+                "{controller}/{action}/{pageNumber}", // URL with parameters
+                new { controller = "Home", action = "Index", pageNumber = UrlParameter.Optional } // Parameter defaults
+             );  
         }
 
         protected void Application_Start()
@@ -48,7 +54,7 @@ namespace elearn
         protected void Application_Error()
         {
             Exception lastException = Server.GetLastError();
-            Logger.Error("Application Error - {0}",lastException.Message);
+            Logger.Error("Application Error - {0}", lastException.Message);
         }
     }
 }

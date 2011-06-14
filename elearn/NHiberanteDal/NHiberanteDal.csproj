@@ -82,6 +82,7 @@
     <Compile Include="DataAccess\IQueryObject.cs" />
     <Compile Include="DataAccess\QueryObjects\QueryCourseByCourseType.cs" />
     <Compile Include="DataAccess\QueryObjects\QueryCourseByName.cs" />
+    <Compile Include="DataAccess\QueryObjects\QueryCoursesByProfileId.cs" />
     <Compile Include="DataAccess\QueryObjects\QueryGroupTypesByName.cs" />
     <Compile Include="DataAccess\QueryObjects\QueryProfilesByName.cs" />
     <Compile Include="DataAccess\Repository.cs" />
