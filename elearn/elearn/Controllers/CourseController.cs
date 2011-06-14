@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
+using elearn.ProfileService;
 using NHiberanteDal.DTO;
 using elearn.CourseService;
 using System;
@@ -10,7 +11,8 @@ namespace elearn.Controllers
 {
     public class CourseController : Controller
     {
-        readonly ICourseService _service;
+        readonly ICourseService _courseService;
+        readonly IProfileService _profileService;
 
         private int _limit = -1;
 
@@ -29,9 +31,10 @@ namespace elearn.Controllers
             }
         }
 
-        public CourseController(ICourseService service)
+        public CourseController(ICourseService courseService,IProfileService profileService)
         {
-            _service = service;
+            _courseService = courseService;
+            _profileService = profileService;
         }
 
 
@@ -47,16 +50,16 @@ namespace elearn.Controllers
         [HttpGet]
         public ActionResult Details(int id)
         {
-            var course = _service.GetById(id);
+            var course = _courseService.GetById(id);
             return View(course);
         }
 
 
-        // GET: /Course/List/id
+        // GET: /Course/List/pageNumber
         [HttpGet]
-        public ActionResult List(int id)
+        public ActionResult List(int pageNumber)
         {
-            var courses = _service.GetAllSignatures().Skip((id - 1) * Limit).Take(Limit).ToArray();
+            var courses = _courseService.GetAllSignatures().Skip((pageNumber - 1) * Limit).Take(Limit).ToArray();
             return View(courses);
         }
 
@@ -67,7 +70,7 @@ namespace elearn.Controllers
         public ActionResult Create()
         {
             var course = new CourseDto();
-            var courseTypes = _service.GetAllCourseTypes().ToList();
+            var courseTypes = _courseService.GetAllCourseTypes().ToList();
             ViewBag.CourseTypes = new SelectList(courseTypes,"ID","TypeName");
                return View(course);
         }
@@ -105,7 +108,7 @@ namespace elearn.Controllers
             if (ModelState.IsValid)
             {
 
-                var id = _service.AddCourse(course);
+                var id = _courseService.AddCourse(course);
 
                 if (id.HasValue)
                     return RedirectToAction("Details", new {id});
@@ -129,7 +132,7 @@ namespace elearn.Controllers
         [HttpGet]
         public ActionResult DeleteCourse(int id)
         {
-            if (_service.Remove(id))
+            if (_courseService.Remove(id))
             {
                 return RedirectToAction("List",new{id=1});
             }
@@ -141,8 +144,8 @@ namespace elearn.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var course = _service.GetById(id);
-            var courseTypes = _service.GetAllCourseTypes().ToList();
+            var course = _courseService.GetById(id);
+            var courseTypes = _courseService.GetAllCourseTypes().ToList();
             ViewBag.CourseTypes = new SelectList(courseTypes, "ID", "TypeName");
             return View(course);
         }
@@ -161,7 +164,7 @@ namespace elearn.Controllers
 
             if (ModelState.IsValid)
             {
-                if (_service.Update(course))
+                if (_courseService.Update(course))
                 {
                     return RedirectToAction("Details", new { id = course.ID });
                 }
@@ -179,17 +182,23 @@ namespace elearn.Controllers
         [HttpPost]
         public ActionResult CheckPassword(int courseId,string password)
         {
-            if (_service.CheckPassword(courseId, Md5Hash.EncodePassword(password)))
+            if (_courseService.CheckPassword(courseId, Md5Hash.EncodePassword(password)))
                 return Json(new ResponseMessage(true, String.Empty));
             return Json(new ResponseMessage(false, String.Empty));
         }
 
-        //todo : test
+        //todotest
         [HttpGet]
         public ActionResult MyCourses()
         {
-            //todo : get courses for current user
-            return View();
+            var profile = _profileService.GetByName(User.Identity.Name);
+            if (profile != null)
+            {
+                var courses = _courseService.GetByProfileId(profile.ID).ToList();
+                return View(courses);
+            }
+            ViewBag.Error = Common.ErrorMessages.Profile.NoProfile;
+            return View("Error");
         }
     }
 }

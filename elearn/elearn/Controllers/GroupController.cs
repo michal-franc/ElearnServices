@@ -4,19 +4,23 @@ using elearn.GroupService;
 using elearn.ProfileService;
 using elearn.JsonMessages;
 using elearn.Models;
+using elearn.JournalService;
 
 namespace elearn.Controllers
 {
     public class GroupController : Controller
     {
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         private readonly IGroupService _groupService;
         private readonly IProfileService _profileService;
+        private readonly IJournalService _journalService;
 
-        public GroupController(IGroupService groupService,IProfileService profileService)
+        public GroupController(IGroupService groupService,IProfileService profileService,IJournalService journalService )
         {
             _groupService = groupService;
             _profileService = profileService;
+            _journalService = journalService;
         }
 
         //
@@ -59,14 +63,25 @@ namespace elearn.Controllers
         }
 
 
+
+        //todotest : modify 
+        //todo : add returned error to error static list
         //
         //Post: /Group/Join/id
         [HttpPost]
-        public ActionResult Join(int groupId,int profileId)
+        public ActionResult Join(int groupId,int profileId,int courseId)
         {
-            return Json(_groupService.AddProfileToGroup(groupId, profileId) 
-                ? new ResponseMessage(true, string.Empty) :
-                 new ResponseMessage(false, string.Empty));
+            logger.Debug("Group Controller Action - Join groupId = {0} , profileId = {1}",groupId,profileId);
+            if(_groupService.AddProfileToGroup(groupId, profileId))
+            {
+                if (_journalService.CreateJournal(courseId, profileId))
+                {
+                    logger.Debug("Group Controller Action - Join  passed");
+                    return Json(new ResponseMessage(true, string.Empty));
+                }
+            }
+            logger.Debug("Group Controller Action - Join  failed");
+            return Json(new ResponseMessage(false, "Problem adding user to group"));
         }
 
         //
@@ -77,14 +92,6 @@ namespace elearn.Controllers
             return Json(_groupService.RemoveProfileFromGroup(groupId, profileId) 
                 ? new ResponseMessage(true, string.Empty) : 
                  new ResponseMessage(false, string.Empty));
-        }
-
-
-        [HttpGet]
-        public ActionResult MyGroups()
-        {
-            //todo get groups for current user
-            return View();
         }
     }
 }
