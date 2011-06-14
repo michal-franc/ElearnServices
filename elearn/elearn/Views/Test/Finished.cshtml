@@ -1,0 +1,22 @@
+﻿@model List<NHiberanteDal.DTO.FinishedTestModelDto> 
+
+@{
+    ViewBag.Title = "Finished";
+}
+
+<ul>
+    @foreach (var test in Model)
+    {
+        <li>
+            Id - @test.TestId
+            <ul>
+                <li>Name - @test.TestName</li>
+                <li>Date Finished - @test.DateFinished</li>
+                <li>Mark - @test.Mark</li>
+            </ul>
+        </li>
+    }
+</ul>
+
+<h2>Finished</h2>
+
