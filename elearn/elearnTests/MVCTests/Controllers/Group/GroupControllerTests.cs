@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using elearn.ProfileService;
 using elearn.JsonMessages;
 using elearn.Models;
+using elearn.JournalService;
 
 namespace elearnTests.MVCTests.Controllers.Group
 {
@@ -17,6 +18,7 @@ namespace elearnTests.MVCTests.Controllers.Group
         protected MockRepository Mock;
         protected IGroupService GroupService;
         protected IProfileService ProfileService;
+        protected IJournalService JournalService;
         protected GroupController GroupController;
 
         protected GroupModelDto SampleGroup;
@@ -30,7 +32,7 @@ namespace elearnTests.MVCTests.Controllers.Group
             Mock = new MockRepository();
             GroupService = Mock.DynamicMock<IGroupService>();
             ProfileService = Mock.DynamicMock<IProfileService>();
-            GroupController = new GroupController(GroupService, ProfileService);
+            GroupController = new GroupController(GroupService, ProfileService, JournalService);
 
             SampleGroup = new GroupModelDto { ID = 1, GroupName = "test" };
             SampleProfile = new ProfileModelDto { ID = 1, Name = "test" };
@@ -158,7 +160,7 @@ namespace elearnTests.MVCTests.Controllers.Group
             JsonResult result;
             using (Mock.Playback())
             {
-               result = (JsonResult)GroupController.Join(1,1);
+               result = (JsonResult)GroupController.Join(1,1,1);
             }
 
             #endregion
@@ -185,7 +187,7 @@ namespace elearnTests.MVCTests.Controllers.Group
             JsonResult result;
             using (Mock.Playback())
             {
-                result = (JsonResult)GroupController.Join(1,1);
+                result = (JsonResult)GroupController.Join(1,1,1);
             }
 
             #endregion

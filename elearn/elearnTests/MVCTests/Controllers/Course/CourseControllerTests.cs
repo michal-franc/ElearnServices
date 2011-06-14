@@ -1,20 +1,22 @@
 ﻿using System;
 using System.Linq;
+using elearn.ProfileService;
+using elearn.CourseService;
 using NUnit.Framework;
 using Rhino.Mocks;
 using elearn.Controllers;
 using System.Web.Mvc;
 using NHiberanteDal.DTO;
 using MvcContrib.TestHelper;
-using elearn.CourseService;
 
 namespace elearnTests.MVCTests.Controllers.Course
 {
-
+    //todotest fix tests
     public class BaseTest
     {
         protected MockRepository Mock;
         protected ICourseService CourseService;
+        protected IProfileService ProfileService;
         protected CourseController CourseController;
 
 
@@ -59,7 +61,7 @@ namespace elearnTests.MVCTests.Controllers.Course
         {
             Mock = new MockRepository();
             CourseService =  Mock.DynamicMock<ICourseService>();
-            CourseController = new CourseController(CourseService) {Limit = 10};
+            CourseController = new CourseController(CourseService,ProfileService) {Limit = 10};
         }
     }
 
