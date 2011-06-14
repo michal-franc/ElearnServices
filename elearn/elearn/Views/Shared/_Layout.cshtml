@@ -18,21 +18,15 @@
         <div id="header">
             <div id="menu">
                 <ul class="topnav">
-                    <li><a href="@Url.Action("Index","Home")">Home</a></li>
-                    <li><a href="@Url.Action("List","Course")">Courses</a>
+                    <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                    <li><a href="@Url.Action("List", "Course", new { pageNumber=1})">Courses</a>
                         <ul class="subnav ui-corner-bottom">
-                            <li><a href="@Url.Action("MyCourses","Course")">My Courses</a></li>
+                            <li><a href="@Url.Action("MyCourses", "Course")">My Courses</a></li>
                         </ul>
                     </li>
-                    <li><a href="@Url.Action("List","Group")">Groups</a>
+                    <li><a href="@Url.Action("List", "Test")">Tests</a>
                         <ul class="subnav ui-corner-bottom">
-                            <li><a href="@Url.Action("MyGroups","Group")">My Groups</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="@Url.Action("List","Test")">Tests</a>
-                        <ul class="subnav ui-corner-bottom">
-                            <li><a href="@Url.Action("New","Test")">New</a></li>
-                            <li><a href="@Url.Action("Finished","Test")">Finished</a></li>
+                            <li><a href="@Url.Action("Finished", "Test")">Finished</a></li>
                         </ul>
                     </li>
                     <li><a href="#">Account</a>
@@ -42,6 +36,7 @@
                             <li><a href="@Url.Action("Register", "Account")">Register</a></li>
                         </ul>
                     </li>
+                    <li><a href="@Url.Action("MyJournal", "Journal")">MyJournals</a>
                     <li><a href="#">Contact Us</a></li>
                     <li><a href="#">About</a></li>
                 </ul>
