@@ -18,6 +18,11 @@ namespace elearn.Common.ErrorMessages
         {
             get { return "Problem Updating Role"; }
         }
+
+        public static string NoProfile
+        {
+            get { return "Error - No Profile found"; }
+        }
     }
 
     public static class Course
