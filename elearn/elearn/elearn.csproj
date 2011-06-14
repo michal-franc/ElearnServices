@@ -82,7 +82,6 @@
     <Compile Include="Controllers\ForumController.cs" />
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\IProfi.cs" />
     <Compile Include="Controllers\JournalController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\ShoutBoxController.cs" />
@@ -362,6 +361,7 @@
     <Content Include="Views\Group\MyGroups.cshtml" />
     <Content Include="Views\Test\Finished.cshtml" />
     <Content Include="Views\Test\DoTest.cshtml" />
+    <Content Include="Views\Test\Score.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

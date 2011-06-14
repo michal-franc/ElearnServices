@@ -177,8 +177,27 @@ namespace elearn.Controllers
             {
                 return View(test);
             }
-            ViewBag.Error = elearn.Common.ErrorMessages.Test.TestIdError;
+            ViewBag.Error = Common.ErrorMessages.Test.TestIdError;
             return View("Error");
+        }
+
+        [HttpPost]
+        public ActionResult DoTest(TestDto testModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var mark = CalculateMark(testModel);
+                return View("Score",mark);
+            }
+            return View(testModel);
+        }
+
+
+        private double CalculateMark(TestDto test)
+        {
+            double allQuestions = test.Questions.Count;
+            double correctAnswers = test.Questions.Where(q => q.Answers.Any(a => a.IsSelected && a.Correct)).Count();
+            return (correctAnswers / allQuestions) * 6;
         }
     }
 }
