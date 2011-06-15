@@ -17,6 +17,8 @@ namespace NHiberanteDal.DTO
         [DataMember]
         public  string Value { get; set; }
 
+        [DataMember]
+        public virtual DateTime DateAdded { get; set; }
 
         public override string ToString()
         {

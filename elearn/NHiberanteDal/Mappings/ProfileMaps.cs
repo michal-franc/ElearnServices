@@ -74,7 +74,6 @@ namespace NHiberanteDal.Mappings
         {
             Id(x => x.ID);
             Map(x => x.Name).Not.Nullable();
-            Map(x=>x.AverageMark);
             Map(x=>x.IsActive);
 
             //One
@@ -93,6 +92,7 @@ namespace NHiberanteDal.Mappings
             Id(x => x.ID);
             Map(x => x.Name).Not.Nullable();
             Map(x => x.Value).Not.Nullable();
+            Map(x => x.DateAdded).Not.Nullable();
         }
     }
 }

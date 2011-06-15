@@ -121,7 +121,7 @@ namespace NHibernateTests.ServicesTests
                                };
             TestJournalMark = new JournalMarkModel { Name = "Zaliczenie", Value = "5" };
             TestJournal = new JournalModel
-                               { Course = TestCourse3, AverageMark = 0, Marks = new List<JournalMarkModel>
+                               { Course = TestCourse3,Marks = new List<JournalMarkModel>
                                                                                      { TestJournalMark }, Name = "test journal" };
 
 

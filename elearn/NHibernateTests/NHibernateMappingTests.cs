@@ -327,7 +327,6 @@ namespace NHibernateTests
             {
                 new PersistenceSpecification<JournalModel>(session, new IDEqualityComparer())
                    .CheckProperty(c => c.Name, "test")
-                   .CheckProperty(c => c.AverageMark, 3.45)
                    .CheckProperty(c=>c.IsActive,true)
                    .CheckReference(c => c.Course, new CourseModel
                             {

@@ -12,8 +12,6 @@ namespace NHiberanteDal.DTO
         [DataMember]
         public  string Name { get; set; }
         [DataMember]
-        public double AverageMark { get; set; }
-        [DataMember]
         public CourseSignatureDto Course { get; set; }
         [DataMember]
         public  IList<JournalMarkModelDto> Marks { get; set; }
