@@ -5,7 +5,6 @@
 <ul>
     @foreach (var mark in Model.Marks)
     {
-        <li>@mark.Name - @mark.Value</li>
+        <li>@mark.Name - @mark.Value - Date - @mark.DateAdded</li>
     }
 </ul>
-AverageMark - @Model.AverageMark

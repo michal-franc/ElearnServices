@@ -9,10 +9,12 @@
     foreach(var journal in Model)
     {
         @journal.Course.Name
+        <br />
+        @journal.ID
         <ul>
             @foreach (var mark in journal.Marks)
             {
-                    <li>@mark.Name - @mark.Value</li>
+                <li>@mark.Name - @mark.Value - Date - @mark.DateAdded</li>
             }
         </ul>
     }

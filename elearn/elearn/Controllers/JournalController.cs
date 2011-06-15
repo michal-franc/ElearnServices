@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using elearn.JournalService;
 using elearn.ProfileService;
@@ -91,6 +92,8 @@ namespace elearn.Controllers
         {
             if (ModelState.IsValid)
             {
+                model.DateAdded = DateTime.Now;
+
                 logger.Debug("Add Mark [Post] with : journalId {0} , model {1} ", id, model.ToString());
                 if (_journalService.AddMark(id, model))
                 {
