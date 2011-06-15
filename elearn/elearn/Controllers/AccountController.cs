@@ -2,6 +2,7 @@
 using System.Web.Routing;
 using System.Web.Security;
 using elearn.Models;
+using elearn.Session;
 
 namespace elearn.Controllers
 {
@@ -36,6 +37,7 @@ namespace elearn.Controllers
                 if (MembershipService.ValidateUser(model.UserName, model.Password))
                 {
                     FormsService.SignIn(model.UserName, model.RememberMe);
+
                     if (Url.IsLocalUrl(returnUrl))
                     {
                         return Redirect(returnUrl);

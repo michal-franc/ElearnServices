@@ -8,7 +8,7 @@ namespace elearn.Controllers
         {
             ViewBag.Message = "Tu bedzie jakas powitalna tresc";
 
-            return View();
+            return View("Index");
         }
     }
 }

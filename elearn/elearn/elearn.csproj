@@ -73,6 +73,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionFilters\LayoutChangerAttribute.cs" />
     <Compile Include="AuthorizeAttributeWCF.cs" />
     <Compile Include="Common\ErrorMessages\ErrorMessages.cs" />
     <Compile Include="Common\Strings.cs" />
@@ -123,6 +124,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Session\CurrentProfileSession.cs" />
+    <Compile Include="Session\SessionStateService.cs" />
     <Compile Include="WebHelper.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -284,7 +287,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LogOnPartial.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_LoggedUserLayout.cshtml" />
     <Content Include="Views\Web.config" />
     <None Include="Service References\CourseService\CourseService.wsdl" />
     <None Include="Service References\CourseService\CourseService.xsd">
@@ -362,6 +365,9 @@
     <Content Include="Views\Test\Finished.cshtml" />
     <Content Include="Views\Test\DoTest.cshtml" />
     <Content Include="Views\Test\Score.cshtml" />
+    <Content Include="Views\Shared\_AnonymousUserLayout.cshtml" />
+    <Content Include="Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Views\Shared\_BetaLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
