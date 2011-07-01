@@ -80,7 +80,7 @@ namespace NHiberanteDal.DTO
                         .ForMember(dest => dest.TestName, opt => opt.MapFrom(p => p.Test.Name));
 
                     Mapper.CreateMap<FinishedTestModelDto, FinishedTestModel>()
-                        .ForMember(dest => dest.Test, ops => ops.Ignore());
+                        .ForMember(dest => dest.Test, opt => opt.MapFrom(p=>new TestModel{ ID= p.TestId}) );
 
                     Mapper.AssertConfigurationIsValid();
                     _initialized = true;

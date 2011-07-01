@@ -7,7 +7,7 @@ namespace NHiberanteDal.Models
 {
     public class TestModel : IModel
     {
-        public virtual int ID { get;private set; }
+        public virtual int ID { get;set; }
         public virtual string Name { get; set; }
         //Kurs
 

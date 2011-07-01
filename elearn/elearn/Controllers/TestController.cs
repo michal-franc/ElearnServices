@@ -186,18 +186,32 @@ namespace elearn.Controllers
         {
             if (ModelState.IsValid)
             {
-                var mark = CalculateMark(testModel);
-                return View("Score",mark);
+                var mark = CalculateMark(testModel, 100);
+                var profile = _profileService.GetByName(User.Identity.Name);
+                profile.FinishedTests.Add(new FinishedTestModelDto()
+                                              {
+                                                  DateFinished = DateTime.Now,
+                                                  Mark = mark,
+                                                  TestId = testModel.ID,
+                                                  TestName = testModel.Name
+                                              });
+                _profileService.UpdateProfile(profile);
+                return View("Score", mark);
             }
             return View(testModel);
         }
 
-
-        private double CalculateMark(TestDto test)
+        /// <summary>
+        /// Method used to calculate final score
+        /// </summary>
+        /// <param name="test">Instance of test model with questions and answers</param>
+        /// <param name="maxValue">Maximum value threshold eg with 100 ( we would had 0-100 mark )</param>
+        /// <returns></returns>
+        private double CalculateMark(TestDto test,int maxValue)
         {
             double allQuestions = test.Questions.Count;
             double correctAnswers = test.Questions.Where(q => q.Answers.Any(a => a.IsSelected && a.Correct)).Count();
-            return (correctAnswers / allQuestions) * 6;
+            return (correctAnswers / allQuestions) * maxValue;
         }
     }
 }
