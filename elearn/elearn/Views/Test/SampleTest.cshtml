@@ -1,0 +1,31 @@
+﻿@model NHiberanteDal.DTO.TestDto
+
+
+@{
+    ViewBag.Title = "SampleTest";
+}
+
+<h2>SampleTest</h2>
+
+@using (Html.BeginForm("DoSampleTest", "Test", FormMethod.Post, new { id = "doTestForm" }))
+{
+    for(int i=0;i<Model.Questions.Count;i++)
+    {
+        <div id="test-question">
+            <div id="test-question-title">
+                @Html.LabelFor(m =>m.Questions[i].QuestionText)
+                <br />
+                @Model.Questions[i].QuestionText
+            </div>
+           @for(int k=0;k<Model.Questions[i].Answers.Count;k++)
+            {
+                <div id="test-question-answer">
+                    @Html.HiddenFor(m => m.Questions[i].Answers[k].Correct)
+                    @Model.Questions[i].Answers[k].Text &nbsp;
+                    @Html.CheckBoxFor(m => m.Questions[i].Answers[k].IsSelected)
+                </div>
+            }
+        </div> 
+    }
+   <button>Check</button>
+}

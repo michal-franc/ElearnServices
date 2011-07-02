@@ -169,6 +169,17 @@ namespace elearn.Controllers
             return View("Error");
         }
 
+
+        [HttpGet]
+        public ActionResult SampleTest()
+        {
+            //sample test id 
+            // todo get from config
+            var sampleTestId = 25;
+            var sampleTest = _testService.GetTestDetails(sampleTestId);
+            return View(sampleTest);
+        }
+
         [HttpGet]
         public ActionResult DoTest(int Id)
         {
@@ -179,6 +190,17 @@ namespace elearn.Controllers
             }
             ViewBag.Error = Common.ErrorMessages.Test.TestIdError;
             return View("Error");
+        }
+
+        [HttpPost]
+        public ActionResult DoSampleTest(TestDto testModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var mark = CalculateMark(testModel, 100);
+                return View("Score", mark);
+            }
+            return View("DoTest",testModel);
         }
 
         [HttpPost]
