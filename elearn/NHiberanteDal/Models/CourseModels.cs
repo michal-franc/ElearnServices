@@ -12,6 +12,7 @@ namespace NHiberanteDal.Models
         public virtual DateTime CreationDate { get; set; }
         public virtual string  Logo { get; set; }
         public virtual string Description { get; set; }
+        public virtual string ShortDescription { get; set; }
         public virtual string Password { get; set; }
 
         //One

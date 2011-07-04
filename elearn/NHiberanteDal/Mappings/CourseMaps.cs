@@ -13,6 +13,7 @@ namespace NHiberanteDal.Mappings
             Map(x => x.Name).Not.Nullable();
             Map(x => x.CreationDate).Not.Nullable();
             Map(x => x.Description);
+            Map(x => x.ShortDescription);
             Map(x=>x.Password).Nullable();
             
 
