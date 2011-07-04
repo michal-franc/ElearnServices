@@ -18,6 +18,9 @@ namespace ELearnServices
         IList<CourseSignatureDto> GetAllSignatures();
 
         [OperationContract]
+        IList<CourseSignatureDto> GetCourseSignaturesByProfileId(int profileId);
+
+        [OperationContract]
         IList<TestSignatureDto> GetAllTestsSignatures(int id);
 
         [OperationContract]

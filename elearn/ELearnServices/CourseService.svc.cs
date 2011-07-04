@@ -44,6 +44,23 @@ namespace ELearnServices
             }
         }
 
+        public IList<CourseSignatureDto> GetCourseSignaturesByProfileId(int profileId)
+        {
+            try
+            {
+                using (var session = DataAccess.OpenSession())
+                {
+                    var courses = session.CreateCriteria(typeof(CourseModel)).List<CourseModel>().Where(c => c.Group.Users.Any(p => p.ID == profileId)).ToList();
+                    return CourseSignatureDto.Map(courses);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Error : CourseService.GetCourseSignaturesByProfileId - {0}", ex.Message);
+                return new List<CourseSignatureDto>();
+            }
+        }
+
         public CourseDto GetById(int id)
         {
             try
