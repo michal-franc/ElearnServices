@@ -1,0 +1,14 @@
+﻿@model NHiberanteDal.DTO.CourseSignatureDto
+
+
+<h2>@Model.Name</h2>
+<a href="@Url.Action("Details", new { id = @Model.ID })">
+    @if(Model.Logo == null)
+    {
+        <img src="@Url.Content("~/Content/Images/nologo.jpg")"/>        
+    }
+    else
+    {
+        <img src="@Url.Content("~/Content/Images/")"@Model.Logo /> 
+    }
+</a>

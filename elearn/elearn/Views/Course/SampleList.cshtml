@@ -1,0 +1,11 @@
+﻿@model IEnumerable<NHiberanteDal.DTO.CourseSignatureDto>
+
+@{
+    ViewBag.Title = "Course List";
+}
+
+<h2>List</h2>
+
+@foreach (var item in Model) {
+    Html.RenderPartial("~/Views/Course/_CourseInfoBlock.cshtml", item);
+}

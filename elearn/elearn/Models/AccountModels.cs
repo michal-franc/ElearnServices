@@ -110,7 +110,7 @@ namespace elearn.Models
             if (String.IsNullOrEmpty(userName)) throw new ArgumentException("Value cannot be null or empty.", "userName");
             if (String.IsNullOrEmpty(password)) throw new ArgumentException("Value cannot be null or empty.", "password");
 
-            if (!_service.IsActiveByName(userName)) throw new ArgumentException("User is inactive.");
+            if (!_service.IsActiveByName(userName)) throw new ArgumentException("User is inactive (Normal DB).");
             return _service.ValidateUser(userName, password);
         }
 

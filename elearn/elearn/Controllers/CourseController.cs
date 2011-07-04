@@ -63,6 +63,13 @@ namespace elearn.Controllers
             return View(courses);
         }
 
+        // GET: /Course/List/pageNumber
+        [HttpGet]
+        public ActionResult SampleList(int pageNumber)
+        {
+            var courses = _courseService.GetAllSignatures().Skip((pageNumber - 1) * Limit).Take(Limit).ToArray();
+            return View(courses);
+        }
 
         // GET: /Course/Create/
         [HttpGet]
