@@ -142,6 +142,7 @@
     <Content Include="Content\graphic\topnav_bg.gif" />
     <Content Include="Content\graphic\topnav_hover.gif" />
     <Content Include="Content\Html5CssReset.css" />
+    <Content Include="Content\Images\nologo.jpg" />
     <Content Include="Content\MvcViews.css" />
     <Content Include="Content\SexyDropDown.css" />
     <Content Include="Content\slidelogin\images\bg.jpg" />
@@ -172,7 +173,9 @@
     <Content Include="Content\themes\pepper-grinder\images\ui-icons_ffffff_256x240.png" />
     <Content Include="Content\themes\pepper-grinder\jquery-ui-1.8.13.custom.css" />
     <Content Include="Global.asax" />
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="NLog.config" />
     <None Include="Properties\DataSources\NHiberanteDal.DTO.CourseDto.datasource" />
     <None Include="Properties\DataSources\NHiberanteDal.DTO.CourseSignatureDto.datasource" />
@@ -187,7 +190,6 @@
     <None Include="Properties\DataSources\NHiberanteDal.DTO.TestTypeModelDto.datasource" />
     <None Include="Properties\DataSources\NHiberanteDal.Models.ForumModel.datasource" />
     <None Include="Properties\DataSources\NHiberanteDal.Models.ProfileModel.datasource" />
-    <Content Include="Images\nologo.jpg" />
     <None Include="Service References\CourseService\configuration91.svcinfo" />
     <None Include="Service References\CourseService\configuration.svcinfo" />
     <None Include="Service References\CourseService\Reference.svcmap">
@@ -373,7 +375,6 @@
     <Content Include="Views\Test\_CreateQuestionPartial.cshtml" />
     <Content Include="Views\Journal\MyJournal.cshtml" />
     <Content Include="Views\Journal\_CreateMarkPartial.cshtml" />
-    <Content Include="Views\Course\MyCourses.cshtml" />
     <Content Include="Views\Group\MyGroups.cshtml" />
     <Content Include="Views\Test\Finished.cshtml" />
     <Content Include="Views\Test\DoTest.cshtml" />
@@ -385,6 +386,7 @@
     <Content Include="Views\Info\ContactUs.cshtml" />
     <Content Include="Views\Info\About.cshtml" />
     <Content Include="Views\Course\SampleList.cshtml" />
+    <Content Include="Views\Course\_CourseInfoBlock.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

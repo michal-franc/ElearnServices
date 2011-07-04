@@ -54,7 +54,7 @@ namespace elearn.Controllers
             return View(course);
         }
 
-
+        //todo not optimal data retrieving , paging should be on the server side
         // GET: /Course/List/pageNumber
         [HttpGet]
         public ActionResult List(int pageNumber)
@@ -201,8 +201,8 @@ namespace elearn.Controllers
             var profile = _profileService.GetByName(User.Identity.Name);
             if (profile != null)
             {
-                var courses = _courseService.GetByProfileId(profile.ID).ToList();
-                return View(courses);
+                var courses = _courseService.GetCourseSignaturesByProfileId(profile.ID).ToList();
+                return View("List",courses);
             }
             ViewBag.Error = Common.ErrorMessages.Profile.NoProfile;
             return View("Error");

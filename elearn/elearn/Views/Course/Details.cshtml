@@ -22,18 +22,25 @@
 
     <li>Course Type : @Model.CourseType.TypeName</li>
     <li>DateCreated : @Model.CreationDate.ToShortDateString()</li>
-    <li>@Html.ActionLink("Forum", "Details", "Forum", new { id = Model.Forum.ID },null)</li>
-    <li>@Html.ActionLink("Group", "Details", "Group", new { id = Model.Group.ID },null)</li>
 
 
-    @{ Html.RenderPartial("_ShoutBoxPartial",ViewData); }
+    @if (Request.IsAuthenticated)
+    { 
+        <li>@Html.ActionLink("Forum", "Details", "Forum", new { id = Model.Forum.ID },null)</li>
+        <li>@Html.ActionLink("Group", "Details", "Group", new { id = Model.Group.ID },null)</li>
+
+
+        Html.RenderPartial("_ShoutBoxPartial",ViewData);
 
 
 
-    <br />
+        <br />
+    }
 </ul>
 
-        @if(Model.Group.Users.Any(c=>c.Name == User.Identity.Name))
+    @if (Request.IsAuthenticated)
+    { 
+        if(Model.Group.Users.Any(c=>c.Name == User.Identity.Name))
         {
             <button id="btnLeaveModal">Leave</button>
             <button id="btnJoinModal" hidden="hidden">Join</button>
@@ -43,6 +50,7 @@
             <button id="btnLeaveModal"hidden="hidden">Leave</button>
             <button id="btnJoinModal">Join</button>
         }
+    }
 
 
 <script type="text/javascript">
