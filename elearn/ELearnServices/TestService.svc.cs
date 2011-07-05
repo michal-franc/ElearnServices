@@ -96,6 +96,33 @@ namespace ELearnServices
             }
         }
 
+        public List<TestSignatureDto> GetMyTests(int profileId)
+        {
+            try
+            {
+                using (var session = DataAccess.OpenSession())
+                {
+                    var myTests = new List<TestModel>();
+                    var courses =
+                        session.CreateCriteria(typeof (CourseModel)).List<CourseModel>().Where(
+                            c => c.Group.Users.Any(p => p.ID == profileId)).ToList();
+
+                    foreach (var course in courses)
+                    {
+                        myTests.AddRange(course.Tests);
+                    }
+
+
+                    return TestSignatureDto.Map(myTests);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Error : TestService.GetAllTests - {0}", ex.Message);
+                return new List<TestSignatureDto>();
+            }
+        }
+
         public int AddQuestion(int id, TestQuestionModelDto question)
         {
             try

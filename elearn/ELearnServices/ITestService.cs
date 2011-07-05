@@ -27,6 +27,9 @@ namespace ELearnServices
         List<TestSignatureDto> GetAllTests();
 
         [OperationContract]
+        List<TestSignatureDto> GetMyTests(int profileId);
+
+        [OperationContract]
         IList<TestTypeModelDto> GetTestTypes();
 
         [OperationContract]
