@@ -121,6 +121,15 @@ namespace elearn.Controllers
         }
 
 
+        //
+        // GET: /Test/MyTests
+        [HttpGet]
+        public ActionResult MyTests()
+        {
+            var profile = _profileService.GetByName(User.Identity.Name);
+            var myTests = _testService.GetMyTests(profile.ID);
+            return View("List", myTests);
+        }
 
         //todotest 
         [HttpGet]
