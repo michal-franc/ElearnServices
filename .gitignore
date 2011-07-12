@@ -2,6 +2,7 @@
 *.user
 *.datasource
 *.Publish.xml
+*.png
 
 obj
 bin
