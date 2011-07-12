@@ -89,6 +89,7 @@
     <Compile Include="Controllers\UserProfileController.cs" />
     <Compile Include="Extensions\LabelWrap.cs" />
     <Compile Include="Extensions\ProfileHelpers.cs" />
+    <Compile Include="Extensions\Validation.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
