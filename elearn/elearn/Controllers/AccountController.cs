@@ -44,10 +44,9 @@ namespace elearn.Controllers
                     }
                     return RedirectToAction("Index", "Home");
                 }
-                ModelState.AddModelError("", "The user name or password provided is incorrect.");
+                ModelState.AddModelError(string.Empty, "The user name or password provided is incorrect.");
             }
 
-            // If we got this far, something failed, redisplay form
             return View(model);
         }
 

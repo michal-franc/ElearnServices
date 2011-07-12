@@ -89,6 +89,7 @@ namespace elearn.Models
     {
         readonly IProfileService _service;
 
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         public WcfAccountMembershipService(IProfileService service)
         {
@@ -107,10 +108,23 @@ namespace elearn.Models
 
         public bool ValidateUser(string userName, string password)
         {
-            if (String.IsNullOrEmpty(userName)) throw new ArgumentException("Value cannot be null or empty.", "userName");
-            if (String.IsNullOrEmpty(password)) throw new ArgumentException("Value cannot be null or empty.", "password");
+            if (String.IsNullOrEmpty(userName))
+            {
+                logger.Error("MembershipService \r\nValue cannot be null or empty.", "userName");
+                return false;
+            }
 
-            if (!_service.IsActiveByName(userName)) throw new ArgumentException("User is inactive (Normal DB).");
+            if (String.IsNullOrEmpty(password))
+            {
+                logger.Error("MembershipService \r\nValue cannot be null or empty.", "password");
+                return false;
+            }
+
+            if (!_service.IsActiveByName(userName))
+            {
+                logger.Info(String.Format("MembershipService \r\nUser : {0} is Inactive or doesnt exist",userName));
+                return false;
+            }
             return _service.ValidateUser(userName, password);
         }
 
