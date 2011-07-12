@@ -15,7 +15,7 @@ namespace elearn.ActionFilters
             var result = filterContext.Result as ViewResult;
             if (result != null)
             {
-                result.MasterName = GetMaster(new SessionStateService(new ProfileServiceClient()).GetCurrentUserDataFromSession());
+                result.MasterName = GetMaster(SessionStateService.SessionState.GetCurrentUserDataFromSession());
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using elearn.ProfileService;
+using elearn.Session;
 
 namespace elearn.Controllers
 {
@@ -44,9 +45,10 @@ namespace elearn.Controllers
         public ActionResult Delete()
         {
             if (!_service.SetAsInactiveByName(UserName))
-            {         
+            {
                 return RedirectToAction("Details");
             }
+            SessionStateService.SessionState.DeleteCurrentUserSession();
             return RedirectToAction("LogOff", "Account");
         }
 
@@ -71,6 +73,7 @@ namespace elearn.Controllers
             {
                 if (_service.UpdateProfile(profile))
                 {
+                    SessionStateService.SessionState.DeleteCurrentUserSession();
                     return RedirectToAction("Details", new { id = profile.ID });
                 }
                 ViewData["Error"] = "Problem Updating Profile";
