@@ -7,15 +7,19 @@
         <img src="@Url.Content("~/Content/Images/" + @Model.CourseType.TypeName + ".png")"/>
     </a>
     <p>
-        <h1>@Model.Name</h1></p>
+        <h1>@Model.Name</h1>
+    </p>
     <p>
         <strong>Course Type</strong> : @Model.CourseType.TypeName</p>
     <p>
         <strong>Date Created</strong> : @Model.CreationDate.ToShortDateString()</p>
-@*    <button style="padding: 5px" class="button_colour">
-        <img style="width: 66px;"  width="24" alt="Bended Arrow Right" src="@Url.Content("~/Content/Adminica/images/content/forms.png")">
-        <span style="font-size: 30px;">Tests</span>
-    </button>*@
+    @if (!Model.Group.Users.Any(c => c.LoginName == User.Identity.Name))
+    { 
+        <button id="btnJoinModal" style="padding: 5px; margin-top: 70px;" class="button_colour">
+            <img style="width: 66px;" alt="Bended Arrow Right" src="@Url.Content("~/Content/Adminica/images/content/sortable.png")">
+            <span style="font-size: 30px;">Join</span>
+        </button>
+    }
 </div>
 <div class="box grid_8 tabs ui-tabs ui-widget ui-widget-content ui-corner-all">
     <ul class="tab_header grad_colour clearfix ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
@@ -75,26 +79,29 @@
             <img height="24" width="24" alt="Bended Arrow Right" src="@Url.Content("~/Content/Adminica/images/icons/small/white/users.png")">
             <span>Group</span>
         </button>
+        <button style="padding: 5px" class="button_colour">
+            <img height="24" width="24"  alt="Bended Arrow Right" src="@Url.Content("~/Content/Adminica/images/icons/small/white/fountain_pen.png")">
+            <span>Tests</span>
+        </button>
+        if (Model.Group.Users.Any(c => c.LoginName == User.Identity.Name))
+        {
+        <button id="btnLeaveModal" class="button_colour" style="margin-top: 210%;">
+            <img height="24" width="24" alt="Bended Arrow Right" src="@Url.Content("~/Content/Adminica/images/icons/small/white/exit.png")">
+            <span>Leave</span>
+        </button>
+        }
 
     }
 </div>
 <hr class="grid_16" />
-@if (Model.Group.Users.Any(c => c.LoginName == User.Identity.Name))
-{
-    <button id="btnLeaveModal" class="button_colour">
-        <img height="24" width="24" alt="Bended Arrow Right" src="@Url.Content("~/Content/Adminica/images/icons/small/white/exit.png")">
-        <span>Leave</span>
-    </button>
-}
-else
-{
-    <button id="btnJoinModal" class="button_colour">
-        <img height="24" width="24" alt="Bended Arrow Right" src="@Url.Content("~/Content/Adminica/images/icons/small/white/walking_man.png")">
-        <span>Join</span>
-    </button>
-}
-<hr class="grid_16" />
-
+<div class="box grid_16" >
+    <h2 class="box_head_no_margin">
+        Learning Materials</h2>
+    <a href="#" class="toggle">&nbsp;</a>
+    <div class="toggle_container">
+            @Html.Partial("_LearningMaterialsList")
+    </div>
+</div>
 <script type="text/javascript">
 
     $(function()
