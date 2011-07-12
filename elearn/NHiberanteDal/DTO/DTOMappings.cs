@@ -77,7 +77,8 @@ namespace NHiberanteDal.DTO
                          .ForMember(dest => dest.Group, opt => opt.Ignore())
                          .ForMember(dest => dest.Forum, opt => opt.Ignore())
                          .ForMember(dest => dest.ShoutBox, opt => opt.Ignore())
-                         .ForMember(dest => dest.Password, opt => opt.Ignore());
+                         .ForMember(dest => dest.Password, opt => opt.Ignore())
+                         .ForMember(dest => dest.Description, opt => opt.Ignore());
 
                     Mapper.CreateMap<FinishedTestModel, FinishedTestModelDto>()
                         .ForMember(dest => dest.TestId, opt => opt.MapFrom(p=>p.Test.ID))
