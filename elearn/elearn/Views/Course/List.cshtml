@@ -1,9 +1,62 @@
 ﻿@model IEnumerable<NHiberanteDal.DTO.CourseSignatureDto>
-
 @{
     ViewBag.Title = "Course List";
 }
-
-@foreach (var item in Model) {
-    Html.RenderPartial("~/Views/Course/_CourseInfoBlock.cshtml", item);
-}
+<div id="feature_container" class="grid_16">
+    <form id="filter" class="clearfix indent gallery_sorter">
+    <fieldset class="grid_7 alpha">
+        <h3>
+            Features:</h3>
+        <label>
+            <div class="radio">
+                <span class="checked">
+                    <input type="radio" name="type" value="all" checked="checked" style="opacity: 0;"></span></div>
+            All</label>
+        <label>
+            <div class="radio">
+                <span class="">
+                    <input type="radio" name="type" value="csharp" style="opacity: 0;"></span></div>
+            C#</label>
+        <label>
+            <div class="radio">
+                <span class="">
+                    <input type="radio" name="type" value="js" style="opacity: 0;"></span></div>
+            Js</label>
+        <label>
+            <div class="radio">
+                <span class="">
+                    <input type="radio" name="type" value="html5" style="opacity: 0;"></span></div>
+            Html5</label>
+        <label>
+            <div class="radio">
+                <span class="">
+                    <input type="radio" name="type" value="net" style="opacity: 0;"></span></div>
+            .Net</label>
+    </fieldset>
+    <fieldset class="grid_7 omega">
+        <h3>
+            Sort by</h3>
+        <label>
+            <div class="radio">
+                <span class="checked">
+                    <input type="radio" name="sort" value="name" style="opacity: 0;"></span></div>
+            Name</label>
+        <label>
+            <div class="radio">
+                <span class="">
+                    <input type="radio" name="sort" value="update" checked="checked" style="opacity: 0;"></span></div>
+            Popularity</label>
+         <label>
+            <div class="radio">
+                <span class="">
+                    <input type="radio" name="sort" value="update" checked="checked" style="opacity: 0;"></span></div>
+            Rating</label>
+    </fieldset>
+    </form>
+    <ul class="feature_list clearfix" style="height: 291px; overflow-x: hidden; overflow-y: hidden;">
+        @foreach (var item in Model)
+        {
+            Html.RenderPartial("~/Views/Course/_CourseInfoBlock.cshtml", item);
+        }
+    </ul>
+</div>

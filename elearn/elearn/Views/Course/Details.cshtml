@@ -1,57 +1,99 @@
-﻿<link href="../../Content/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
-
-
+﻿@model NHiberanteDal.DTO.CourseDto
 @{
     ViewBag.Title = "Kurs";
 }
-
-@model NHiberanteDal.DTO.CourseDto
-
-
-<h2>@Model.Name</h2>
-<ul>
-
-        @if(Model.Logo == null)
-        {
-             <img src="../../Images/nologo.jpg" />        
-        }
-        else
-        {
-            <img src="../../Images/"@Model.Logo /> 
-        }
-
-    <li>Course Type : @Model.CourseType.TypeName</li>
-    <li>DateCreated : @Model.CreationDate.ToShortDateString()</li>
-
-
-    @if (Request.IsAuthenticated)
+<div class="flat_area grid_5 round_all">
+    <a id="opener" href="@Url.Action("Details", new { id = @Model.ID })" class="features">
+        <img src="@Url.Content("~/Content/Images/" + @Model.CourseType.TypeName + ".png")"/>
+    </a>
+    <p>
+        <h1>@Model.Name</h1></p>
+    <p>
+        <strong>Course Type</strong> : @Model.CourseType.TypeName</p>
+    <p>
+        <strong>Date Created</strong> : @Model.CreationDate.ToShortDateString()</p>
+@*    <button style="padding: 5px" class="button_colour">
+        <img style="width: 66px;"  width="24" alt="Bended Arrow Right" src="@Url.Content("~/Content/Adminica/images/content/forms.png")">
+        <span style="font-size: 30px;">Tests</span>
+    </button>*@
+</div>
+<div class="box grid_8 tabs ui-tabs ui-widget ui-widget-content ui-corner-all">
+    <ul class="tab_header grad_colour clearfix ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+        <li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active"><a href="#tabs-1">
+            Description</a></li>
+        <li class="ui-state-default ui-corner-top"><a href="#tabs-2">News</a></li>
+        <li class="ui-state-default ui-corner-top"><a href="#tabs-3">ShoutBox</a></li>
+    </ul>
+    <div class="toggle_container">
+        <div id="tabs-1" class="block ui-tabs-panel ui-widget-content ui-corner-bottom ui-tabs-hide">
+            <div class="content">
+                <h1>
+                    Primary Heading</h1>
+                <p>
+                    Lorem Ipsum is simply dummy text of the <a href="#" title="This is a tooltip">printing
+                        industry</a>. Lorem Ipsum has been the industry’s standard dummy text ever since
+                    the 1500s, when an unknown printer took a galley of type and scrambled it to make
+                    a type specimen book.</p>
+                <h2>
+                    Secondary Heading</h2>
+                <p>
+                    Lorem Ipsum is simply dummy text of the printing industry. Lorem Ipsum has been
+                    the industry’s standard dummy text ever since the 1500s, when an unknown printer
+                    took a galley of type and scrambled it to make a type specimen book.</p>
+            </div>
+        </div>
+        <div id="tabs-2" class="block ui-tabs-panel ui-widget-content ui-corner-bottom ui-tabs-hide">
+            <div class="content">
+                <h1>
+                    Primary Heading</h1>
+                <p>
+                    Lorem Ipsum is simply dummy text of the <a href="#" title="This is a tooltip">printing
+                        industry</a>. Lorem Ipsum has been the industry’s standard dummy text ever since
+                    the 1500s, when an unknown printer took a galley of type and scrambled it to make
+                    a type specimen book.</p>
+                <h2>
+                    Secondary Heading</h2>
+                <p>
+                    Lorem Ipsum is simply dummy text of the printing industry. Lorem Ipsum has been
+                    the industry’s standard dummy text ever since the 1500s, when an unknown printer
+                    took a galley of type and scrambled it to make a type specimen book.</p>
+            </div>
+        </div>
+        <div id="tabs-3" class="block no_padding ui-tabs-panel ui-widget-content ui-corner-bottom">
+            @Html.Partial("_ShoutBoxPartial", ViewData);
+        </div>
+    </div>
+</div>
+<div class="flat_area grid_3 round_all">
+    @if (Model.Group.Users.Any(c => c.LoginName == User.Identity.Name))
     { 
-        <li>@Html.ActionLink("Forum", "Details", "Forum", new { id = Model.Forum.ID },null)</li>
-        <li>@Html.ActionLink("Group", "Details", "Group", new { id = Model.Group.ID },null)</li>
+        <button class="button_colour" onClick="window.location='@Url.Action("Details", "Forum", new { id = Model.Forum.ID })'">
+            <img height="24" width="24" alt="Bended Arrow Right" src="@Url.Content("~/Content/Adminica/images/icons/small/white/note_book.png")">
+            <span>Forum</span>
+        </button>
+        <button class="button_colour" onClick="window.location='@Url.Action("Details", "Group", new { id = Model.Group.ID })'">
+            <img height="24" width="24" alt="Bended Arrow Right" src="@Url.Content("~/Content/Adminica/images/icons/small/white/users.png")">
+            <span>Group</span>
+        </button>
 
-
-        Html.RenderPartial("_ShoutBoxPartial",ViewData);
-
-
-
-        <br />
     }
-</ul>
-
-    @if (Request.IsAuthenticated)
-    { 
-        if(Model.Group.Users.Any(c=>c.Name == User.Identity.Name))
-        {
-            <button id="btnLeaveModal">Leave</button>
-            <button id="btnJoinModal" hidden="hidden">Join</button>
-        }
-        else
-        {
-            <button id="btnLeaveModal"hidden="hidden">Leave</button>
-            <button id="btnJoinModal">Join</button>
-        }
-    }
-
+</div>
+<hr class="grid_16" />
+@if (Model.Group.Users.Any(c => c.LoginName == User.Identity.Name))
+{
+    <button id="btnLeaveModal" class="button_colour">
+        <img height="24" width="24" alt="Bended Arrow Right" src="@Url.Content("~/Content/Adminica/images/icons/small/white/exit.png")">
+        <span>Leave</span>
+    </button>
+}
+else
+{
+    <button id="btnJoinModal" class="button_colour">
+        <img height="24" width="24" alt="Bended Arrow Right" src="@Url.Content("~/Content/Adminica/images/icons/small/white/walking_man.png")">
+        <span>Join</span>
+    </button>
+}
+<hr class="grid_16" />
 
 <script type="text/javascript">
 
@@ -63,7 +105,7 @@
                     open: function() {
                         $.ajax({
                                 type : "GET",
-                                url: "@Html.Raw(Url.Action("Join", "Group",new {groupId = Model.Group.ID,courseId=Model.ID,isPasswordProtected = Model.IsPasswordProtected}))",
+                                url: "@Html.Raw(Url.Action("Join", "Group", new { groupId = Model.Group.ID, courseId = Model.ID, isPasswordProtected = Model.IsPasswordProtected }))",
                                 cache: false,
                                 dataType: "html",
                                 success: function(data) {   
@@ -96,7 +138,7 @@
                         $.ajax({
                                 type : "GET",
                                 url:
-                                    "@Url.Action("Leave","Group",new {groupId = Model.Group.ID})",
+                                    "@Url.Action("Leave", "Group", new { groupId = Model.Group.ID })",
                                 cache: false,
                                 dataType: "html",
                                 success: function(data) {
@@ -121,4 +163,3 @@
     });
 
 </script>
-
