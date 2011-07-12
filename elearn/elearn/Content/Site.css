@@ -1,65 +1,20 @@
-﻿body
+﻿span.field-validation-error
 {
-    margin: 0;
-    padding: 0;
-    font: 10px normal Arial, Helvetica, sans-serif;
-    background-color: white;
+    color:Red;
+    margin-left: 30px;
 }
 
-
-.page
+.validation-summary-errors
 {
-    width: 700px;
-    margin: 0 auto;
-    position: relative;
+    margin-left:50px;
+    margin-top:20px;
 }
 
-#menu
+.alert_box
 {
-    padding-left:10%;
-}
-
-
-#header
-{
-    position: relative;
-    margin-bottom: 0px;
-    padding-top: 120px;
-    background: url('graphic/header_bg.gif') no-repeat center top;
-    background-color:#415049;
-}
-
-#main
-{
-    float:left;
-    padding: 30px 30px 30px 30px;
-    background-color:red;
-}
-
-#footer
-{
-    padding: 10px 0;
-    text-align: center;
-    line-height: normal;
-    margin: 0;
-    font-size: .9em;
-}
-
-.footerbg
-{
-    width: 100%;
-    background: url('graphic/footer_bg.gif') repeat-x;    
-}
-
-
-.home-info-panel
-{
-    width:45%;
-    padding: 5px;
-    margin-left:10px;
-    margin-right:10px;
-    margin-top:10px;
-    float:left;
-    background-color:Black;
-    color:White;
+    width:300px;
+    display:block;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -webkit-box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.2),	inset 0px 1px 0px rgba(0, 0, 0, 0.2);
 }
