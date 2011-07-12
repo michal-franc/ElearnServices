@@ -15,7 +15,10 @@ namespace NHiberanteDal.DTO
         public int ID { get; set; }
 
         [DataMember]
-        public string Name { get; set; }
+        public string LoginName { get; set; }
+
+        [DataMember]
+        public string DisplayName { get; set; }
 
         [DataMember]
         public string Role { get; set; }

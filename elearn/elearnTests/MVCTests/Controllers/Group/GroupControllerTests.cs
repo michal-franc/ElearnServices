@@ -35,7 +35,7 @@ namespace elearnTests.MVCTests.Controllers.Group
             GroupController = new GroupController(GroupService, ProfileService, JournalService);
 
             SampleGroup = new GroupModelDto { ID = 1, GroupName = "test" };
-            SampleProfile = new ProfileModelDto { ID = 1, Name = "test" };
+            SampleProfile = new ProfileModelDto { ID = 1, LoginName = "test" };
             SampleGroupList = new List<GroupModelDto>
                                   {
                                       new GroupModelDto(),

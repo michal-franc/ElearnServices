@@ -34,7 +34,8 @@ namespace NHiberanteDal.Mappings
         public ProfileModelMap()
 	    {
             Id(x=>x.ID);
-            Map(x => x.Name);
+            Map(x => x.DisplayName);
+            Map(x => x.LoginName);
             Map(x=>x.Role);
             Map(x => x.Email).Not.Nullable();
             Map(x => x.IsActive).Default("FALSE");

@@ -60,7 +60,7 @@ namespace elearnTests.MVCTests
         public void Can_convert_entity_to_form_collection()
         {
             #region Arrange
-            var profile = new ProfileModelDto { Email = "test@test.com", ID = 1, IsActive = true, Name = "test", Role = "test" };
+            var profile = new ProfileModelDto { Email = "test@test.com", ID = 1, IsActive = true, LoginName = "test", Role = "test" };
             #endregion
 
             #region Act

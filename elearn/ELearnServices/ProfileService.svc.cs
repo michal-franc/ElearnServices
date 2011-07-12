@@ -110,7 +110,7 @@ namespace ELearnServices
         public bool UpdateRole(ProfileModelDto profile,bool createIfNotExist)
         {
             var role = profile.Role;
-            var userName = profile.Name;
+            var userName = profile.LoginName;
             try
             {
                 if (!String.IsNullOrWhiteSpace(role))
@@ -162,15 +162,15 @@ namespace ELearnServices
         {
             try
             {
-                var profile = new ProfileModelDto { Name = userName, Email = email, Role = "basicuser" };
+                var profile = new ProfileModelDto { LoginName = userName, Email = email, Role = "basicuser" };
                 AddProfile(profile);
                 UpdateRole(profile, false);
 
                 MembershipCreateStatus status;
                 if (Membership.Provider.RequiresQuestionAndAnswer)
-                    Membership.Provider.CreateUser(profile.Name, password, email, "this is sample question", "this is answer", true, null, out status);
+                    Membership.Provider.CreateUser(profile.LoginName, password, email, "this is sample question", "this is answer", true, null, out status);
                 else
-                    Membership.Provider.CreateUser(profile.Name, password, email, null, null, true, null, out status);
+                    Membership.Provider.CreateUser(profile.LoginName, password, email, null, null, true, null, out status);
                 return status;
             }
             catch (Exception ex)
@@ -240,8 +240,8 @@ namespace ELearnServices
             {
                 using (var session = DataAccess.OpenSession())
                 {
-                    var profile = session.CreateCriteria(typeof(ProfileModel)).Add(Restrictions.Eq("Name", userName)).List<ProfileModel>();
-                    return ProfileModelDto.Map(profile.First());
+                    var profiles  = (List<ProfileModel>)session.CreateQuery(new QueryProfilesByName(userName).Query).List<ProfileModel>();
+                    return ProfileModelDto.Map(profiles.First());
                 }
             }
             catch (Exception ex)

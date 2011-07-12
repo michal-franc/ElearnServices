@@ -16,7 +16,7 @@ namespace NHiberanteDal.DataAccess.QueryObjects
             get
             {
                 return String.Format
-                    ("from ProfileModel p where p.Name = '{0}'", _value);
+                    ("from ProfileModel p where p.LoginName = '{0}'", _value);
             }
         }
     }

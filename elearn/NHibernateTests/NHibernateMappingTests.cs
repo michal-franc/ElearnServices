@@ -41,7 +41,7 @@ namespace NHibernateTests
         readonly ContentTypeModel _contentType = new ContentTypeModel { TypeName="test" };
         readonly CourseTypeModel _courseType = new CourseTypeModel { TypeName = "test" };
         readonly TestTypeModel _testType = new TestTypeModel { TypeName = "test" };
-        readonly ProfileModel _testProfile = new ProfileModel { Email="test", Name = "test" };
+        readonly ProfileModel _testProfile = new ProfileModel { Email = "test", LoginName = "test" };
         private readonly List<TestModel> _tests = new List<TestModel>
                                                       {
                                                           new TestModel(),
@@ -237,7 +237,7 @@ namespace NHibernateTests
                    .CheckList(c => c.Users,
                    new List<ProfileModel>
                        { 
-                            new ProfileModel { Email="test", Name="test"}
+                            new ProfileModel { Email="test", LoginName="test"}
                         }
                    )
                    .VerifyTheMappings();
@@ -272,7 +272,8 @@ namespace NHibernateTests
             {
 
                 new PersistenceSpecification<ProfileModel>(session)
-                   .CheckProperty(c => c.Name, "test")
+                   .CheckProperty(c => c.LoginName, "test")
+                   .CheckProperty(c => c.DisplayName, "test")
                    .CheckProperty(c => c.Email, "test")
                    .CheckProperty(c => c.Role, "test")
                    .CheckProperty(c => c.IsActive, true)

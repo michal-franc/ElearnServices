@@ -19,7 +19,7 @@ namespace NHibernateTests.ServicesTests
         public void Can_get_all_profiles()
         {
             #region Arrange
-            var profile = new ProfileModel { Name = "test1", Email = "test@test.com", IsActive = true };
+            var profile = new ProfileModel { LoginName = "test1", Email = "test@test.com", IsActive = true };
             DataAccess.InTransaction(session => session.Save(profile));
             #endregion
 
@@ -40,7 +40,7 @@ namespace NHibernateTests.ServicesTests
         public void Can_get_profile_by_username()
         {
             #region Arrange
-            var profile = new ProfileModel { Name = "test profile", Email = "test@test.com", IsActive = true };
+            var profile = new ProfileModel { LoginName = "test profile", Email = "test@test.com", IsActive = true };
             #endregion
 
             #region Act
@@ -54,7 +54,7 @@ namespace NHibernateTests.ServicesTests
 
             #region Assert
             Assert.That(returnedProfile,Is.Not.Null);
-            Assert.That(returnedProfile.Name,Is.EqualTo("test profile"));
+            Assert.That(returnedProfile.LoginName, Is.EqualTo("test profile"));
             #endregion
         }
 				
@@ -71,7 +71,7 @@ namespace NHibernateTests.ServicesTests
 
             #region Assert
             Assert.That(profile, Is.Not.Null);
-            Assert.That(profile.Name,Is.EqualTo("test"));
+            Assert.That(profile.LoginName, Is.EqualTo("test"));
             #endregion
         }
 
@@ -79,7 +79,7 @@ namespace NHibernateTests.ServicesTests
         public void Can_add_profile()
         {
             #region Arrange
-            var profile = new ProfileModelDto { Name = "new profile", Email = "test@test.com" };
+            var profile = new ProfileModelDto { LoginName = "new profile", Email = "test@test.com" };
             #endregion
 
             #region Act
@@ -95,7 +95,7 @@ namespace NHibernateTests.ServicesTests
             #region Assert
             Assert.That(id,Is.GreaterThan(-1));
             Assert.That(profileModel,Is.Not.Null);
-            Assert.That(profileModel.Name, Is.EqualTo("new profile"));
+            Assert.That(profileModel.LoginName, Is.EqualTo("new profile"));
             #endregion
         }
 
@@ -159,7 +159,7 @@ namespace NHibernateTests.ServicesTests
                 {
                     profile = session.Get<ProfileModel>(1);
                 });
-            profile.Name = "update test";
+            profile.LoginName = "update test";
             #endregion
 
             #region Act
@@ -175,7 +175,7 @@ namespace NHibernateTests.ServicesTests
 
             #region Assert
             Assert.That(updateOk,Is.True);
-            Assert.That(testProfile.Name,Is.EqualTo("update test"));
+            Assert.That(testProfile.LoginName, Is.EqualTo("update test"));
             #endregion
         }
 
@@ -202,7 +202,7 @@ namespace NHibernateTests.ServicesTests
         public void Can_delete_profile()
         {
             #region Arrange
-            var profile = new ProfileModel { Name = "delete test", Email = "test@test.com", IsActive = true };
+            var profile = new ProfileModel { LoginName = "delete test", Email = "test@test.com", IsActive = true };
             int id = -1;
             DataAccess.InTransaction(session =>
             {
@@ -237,7 +237,7 @@ namespace NHibernateTests.ServicesTests
             #region Arrange
 
             var roleProvider = _mocker.DynamicMock<IRoleProvider>();
-            var profile = new ProfileModelDto { Role="admin", Name="user" };
+            var profile = new ProfileModelDto { Role = "admin", LoginName = "user" };
             var service = new ProfileService(roleProvider);
 
             #endregion
@@ -270,7 +270,7 @@ namespace NHibernateTests.ServicesTests
             #region Arrange
 
             var roleProvider = _mocker.DynamicMock<IRoleProvider>();
-            var profile = new ProfileModelDto { Role = "admin", Name = "user" };
+            var profile = new ProfileModelDto { Role = "admin", LoginName = "user" };
             var service = new ProfileService(roleProvider);
 
             #endregion
@@ -301,7 +301,7 @@ namespace NHibernateTests.ServicesTests
             #region Arrange
 
             var roleProvider = _mocker.DynamicMock<IRoleProvider>();
-            var profile = new ProfileModelDto { Role = "admin", Name = "user" };
+            var profile = new ProfileModelDto { Role = "admin", LoginName = "user" };
             var service = new ProfileService(roleProvider);
 
             #endregion
@@ -328,7 +328,7 @@ namespace NHibernateTests.ServicesTests
             #region Arrange
 
             var roleProvider = _mocker.DynamicMock<IRoleProvider>();
-            var profile = new ProfileModelDto { Role = "", Name = "user" };
+            var profile = new ProfileModelDto { Role = "", LoginName = "user" };
             var service = new ProfileService(roleProvider);
 
             #endregion

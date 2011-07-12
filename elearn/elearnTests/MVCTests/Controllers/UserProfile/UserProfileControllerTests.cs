@@ -26,7 +26,7 @@ namespace elearnTests.MVCTests.Controllers.UserProfile
             ProfileService = (IProfileService)Mock.DynamicMock(typeof(IProfileService));
             UserProfileController = new UserProfileController(ProfileService);
 
-            Profile = new ProfileModelDto { ID = 1, Email = "test@test.com", Role = "admin", Name = "testuser" };
+            Profile = new ProfileModelDto { ID = 1, Email = "test@test.com", Role = "admin", LoginName = "testuser" };
             ProfileList = new[]
                 {
                     new ProfileModelDto{ ID=1},

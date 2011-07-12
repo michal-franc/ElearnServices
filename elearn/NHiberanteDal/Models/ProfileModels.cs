@@ -6,7 +6,8 @@ namespace NHiberanteDal.Models
     public class ProfileModel : IModel
     {
         public virtual int ID { get; private set; }
-        public virtual string Name { get; set; }
+        public virtual string LoginName { get; set; }
+        public virtual string DisplayName { get; set; }
         public virtual string Role { get; set; }
         public virtual string Email { get; set; }
         public virtual bool IsActive { get; set; }

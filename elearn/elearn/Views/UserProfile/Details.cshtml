@@ -1,24 +1,20 @@
 ﻿@model NHiberanteDal.DTO.ProfileModelDto
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Profile Details";
 }
 
-<h2>Details</h2>
-
 <fieldset>
-    <legend>ProfileModelDto</legend>
+    <p><strong>Name</strong> : @Model.DisplayName</p>
 
-    <div class="display-label">Name</div>
-    <div class="display-field">@Model.Name</div>
+    <p><strong>Role</strong> : @Model.Role</p>
 
-    <div class="display-label">Role</div>
-    <div class="display-field">@Model.Role</div>
-
-    <div class="display-label">Email</div>
-    <div class="display-field">@Model.Email</div>
+    <p><strong>Email</strong> : @Model.Email</p>
 </fieldset>
-<p>
-    @Html.ActionLink("Edit", "Edit")
-</p>
+
+<hr class="grid_16" />
+<button class="button_colour" onClick="window.location='@Url.Action("Edit")'">
+    <img height="24" width="24" alt="Bended Arrow Right" src="@Url.Content("~/Content/Adminica/images/icons/small/white/pencil.png")">
+    <span>Edit</span>
+</button>
 

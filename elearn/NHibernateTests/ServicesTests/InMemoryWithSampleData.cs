@@ -51,7 +51,7 @@ namespace NHibernateTests.ServicesTests
                                 { QuestionText = "test question", Answers = new List<TestQuestionAnswer>
                                                                                 { TestQuestionAnswer } };
             TestTestType = new TestTypeModel { TypeName = "test" };
-            TestPofile = new ProfileModel { Name = "test", Email="test@test.com",IsActive=true };
+            TestPofile = new ProfileModel { LoginName = "test", Email = "test@test.com", IsActive = true };
             TestTest = new TestModel
                             { Author = TestPofile, CreationDate = new DateTime(2010, 1, 1), Name = "test", TestType = TestTestType };
             LatestTest = new TestModel
