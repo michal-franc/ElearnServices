@@ -88,6 +88,7 @@
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UserProfileController.cs" />
     <Compile Include="Extensions\LabelWrap.cs" />
+    <Compile Include="Extensions\ProfileHelpers.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2335,6 +2336,8 @@
     <Content Include="Views\Test\EditList.cshtml" />
     <Content Include="Views\Account\LogOn.cshtml" />
     <Content Include="Views\Shared\_LoggedUserLayout.cshtml" />
+    <Content Include="Views\Shared\_NavTopPartial.cshtml" />
+    <Content Include="Views\Shared\_SideBarPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
