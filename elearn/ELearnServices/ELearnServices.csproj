@@ -63,6 +63,7 @@
     <Content Include="ForumService.svc" />
     <Content Include="GroupService.svc" />
     <Content Include="JournalService.svc" />
+    <Content Include="LearningMaterialService.svc" />
     <Content Include="ProfileService.svc" />
     <Content Include="TestService.svc" />
     <Content Include="Web.config" />
@@ -87,11 +88,15 @@
     <Compile Include="IForumService.cs" />
     <Compile Include="IGroupService.cs" />
     <Compile Include="IJournalService.cs" />
+    <Compile Include="ILearningMaterialService.cs" />
     <Compile Include="IProfileService.cs" />
     <Compile Include="IRoleProvider.cs" />
     <Compile Include="ITestService.cs" />
     <Compile Include="JournalService.svc.cs">
       <DependentUpon>JournalService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="LearningMaterialService.svc.cs">
+      <DependentUpon>LearningMaterialService.svc</DependentUpon>
     </Compile>
     <Compile Include="MembershipRoleProvider.cs" />
     <Compile Include="ProfileService.svc.cs">
@@ -151,7 +156,8 @@ copy   $(ProjectDir)TestService.svc "C:\ElearnService\"
 copy   $(ProjectDir)JournalService.svc "C:\ElearnService\"
 copy   $(ProjectDir)ProfileService.svc "C:\ElearnService\"
 copy   $(ProjectDir)GroupService.svc "C:\ElearnService\"
-copy $(ProjectDir)ForumService.svc "C:\ElearnService\"</PostBuildEvent>
+copy $(ProjectDir)ForumService.svc "C:\ElearnService\"
+copy $(ProjectDir)LearningMaterialService.svc "C:\ElearnService\"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
