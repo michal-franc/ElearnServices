@@ -540,6 +540,62 @@ namespace NHibernateTests
 
             #endregion
         }
+
+
+        [Test]
+        public void Can_map_entity_file()
+        {
+            #region Act
+
+            using (var session = DataAccess.OpenSession())
+            {
+                new PersistenceSpecification<FileModel>(session)
+                   .CheckProperty(c => c.Address, "test")
+                   .CheckProperty(c => c.FileName, "test")
+                   .VerifyTheMappings();
+            }
+
+            #endregion
+        }
+
+        [Test]
+        public void Can_map_entity_section()
+        {
+            #region Act
+
+            using (var session = DataAccess.OpenSession())
+            {
+                new PersistenceSpecification<SectionModel>(session)
+                   .CheckProperty(c => c.IconName, "test")
+                   .CheckProperty(c => c.Text, "test")
+                   .CheckProperty(c => c.Title, "test")
+                   .VerifyTheMappings();
+            }
+
+            #endregion
+        }
+
+        [Test]
+        public void Can_map_entity_learning_material()
+        {
+            #region Act
+
+            using (var session = DataAccess.OpenSession())
+            {
+                new PersistenceSpecification<LearningMaterialModel>(session)
+                   .CheckProperty(c => c.Description, "test")
+                   .CheckProperty(c => c.Goals, "test")
+                   .CheckProperty(c => c.Level, 1)
+                   .CheckProperty(c => c.Summary, "test")
+                   .CheckProperty(c => c.UpdateDate, DateTime.Now)
+                   .CheckProperty(c => c.CreationDate, DateTime.Now)
+                   .CheckProperty(c => c.VersionNumber, "111.11")
+                   .VerifyTheMappings();
+            }
+
+            #endregion
+        }
+				
 				
 				
 

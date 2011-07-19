@@ -36,6 +36,21 @@ namespace NHibernateTests.ServicesTests
         protected ContentModel TestContent;
 
 
+        #region Learning Materials
+        protected LearningMaterialModel LearningMaterialModel;
+        #region Sections
+        protected SectionModel SectionModel;
+        #endregion
+
+        #region Files
+        protected FileModel FileModel;
+        #endregion
+
+        #endregion
+
+
+
+
         [SetUp]
         public void SetUp()
         {
@@ -124,6 +139,22 @@ namespace NHibernateTests.ServicesTests
                                { Course = TestCourse3,Marks = new List<JournalMarkModel>
                                                                                      { TestJournalMark }, Name = "test journal" };
 
+            FileModel = new FileModel {FileName = "test", Address = "test"};
+            SectionModel = new SectionModel {IconName = "test", Text = "test", Title = "tset"};
+
+            LearningMaterialModel = new LearningMaterialModel
+                                        {
+                                            Level = 1,
+                                            CreationDate = DateTime.Now,
+                                            Description = "test",
+                                            Goals = "test",
+                                            Summary = "test",
+                                            UpdateDate = DateTime.Now,
+                                            VersionNumber = "111",
+                                            Tests = new List<TestModel> {TestTest},
+                                            Files = new List<FileModel> {FileModel},
+                                            Sections = new List<SectionModel> {SectionModel}
+                                        };
 
             using (var session = DataAccess.OpenSession())
             {
@@ -151,6 +182,9 @@ namespace NHibernateTests.ServicesTests
                 session.Save(TestJournal);
                 session.Save(TestContentType);
                 session.Save(TestContent);
+                session.Save(FileModel);
+                session.Save(SectionModel);
+                session.Save(LearningMaterialModel);
                 session.Flush();
             }
         }

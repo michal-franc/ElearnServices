@@ -12,11 +12,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NHiberanteDal", "NHiberante
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NHibernateTests", "NHibernateTests\NHibernateTests.csproj", "{A19ED946-F053-4997-9279-40672D23A08D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CA8889DD-4107-4657-845D-D7AD3468EE40}"
-	ProjectSection(SolutionItems) = preProject
-		..\gitignore.gitignore = ..\gitignore.gitignore
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "elearnTests", "elearnTests\elearnTests.csproj", "{818C18C7-3AD3-4BBD-8FBE-EF8460EAC3E8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{BC11BE79-A47D-4DF4-9A47-498700E05807}"
@@ -86,7 +81,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{A19ED946-F053-4997-9279-40672D23A08D} = {BC11BE79-A47D-4DF4-9A47-498700E05807}
 		{818C18C7-3AD3-4BBD-8FBE-EF8460EAC3E8} = {BC11BE79-A47D-4DF4-9A47-498700E05807}
+		{A19ED946-F053-4997-9279-40672D23A08D} = {BC11BE79-A47D-4DF4-9A47-498700E05807}
 	EndGlobalSection
 EndGlobal

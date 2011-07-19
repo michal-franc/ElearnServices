@@ -116,8 +116,9 @@ namespace elearn.Controllers
         [HttpGet]
         public ActionResult List()
         {
-            var tests = _testService.GetAllTests();
-            return View(tests);
+            //var tests = _testService.GetNotFinishedTests();
+            throw new NotImplementedException();
+            //return View(tests);
         }
 
 

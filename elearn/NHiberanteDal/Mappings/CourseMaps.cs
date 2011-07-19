@@ -27,6 +27,7 @@ namespace NHiberanteDal.Mappings
             HasMany(x => x.Contents).KeyColumns.Add("CourseId").Cascade.All().LazyLoad();
             HasMany(x => x.Surveys).KeyColumns.Add("CourseId").Cascade.All().LazyLoad();
             HasMany(x => x.Tests).KeyColumns.Add("CourseId").Cascade.All().LazyLoad();
+            HasMany(x => x.LearningMaterials).KeyColumns.Add("CourseId").Cascade.All().Not.LazyLoad();
         }
     }
 

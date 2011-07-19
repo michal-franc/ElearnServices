@@ -85,6 +85,7 @@
     <Compile Include="DataAccess\QueryObjects\QueryCoursesByProfileId.cs" />
     <Compile Include="DataAccess\QueryObjects\QueryGroupTypesByName.cs" />
     <Compile Include="DataAccess\QueryObjects\QueryProfilesByName.cs" />
+    <Compile Include="DataAccess\QueryObjects\QueryTestsByNotFinished.cs" />
     <Compile Include="DataAccess\Repository.cs" />
     <Compile Include="DTO\CourseDto.cs" />
     <Compile Include="DTO\CourseSignatureDto.cs" />
@@ -92,13 +93,16 @@
     <Compile Include="DTO\DataTransferObject.cs" />
     <Compile Include="DTO\DtoBaseClass.cs" />
     <Compile Include="DTO\DTOMappings.cs" />
+    <Compile Include="DTO\FileDto.cs" />
     <Compile Include="DTO\FinishedTestModelDto.cs" />
     <Compile Include="DTO\ForumModelDto.cs" />
     <Compile Include="DTO\GroupModelDto.cs" />
     <Compile Include="DTO\GroupTypeModelDto.cs" />
     <Compile Include="DTO\JournalMarkModelDto.cs" />
     <Compile Include="DTO\JournalModelDto.cs" />
+    <Compile Include="DTO\LearningMaterialDto.cs" />
     <Compile Include="DTO\ProfileModelDto.cs" />
+    <Compile Include="DTO\SectionDto.cs" />
     <Compile Include="DTO\ShoutBoxMessageModelDto.cs" />
     <Compile Include="DTO\ShoutboxModelDto.cs" />
     <Compile Include="DTO\SurveyModelDto.cs" />
@@ -111,6 +115,7 @@
     <Compile Include="Mappings\ContentMaps.cs" />
     <Compile Include="Mappings\CourseMaps.cs" />
     <Compile Include="Mappings\ForumMaps.cs" />
+    <Compile Include="Mappings\LearningMaterialMaps.cs" />
     <Compile Include="Mappings\ProfileMaps.cs" />
     <Compile Include="Mappings\ShoutboxMaps.cs" />
     <Compile Include="Mappings\SurveyMaps.cs" />
@@ -119,6 +124,7 @@
     <Compile Include="Models\ContentTypeModel.cs" />
     <Compile Include="Models\CourseModels.cs" />
     <Compile Include="Models\CourseTypeModel.cs" />
+    <Compile Include="Models\FileModel.cs" />
     <Compile Include="Models\FinishedTestModel.cs" />
     <Compile Include="Models\ForumModels.cs" />
     <Compile Include="Models\GroupModel.cs" />
@@ -126,9 +132,11 @@
     <Compile Include="Models\IModel.cs" />
     <Compile Include="Models\JournalMarkModel.cs" />
     <Compile Include="Models\JournalModel.cs" />
+    <Compile Include="Models\LearningMaterialModel.cs" />
     <Compile Include="Models\PrivateMessageModel.cs" />
     <Compile Include="Models\ProfileModels.cs" />
     <Compile Include="Models\ProfileTypeModel.cs" />
+    <Compile Include="Models\SectionModel.cs" />
     <Compile Include="Models\ShoutBoxMessageModel.cs" />
     <Compile Include="Models\ShoutboxModels.cs" />
     <Compile Include="Models\SurveyModels.cs" />

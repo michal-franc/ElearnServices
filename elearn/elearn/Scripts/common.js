@@ -32,3 +32,13 @@ function GetId(data) {
     var id = data.toString().substring(index + 1, data.length);
     return id;
 }
+
+
+function ConvertRawDataToSyntaxTexty(item) {
+
+}
+
+//Javascript
+function removeWhiteSpace(data) {
+    return data.replace(/^\s*|\s*$/g, '');
+}

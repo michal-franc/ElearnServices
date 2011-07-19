@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using NHiberanteDal.Models;
 using System.Runtime.Serialization;
 using System.ComponentModel.DataAnnotations;
@@ -37,6 +38,8 @@ namespace NHiberanteDal.DTO
         public SurveyModel LatestSurvey {get;set;}
         [DataMember]
         public bool IsPasswordProtected { get; set; }
+        [DataMember]
+        public List<LearningMaterialDto> LearningMaterials { get; set; }
     }
 
 }

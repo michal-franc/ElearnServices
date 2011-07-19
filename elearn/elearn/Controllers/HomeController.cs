@@ -7,8 +7,6 @@ namespace elearn.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            ViewBag.Message = "Tu bedzie jakas powitalna tresc";
-
             return View("Index");
         }
 

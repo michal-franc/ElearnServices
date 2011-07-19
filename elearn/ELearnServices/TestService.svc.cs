@@ -96,6 +96,25 @@ namespace ELearnServices
             }
         }
 
+
+        public List<TestSignatureDto> GetNotFinishedTests()
+        {
+            try
+            {
+                using (var session = DataAccess.OpenSession())
+                {
+                    
+                    //return TestSignatureDto.Map(tests);
+                    throw new NotImplementedException();
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Error : TestService.GetAllTests - {0}", ex.Message);
+                return new List<TestSignatureDto>();
+            }
+        }
+    
         public List<TestSignatureDto> GetMyTests(int profileId)
         {
             try

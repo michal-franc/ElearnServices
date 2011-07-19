@@ -60,7 +60,7 @@ namespace elearnTests.MVCTests
         public void Can_convert_entity_to_form_collection()
         {
             #region Arrange
-            var profile = new ProfileModelDto { Email = "test@test.com", ID = 1, IsActive = true, LoginName = "test", Role = "test" };
+            var profile = new ProfileModelDto { Email = "test@test.com", ID = 1, IsActive = true,DisplayName="test", LoginName = "test", Role = "test" };
             #endregion
 
             #region Act
@@ -70,10 +70,11 @@ namespace elearnTests.MVCTests
             #endregion
 
             #region Assert
-            Assert.That(form.Count,Is.EqualTo(5));
+            Assert.That(form.Count,Is.EqualTo(6));
             Assert.That(form["Email"], Is.EqualTo("test@test.com"));
             Assert.That(form["IsActive"], Is.EqualTo("True"));
-            Assert.That(form["Name"], Is.EqualTo("test"));
+            Assert.That(form["LoginName"], Is.EqualTo("test"));
+            Assert.That(form["DisplayName"], Is.EqualTo("test"));
             Assert.That(form["ID"], Is.EqualTo("1"));
             Assert.That(form["Role"], Is.EqualTo("test"));
             #endregion

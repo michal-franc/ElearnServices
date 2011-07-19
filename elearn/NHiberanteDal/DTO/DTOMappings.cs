@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using AutoMapper;
 using NHiberanteDal.Models;
 
@@ -16,6 +15,15 @@ namespace NHiberanteDal.DTO
                 Logger.Info("DTO Mappings Initialized");
                 try
                 {
+
+                    Mapper.CreateMap<SectionDto, SectionModel>();
+                    Mapper.CreateMap<SectionModel, SectionDto>();
+                    Mapper.CreateMap<FileDto, FileModel>();
+                    Mapper.CreateMap<FileModel, FileDto>();
+                    Mapper.CreateMap<LearningMaterialDto, LearningMaterialModel>();
+                    Mapper.CreateMap<LearningMaterialModel, LearningMaterialDto>();
+
+
                     Mapper.CreateMap<JournalModelDto, JournalModel>();
                     Mapper.CreateMap<JournalModel, JournalModelDto>();
                     Mapper.CreateMap<JournalMarkModelDto, JournalMarkModel>();
