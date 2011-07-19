@@ -1,0 +1,22 @@
+﻿@model NHiberanteDal.DTO.SectionDto
+   
+   
+    <h3 class="bar ui-accordion-header ui-helper-reset ui-state-default ui-corner-all" role="tab" aria-expanded="false" tabindex="-1">@Model.Title</h3>
+	    <div class="content ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" role="tabpanel" style="display: none; ">
+            @Html.Partial("_MarkItUpEditorPartial", new elearn.Models.MarkItUpDataModel() { Data = @Model.Text, Name = "section" + @ViewBag.Counter }) 
+
+        <button  name="sectionSaveBtn" sectionnumber='@ViewBag.Counter'  class="button_colour">
+            <img src="@Url.Content("~/Content/Icons/ok.png")"/>
+        <span>save</span>
+        </button>
+
+        <button  name="sectionRemoveBtn" sectionnumber='@ViewBag.Counter'  class="button_colour">
+            <img src="@Url.Content("~/Content/Icons/ok.png")"/>
+        <span>remove</span>
+        </button>
+
+        <br />
+        <br />
+        <br />
+
+    </div>

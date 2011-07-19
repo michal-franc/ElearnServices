@@ -1,0 +1,77 @@
+﻿@model NHiberanteDal.DTO.LearningMaterialDto
+
+@{
+    ViewBag.Title = "Learning Material Details";
+}
+<div class="box grid_16">
+    <h2 class="box_head grad_colour">Info</h2>
+    <a href="#" class="toggle">&nbsp;</a>
+    <div class="toggle_container">
+    <ul class="block content_accordion ui-accordion ui-widget ui-helper-reset ui-sortable" role="tablist">
+	    <li class="ui-accordion-li-fix">
+		    <h3 class="bar ui-accordion-header ui-helper-reset ui-state-default ui-corner-all" role="tab" aria-expanded="true" tabindex="0">Description</h3>
+		    <div class="content ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" role="tabpanel" style="display: none; ">
+                <div class="textyConvert">
+                    @Html.Raw(Model.Description)
+                </div>
+		    </div>
+	    </li>
+	    <li class="ui-accordion-li-fix">
+		    <h3 class="bar ui-accordion-header ui-helper-reset ui-state-default ui-corner-all" role="tab" aria-expanded="false" tabindex="-1">Goals</h3>
+		    <div class="content ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" role="tabpanel" style="display: none; ">
+                <div class="textyConvert">
+                    @Html.Raw(Model.Goals)
+               </div>
+		    </div>
+	    </li>
+    </ul>
+    </div>
+</div>
+
+@Html.Partial("_SectionPartial", Model.Sections)
+
+
+<div class="box grid_16">
+    <h2 class="box_head grad_colour">Summary</h2>
+    <a href="#" class="toggle">&nbsp;</a>
+    <div class="toggle_container">
+    <ul class="block content_accordion ui-accordion ui-widget ui-helper-reset ui-sortable" role="tablist">
+	    <li class="ui-accordion-li-fix">
+		    <h3 class="bar ui-accordion-header ui-helper-reset ui-state-default ui-corner-all" role="tab" aria-expanded="true" tabindex="0">Summary</h3>
+		    <div class="content ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" role="tabpanel" style="display: none; ">
+                <div class="textyConvert">
+                    @Html.Raw(Model.Summary)
+                </div>
+		    </div>
+	    </li>
+         <li class="ui-accordion-li-fix">
+		    <h3 class="bar ui-accordion-header ui-helper-reset ui-state-default ui-corner-all" role="tab" aria-expanded="false" tabindex="-1">More ?</h3>
+		    <div class="content ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" role="tabpanel" style="display: none; ">
+			    @Html.Raw(Model.Links)
+		    </div>
+	    </li>
+    </ul>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+
+
+    $(function () {
+
+        $(".textyConvert").each(function () {
+            $(this).html(convert(removeWhiteSpace($(this).html())));
+            $(this).children("pre").each(function (index, item) {
+                $(this).html($(this).html().replace(/\;/g, ";\n"));
+                $(this).html($(this).html().replace(/\{/g, "{\n"));
+            });
+        });
+        SyntaxHighlighter.all();
+
+    })
+
+
+
+</script>

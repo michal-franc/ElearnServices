@@ -1,0 +1,76 @@
+﻿@model NHiberanteDal.DTO.LearningMaterialDto
+
+@{
+    var markitUpId = "markItUpsection";
+    var previewId = "previewsection";
+}
+@{var counter=0;}
+@foreach (var sect in Model.Sections)
+{ 
+    ViewBag.Counter=counter;
+    @Html.Partial("_SingleSectionEditor", sect, this.ViewData)
+    counter++;
+}
+
+
+<button  id="sectionAddBtn" class="button_colour">
+    <img src="@Url.Content("~/Content/Icons/ok.png")"/>
+<span>Add</span>
+
+<script type="text/javascript">
+
+    $(function () {
+
+        $('[name="sectionSaveBtn"]').click(function () {
+
+        var sectionId = $(this).attr('sectionnumber');
+            $.ajax({
+            type: "POST",
+            url:"@Url.Action("UpdateSection", "LearningMaterial")/@Model.ID",
+            data: "data="+$("#"+"@markitUpId"+sectionId).val()+"&sectionNumber="+sectionId,
+            datatype:'json',
+            succes:function(data)
+            {
+                alert('operation : '+data);
+            }
+            });
+
+        });
+
+
+        $('[name="sectionRemoveBtn"]').click(function () {
+
+        var sectionId = $(this).attr('sectionnumber');
+            $.ajax({
+            type: "GET",
+            url:"@Url.Action("RemoveSection", "LearningMaterial")",
+            data: "id="+@Model.ID+"&sectionId="+sectionId,
+            datatype:'json',
+            succes:function(data)
+            {
+                alert('operation : '+data);
+            }
+            });
+
+        });
+
+        //todo more sections at one click
+        $("#sectionAddBtn").click(function(){
+        
+            $.ajax({
+            type: "GET",
+            url:"@Url.Action("AddSections", "LearningMaterial", new { id = Model.ID })",
+            data: "count="+1,
+            datatype:'json',
+            succes:function(data)
+            {
+                alert('operation : '+data);
+            }
+            });
+        
+        });
+
+    })
+
+
+</script>

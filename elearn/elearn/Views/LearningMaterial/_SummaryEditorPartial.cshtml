@@ -1,0 +1,35 @@
+﻿@model NHiberanteDal.DTO.LearningMaterialDto
+
+@{
+    var markitUpId = "markItUpsummary";
+    var previewId = "previewsummary";
+}
+
+@*todo limit chars in goals  chars counter*@
+@Html.Partial("_MarkItUpEditorPartial",new elearn.Models.MarkItUpDataModel(){ Data=Model.Summary,Name="summary"})
+
+<button id="btnSaveSummary" class="button_colour">
+    <img src="@Url.Content("~/Content/Icons/ok.png")"/>
+    <span>save</span>
+</button>
+
+<br />
+<br />
+<br />
+
+<script type="text/javascript">
+    $(function () {
+        $("#btnSaveSummary").click(function () {
+            $.ajax({
+            type: "POST",
+            url:"@Url.Action("UpdateSummary","LearningMaterial")/@Model.ID",
+            data: "data="+$("#"+"@markitUpId").val(),
+            datatype:'json',
+            succes:function(data)
+            {
+                alert('operation : '+data);
+            }
+            });
+        });
+    })
+</script>

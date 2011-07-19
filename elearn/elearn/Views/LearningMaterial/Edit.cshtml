@@ -1,0 +1,64 @@
+﻿
+
+@model NHiberanteDal.DTO.LearningMaterialDto
+           
+
+@{
+    ViewBag.Title = "Edit Learning Material";
+}
+
+
+<link href="@Url.Content("~/Content/Adminica/js/tinyeditor/style.css")" rel="stylesheet" type="text/css" />
+
+<div class="box grid_16">
+    <h2 class="box_head grad_colour">Info</h2>
+    <a href="#" class="toggle">&nbsp;</a>
+    <div class="toggle_container">
+    <ul class="block content_accordion ui-accordion ui-widget ui-helper-reset ui-sortable" role="tablist">
+	    <li class="ui-accordion-li-fix">
+		    <h3 class="bar ui-accordion-header ui-helper-reset ui-state-default ui-corner-all" role="tab" aria-expanded="true" tabindex="0">Description</h3>
+		    <div class="content ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" role="tabpanel" style="display: none; ">
+                 @Html.Partial("_DescriptionEditorPartial",Model)
+		    </div>
+	    </li>
+	    <li class="ui-accordion-li-fix">
+		    <h3 class="bar ui-accordion-header ui-helper-reset ui-state-default ui-corner-all" role="tab" aria-expanded="false" tabindex="-1">Goals</h3>
+		    <div class="content ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" role="tabpanel" style="display: none; ">
+                @Html.Partial("_GoalsEditorPartial", Model)
+		    </div>
+	    </li>
+    </ul>
+    </div>
+</div>
+
+<div class="box grid_16">
+    <h2 class="box_head grad_colour">Learn</h2>
+    <a href="#" class="toggle">&nbsp;</a>
+    <div class="toggle_container">
+    <ul class="block content_accordion ui-accordion ui-widget ui-helper-reset ui-sortable" role="tablist">
+        @Html.Partial("_SectionEditorPartial", Model)
+    </ul>
+    </div>
+</div>
+
+
+<div class="box grid_16">
+    <h2 class="box_head grad_colour">Summary</h2>
+    <a href="#" class="toggle">&nbsp;</a>
+    <div class="toggle_container">
+    <ul class="block content_accordion ui-accordion ui-widget ui-helper-reset ui-sortable" role="tablist">
+	    <li class="ui-accordion-li-fix">
+		    <h3 class="bar ui-accordion-header ui-helper-reset ui-state-default ui-corner-all" role="tab" aria-expanded="true" tabindex="0">Summary</h3>
+		    <div class="content ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" role="tabpanel" style="display: none; ">
+               @Html.Partial("_SummaryEditorPartial", Model)
+		    </div>
+	    </li>
+         <li class="ui-accordion-li-fix">
+		    <h3 class="bar ui-accordion-header ui-helper-reset ui-state-default ui-corner-all" role="tab" aria-expanded="false" tabindex="-1">Links</h3>
+		    <div class="content ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" role="tabpanel" style="display: none; ">
+			    @Html.Partial("_LinksEditorPartial", Model)
+		    </div>
+	    </li>
+    </ul>
+    </div>
+</div>

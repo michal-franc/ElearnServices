@@ -82,6 +82,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InfoController.cs" />
     <Compile Include="Controllers\JournalController.cs" />
+    <Compile Include="Controllers\LearningMaterialController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\ShoutBoxController.cs" />
     <Compile Include="Controllers\SurveyController.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="Helpers\Md5Hash.cs" />
     <Compile Include="JsonMessages\ResponseMessage.cs" />
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\MarkItUpDataModel.cs" />
     <Compile Include="Models\ProfileIDGroupIDModel.cs" />
     <Compile Include="NinjectDependencyResolver.cs" />
     <Compile Include="NinjectModules.cs" />
@@ -111,6 +113,11 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Service References\JournalService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\LearningMaterialService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -1732,6 +1739,11 @@
     <Content Include="Content\Adminica\images\trans_black_less.png" />
     <Content Include="Content\Adminica\images\zero_admin.png" />
     <Content Include="Content\Adminica\images\zero_logo.png" />
+    <Content Include="Content\css\goals.css">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>goals.scss</DependentUpon>
+    </Content>
     <Content Include="Content\CustomUi.css" />
     <Content Include="Content\graphic\ajax-loader.gif" />
     <Content Include="Content\graphic\body_bg.gif" />
@@ -1874,12 +1886,17 @@
     <None Include="Content\Adminica\images\icons\large\.DS_Store" />
     <None Include="Content\Adminica\images\icons\small\.DS_Store" />
     <None Include="Content\Adminica\images\icons\small\grey\.DS_Store" />
+    <None Include="Content\css\goals.scss">
+      <Generator>ScssGenerator</Generator>
+      <LastGenOutput>goals.css</LastGenOutput>
+    </None>
     <None Include="Properties\DataSources\NHiberanteDal.DTO.CourseDto.datasource" />
     <None Include="Properties\DataSources\NHiberanteDal.DTO.CourseSignatureDto.datasource" />
     <None Include="Properties\DataSources\NHiberanteDal.DTO.CourseTypeModelDto.datasource" />
     <None Include="Properties\DataSources\NHiberanteDal.DTO.GroupModelDto.datasource" />
     <None Include="Properties\DataSources\NHiberanteDal.DTO.GroupTypeModelDto.datasource" />
     <None Include="Properties\DataSources\NHiberanteDal.DTO.JournalModelDto.datasource" />
+    <None Include="Properties\DataSources\NHiberanteDal.DTO.LearningMaterialDto.datasource" />
     <None Include="Properties\DataSources\NHiberanteDal.DTO.ProfileModelDto.datasource" />
     <None Include="Properties\DataSources\NHiberanteDal.DTO.ShoutBoxMessageModelDto.datasource" />
     <None Include="Properties\DataSources\NHiberanteDal.DTO.TestDto.datasource" />
@@ -1953,31 +1970,35 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <None Include="Service References\ProfileService\ProfileService.wsdl" />
-    <None Include="Service References\ProfileService\ProfileService.xsd">
+    <None Include="Service References\LearningMaterialService\LearningMaterialService.wsdl" />
+    <None Include="Service References\LearningMaterialService\LearningMaterialService.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ProfileService\ProfileService1.xsd">
+    <None Include="Service References\LearningMaterialService\LearningMaterialService1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ProfileService\ProfileService2.xsd">
+    <None Include="Service References\LearningMaterialService\LearningMaterialService2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ProfileService\ProfileService3.xsd">
+    <None Include="Service References\ProfileService\ProfileService1.wsdl" />
+    <None Include="Service References\ProfileService\ProfileService5.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ProfileService\ProfileService4.xsd">
+    <None Include="Service References\ProfileService\ProfileService51.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ProfileService\ProfileService52.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ProfileService\ProfileService53.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ProfileService\ProfileService54.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\TestService\configuration91.svcinfo" />
     <None Include="Service References\TestService\configuration.svcinfo" />
     <None Include="Service References\TestService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <None Include="Service References\ProfileService\configuration91.svcinfo" />
-    <None Include="Service References\ProfileService\configuration.svcinfo" />
-    <None Include="Service References\ProfileService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
@@ -2281,6 +2302,18 @@
     <Content Include="Scripts\knockout-1.2.1.js" />
     <Content Include="Scripts\loginslide.js" />
     <Content Include="Scripts\SexyDropDown.js" />
+    <None Include="Service References\ProfileService\configuration91.svcinfo" />
+    <None Include="Service References\ProfileService\configuration.svcinfo" />
+    <None Include="Service References\ProfileService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\LearningMaterialService\configuration91.svcinfo" />
+    <None Include="Service References\LearningMaterialService\configuration.svcinfo" />
+    <None Include="Service References\LearningMaterialService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -2421,6 +2454,19 @@
     <Content Include="Views\Shared\_LoggedUserLayout.cshtml" />
     <Content Include="Views\Shared\_NavTopPartial.cshtml" />
     <Content Include="Views\Shared\_SideBarPartial.cshtml" />
+    <Content Include="Views\Course\_LearningMaterialsList.cshtml" />
+    <Content Include="Views\LearningMaterial\Details.cshtml" />
+    <Content Include="Views\LearningMaterial\_SectionPartial.cshtml" />
+    <Content Include="Views\LearningMaterial\_FilesPartial.cshtml" />
+    <Content Include="Views\LearningMaterial\_TestsPartial.cshtml" />
+    <Content Include="Views\LearningMaterial\Edit.cshtml" />
+    <Content Include="Views\LearningMaterial\_SectionEditorPartial.cshtml" />
+    <Content Include="Views\LearningMaterial\_GoalsEditorPartial.cshtml" />
+    <Content Include="Views\Shared\_MarkItUpEditorPartial.cshtml" />
+    <Content Include="Views\LearningMaterial\_DescriptionEditorPartial.cshtml" />
+    <Content Include="Views\LearningMaterial\_SummaryEditorPartial.cshtml" />
+    <Content Include="Views\LearningMaterial\_SingleSectionEditor.cshtml" />
+    <Content Include="Views\LearningMaterial\_LinksEditorPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2440,6 +2486,7 @@
     <WCFMetadataStorage Include="Service References\CourseService\" />
     <WCFMetadataStorage Include="Service References\GroupService\" />
     <WCFMetadataStorage Include="Service References\JournalService\" />
+    <WCFMetadataStorage Include="Service References\LearningMaterialService\" />
     <WCFMetadataStorage Include="Service References\ProfileService\" />
     <WCFMetadataStorage Include="Service References\TestService\" />
   </ItemGroup>
