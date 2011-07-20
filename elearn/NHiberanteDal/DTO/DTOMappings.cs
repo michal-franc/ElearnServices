@@ -67,10 +67,6 @@ namespace NHiberanteDal.DTO
                         .ForMember(
                             dest => dest.IsPasswordProtected,
                             opt => opt.MapFrom(c => c.Password != null)
-                        )
-                        .ForMember(
-                            dest => dest.Description,
-                            opt => opt.Ignore()
                         );
                     Mapper.CreateMap<CourseDto, CourseModel>()
                         .ForMember(dest => dest.Tests, opt => opt.Ignore())
