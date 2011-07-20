@@ -47,5 +47,19 @@ namespace ELearnServices
                 return false;
             }
         }
+
+        public int? Add(LearningMaterialDto learningMaterial)
+        {
+            try
+            {
+                var learningModel = LearningMaterialDto.UnMap(learningMaterial);
+                return new Repository<LearningMaterialModel>().Add(learningModel);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Error : LearningMaterialService.Update -  \r\n {0}", ex.Message);
+                return null;
+            }
+        }
     }
 }

@@ -11,5 +11,8 @@ namespace ELearnServices
 
         [OperationContract]
         bool Update(LearningMaterialDto learningMaterial);
+
+        [OperationContract]
+        int? Add(LearningMaterialDto learningMaterial);
     }
 }
