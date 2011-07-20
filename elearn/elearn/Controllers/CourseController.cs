@@ -61,9 +61,10 @@ namespace elearn.Controllers
         //todo not optimal data retrieving , paging should be on the database side
         // GET: /Course/List/pageNumber
         [HttpGet]
-        public ActionResult List(int pageNumber)
+        public ActionResult List()
         {
-            var courses = _courseService.GetAllSignatures().Skip((pageNumber - 1) * Limit).Take(Limit).ToArray();
+            //var courses = _courseService.GetAllSignatures().Skip((pageNumber - 1) * Limit).Take(Limit).ToArray();
+            var courses = _courseService.GetAllSignatures();
             return View(courses);
         }
 

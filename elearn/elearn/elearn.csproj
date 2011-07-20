@@ -1756,6 +1756,7 @@
     <Content Include="Content\graphic\topnav_hover.gif" />
     <Content Include="Content\Html5CssReset.css" />
     <Content Include="Content\Adminica\images\adminica_logo_black-trans.png" />
+    <Content Include="Content\Icons\ajax-loading-2.gif" />
     <Content Include="Content\Icons\blockminus.png" />
     <Content Include="Content\Icons\blockplus.png" />
     <Content Include="Content\Icons\greenarrow.gif" />

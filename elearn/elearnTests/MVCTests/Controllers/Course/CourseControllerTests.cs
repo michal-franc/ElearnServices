@@ -463,7 +463,7 @@ namespace elearnTests.MVCTests.Controllers.Course
             ViewResult view;
             using (Mock.Playback())
             {
-                view = (ViewResult)CourseController.List(1);
+                view = (ViewResult)CourseController.List();
             }
 
             #endregion
@@ -474,6 +474,7 @@ namespace elearnTests.MVCTests.Controllers.Course
             #endregion
         }
 
+        //todo obsolete course
         [Test]
         public void Get_can_page_courses_dto_signature_list()
         {
@@ -489,7 +490,7 @@ namespace elearnTests.MVCTests.Controllers.Course
             ViewResult view;
             using (Mock.Playback())
             {
-                view = (ViewResult)CourseController.List(2);
+                view = (ViewResult)CourseController.List();
             }
 
             #endregion
