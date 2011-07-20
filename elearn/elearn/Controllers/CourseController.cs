@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
+using elearn.LearningMaterialService;
 using elearn.ProfileService;
 using NHiberanteDal.DTO;
 using elearn.CourseService;
@@ -13,6 +14,7 @@ namespace elearn.Controllers
     {
         readonly ICourseService _courseService;
         readonly IProfileService _profileService;
+        readonly ILearningMaterialService _learningService;
 
         private int _limit = -1;
 
@@ -31,10 +33,12 @@ namespace elearn.Controllers
             }
         }
 
-        public CourseController(ICourseService courseService,IProfileService profileService)
+        public CourseController(ICourseService courseService,IProfileService profileService, ILearningMaterialService learningService)
         {
             _courseService = courseService;
             _profileService = profileService;
+            _learningService = learningService;
+
         }
 
 
@@ -54,7 +58,7 @@ namespace elearn.Controllers
             return View(course);
         }
 
-        //todo not optimal data retrieving , paging should be on the server side
+        //todo not optimal data retrieving , paging should be on the database side
         // GET: /Course/List/pageNumber
         [HttpGet]
         public ActionResult List(int pageNumber)
@@ -181,7 +185,7 @@ namespace elearn.Controllers
             }
             
             ViewBag.Error = Common.ErrorMessages.Course.ModelUpdateError;
-            return View();
+            return View("Error");
         }
 
 
@@ -206,6 +210,24 @@ namespace elearn.Controllers
             }
             ViewBag.Error = Common.ErrorMessages.Profile.NoProfile;
             return View("Error");
+        }
+
+
+        //todotest
+        [HttpGet]
+        public ActionResult AddLearningMaterial(int id)
+        {
+            var course = _courseService.GetById(id);
+            var newLearningMaterial = new LearningMaterialDto { CreationDate=DateTime.Now,UpdateDate=DateTime.Now};
+            var newLmId = _learningService.Add(newLearningMaterial);
+            if (newLmId.HasValue)
+            {
+                newLearningMaterial.ID = newLmId.Value;
+                course.LearningMaterials.Add(newLearningMaterial);
+                _courseService.Update(course);
+            }
+
+            return RedirectToAction("Edit", new {id = id});
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using elearn.LearningMaterialService;
 using elearn.ProfileService;
 using elearn.CourseService;
 using NUnit.Framework;
@@ -17,6 +18,7 @@ namespace elearnTests.MVCTests.Controllers.Course
         protected MockRepository Mock;
         protected ICourseService CourseService;
         protected IProfileService ProfileService;
+        protected ILearningMaterialService LearningService;
         protected CourseController CourseController;
 
 
@@ -61,7 +63,7 @@ namespace elearnTests.MVCTests.Controllers.Course
         {
             Mock = new MockRepository();
             CourseService =  Mock.DynamicMock<ICourseService>();
-            CourseController = new CourseController(CourseService,ProfileService) {Limit = 10};
+            CourseController = new CourseController(CourseService, ProfileService, LearningService) { Limit = 10 };
         }
     }
 

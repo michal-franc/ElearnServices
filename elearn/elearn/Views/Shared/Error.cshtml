@@ -4,8 +4,10 @@
     ViewBag.Title = "Error";
 }
 
-
-@Model.Exception
+@*@if (Model.Exception != null)
+{
+    @Model.Exception
+}*@
 <h2>
     Sorry, an error occurred while processing your request.
 </h2>
