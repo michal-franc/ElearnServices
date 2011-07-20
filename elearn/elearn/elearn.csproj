@@ -1758,6 +1758,7 @@
     <Content Include="Content\Adminica\images\adminica_logo_black-trans.png" />
     <Content Include="Content\Icons\blockminus.png" />
     <Content Include="Content\Icons\blockplus.png" />
+    <Content Include="Content\Icons\greenarrow.gif" />
     <Content Include="Content\Icons\ok.png" />
     <Content Include="Content\Icons\rounderror.gif" />
     <Content Include="Content\Icons\roundok.gif" />

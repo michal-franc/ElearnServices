@@ -2,11 +2,15 @@
 
 @model NHiberanteDal.DTO.CourseDto
 
-<div id="shoutBoxMessages"></div>
-<input id="shoutBoxText" type="text"/>
-<div id="markGood" hidden="hidden" >Good</div>
-<div id="markFail" hidden="hidden">Fail</div>
-<div id="markLoading" hidden="hidden">Loading</div>
+<div style="padding:10px;">
+    <div id="shoutBoxMessages"></div>
+<br />
+<br />
+<input style="width: 100%;" id="shoutBoxText" type="text"/>
+<div id="markGood" hidden="hidden" ><img src="@Url.Content("~/Content/Icons/handup.gif")" /></div>
+<div id="markFail" hidden="hidden"><img src="@Url.Content("~/Content/Icons/handdown.gif")" /></div>
+<div id="markLoading" hidden="hidden"><img src="@Url.Content("~/Content/Icons/ajax-loading-2.gif")" /></div>
+</div>
 
 <script type="text/javascript"> 
 
@@ -24,6 +28,7 @@
                 var shoutBoxtext = $("#shoutBoxText").val();
                 $.ajax({
                     type : "POST",
+                    timeoutNumber : 5000,
                     url: "@Html.Raw(Url.Action("Add", "ShoutBox", new { id =Model.ShoutBox.ID}))",
                     data: "message="+shoutBoxtext,
                     success: function(msg) {
@@ -40,7 +45,11 @@
                     failure : function () {
                         $("#markFail").show();
                         $("#markLoading").hide();
-                    }
+                    },
+                      statusCode: { 404: function() {
+                             $("#markFail").show();
+                             $("#markLoading").hide();
+                        }}
                 });
             }
         });
@@ -71,7 +80,11 @@
                 failure : function () {
                     $("#markFail").show();
                     $("#markLoading").hide();
-                }
+                },
+                statusCode: { 404: function() {
+                    $("#markFail").show();
+                    $("#markLoading").hide();
+                }}
             });
     };
 
@@ -79,14 +92,22 @@
     
     function FormatMessage(data) {
         var formatedMessage = 
-        FormatDate(JsonToDate(data.TimePosted)) + " "
-            + data.Author + " "
-                + data.Message + "<br />";
+        "<span style='color:grey;'>"+FormatDate(JsonToDate(data.TimePosted))+"</span>" +" &nbsp; : &nbsp; <strong>"+data.Author+"</strong>" + "&nbsp; <img width='8px' height='8px' src='@Url.Content("~/Content/Icons/greenarrow.gif")'/> &nbsp;" + data.Message + " &nbsp;<br/>";
         return formatedMessage;
     }
     
     
     function FormatDate(date) {
+
+
+        var month = date.getMonth();
+        if (month <10)
+            month = "0" + month;
+
+        var days = date.getDay();
+        if (days <10)
+            days = "0" + days;
+
         var hours = date.getHours();
         if (hours <10)
             hours = "0" + hours;
@@ -94,7 +115,7 @@
         var minutes = date.getMinutes();
         if (minutes<10)
             minutes = "0" + minutes;
-        return hours + ":" + minutes;
+        return days + "." + month + " " +hours + ":" + minutes;
     }
     
     function JsonToDate(date) {
