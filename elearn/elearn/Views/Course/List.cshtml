@@ -53,7 +53,7 @@
             Rating</label>
     </fieldset>
     </form>
-    <ul class="feature_list clearfix" style="height: 291px; overflow-x: hidden; overflow-y: hidden;">
+    <ul class="feature_list clearfix">
         @foreach (var item in Model)
         {
             Html.RenderPartial("~/Views/Course/_CourseInfoBlock.cshtml", item);
