@@ -14,6 +14,7 @@ namespace NHiberanteDal.Models
         public virtual string Description { get; set; }
         public virtual string ShortDescription { get; set; }
         public virtual string Password { get; set; }
+        public virtual string News { get; set; }
 
         //One
         public virtual CourseTypeModel CourseType { get; set; }

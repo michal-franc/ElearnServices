@@ -14,9 +14,9 @@ namespace NHiberanteDal.Mappings
             Map(x => x.CreationDate).Not.Nullable();
             Map(x => x.Description);
             Map(x => x.ShortDescription);
+            Map(x => x.News);
             Map(x=>x.Password).Nullable();
             
-
             //One
             References(x => x.Group).Not.Nullable().Cascade.All().Not.LazyLoad();
             References(x => x.CourseType).Not.Nullable().Not.LazyLoad();
@@ -24,10 +24,10 @@ namespace NHiberanteDal.Mappings
             References(x => x.ShoutBox).Not.Nullable().Cascade.All().Not.LazyLoad();
 
             //Many
-            HasMany(x => x.Contents).KeyColumns.Add("CourseId").Cascade.All().LazyLoad();
-            HasMany(x => x.Surveys).KeyColumns.Add("CourseId").Cascade.All().LazyLoad();
-            HasMany(x => x.Tests).KeyColumns.Add("CourseId").Cascade.All().LazyLoad();
-            HasMany(x => x.LearningMaterials).KeyColumns.Add("CourseId").Cascade.All().Not.LazyLoad();
+            HasMany(x => x.Contents).KeyColumns.Add("CourseId").Cascade.SaveUpdate().LazyLoad();
+            HasMany(x => x.Surveys).KeyColumns.Add("CourseId").Cascade.SaveUpdate().LazyLoad();
+            HasMany(x => x.Tests).KeyColumns.Add("CourseId").Cascade.SaveUpdate().LazyLoad();
+            HasMany(x => x.LearningMaterials).KeyColumns.Add("CourseId").Not.LazyLoad();
         }
     }
 

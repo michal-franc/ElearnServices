@@ -25,6 +25,8 @@ namespace NHiberanteDal.DTO
         [DataMember]
         public  string Description { get; set; }
         [DataMember]
+        public string News { get; set; }
+        [DataMember]
         public string ShortDescription { get; set; }
         [DataMember]
         public CourseTypeModelDto CourseType { get; set; }
