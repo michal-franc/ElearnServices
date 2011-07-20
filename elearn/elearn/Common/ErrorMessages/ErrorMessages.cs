@@ -34,7 +34,7 @@ namespace elearn.Common.ErrorMessages
 
         public static string ModelUpdateError
         {
-            get { return "Update course model error"; }
+            get { return "Update course model error -  validation"; }
         }
 
         public static string DeleteError
