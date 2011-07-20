@@ -33,7 +33,7 @@ namespace ELearnServices
         List<CourseDto> GetByCourseType(CourseTypeModelDto testCourseType);
 
         [OperationContract]
-        bool Update(CourseDto updatedCourse);
+        bool Update(CourseDto updatedCourse, bool reupload);
 
         [OperationContract]
         int? AddCourse(CourseDto newCourse);

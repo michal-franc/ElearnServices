@@ -312,7 +312,7 @@ namespace elearnTests.MVCTests.Controllers.Course
             #region Arrange
             using (Mock.Record())
             {
-                Expect.Call(CourseService.Update(Course)).Return(true);
+                Expect.Call(CourseService.Update(Course,false)).Return(true);
             }
             #endregion
 
@@ -336,7 +336,7 @@ namespace elearnTests.MVCTests.Controllers.Course
             #region Arrange
             using (Mock.Record())
             {
-                Expect.Call(CourseService.Update(Course)).Return(false);
+                Expect.Call(CourseService.Update(Course,false)).Return(false);
             }
             #endregion
 
@@ -365,7 +365,7 @@ namespace elearnTests.MVCTests.Controllers.Course
 
             using (Mock.Record())
             {
-                Expect.Call(CourseService.Update(ErrorCourse)).Repeat.Never();
+                Expect.Call(CourseService.Update(ErrorCourse,false)).Repeat.Never();
             }
             #endregion
 

@@ -200,7 +200,7 @@ namespace NHibernateTests.ServicesTests
 
             #region Act
 
-            var updateOk = new CourseService().Update(course);
+            var updateOk = new CourseService().Update(course,false);
             course = new CourseService().GetById(1);
             #endregion
 
@@ -219,7 +219,7 @@ namespace NHibernateTests.ServicesTests
             #endregion
 
             #region Act
-            var updateOk  = new CourseService().Update(course);
+            var updateOk  = new CourseService().Update(course,false);
             course = new CourseService().GetById(1);
             #endregion
 

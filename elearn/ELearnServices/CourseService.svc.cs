@@ -156,25 +156,35 @@ namespace ELearnServices
             }
         }
 
-        public bool Update(CourseDto updatedCourse)
+        //todo poprawic updatowanie learning materialsow bo teraz jest burdel :X 2 azy sciagam niepotrzebnie encje
+        public bool Update(CourseDto updatedCourse,bool reupload)
         {
             try
             {
                 using (var session = DataAccess.OpenSession())
                 {
-                    var originalCourse = session.Load<CourseModel>(updatedCourse.ID);
+                    if (reupload)
+                    {
+                        var originalCourse = session.Load<CourseModel>(updatedCourse.ID);
 
-                    var course = CourseDto.UnMap(updatedCourse);
-                    originalCourse.CourseType = course.CourseType;
-                    originalCourse.Description = course.Description;
-                    originalCourse.Logo = course.Logo;
-                    originalCourse.Name = course.Name;
-                    originalCourse.News = course.News;
-                    originalCourse.Password = course.Password;
-                    originalCourse.ShortDescription = course.ShortDescription;
-                    session.Update(originalCourse);
-                    session.Flush();
-                    return true;
+                        var course = CourseDto.UnMap(updatedCourse);
+                        originalCourse.CourseType = course.CourseType;
+                        originalCourse.Description = course.Description;
+                        originalCourse.Logo = course.Logo;
+                        originalCourse.Name = course.Name;
+                        originalCourse.News = course.News;
+                        originalCourse.Password = course.Password;
+                        originalCourse.ShortDescription = course.ShortDescription;
+                        session.Update(originalCourse);
+                        session.Flush();
+                        return true;
+                    }
+                    else
+                    {
+                        session.Update(CourseDto.UnMap(updatedCourse));
+                        session.Flush();
+                        return true;
+                    }
                 }
             }
             catch (Exception ex)

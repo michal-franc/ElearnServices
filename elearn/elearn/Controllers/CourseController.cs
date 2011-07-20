@@ -175,7 +175,7 @@ namespace elearn.Controllers
 
             if (ModelState.IsValid)
             {
-                if (_courseService.Update(course))
+                if (_courseService.Update(course,true))
                 {
                     return RedirectToAction("Details", new { id = course.ID });
                 }
@@ -219,14 +219,8 @@ namespace elearn.Controllers
         {
             var course = _courseService.GetById(id);
             var newLearningMaterial = new LearningMaterialDto { CreationDate=DateTime.Now,UpdateDate=DateTime.Now};
-            var newLmId = _learningService.Add(newLearningMaterial);
-            if (newLmId.HasValue)
-            {
-                newLearningMaterial.ID = newLmId.Value;
                 course.LearningMaterials.Add(newLearningMaterial);
-                _courseService.Update(course);
-            }
-
+                _courseService.Update(course,false);
             return RedirectToAction("Edit", new {id = id});
         }
     }

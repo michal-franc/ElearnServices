@@ -42,7 +42,7 @@
             Rating</label>
     </fieldset>
     </form>
-    <ul class="feature_list clearfix" style="height: 291px; overflow-x: hidden; overflow-y: hidden;">
+    <ul class="feature_list clearfix">
         @foreach (var material in Model.LearningMaterials)
         { 
             <li data-id="@material.ID" data-type="@material.Level"><a href="@Url.Action("Details", "LearningMaterial")/@material.ID" class="features">
