@@ -29,7 +29,7 @@
             @Html.ValidationMessageFor(model => model.Name)
         </div>
 
-                <div class="editor-label">
+        <div class="editor-label">
             @Html.LabelFor(model => model.Logo)
         </div>
         <div class="editor-field">
@@ -38,7 +38,7 @@
         </div>
 
         <div class="editor-field">
-            @Html.DropDownListFor(model => model.CourseType, ViewBag.CourseTypes as SelectList)
+            @Html.DropDownListFor(model => model.CourseTypeId, ViewBag.CourseTypes as SelectList)
             @Html.ValidationMessageFor(model => model.CourseType)
         </div>
 

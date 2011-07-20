@@ -13,10 +13,11 @@ namespace NHiberanteDal.DTO
         public static int DefaultGroupTypeId = 2;
         public static int DefaultCourseTypeId = 3;
 
+
         [DataMember]
         public int ID { get; set; }
-        [DataMember]
         [Required]
+        [DataMember]
         public string Name { get; set; }
         [DataMember]
         public DateTime CreationDate { get; set; }
@@ -30,6 +31,8 @@ namespace NHiberanteDal.DTO
         public string ShortDescription { get; set; }
         [DataMember]
         public CourseTypeModelDto CourseType { get; set; }
+        [DataMember]
+        public int CourseTypeId { get; set; }
         [DataMember]
         public  GroupModelDto Group { get; set; }
         [DataMember]

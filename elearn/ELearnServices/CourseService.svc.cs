@@ -168,7 +168,7 @@ namespace ELearnServices
                         var originalCourse = session.Load<CourseModel>(updatedCourse.ID);
 
                         var course = CourseDto.UnMap(updatedCourse);
-                        originalCourse.CourseType = course.CourseType;
+                        originalCourse.CourseType = session.Load<CourseTypeModel>(updatedCourse.CourseTypeId);
                         originalCourse.Description = course.Description;
                         originalCourse.Logo = course.Logo;
                         originalCourse.Name = course.Name;

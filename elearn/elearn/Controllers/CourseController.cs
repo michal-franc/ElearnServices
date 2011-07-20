@@ -157,10 +157,14 @@ namespace elearn.Controllers
         {
             var course = _courseService.GetById(id);
             var courseTypes = _courseService.GetAllCourseTypes().ToList();
-            ViewBag.CourseTypes = new SelectList(courseTypes, "ID", "TypeName");
+            var courseTypesList = new SelectList(courseTypes, "ID", "TypeName");
+            ViewBag.CourseTypes = courseTypesList;
+
             return View(course);
         }
 
+
+        //todo rpzemyslec tutaj logike z course type bo to usuwanie jest bez senus seriously ;/
         //Post: /Course/Edit/id
         [HttpPost]
         public ActionResult Edit(CourseDto course)
@@ -168,8 +172,6 @@ namespace elearn.Controllers
             //Fixing ModelState Valid Error
             if (ModelState.ContainsKey("CourseType"))
             {
-                int courseTypeId = Int32.Parse(ModelState["CourseType"].Value.AttemptedValue);
-                course.CourseType = new CourseTypeModelDto { ID = courseTypeId };
                 ModelState.Remove("CourseType");
             }
 
