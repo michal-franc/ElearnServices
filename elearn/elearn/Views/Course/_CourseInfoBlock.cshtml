@@ -2,7 +2,7 @@
 
 <li data-id="@Model.CourseType.TypeName" data-type="@Model.CourseType.TypeName">
 		<a id="opener" href="@Url.Action("Details", new { id = @Model.ID })" class="features">
-		<img src="@Url.Content("~/Content/Images/"+@Model.CourseType.TypeName+".png")"/><strong>@Model.Name</strong>
+		<img src="@Url.Content("~/Content/Images/"+@Model.Logo+".png")"/><strong>@Model.Name</strong>
 		<span class="update">0</span>
         </a>
 </li>
