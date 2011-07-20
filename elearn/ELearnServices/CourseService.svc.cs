@@ -160,8 +160,22 @@ namespace ELearnServices
         {
             try
             {
-                var course = CourseDto.UnMap(updatedCourse);
-                return new Repository<CourseModel>().Update(course);
+                using (var session = DataAccess.OpenSession())
+                {
+                    var originalCourse = session.Load<CourseModel>(updatedCourse.ID);
+
+                    var course = CourseDto.UnMap(updatedCourse);
+                    originalCourse.CourseType = course.CourseType;
+                    originalCourse.Description = course.Description;
+                    originalCourse.Logo = course.Logo;
+                    originalCourse.Name = course.Name;
+                    originalCourse.News = course.News;
+                    originalCourse.Password = course.Password;
+                    originalCourse.ShortDescription = course.ShortDescription;
+                    session.Update(originalCourse);
+                    session.Flush();
+                    return true;
+                }
             }
             catch (Exception ex)
             {
