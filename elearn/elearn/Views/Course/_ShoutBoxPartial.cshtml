@@ -6,9 +6,9 @@
     <div id="shoutBoxMessages"></div>
 <br />
 <br />
-<input style="width: 100%;" id="shoutBoxText" type="text"/>
-<div id="markGood" hidden="hidden" ><img src="@Url.Content("~/Content/Icons/handup.gif")" /></div>
-<div id="markFail" hidden="hidden"><img src="@Url.Content("~/Content/Icons/handdown.gif")" /></div>
+<input style="width: 80%;display:inline;" id="shoutBoxText" type="text"/>
+<span id="markGood" hidden="hidden" ><img style="vertical-align:middle;" width="20px" height="20px" src="@Url.Content("~/Content/Icons/handup.gif")" /></span>
+<span id="markFail" hidden="hidden"><img  style="vertical-align:middle;" width="20px" height="20px" src="@Url.Content("~/Content/Icons/handdown.gif")" /></span>
 <div id="markLoading" hidden="hidden"><img src="@Url.Content("~/Content/Icons/ajax-loading-2.gif")" /></div>
 </div>
 
@@ -21,7 +21,6 @@
             var code = (e.keyCode ? e.keyCode : e.which);
             //enter code
             if (code == 13) {
-                
                 $("#markGood").hide();
                 $("#markFail").hide();
                 $("#markLoading").show();

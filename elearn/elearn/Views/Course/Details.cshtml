@@ -55,14 +55,10 @@
             <img height="24" width="24"  alt="Bended Arrow Right" src="@Url.Content("~/Content/Adminica/images/icons/small/white/fountain_pen.png")">
             <span>Tests</span>
         </button>
-        if (Model.Group.Users.Any(c => c.LoginName == User.Identity.Name))
-        {
         <button id="btnLeaveCourse" class="button_colour" style="margin-top: 210%;">
             <img height="24" width="24" alt="Bended Arrow Right" src="@Url.Content("~/Content/Adminica/images/icons/small/white/exit.png")">
             <span>Leave</span>
         </button>
-        }
-
     }
 </div>
 <hr class="grid_16" />
@@ -78,6 +74,7 @@
 
     $(function()
         {
+
         $("#btnJoinCourse").click(function() {
               $.ajax({
                     type: "POST",
@@ -86,53 +83,48 @@
                     dataType: "json",
                     success: function(data) {
                         if (data.IsSuccess) {
-                            $("#summary").text("You have succesfully joined course!");
-                            $("#btnJoin").hide();
-                        }
-                        else {
-                            $("#btnJoin").hide();
+                            ShowGreenAlert("You have succesfully joined course!");
+                            $("#btnJoinCourse").hide();
                         }
                     },
                     error: function() {
-                        $("#summary").text("Error");
-                        $("#btnJoin").hide();
+                        ShowRedAlert();
                     },
                     statusCode: { 404: function() {
-                        $("#summary").text("Error");
-                        $("#btnJoin").hide();
+                        ShowRedAlert();
                     }}
              });
             return false;
 
         });
 
-        $("#btnLeaveCourse").click(function() {
-           $.ajax({
-                    type : "POST",
-                    url: "@Url.Action("Leave","Group")",
-                    data : "groupId=" + @Model.Group.ID,
-                    cache: false,
-                    dataType: "json",
-                    success: function(data) {
-                        if (data.IsSuccess) {
-                            $("#summary").text("Success");
-                            $("#modalResult").text("true");
-                        }
-                        else {
-                                $("#summary").text("Failed");
-                            }
-                    },
-                    error : function() {
-                        $("#summary").text("Error");
-                    },
-                    statusCode: { 404: function() {
-                        $("#summary").text("Error");
-                        $("#btnJoin").hide();
-                    }}
-                });
-                return false;
+//        $("#btnLeaveCourse").click(function() {
+//           $.ajax({
+//                    type : "POST",
+//                    url: "@Url.Action("Leave","Group")",
+//                    data : "groupId=" + @Model.Group.ID,
+//                    cache: false,
+//                    dataType: "json",
+//                    success: function(data) {
+//                        if (data.IsSuccess) {
+//                            $("#summary").text("Success");
+//                            $("#modalResult").text("true");
+//                        }
+//                        else {
+//                                $("#summary").text("Failed");
+//                            }
+//                    },
+//                    error : function() {
+//                        $("#summary").text("Error");
+//                    },
+//                    statusCode: { 404: function() {
+//                        $("#summary").text("Error");
+//                        $("#btnJoin").hide();
+//                    }}
+//                });
+//                return false;
 
-            });
+//            });
     });
 
 </script>
