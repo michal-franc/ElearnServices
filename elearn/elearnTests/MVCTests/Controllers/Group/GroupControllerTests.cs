@@ -32,7 +32,7 @@ namespace elearnTests.MVCTests.Controllers.Group
             Mock = new MockRepository();
             GroupService = Mock.DynamicMock<IGroupService>();
             ProfileService = Mock.DynamicMock<IProfileService>();
-            GroupController = new GroupController(GroupService, ProfileService, JournalService);
+            GroupController = new GroupController(GroupService, JournalService);
 
             SampleGroup = new GroupModelDto { ID = 1, GroupName = "test" };
             SampleProfile = new ProfileModelDto { ID = 1, LoginName = "test" };
@@ -80,71 +80,6 @@ namespace elearnTests.MVCTests.Controllers.Group
     [TestFixture]
     public class Join : BaseTest
     {
-
-
-        [Test]
-        public void Get_if_profile_not_in_group_return_partial_join()
-        {
-            #region Arrange
-
-            GroupController.ControllerContext =
-                TestHelper.MockControllerContext(GroupController).WithAuthenticatedUser("test");
-
-            using (Mock.Record())
-            {
-                Expect.Call(ProfileService.GetByName("test")).Return(SampleProfile).IgnoreArguments();
-            }
-            #endregion
-
-            #region Act
-
-            PartialViewResult partialView;
-            using (Mock.Playback())
-            {
-                partialView = (PartialViewResult) GroupController.Join(1,1,true);
-            }
-
-            #endregion
-
-            #region Assert
-            Assert.That(partialView,Is.InstanceOf<PartialViewResult>());
-            Assert.That(partialView.ViewName, Is.EqualTo("_Join"));
-            Assert.That(partialView.ViewData.Model, Is.InstanceOf<JoinGroupModel>());
-
-            #endregion
-        }
-
-
-        [Test]
-        public void Get_if_profile_null_then_return_partial_error()
-        {
-            #region Arrange
-            GroupController.ControllerContext =
-                 TestHelper.MockControllerContext(GroupController).WithAuthenticatedUser("test");
-            using (Mock.Record())
-            {
-                Expect.Call(ProfileService.GetByName("test")).Return(null);
-            }
-            #endregion
-
-            #region Act
-
-            PartialViewResult view;
-            using (Mock.Playback())
-            {
-                view = (PartialViewResult)GroupController.Join(1,1, true);
-            }
-
-            #endregion
-
-            #region Assert
-            Assert.That(view.ViewName, Is.EqualTo("_Error"));
-            Assert.That(view.ViewBag.Error, Is.Not.Null);
-            Assert.That(view.ViewData["Error"], Is.EqualTo(elearn.Common.ErrorMessages.Group.ProfileJoinError));
-            #endregion
-        }
-				
-
         [Test]
         public void Post_adds_profile_to_group_then_returns_succes_msg()
         {
@@ -160,7 +95,7 @@ namespace elearnTests.MVCTests.Controllers.Group
             JsonResult result;
             using (Mock.Playback())
             {
-               result = (JsonResult)GroupController.Join(1,1,1);
+               result = (JsonResult)GroupController.Join(1,1);
             }
 
             #endregion
@@ -187,7 +122,7 @@ namespace elearnTests.MVCTests.Controllers.Group
             JsonResult result;
             using (Mock.Playback())
             {
-                result = (JsonResult)GroupController.Join(1,1,1);
+                result = (JsonResult)GroupController.Join(1,1);
             }
 
             #endregion
@@ -204,68 +139,6 @@ namespace elearnTests.MVCTests.Controllers.Group
     [TestFixture]
     public class Leave : BaseTest
     {
-        [Test]
-        public void Get_gets_profile_then_return_partial_leave()
-        {
-            #region Arrange
-            SampleGroup.Users.Add(SampleProfile);
-
-            GroupController.ControllerContext =
-                TestHelper.MockControllerContext(GroupController).WithAuthenticatedUser("test");
-
-            using (Mock.Record())
-            {
-                Expect.Call(ProfileService.GetByName("test")).Return(SampleProfile).IgnoreArguments();
-            }
-            #endregion
-
-            #region Act
-
-            PartialViewResult partialView;
-            using (Mock.Playback())
-            {
-                partialView = (PartialViewResult) GroupController.Leave(1);
-            }
-
-            #endregion
-
-            #region Assert
-            Assert.That(partialView, Is.InstanceOf<PartialViewResult>());
-            Assert.That(partialView.ViewName, Is.EqualTo("_Leave"));
-            Assert.That(partialView.ViewData.Model.ToString(), Is.EqualTo(new ProfileIDGroupIDModel(1,1).ToString()));
-            #endregion
-        }
-
-
-        [Test]
-        public void Get_if_profile_null_then_dont_update_and_return_error_msg()
-        {
-            #region Arrange
-            GroupController.ControllerContext =
-                    TestHelper.MockControllerContext(GroupController).WithAuthenticatedUser("test");
-            using (Mock.Record())
-            {
-                Expect.Call(ProfileService.GetByName("test")).Return(null);
-            }
-            #endregion
-
-            #region Act
-
-            PartialViewResult view;
-            using (Mock.Playback())
-            {
-                view = (PartialViewResult)GroupController.Leave(1);
-            }
-
-            #endregion
-
-            #region Assert
-            Assert.That(view.ViewBag.Error, Is.Not.Null);
-            Assert.That(view.ViewData["Error"], Is.EqualTo(elearn.Common.ErrorMessages.Group.ProfileLeaveError));
-            Assert.That(view.ViewName, Is.EqualTo("_Error"));
-
-            #endregion
-        }
 
         [Test]
         public void Post_removes_profile_from_group_then_returns_succes_msg()
@@ -282,7 +155,7 @@ namespace elearnTests.MVCTests.Controllers.Group
             JsonResult result;
             using (Mock.Playback())
             {
-                result = (JsonResult)GroupController.Leave(1,1);
+                result = (JsonResult)GroupController.Leave(1);
             }
 
             #endregion
@@ -309,7 +182,7 @@ namespace elearnTests.MVCTests.Controllers.Group
             JsonResult result;
             using (Mock.Playback())
             {
-                result = (JsonResult)GroupController.Leave(1,1);
+                result = (JsonResult)GroupController.Leave(1);
             }
 
             #endregion

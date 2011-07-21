@@ -4,13 +4,20 @@
 {
     @Html.TextBox("Password", "", new { id = "txtBoxPassword", type = "Password" })
 }
- <button id="btnJoin" >Join</button>
-<label id="summary"></label>
-<label id="modalResult" hidden="hidden">false</label>
+<button style="float:right;" id="btnJoin" >Join</button>
+<button style="float:right;" id="btnOk" hidden="hidden">Ok</button>
+<span id="modalResultFail" hidden="hidden"><img src="@Url.Content("~/Content/Icons/handup.gif")" /></span>
+<span id="modalResultOk" hidden="hidden"><img src="@Url.Content("~/Content/Icons/handup.gif")" /></span>
+<span id="summary"></span>
 <script type="text/javascript">
 
     $(function()
         {
+
+        $("#btnOk").click(){
+            $("#createEventModal").dialog("close");           
+        };
+
         $("#btnJoin").click(function() {           
             var pass = $("#txtBoxPassword").val();
             var passOk = false;
@@ -23,14 +30,28 @@
                         success: function(msg) {
                             if (msg.IsSuccess) {
                                 passOk = true;
+                                $("#btnOk").show();
+                                $("#btnJoin").hide();
+                                $("#modalResultFail").hide();
                             }
                             else {
                                 $("#summary").text("Wrong Password");
+                                $("#modalResultFail").show();
                             }
                         },
                         failure: function() {
                             $("#summary").text("Error");
-                        }
+                            $("#modalResultFail").show();
+                            $("#btnOk").show();
+                            $("#btnJoin").hide();
+                        },
+                      statusCode: { 404: function() {
+                            $("#summary").text("Error");
+                            $("#modalResultFail").show();
+                            $("#modalResultFail").show();
+                            $("#btnOk").show();
+                            $("#btnJoin").hide();
+                        }}
                     });
             }
             else {
@@ -45,16 +66,32 @@
                         dataType: "json",
                         success: function(data) {
                             if (data.IsSuccess) {
-                                $("#summary").text("Success");
-                                $("#modalResult").text("true");
+                                $("#summary").text("You have succesfully joined course!");
+                                $("#modalResultOk").show();
+                                $("#btnOk").show();
+                                $("#btnJoin").hide();
                             }
                             else {
                                 $("#summary").text("Failed");
+                                $("#modalResultFail").show();
+                                $("#btnOk").show();
+                                $("#btnJoin").hide();
                             }
                         },
                         error: function() {
                             $("#summary").text("Error");
-                        }
+                            $("#modalResultFail").show();
+                            $("#modalResultFail").show();
+                            $("#btnOk").show();
+                            $("#btnJoin").hide();
+                        },
+                      statusCode: { 404: function() {
+                            $("#summary").text("Error");
+                            $("#modalResultFail").show();
+                            $("#modalResultFail").show();
+                            $("#btnOk").show();
+                            $("#btnJoin").hide();
+                        }}
                  });
             }
         });

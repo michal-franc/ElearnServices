@@ -15,7 +15,7 @@
         <strong>Date Created</strong> : @Model.CreationDate.ToShortDateString()</p>
     @if (!Model.Group.Users.Any(c => c.LoginName == User.Identity.Name))
     { 
-        <button id="btnJoinModal" style="padding: 5px; margin-top: 70px;" class="button_colour">
+        <button id="btnJoinCourse" style="padding: 5px; margin-top: 70px;" class="button_colour">
             <img style="width: 66px;" alt="Bended Arrow Right" src="@Url.Content("~/Content/Adminica/images/content/sortable.png")">
             <span style="font-size: 30px;">Join</span>
         </button>
@@ -57,7 +57,7 @@
         </button>
         if (Model.Group.Users.Any(c => c.LoginName == User.Identity.Name))
         {
-        <button id="btnLeaveModal" class="button_colour" style="margin-top: 210%;">
+        <button id="btnLeaveCourse" class="button_colour" style="margin-top: 210%;">
             <img height="24" width="24" alt="Bended Arrow Right" src="@Url.Content("~/Content/Adminica/images/icons/small/white/exit.png")">
             <span>Leave</span>
         </button>
@@ -78,67 +78,61 @@
 
     $(function()
         {
-        $("#btnJoinModal").click(function() {
-            $("<div id='createEventModal'/>").dialog({
-                    modal: true,
-                    open: function() {
-                        $.ajax({
-                                type : "GET",
-                                url: "@Html.Raw(Url.Action("Join", "Group", new { groupId = Model.Group.ID, courseId = Model.ID, isPasswordProtected = Model.IsPasswordProtected }))",
-                                cache: false,
-                                dataType: "html",
-                                success: function(data) {   
-                                    $("#createEventModal").html(data);
-                                },
-                                error : function (data) {
-                                    $("#createEventModal").html(data);
-                                }
-                            });
-                    },
-                    close: function() {
-                        if($("#modalResult").text() == "true")
-                        {
-                            $("#btnJoinModal").hide();
-                            $("#btnLeaveModal").show();
+        $("#btnJoinCourse").click(function() {
+              $.ajax({
+                    type: "POST",
+                    url: "@Html.Raw(Url.Action("Join", "Group", new { courseId = Model.ID, groupId = Model.Group.ID}))",
+                    cache: false,
+                    dataType: "json",
+                    success: function(data) {
+                        if (data.IsSuccess) {
+                            $("#summary").text("You have succesfully joined course!");
+                            $("#btnJoin").hide();
                         }
-                        $("#createEventModal").remove();
+                        else {
+                            $("#btnJoin").hide();
+                        }
                     },
-                    height: 500,
-                    width: 900,
-                    title: 'Join Course'
-                });
+                    error: function() {
+                        $("#summary").text("Error");
+                        $("#btnJoin").hide();
+                    },
+                    statusCode: { 404: function() {
+                        $("#summary").text("Error");
+                        $("#btnJoin").hide();
+                    }}
+             });
             return false;
+
         });
 
-        $("#btnLeaveModal").click(function() {
-            $("<div id='createEventModal'/>").dialog({
-                    modal: true,
-                    open: function() {
-                        $.ajax({
-                                type : "GET",
-                                url:
-                                    "@Url.Action("Leave", "Group", new { groupId = Model.Group.ID })",
-                                cache: false,
-                                dataType: "html",
-                                success: function(data) {
-                                    $("#createEventModal").html(data);
-                                }
-                            });
-                    },
-                    close: function() {
-                        if($("#modalResult").text() == "true")
-                        {
-                            $("#btnJoinModal").show();
-                            $("#btnLeaveModal").hide();
+        $("#btnLeaveCourse").click(function() {
+           $.ajax({
+                    type : "POST",
+                    url: "@Url.Action("Leave","Group")",
+                    data : "groupId=" + @Model.Group.ID,
+                    cache: false,
+                    dataType: "json",
+                    success: function(data) {
+                        if (data.IsSuccess) {
+                            $("#summary").text("Success");
+                            $("#modalResult").text("true");
                         }
-                        $("#createEventModal").remove();
+                        else {
+                                $("#summary").text("Failed");
+                            }
                     },
-                    height: 500,
-                    width: 900,
-                    title: 'Leave Course'
+                    error : function() {
+                        $("#summary").text("Error");
+                    },
+                    statusCode: { 404: function() {
+                        $("#summary").text("Error");
+                        $("#btnJoin").hide();
+                    }}
                 });
-            return false;
-        });
+                return false;
+
+            });
     });
 
 </script>
