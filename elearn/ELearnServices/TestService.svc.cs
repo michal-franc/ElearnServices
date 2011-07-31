@@ -17,7 +17,7 @@ namespace ELearnServices
             DtoMappings.Initialize();
         }
 
-        public int AddTest(int courseId,TestDto test)
+        public int AddTestToCourse(int courseId,TestDto test)
         {
             try
             {
@@ -35,21 +35,53 @@ namespace ELearnServices
             }
             catch (Exception ex)
             {
-                Logger.Error("Error : TestService.AddTest - {0}", ex.Message);
+                Logger.Error("Error : AddTestToCourse - {0}", ex.Message);
                 return -1;
             }
 
         }
 
-        public void DeleteTest(TestDto test)
+
+        public int AddTestToLearningMaterial(int learningMaterialId, TestDto test)
         {
             try
             {
-                DataAccess.InTransaction(session => session.Delete(TestDto.UnMap(test)));
+                var id = -1;
+                DataAccess.InTransaction(session =>
+                {
+                    var learningMaterial = session.Get<LearningMaterialModel>(learningMaterialId);
+                    var model = TestDto.UnMap(test);
+                    id = (int)session.Save(model);
+                    learningMaterial.Tests.Add(model);
+                    session.Save(learningMaterial);
+                });
+                Logger.Trace("Created Test id - {0}", id);
+                return id;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Error : AddTestToLearningMaterial - {0}", ex.Message);
+                return -1;
+            }
+
+        }
+
+        public bool DeleteTest(int id)
+        {
+            try
+            {
+                using (var session = DataAccess.OpenSession())
+                {
+                    var test = session.Get<TestModel>(id);
+                    session.Delete(test);
+                    session.Flush();
+                    return true;
+                }
             }
             catch (Exception ex)
             {
                 Logger.Error("Error : TestService.DeleteTest - {0}", ex.Message);
+                return false;
             }
         }
 
@@ -203,6 +235,51 @@ namespace ELearnServices
             }
         }
 
+
+
+        public TestQuestionModelDto GetTestQuestion(int id)
+        {
+            try
+            {
+                var tesquestion = new Repository<TestQuestionModel>().GetById(id);
+                return TestQuestionModelDto.Map(tesquestion);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Error : GetTestQuestion - {0}", ex.Message);
+                return null;
+            }
+        }
+
+        public bool UpdateTestQuestion(TestQuestionModelDto model)
+        {
+            try
+            {
+                var question = TestQuestionModelDto.UnMap(model);
+                new Repository<TestQuestionModel>().Update(question);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Error : GetTestQuestion - {0}", ex.Message);
+                return false;
+            }
+        }
+
+        public bool DeleteTestQuestion(int id)
+        {
+            try
+            {
+                var tesquestion = new Repository<TestQuestionModel>().GetById(id);
+                new Repository<TestQuestionModel>().Remove(tesquestion);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Error : DeleteTestQuestionQuestion - {0}", ex.Message);
+                return false;
+            }
+        }
     }
 }
  

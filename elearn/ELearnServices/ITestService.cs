@@ -12,16 +12,28 @@ namespace ELearnServices
         int AddQuestion(int id, TestQuestionModelDto question);
 
         [OperationContract]
+        bool DeleteTestQuestion(int id);
+
+        [OperationContract]
         TestDto GetTestDetails(int id);
 
         [OperationContract]
         bool UpdateTest(TestDto test);
 
         [OperationContract]
-        void DeleteTest(TestDto test);
+        bool DeleteTest(int id);
 
         [OperationContract]
-        int AddTest(int courseId, TestDto test);
+        int AddTestToCourse(int courseId, TestDto test);
+
+        [OperationContract]
+        int AddTestToLearningMaterial(int learningMaterialId, TestDto test);
+
+        [OperationContract]
+        TestQuestionModelDto GetTestQuestion(int id);
+
+        [OperationContract]
+        bool UpdateTestQuestion(TestQuestionModelDto model);
 
         [OperationContract]
         List<TestSignatureDto> GetAllTests();
