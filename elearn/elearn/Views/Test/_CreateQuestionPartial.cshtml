@@ -1,15 +1,20 @@
 ﻿@model NHiberanteDal.DTO.TestQuestionModelDto
-@*todo  : style form*@ @*todo  : highlight answer that is selected as correct*@
-@*todo  : dynamic test id passed to this partial View*@
-@Html.LabelFor(m => m.QuestionText)@Html.TextBoxFor(m => m.QuestionText, new { id = "txtBoxQuestionText" })
-<br />
-<label id="btnAddAnswer" style="color: green; font-weight: bold;">
-    +</label>
-<br />
-<form id="answersForm">
-<div id="Answers">
+<div class="flat_area grid_8">
+    <h2>@Html.LabelFor(model => model.QuestionLabel) @Html.TextBoxFor(model => model.QuestionLabel, new { id = "questionLabel" })</h2>
+    <h2>Question</h2>
+    @Html.Partial("_MarkItUpEditorPartial", new elearn.Models.MarkItUpDataModel() { Data = Model.QuestionText, Name = "questionText"})
+    <br />
+
 </div>
-</form>
+<div class="flat_area grid_8" style="margin-top: 52px;">
+    <h2>Answers</h2>
+    <label id="btnAddAnswer" style="color: green; font-weight: bold;">+ Add Answer</label>
+    <br />
+    <form id="answersForm">
+    <div id="Answers" style="margin-top:13px;">
+    </div>
+    </form>
+</div>
 <div class="custom-ui-smallButton">
     <button id="addQuestion">
         Create
@@ -18,15 +23,17 @@
 <script type="text/javascript">
     var id = 0;
     $(function () {
+        $("#markItUpMarkItUpquestionText").width("500px");
+        $("#markItUpquestionText").width("500px");
+        $("#markItUpquestionText").height("150px");
 
         $("#addQuestion").button({ icons: { primary: 'ui-icon-check'} });
 
         $("#addQuestion").click(function () {
             $.ajax({
                 url: "@Url.Action("CreateQuestion", "Test", new { id = @ViewBag.TestId })",
-                data: "QuestionText="+$("#txtBoxQuestionText").val(),
+                data: "&QuestionLabel="+$("#questionLabel").val()+"&QuestionText="+$("#markItUpquestionText").val(),
                 type: "POST",
-                dataType: 'json',
                 traditional: true,
                 success: function (result) {
                     if (result.IsSuccess) {
@@ -38,39 +45,58 @@
                                     url: "@Url.Action("AddAnswers", "Test")/"+questionId,
                                     data: answersData,
                                     type: "POST",
-                                    dataType: 'json',
                                     traditional: true,
                                     success: function(result) {
                                         if (result.IsSuccess) {
-
+                                            $("#addQuestionModal").dialog('close');
+                                            ShowGreenAlert('Succesfuly added question');
                                         }
                                     },
-                                    error: function() {
-                                    },
                                     failure: function() {
-                                    }
+                                        $("#addQuestionModal").dialog('close');
+                                        ShowRedAlert('Problem when adding question');
+                                    },
+                                      statusCode: { 404: function() {
+                                            $("#addQuestionModal").dialog('close');
+                                            ShowRedAlert('Problem when adding question');
+                                        }}
                                 });
                         }
                     }
-                },
-                error: function () {
                 },
                 failure: function () {
                 }
             });
             return false;
         });
+
+
         
         $("#btnAddAnswer").click(function () {
                 $("#Answers").append(
-                    "<input type='textbox' name='["+id+"].Text'></input>" +
-                    "<input type='checkbox' id='chckbox"+id+"' name='["+id+"].Correct'/>");
+                    "<div class='divAnswer'>"+
+                    "<label name='btnRemoveAnswer' style='cursor: pointer; font-weight: bold; color: Red;'>&nbsp;-&nbsp;</label>"+
+                    "<input style='display: inline;' type='textbox' name='Answers["+id+"].Text'></input>" +
+                    "<input style='display: inline;vertical-align:middle;' type='checkbox' id='chckbox"+id+"' name='Answers["+id+"].Correct'/><br/>"+
+                    "</div>");
+                     $("label[name='btnRemoveAnswer']").click(function(){
+                        $(this).parent().remove();
+                    });
             id++;
         });
     }); 
 
     function CreateAnswerData()
     {
+        var id =0;
+        $(".divAnswer").each(function(){
+            $(this).children("input[name*='Answers[']").each(function(){
+                var oldName = $(this).attr('name');
+                var newName = oldName.replace(/[0-9]+/g,id);
+                $(this).attr('name',newName);                
+            });
+            id++;
+        });
         return $("#answersForm").serialize().replace("on","true");
     }
 

@@ -9,13 +9,15 @@ namespace NHiberanteDal.Mappings
         {
             Id(x => x.ID);
             Map(x=>x.CreationDate);
-            Map(x => x.Description);
-            Map(x => x.Goals);
+            Map(x => x.Description).Length(4001);
+            Map(x => x.Title);
+            Map(x => x.IconName);
+            Map(x => x.Goals).Length(4001);
             Map(x => x.Level);
             Map(x => x.UpdateDate);
             Map(x => x.VersionNumber);
-            Map(x => x.Summary);
-            Map(x => x.Links);
+            Map(x => x.Summary).Length(4001);
+            Map(x => x.Links).Length(4001);
 
 
             //Many
@@ -32,9 +34,9 @@ namespace NHiberanteDal.Mappings
         public SectionMaps()
         {
             Id(x => x.ID);
-            Map(x => x.IconName );
+            Map(x => x.IconName);
             Map(x => x.Title);
-            Map(x => x.Text);
+            Map(x => x.Text).Length(4001);
         }
     }
 

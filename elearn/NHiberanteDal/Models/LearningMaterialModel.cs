@@ -7,6 +7,8 @@ namespace NHiberanteDal.Models
     {
         public virtual int ID { get; set; }
         public virtual string Description { get; set; }
+        public virtual string Title { get; set; }
+        public virtual string IconName { get; set; }
         public virtual string Goals { get; set; }
         public virtual int Level { get; set; }
         public virtual DateTime CreationDate { get; set; }

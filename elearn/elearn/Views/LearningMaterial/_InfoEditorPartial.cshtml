@@ -1,0 +1,43 @@
+﻿@model NHiberanteDal.DTO.LearningMaterialDto
+
+<div class="content ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom"
+    role="tabpanel" style="display: none;">
+    <div>
+        @Html.LabelFor(m => m.Title)
+        @Html.TextBoxFor(m => m.Title,new {id="txtBoxTitle"})
+    </div>
+    <div>
+        @Html.LabelFor(m => m.IconName)
+        @Html.TextBoxFor(m => m.IconName,new {id="txtBoxIconName"})
+    </div>
+        <div>
+        @Html.LabelFor(m => m.Level)
+        @Html.TextBoxFor(m => m.Level, new { id = "txtBoxLevel" })
+    </div>
+    <button id="btnSaveInfo" class="button_colour">
+        <img src="@Url.Content("~/Content/Icons/ok.png")"/>
+        <span>save</span>
+    </button>
+    <br />
+    <br />
+    <br />
+</div>
+
+
+<script type="text/javascript">
+    $(function () {
+        $("#btnSaveInfo").click(function () { 
+         $.ajax({
+            type: "POST",
+            url:"@Url.Action("UpdateInfo","LearningMaterial")/@Model.ID",
+            data: "title="+$("#txtBoxTitle").val()+"&iconName="+$("#txtBoxIconName").val()+"&level="+$("#txtBoxLevel").val(),
+            success:function(data){
+                if(data.IsSuccess)
+                    ShowGreenAlert("Info Succesfully Updated.");
+                else
+                    ShowRedAlert("Encountered problem. Try again later.");
+            }
+            });        
+        });
+    })
+</script>

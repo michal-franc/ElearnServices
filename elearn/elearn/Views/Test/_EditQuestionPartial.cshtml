@@ -1,0 +1,97 @@
+﻿@model NHiberanteDal.DTO.TestQuestionModelDto
+<div class="flat_area grid_8">
+    <h2>@Html.LabelFor(model => model.QuestionLabel) @Html.TextBoxFor(model => model.QuestionLabel, new { id = "questionLabel" })</h2>
+    <h2>
+        Question</h2>
+    @Html.Partial("_MarkItUpEditorPartial", new elearn.Models.MarkItUpDataModel() { Data = Model.QuestionText, Name = "questionText" })
+    <br />
+    @{int id = 0;}
+</div>
+<div class="flat_area grid_8" style="margin-top: 52px;">
+    <h2>
+        Answers</h2>
+    <label id="btnAddAnswer" style="color: green; font-weight: bold;">
+        + Add Answer</label>
+    <br />
+    <form id="answersForm">
+    <div id="Answers" style="margin-top: 13px;">
+        @foreach (var answer in Model.Answers)
+        { 
+            <div class="divAnswer">
+                <label name='btnRemoveAnswer' style="cursor: pointer; font-weight: bold; color: Red;">
+                    &nbsp;-&nbsp;</label>
+                @Html.TextBoxFor(a => a.Answers[id].Text)
+                @Html.CheckBoxFor(a => a.Answers[id].Correct)
+                @Html.HiddenFor(a => a.Answers[id].ID)
+            </div>
+            id++;
+        }
+    </div>
+    </form>
+</div>
+<div class="custom-ui-smallButton">
+    <button id="addQuestion">
+        Create
+    </button>
+</div>
+<script type="text/javascript">
+    var id = @id;
+
+    $(function () {
+        $("#markItUpMarkItUpquestionText").width("500px");
+        $("#markItUpquestionText").width("500px");
+        $("#markItUpquestionText").height("150px");
+
+        $("label[name='btnRemoveAnswer']").click(function(){
+            $(this).parent().remove();
+        });
+
+        $("#addQuestion").button({ icons: { primary: 'ui-icon-check'} });
+
+        $("#addQuestion").click(function () {
+            $.ajax({
+                url: "@Url.Action("EditQuestion", "Test")",
+                data: "&QuestionLabel="+$("#questionLabel").val()+"&QuestionText="+$("#markItUpquestionText").val()+"&"+CreateAnswerData(),
+                type: "POST",
+                traditional: true,
+                success: function (result) {
+                    if (result.IsSuccess) {
+                         $("#editQuestionModal").dialog('close');
+                    }
+                },
+                failure: function () {
+                     $("#editQuestionModal").dialog('close');
+                },
+                statusCode: { 404: function() {
+                    $("#editQuestionModal").dialog('close');
+                }}
+            });
+            return false;
+        });
+        
+        $("#btnAddAnswer").click(function () {
+                $("#Answers").append(
+                    "<div class='divAnswer'>"+
+                    "<label name='btnRemoveAnswer' style='cursor: pointer; font-weight: bold; color: Red;'>&nbsp;-&nbsp;</label>"+
+                    "<input style='display: inline;' type='textbox' name='Answers["+id+"].Text'></input>" +
+                    "<input style='display: inline;vertical-align:middle;' type='checkbox' id='chckbox"+id+"' name='Answers["+id+"].Correct'/><br/>"+
+                    "</div>");
+            id++;
+        });
+    }); 
+
+    function CreateAnswerData()
+    {
+        var id =0;
+        $(".divAnswer").each(function(){
+            $(this).children("input[name*='Answers[']").each(function(){
+                var oldName = $(this).attr('name');
+                var newName = oldName.replace(/[0-9]+/g,id);
+                $(this).attr('name',newName);                
+            });
+            id++;
+        });
+        return $("#answersForm").serialize().replace("on","true");
+    }
+
+</script>

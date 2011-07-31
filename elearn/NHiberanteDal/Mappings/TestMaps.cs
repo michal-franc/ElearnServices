@@ -37,10 +37,11 @@ namespace NHiberanteDal.Mappings
         public TestQuestionModelMap()
         {
             Id(x => x.ID);
-            Map(x => x.QuestionText).Not.Nullable();
+            Map(x => x.QuestionText).Length(4001).Not.Nullable();
+            Map(x => x.QuestionLabel).Not.Nullable();
 
             //Many
-            HasMany(x => x.Answers).Cascade.All().Not.LazyLoad().KeyColumns.Add("TestQuestionId");
+            HasMany(x => x.Answers).Cascade.AllDeleteOrphan().Not.LazyLoad().KeyColumns.Add("TestQuestionId");
         }
     }
 

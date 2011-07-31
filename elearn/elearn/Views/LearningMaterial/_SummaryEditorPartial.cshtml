@@ -24,10 +24,16 @@
             type: "POST",
             url:"@Url.Action("UpdateSummary","LearningMaterial")/@Model.ID",
             data: "data="+$("#"+"@markitUpId").val(),
-            datatype:'json',
-            succes:function(data)
+            success:function(data)
             {
-                alert('operation : '+data);
+                 if(data.IsSuccess)
+                {
+                    ShowGreenAlert("Succesfully Updated Summary.");
+                }
+                else
+                {
+                    ShowRedAlert("Problem Updating Summary.");
+                }
             }
             });
         });

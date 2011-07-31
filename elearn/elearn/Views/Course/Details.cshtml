@@ -55,9 +55,9 @@
             <img height="24" width="24"  alt="Bended Arrow Right" src="@Url.Content("~/Content/Adminica/images/icons/small/white/fountain_pen.png")">
             <span>Tests</span>
         </button>
-        <button id="btnLeaveCourse" class="button_colour" style="margin-top: 210%;">
-            <img height="24" width="24" alt="Bended Arrow Right" src="@Url.Content("~/Content/Adminica/images/icons/small/white/exit.png")">
-            <span>Leave</span>
+        <button style="padding: 5px"   onClick="window.location='@Url.Action("Edit", "Course", new {id=Model.ID })'"  class="button_colour">
+            <img height="24" width="24"  alt="Bended Arrow Right" src="@Url.Content("~/Content/Adminica/images/icons/small/white/fountain_pen.png")">
+            <span>Edit</span>
         </button>
     }
 </div>
@@ -67,7 +67,7 @@
         Learning Materials</h2>
     <a href="#" class="toggle">&nbsp;</a>
     <div class="toggle_container">
-            @Html.Partial("_LearningMaterialsList",Model)
+            @Html.Partial("_LearningMaterialsList", Model)
     </div>
 </div>
 <script type="text/javascript">
@@ -78,7 +78,7 @@
         $("#btnJoinCourse").click(function() {
               $.ajax({
                     type: "POST",
-                    url: "@Html.Raw(Url.Action("Join", "Group", new { courseId = Model.ID, groupId = Model.Group.ID}))",
+                    url: "@Html.Raw(Url.Action("Join", "Group", new { courseId = Model.ID, groupId = Model.Group.ID }))",
                     cache: false,
                     dataType: "json",
                     success: function(data) {
@@ -97,34 +97,6 @@
             return false;
 
         });
-
-//        $("#btnLeaveCourse").click(function() {
-//           $.ajax({
-//                    type : "POST",
-//                    url: "@Url.Action("Leave","Group")",
-//                    data : "groupId=" + @Model.Group.ID,
-//                    cache: false,
-//                    dataType: "json",
-//                    success: function(data) {
-//                        if (data.IsSuccess) {
-//                            $("#summary").text("Success");
-//                            $("#modalResult").text("true");
-//                        }
-//                        else {
-//                                $("#summary").text("Failed");
-//                            }
-//                    },
-//                    error : function() {
-//                        $("#summary").text("Error");
-//                    },
-//                    statusCode: { 404: function() {
-//                        $("#summary").text("Error");
-//                        $("#btnJoin").hide();
-//                    }}
-//                });
-//                return false;
-
-//            });
     });
 
 </script>

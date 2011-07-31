@@ -8,6 +8,7 @@ using elearn.JsonMessages;
 using elearn.ProfileService;
 using elearn.TestService;
 using elearn.CourseService;
+using elearn.Models;
 
 namespace elearn.Controllers
 {
@@ -47,45 +48,53 @@ namespace elearn.Controllers
 
         //
         // GET: /Test/Create
-        public ActionResult Create()
+        [HttpGet]
+        public ActionResult Create(int id,int typeId)
         {
             var test = new TestDto();
             var testTypes = _testService.GetTestTypes();
-            ViewBag.TestTypes = new SelectList(testTypes, "ID", "TypeName");
+            test.TestType = testTypes.Where(c => c.ID == typeId).SingleOrDefault();
+            ViewBag.ItemId = id;
             return View(test);
         }
 
         //
         // GET: /Test/Create
         [HttpPost]
-        public ActionResult Create(TestDto test)
+        public ActionResult Create(TestDto test,int itemid)
         {
-
-            //Fixing ModelState Valid Error
-            if (ModelState.ContainsKey("TestType"))
-            {
-                var testTypeId = Int32.Parse(ModelState["TestType"].Value.AttemptedValue);
-                test.TestType = new TestTypeModelDto() { ID = testTypeId };
-                ModelState.Remove("TestType");
-            }
-
             test.Author = _profileService.GetByName(User.Identity.Name);
+            test.CreationDate = DateTime.Now;
+            test.EditDate = DateTime.Now;
 
-
-            if (ModelState.IsValid)
-            {
-                var newId = _testService.AddTest(35, test);
+            //if (ModelState.IsValid)
+            //{
+                var newId = 0;
+                if (test.TestType.ID == 2)
+                    newId = _testService.AddTestToCourse(itemid, test);
+                else if(test.TestType.ID == 1)
+                    newId = _testService.AddTestToLearningMaterial(itemid, test);
                 if (newId > 0)
                 {
-                    return RedirectToAction("Details", new { id = newId });
+                    return RedirectToAction("Edit", new { id = newId });
                 }
                 else
                 {
                     //todo log error
                 }
-            }
+            //}
             // bug : problem with null TestTypes in View , recreate TestTypes list before sending model to view
             return View(test);
+        }
+
+        [HttpGet]
+        public ActionResult Delete(int id)
+        {
+           var result = _testService.DeleteTest(id);
+           if (result)
+               return PartialView("_StatusPartial",new StatusModel("Successfully deleted Test",StatusType.Green));
+           else
+               return PartialView("_StatusPartial", new StatusModel("Could not delete test", StatusType.Red));
         }
 
         //
@@ -93,8 +102,6 @@ namespace elearn.Controllers
         public ActionResult Edit(int id)
         {
             var test = _testService.GetTestDetails(id);
-            var courses = _courseService.GetAllSignatures();
-            ViewData["Courses"] = new SelectList(courses);
             return View(test);
         }
 
@@ -121,17 +128,6 @@ namespace elearn.Controllers
             //return View(tests);
         }
 
-
-        //
-        // GET: /Test/MyTests
-        [HttpGet]
-        public ActionResult MyTests()
-        {
-            var profile = _profileService.GetByName(User.Identity.Name);
-            var myTests = _testService.GetMyTests(profile.ID);
-            return View("List", myTests);
-        }
-
         //todotest 
         [HttpGet]
         public ActionResult CreateQuestion(int id)
@@ -140,12 +136,10 @@ namespace elearn.Controllers
             {
                 var newQuestion = new TestQuestionModelDto();
                 ViewBag.TestId = id;
-
                 return PartialView("_CreateQuestionPartial", newQuestion);
             }
-            logger.Error(elearn.Common.ErrorMessages.Test.TestIdError);
-            ViewBag.Error = elearn.Common.ErrorMessages.Test.TestIdError;
-            return PartialView("_Error");
+            logger.Error(Common.ErrorMessages.Test.TestIdError);
+            return PartialView("_ModalError");
         }
 
         [HttpPost]
@@ -154,6 +148,36 @@ namespace elearn.Controllers
             var questionId = _testService.AddQuestion(id, questionModel);
             return Json(new ResponseMessage(true, questionId));
         }
+
+        //todotest 
+        [HttpGet]
+        public ActionResult EditQuestion(int id)
+        {
+            if (id > 0)
+            {
+                var question = _testService.GetTestQuestion(id);
+                return PartialView("_EditQuestionPartial", question);
+            }
+            logger.Error(Common.ErrorMessages.Test.TestIdError);
+            return PartialView("_ModalError");
+        }
+
+        [HttpPost]
+        public JsonResult EditQuestion(int id,TestQuestionModelDto questionModel)
+        {
+            questionModel.ID = id;
+            var result = _testService.UpdateTestQuestion(questionModel);
+            return Json(new ResponseMessage(result));
+        }
+
+
+        [HttpPost]
+        public JsonResult DeleteQuestion(int id)
+        {
+            var result = _testService.DeleteTestQuestion(id);
+            return Json(new ResponseMessage(result));
+        }
+
 
         //write test
         [HttpPost]
@@ -203,17 +227,6 @@ namespace elearn.Controllers
         }
 
         [HttpPost]
-        public ActionResult DoSampleTest(TestDto testModel)
-        {
-            if (ModelState.IsValid)
-            {
-                var mark = CalculateMark(testModel, 100);
-                return View("Score", mark);
-            }
-            return View("DoTest",testModel);
-        }
-
-        [HttpPost]
         public ActionResult DoTest(TestDto testModel)
         {
             if (ModelState.IsValid)
@@ -241,9 +254,9 @@ namespace elearn.Controllers
         /// <returns></returns>
         private double CalculateMark(TestDto test,int maxValue)
         {
-            double allQuestions = test.Questions.Count;
-            double correctAnswers = test.Questions.Where(q => q.Answers.Any(a => a.IsSelected && a.Correct)).Count();
-            return (correctAnswers / allQuestions) * maxValue;
+            var allQuestionsWithAnswers = test.Questions.Where(q => q.Answers != null).ToList();
+            double correctAnswers = allQuestionsWithAnswers.Where(q => q.Answers.Any(a => a.IsSelected && a.Correct)).Count();
+            return (correctAnswers / allQuestionsWithAnswers.Count) * maxValue;
         }
     }
 }

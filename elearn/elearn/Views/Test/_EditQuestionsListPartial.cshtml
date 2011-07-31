@@ -1,0 +1,124 @@
+﻿@model NHiberanteDal.DTO.TestDto
+@if (Model.Questions != null)
+{
+    foreach (var question in Model.Questions)
+    {
+    <li class="ui-accordion-li-fix">
+        <h3 class="bar ui-accordion-header ui-helper-reset ui-state-default ui-corner-all"
+            role="tab" aria-expanded="true" tabindex="0">
+            @Html.Raw(question.QuestionLabel)
+        </h3>
+        <div class="content ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom"
+            role="tabpanel" style="display: none;">
+            <div style="height: 250px;">
+                <div class="flat_area grid_8">
+                    <h2>
+                        Question</h2>
+                    <div class="textyConvert">
+                        @Html.Raw(@question.QuestionText)
+                    </div>
+                </div>
+                <div class="flat_area grid_8">
+                    <h2>
+                        Answers</h2>
+                    <ul>
+                    @{var id = 0;}
+                        @foreach (var answer in question.Answers)
+                        {
+
+                            if (answer.Correct)
+                            {  
+                            <li style="color: Green; font-weight: bold;">+ @answer.Text
+                            </li>
+                            }
+                            else
+                            {
+                            <li>+ @answer.Text
+                            </li>
+                            }
+                            id++;
+                        }
+                    </ul>
+                </div>
+                <button name="btnEditQuestion" questionId ="@question.ID" class="button_colour" value="Save">
+                    <img height="24" width="24" alt="Bended Arrow Right" src="@Url.Content("~/Content/Adminica/images/icons/small/white/bended_arrow_right.png")">
+                <span>Edit</span>
+                <button name="btnDeleteQuestion" questionId ="@question.ID" class="button_colour" value="Save">
+                    <img height="24" width="24" alt="Bended Arrow Right" src="@Url.Content("~/Content/Adminica/images/icons/small/white/bended_arrow_right.png")">
+                <span>Delete</span>
+            </button>
+            </div>
+        </div>
+    </li>
+    }
+}
+
+<script type="text/javascript">
+
+    $(function () {
+
+        $("button[name='btnDeleteQuestion']").click(function ()
+         {
+            var questionId = $(this).attr('questionId');
+            $.ajax({
+               type: "POST",
+                        url: "@Url.Action("DeleteQuestion", "Test")/"+questionId,
+                        cache: false,
+                        success: function(data) {
+                            if(data.IsSuccess)
+                            {
+                                window.location.reload();
+                            }
+                            else
+                            {
+                                ShowRedAlert("Problem deleting question");
+                            }
+                        },
+                        failure: function() {
+                            ShowRedAlert("Failure");
+                        },
+                      statusCode: { 404: function() {
+                             ShowRedAlert("No Connection");
+                        }}
+                    });           
+        });
+
+        $("button[name='btnEditQuestion']").click(function () {
+            var questionId = $(this).attr('questionId');
+
+          $("<div id='editQuestionModal'/>").dialog({
+            modal: true,
+            open: function () {
+                $.ajax({
+                        type: "GET",
+                        url: "@Url.Action("EditQuestion", "Test")/"+questionId,
+                        cache: false,
+                        dataType: "html",
+                        success: function(data) {
+                            $("#editQuestionModal").html(data);
+                        },
+                        failure: function() {
+                            ShowRedAlert("Failure");
+                        },
+                      statusCode: { 404: function() {
+                             $("#editQuestionModal").remove();
+                             ShowRedAlert("No Connection");
+                        }}
+                    });           
+            },
+            close: function () {
+                $("#editQuestionModal").remove();
+                window.location.reload();
+            },
+            height: 'auto',
+            width:  735,
+            title: 'Edit Question'
+            });
+        return false;
+        });
+
+
+    })
+
+
+</script>

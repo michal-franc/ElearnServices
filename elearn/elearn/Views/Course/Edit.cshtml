@@ -8,66 +8,70 @@
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
 
 
-@using (Html.BeginForm()) {
-    
-    
-    
-    @Html.ValidationSummary(true)
-    <fieldset>
-        <legend>CourseDto</legend>
-
+@using (Html.BeginForm())
+{
         @Html.HiddenFor(model => model.ID)
         @Html.HiddenFor(model => model.CreationDate)
         @Html.HiddenFor(model => model.IsPasswordProtected)
-
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Name)
+        <div class="box grid_8 round_all">
+            <h2 class="box_head grad_colour">
+                Basic Info</h2>
+            <div class="block">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Name)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.Name)
+                    @Html.ValidationMessageFor(model => model.Name)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Logo)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.Logo)
+                    @Html.ValidationMessageFor(model => model.Logo)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.CourseType)
+                </div>
+                <div class="editor-field">
+                    @Html.DropDownListFor(model => model.CourseTypeId, ViewBag.CourseTypes as SelectList)
+                    @Html.ValidationMessageFor(model => model.CourseType)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.IsPasswordProtected)
+                </div>
+                <div class="editor-field">
+                    @Html.CheckBoxFor(model => model.IsPasswordProtected)
+                    @Html.ValidationMessageFor(model => model.IsPasswordProtected)
+                </div>
+            </div>
         </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Name)
-            @Html.ValidationMessageFor(model => model.Name)
+        <div class="box grid_8 round_all">
+            <h2 class="box_head grad_colour">
+                Description Info</h2>
+            <div class="block form-text-areas">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Description)
+                </div>
+                <div class="editor-field form-text-area">
+                    @Html.TextAreaFor(model => model.Description, new { @style = "width:100%;" })
+                    @Html.ValidationMessageFor(model => model.Description)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.ShortDescription)
+                </div>
+                <div class="editor-field">
+                    @Html.TextAreaFor(model => model.ShortDescription, new { @style = "width:100%;" })
+                    @Html.ValidationMessageFor(model => model.ShortDescription)
+                </div>
+            </div>
         </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Logo)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Logo)
-            @Html.ValidationMessageFor(model => model.Logo)
-        </div>
-
-        <div class="editor-field">
-            @Html.DropDownListFor(model => model.CourseTypeId, ViewBag.CourseTypes as SelectList)
-            @Html.ValidationMessageFor(model => model.CourseType)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Description)
-        </div>
-        <div class="editor-field">
-            @Html.TextAreaFor(model => model.Description)
-            @Html.ValidationMessageFor(model => model.Description)
-        </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.ShortDescription)
-        </div>
-        <div class="editor-field">
-            @Html.TextAreaFor(model => model.ShortDescription)
-            @Html.ValidationMessageFor(model => model.ShortDescription)
-        </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.News)
-        </div>
-        <div class="editor-field">
-            @Html.TextAreaFor(model => model.News)
-            @Html.ValidationMessageFor(model => model.News)
-        </div>
-
-        <p>
-            <input type="submit" value="Save" />
-        </p>
-    </fieldset>
+        <hr class="grid_16" />
+        <button class="button_colour" value="Save" type="submit">
+            <img height="24" width="24" alt="Bended Arrow Right" src="@Url.Content("~/Content/Adminica/images/icons/small/white/bended_arrow_right.png")">
+            <span>Save</span>
+        </button>
 }
 
 <div class="box grid_16" >
@@ -75,7 +79,7 @@
         Learning Materials</h2>
     <a href="#" class="toggle">&nbsp;</a>
     <div class="toggle_container">
-            @Html.Partial("_LearningMaterialsList",Model)
+            @Html.Partial("_LearningMaterialsList", Model)
     </div>
 </div>
 
@@ -83,22 +87,14 @@
         <img src="@Url.Content("~/Content/Icons/ok.png")"/>
     <span>Add LM</span>
 
+
 <script type="text/javascript">
 
     $(function () { 
     
         //todo more sections at one click
         $("#learningMaterialAddBtn").click(function(){
-            $.ajax({
-            type: "GET",
-            url:"@Url.Action("AddLearningMaterial", "Course", new { id = Model.ID })",
-            datatype:'json',
-            succes:function(data)
-            {
-                alert('operation : '+data);
-            }
-            });
-    
+            window.location = "@Url.Action("AddLearningMaterial", "Course", new { id = Model.ID })"; 
         });
     })
 

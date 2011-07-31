@@ -28,10 +28,16 @@
             type: "POST",
             url:"@Url.Action("UpdateGoals","LearningMaterial")/@Model.ID",
             data: "data="+$("#"+"@markitUpId").val(),
-            datatype:'json',
-            succes:function(data)
+            success:function(data)
             {
-                alert('operation : '+data);
+                 if(data.IsSuccess)
+                {
+                    ShowGreenAlert("Succesfully Updated Goals.");
+                }
+                else
+                {
+                    ShowRedAlert("Problem Updating Goals.");
+                }
             }
             });
 

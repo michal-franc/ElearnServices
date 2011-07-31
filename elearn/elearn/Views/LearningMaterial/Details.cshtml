@@ -1,60 +1,104 @@
 ﻿@model NHiberanteDal.DTO.LearningMaterialDto
-
 @{
     ViewBag.Title = "Learning Material Details";
 }
 <div class="box grid_16">
-    <h2 class="box_head grad_colour">Info</h2>
+    <h2 class="box_head grad_colour">
+        Info</h2>
     <a href="#" class="toggle">&nbsp;</a>
     <div class="toggle_container">
-    <ul class="block content_accordion ui-accordion ui-widget ui-helper-reset ui-sortable" role="tablist">
-	    <li class="ui-accordion-li-fix">
-		    <h3 class="bar ui-accordion-header ui-helper-reset ui-state-default ui-corner-all" role="tab" aria-expanded="true" tabindex="0">Description</h3>
-		    <div class="content ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" role="tabpanel" style="display: none; ">
-                <div class="textyConvert">
-                    @Html.Raw(Model.Description)
+        <ul class="block content_accordion ui-accordion ui-widget ui-helper-reset ui-sortable"
+            role="tablist">
+            <li class="ui-accordion-li-fix">
+                <h3 class="bar ui-accordion-header ui-helper-reset ui-state-default ui-corner-all"
+                    role="tab" aria-expanded="true" tabindex="0">
+                    Info</h3>
+                <div class="content ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom"
+                    role="tabpanel" style="display: none;">
+                    <a id="opener">
+                        <img src="@Url.Content("~/Content/Images/" + @Model.IconName + ".png")"/>
+                    </a>
+                    <p>
+                     <h3>@Model.Title</h3>
+                    </p>
                 </div>
-		    </div>
-	    </li>
-	    <li class="ui-accordion-li-fix">
-		    <h3 class="bar ui-accordion-header ui-helper-reset ui-state-default ui-corner-all" role="tab" aria-expanded="false" tabindex="-1">Goals</h3>
-		    <div class="content ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" role="tabpanel" style="display: none; ">
-                <div class="textyConvert">
-                    @Html.Raw(Model.Goals)
-               </div>
-		    </div>
-	    </li>
-    </ul>
+            </li>
+            <li class="ui-accordion-li-fix">
+                <h3 class="bar ui-accordion-header ui-helper-reset ui-state-default ui-corner-all"
+                    role="tab" aria-expanded="true" tabindex="0">
+                    Description</h3>
+                <div class="content ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom"
+                    role="tabpanel" style="display: none;">
+                    <div class="textyConvert">
+                        @Html.Raw(Model.Description)
+                    </div>
+                </div>
+            </li>
+            <li class="ui-accordion-li-fix">
+                <h3 class="bar ui-accordion-header ui-helper-reset ui-state-default ui-corner-all"
+                    role="tab" aria-expanded="false" tabindex="-1">
+                    Goals</h3>
+                <div class="content ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom"
+                    role="tabpanel" style="display: none;">
+                    <div class="textyConvert">
+                        @Html.Raw(Model.Goals)
+                    </div>
+                </div>
+            </li>
+        </ul>
     </div>
 </div>
-
+<hr class="grid_16" />
 @Html.Partial("_SectionPartial", Model.Sections)
-
-
+<hr class="grid_16" />
 <div class="box grid_16">
-    <h2 class="box_head grad_colour">Summary</h2>
+    <h2 class="box_head grad_colour">
+        Summary</h2>
     <a href="#" class="toggle">&nbsp;</a>
     <div class="toggle_container">
-    <ul class="block content_accordion ui-accordion ui-widget ui-helper-reset ui-sortable" role="tablist">
-	    <li class="ui-accordion-li-fix">
-		    <h3 class="bar ui-accordion-header ui-helper-reset ui-state-default ui-corner-all" role="tab" aria-expanded="true" tabindex="0">Summary</h3>
-		    <div class="content ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" role="tabpanel" style="display: none; ">
-                <div class="textyConvert">
-                    @Html.Raw(Model.Summary)
+        <ul class="block content_accordion ui-accordion ui-widget ui-helper-reset ui-sortable"
+            role="tablist">
+            <li class="ui-accordion-li-fix">
+                <h3 class="bar ui-accordion-header ui-helper-reset ui-state-default ui-corner-all"
+                    role="tab" aria-expanded="true" tabindex="0">
+                    Summary</h3>
+                <div class="content ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom"
+                    role="tabpanel" style="display: none;">
+                    <div class="textyConvert">
+                        @Html.Raw(Model.Summary)
+                    </div>
                 </div>
-		    </div>
-	    </li>
-         <li class="ui-accordion-li-fix">
-		    <h3 class="bar ui-accordion-header ui-helper-reset ui-state-default ui-corner-all" role="tab" aria-expanded="false" tabindex="-1">More ?</h3>
-		    <div class="content ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" role="tabpanel" style="display: none; ">
-			    @Html.Raw(Model.Links)
-		    </div>
-	    </li>
-    </ul>
+            </li>
+            <li class="ui-accordion-li-fix">
+                <h3 class="bar ui-accordion-header ui-helper-reset ui-state-default ui-corner-all"
+                    role="tab" aria-expanded="false" tabindex="-1">
+                    More ?</h3>
+                <div class="content ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom"
+                    role="tabpanel" style="display: none;">
+                    <div class="textyConvert">
+                        @Html.Raw(Model.Links)
+                    </div>
+                </div>
+            </li>
+        </ul>
     </div>
 </div>
-
-
+<hr class="grid_16" />
+<a href="@Url.Action("Edit", "LearningMaterial", new { id = Model.ID })">
+    <button class="button_colour" value="Save" type="submit">
+        <img height="24" width="24" alt="Bended Arrow Right" src="@Url.Content("~/Content/Adminica/images/icons/small/white/bended_arrow_right.png")">
+        <span>Edit</span>
+    </button>
+</a>
+@if (Model.Tests != null && Model.Tests.Count>0)
+{ 
+<a href="@Url.Action("DoTest", "Test", new { id = Model.Tests.First().ID })">
+    <button class="button_colour" value="Save" type="submit">
+        <img height="24" width="24" alt="Bended Arrow Right" src="@Url.Content("~/Content/Adminica/images/icons/small/white/bended_arrow_right.png")">
+        <span>Do Test</span>
+    </button>
+</a>
+}
 
 <script type="text/javascript">
 
@@ -69,7 +113,6 @@
             });
         });
         SyntaxHighlighter.all();
-
     })
 
 

@@ -2,7 +2,34 @@
     ViewBag.Title = "Score";
 }
 
-Your Score = @Model
 
-<h2>Score</h2>
+@if (Model < 50)
+{
+<div style="color:red;font-size:60px;font-weight:bold;text-align:center;">
 
+@Model / 100
+
+</div>
+}
+else
+{
+   <div style="color:green;font-size:60px;font-weight:bold;text-align:center;">
+
+@Model / 100
+
+</div>  
+
+}
+
+<div style="font-size:40px;font-weight:bold;text-align:center;">
+@if (Model < 50)
+{
+    Write("Try Again Later!");
+}
+else
+{
+    Write("Congratulations!");
+}
+    
+
+</div>

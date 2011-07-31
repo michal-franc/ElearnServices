@@ -7,8 +7,7 @@
 @{var counter=0;}
 @foreach (var sect in Model.Sections)
 { 
-    ViewBag.Counter=counter;
-    @Html.Partial("_SingleSectionEditor", sect, this.ViewData)
+    @Html.Partial("_SingleSectionEditor", sect)
     counter++;
 }
 
@@ -27,11 +26,17 @@
             $.ajax({
             type: "POST",
             url:"@Url.Action("UpdateSection", "LearningMaterial")/@Model.ID",
-            data: "data="+$("#"+"@markitUpId"+sectionId).val()+"&sectionNumber="+sectionId,
-            datatype:'json',
-            succes:function(data)
+            data: "data="+$("#"+"@markitUpId"+sectionId).val()+"&sectionNumber="+sectionId+"&title="+$("#txtBoxSectionTitle"+sectionId).val(),
+            success:function(data)
             {
-                alert('operation : '+data);
+                if(data.IsSuccess)
+                {
+                    ShowGreenAlert("Section Succesfully updated. Refresh to see changes",450);
+                }
+                else
+                {
+                    ShowRedAlert("Problem updating section.");
+                }
             }
             });
 
@@ -42,13 +47,19 @@
 
         var sectionId = $(this).attr('sectionnumber');
             $.ajax({
-            type: "GET",
+            type: "POST",
             url:"@Url.Action("RemoveSection", "LearningMaterial")",
             data: "id="+@Model.ID+"&sectionId="+sectionId,
-            datatype:'json',
-            succes:function(data)
+            success:function(data)
             {
-                alert('operation : '+data);
+                if(data.IsSuccess)
+                {
+                    ShowGreenAlert("Section Succesfully removed. Refresh to see changes",450);
+                }
+                else
+                {
+                    ShowRedAlert("Problem removing section.");
+                }
             }
             });
 
@@ -58,13 +69,19 @@
         $("#sectionAddBtn").click(function(){
         
             $.ajax({
-            type: "GET",
+            type: "POST",
             url:"@Url.Action("AddSections", "LearningMaterial", new { id = Model.ID })",
             data: "count="+1,
-            datatype:'json',
-            succes:function(data)
+            success:function(data)
             {
-                alert('operation : '+data);
+                if(data.IsSuccess)
+                {
+                    ShowGreenAlert("Section Succesfully added. Refresh to see changes",450);
+                }
+                else
+                {
+                    ShowRedAlert("Problem adding section.");
+                }
             }
             });
         

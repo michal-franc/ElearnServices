@@ -63,7 +63,7 @@ namespace NHibernateTests.ServicesTests
             TestShoutBoxMessage1 = new ShoutBoxMessageModel { Author = "test", Message = "testLatest", ShoutBoxId = 1, TimePosted = new DateTime(2011, 10, 10, 10, 10, 10) };
             TestQuestionAnswer = new TestQuestionAnswer {Correct = true,NumberSelected = 0, Text = "test"};
             TestQuestion = new TestQuestionModel
-                                { QuestionText = "test question", Answers = new List<TestQuestionAnswer>
+                                { QuestionText = "test question",QuestionLabel ="test", Answers = new List<TestQuestionAnswer>
                                                                                 { TestQuestionAnswer } };
             TestTestType = new TestTypeModel { TypeName = "test" };
             TestPofile = new ProfileModel { LoginName = "test", Email = "test@test.com", IsActive = true };

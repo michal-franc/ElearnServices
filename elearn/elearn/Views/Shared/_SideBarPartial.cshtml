@@ -14,19 +14,7 @@
 				</div><!-- #user_box -->
 			
 				<ul id="accordion" class="round_all">
-					<li><a class="top_level has_slide"><img src="@Url.Content("~/Content/Adminica/images/icons/small/grey/home.png")"/>Home</a>
-						<ul class="drawer">
-							<li><a href="@Url.Action("Index","Home")">News</a></li>
-							<li><a href="#">Events</a></li>
-							<li><a href="#">Tasks</a></li>
-						</ul>
-					</li>
-					<li><a href="#" class="top_level has_slide"><img src="@Url.Content("~/Content/Adminica/images/icons/small/grey/mail.png")"/>Messages</a>
-						<ul class="drawer">
-							<li><a href="#">Inbox</a></li>
-							<li><a href="#">Sent Items</a></li>
-							<li><a href="#">Trash</a></li>
-						</ul>
+					<li><a href="@Url.Action("Index","Home")"><img src="@Url.Content("~/Content/Adminica/images/icons/small/grey/home.png")"/>Home</a>
 					</li>
 					<li><a href="#" class="top_level has_slide"><img src="@Url.Content("~/Content/Adminica/images/icons/small/grey/expose.png")"/>Courses</a>
 						<ul class="drawer">
@@ -38,13 +26,7 @@
                     <li><a href="#" class="top_level has_slide"><img src="@Url.Content("~/Content/Adminica/images/icons/small/grey/fountain_pen.png")"/>Tests</a>
 						<ul class="drawer">
 							<li><a href="#">Pending Tests</a></li>
-							<li><a href="#">Completed Tests</a></li>
-						</ul>
-					</li>
-					<li><a href="#" class="top_level has_slide"><img src="@Url.Content("~/Content/Adminica/images/icons/small/grey/users.png")"/>Members</a>
-						<ul class="drawer">
-							<li><a href="#">List</a></li>
-                            <li><a href="#">Search</a></li>
+							<li><a href="@Url.Action("Finished","Test")">Completed Tests</a></li>
 						</ul>
 					</li>
                     <li><a href="#"><img src="@Url.Content("~/Content/Adminica/images/icons/small/grey/winner_podium.png")"/>Journals</a>
@@ -61,9 +43,7 @@
 				</ul>
 				<form id="search_side"><input class="round_all" type="text" value="Search Adminica..." onclick="value=''"></form>
 				<ul id="side_links" class="text_shadow round_all" >
-					<li><a href="http://www.mfranc.com">Author Blog</a></li>
+					<li><a href="http://www.mfranc.com">Author</a></li>
 					<li><a href="#">About</a></li>
-					<li><a href="#">Contact</a></li>
-                    <li><a href="#">Report Bug</a></li>
 				</ul>
 			</div><!-- #sidebar -->

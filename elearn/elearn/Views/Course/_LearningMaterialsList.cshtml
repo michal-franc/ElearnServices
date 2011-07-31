@@ -46,10 +46,20 @@
         @foreach (var material in Model.LearningMaterials)
         { 
             <li data-id="@material.ID" data-type="@material.Level"><a href="@Url.Action("Details", "LearningMaterial")/@material.ID" class="features">
-                <img src="http://www.tricycle.ie/adminica/images/content/sidebar.png"><strong>Side Nav</strong>
+                <img src="@Url.Content("~/Content/Images/"+@material.IconName+".png")"@material.IconName><strong>@material.Title</strong>
                 <span class="update">0</span>
-                <div class="starred">
-                    &nbsp;</div>
+                @if (material.Level == 1)
+                { 
+                    <div class="starred green">&nbsp;</div>
+                }
+                else if (material.Level == 2)
+                { 
+                    <div class="starred blue">&nbsp;</div>
+                }
+                else if (material.Level == 3)
+                { 
+                    <div class="starred">&nbsp;</div>
+                }
             </a></li>
         }
     </ul>

@@ -27,6 +27,7 @@
 
     <script type="text/javascript" src="@Url.Content("~/Content/syntax/scripts/shCore.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Content/syntax/scripts/shBrushJScript.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Content/syntax/scripts/shBrushCSharp.js")"></script>
 
     <script src="@Url.Content("~/Content/markitup/jquery.markitup.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Content/markitup/sets/textile/set.js")" type="text/javascript"></script>
@@ -34,6 +35,12 @@
 
     <link href="@Url.Content("~/Content/markitup/sets/textile/style.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Content/markitup/skins/simple/style.css")" rel="stylesheet" type="text/css" />
+
+        <style type='text/css'>@Html.Raw("@import url('http://getbarometer.s3.amazonaws.com/assets/barometer/css/barometer.css');")</style>
+    <script src='http://getbarometer.s3.amazonaws.com/assets/barometer/javascripts/barometer.js' type='text/javascript'></script>
+    <script type="text/javascript" charset="utf-8">
+        BAROMETER.load('by4ZRRsCTgEacspdj7Kke');
+    </script>
 
 </head>
 <body>
@@ -55,5 +62,7 @@
 			    </div>
             </div>
     </div>
+
 </body>
+
 </html>

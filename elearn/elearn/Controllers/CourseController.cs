@@ -68,14 +68,7 @@ namespace elearn.Controllers
             return View(courses);
         }
 
-        // GET: /Course/List/pageNumber
-        [HttpGet]
-        public ActionResult SampleList(int pageNumber)
-        {
-            var courses = _courseService.GetAllSignatures().Skip((pageNumber - 1) * Limit).Take(Limit).ToArray();
-            return View(courses);
-        }
-
+        //todo fix course type logic
         // GET: /Course/Create/
         [HttpGet]
         //[AuthorizeAttributeWcf(Roles = "collaborator")]
@@ -221,10 +214,10 @@ namespace elearn.Controllers
         public ActionResult AddLearningMaterial(int id)
         {
             var course = _courseService.GetById(id);
-            var newLearningMaterial = new LearningMaterialDto { CreationDate=DateTime.Now,UpdateDate=DateTime.Now};
+            var newLearningMaterial = new LearningMaterialDto { CreationDate=DateTime.Now,UpdateDate=DateTime.Now, Title="New LM" , IconName="sidebar"};
                 course.LearningMaterials.Add(newLearningMaterial);
                 _courseService.Update(course,false);
-            return RedirectToAction("Edit", new {id = id});
+            return RedirectToAction("Edit" , new {id = id});
         }
     }
 }

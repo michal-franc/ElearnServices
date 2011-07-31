@@ -1,0 +1,24 @@
+﻿@model elearn.Models.StatusModel
+
+@{
+    ViewBag.Title = "Status";
+}
+
+
+    <button id="btnDelete" class="button_colour" value="Save" type="submit">
+        <img height="24" width="24" alt="Bended Arrow Right" src="@Url.Content("~/Content/Adminica/images/icons/small/white/bended_arrow_right.png")">
+        <span>Go Back</span>
+    </button>
+
+
+
+    <script>
+
+        $(function () {
+        
+           var type = @Model.Type;
+           var msg = @Model.Message;
+           ShowAlert(msg,type);
+        
+         })
+    </script>

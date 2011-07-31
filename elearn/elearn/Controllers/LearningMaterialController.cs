@@ -1,5 +1,7 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Web.Mvc;
 using elearn.LearningMaterialService;
+using elearn.JsonMessages;
 
 namespace elearn.Controllers
 {
@@ -31,11 +33,8 @@ namespace elearn.Controllers
         {
             var learningMaterial = _learningMatService.GetById(id);
             learningMaterial.Goals = data;
-            var ok = _learningMatService.Update(learningMaterial);
-
-            if (ok)
-                return Json(true);
-            return Json(false);
+            var result = _learningMatService.Update(learningMaterial);
+            return Json(new ResponseMessage(result));
         }
 
         [ValidateInput(false)]
@@ -44,11 +43,8 @@ namespace elearn.Controllers
         {
             var learningMaterial = _learningMatService.GetById(id);
             learningMaterial.Description = data;
-            var ok = _learningMatService.Update(learningMaterial);
-
-            if (ok)
-                return Json(true);
-            return Json(false);
+            var result = _learningMatService.Update(learningMaterial);
+            return Json(new ResponseMessage(result));
         }
 
         [ValidateInput(false)]
@@ -57,25 +53,32 @@ namespace elearn.Controllers
         {
             var learningMaterial = _learningMatService.GetById(id);
             learningMaterial.Summary = data;
-            var ok = _learningMatService.Update(learningMaterial);
+            var result = _learningMatService.Update(learningMaterial);
+            return Json(new ResponseMessage(result));
+        }
 
-            if (ok)
-                return Json(true);
-            return Json(false);
+
+        [HttpPost]
+        public ActionResult UpdateInfo(int id,string title, string iconName,int level)
+        {
+            var learningMaterial = _learningMatService.GetById(id);
+            learningMaterial.Title = title;
+            learningMaterial.IconName = iconName;
+            learningMaterial.Level = level;
+            var result = _learningMatService.Update(learningMaterial);
+            return Json(new ResponseMessage(result));
         }
 
 
         [ValidateInput(false)]
         [HttpPost]
-        public ActionResult UpdateSection(int id,string data,int sectionNumber)
+        public ActionResult UpdateSection(int id,string data,int sectionNumber,string title)
         {
             var learningMaterial = _learningMatService.GetById(id);
-            learningMaterial.Sections[sectionNumber].Text = data;
-            var ok = _learningMatService.Update(learningMaterial);
-
-            if (ok)
-                return Json(true);
-            return Json(false);
+            learningMaterial.Sections.Where(s=>s.ID == sectionNumber).Single().Text = data;
+            learningMaterial.Sections.Where(s => s.ID == sectionNumber).Single().Title = title;
+            var result = _learningMatService.Update(learningMaterial);
+            return Json(new ResponseMessage(result));
         }
 
 
@@ -85,15 +88,12 @@ namespace elearn.Controllers
         {
             var learningMaterial = _learningMatService.GetById(id);
             learningMaterial.Links = data;
-            var ok = _learningMatService.Update(learningMaterial);
-
-            if (ok)
-                return Json(true);
-            return Json(false);
+            var result = _learningMatService.Update(learningMaterial);
+            return Json(new ResponseMessage(result));
         }
 
-        [HttpGet]
-        public ActionResult AddSections(int id,int count)
+        [HttpPost]
+        public ActionResult AddSections(int id, int count)
         {
             var learningMaterial = _learningMatService.GetById(id);
             for (int i = 0; i < count; i++)
@@ -102,12 +102,12 @@ namespace elearn.Controllers
                 learningMaterial.Sections.Add(newSection);
             }
             var ok = _learningMatService.Update(learningMaterial);
-
-            return RedirectToAction("Edit");
+            return Json(new ResponseMessage(ok));
         }
 
 
-        [HttpGet]
+
+        [HttpPost]
         public ActionResult RemoveSection(int id, int sectionId)
         {
             var learningMaterial = _learningMatService.GetById(id);
@@ -115,8 +115,7 @@ namespace elearn.Controllers
             learningMaterial.Sections.RemoveAt(sectionId);
 
             var ok = _learningMatService.Update(learningMaterial);
-
-            return RedirectToAction("Edit");
+            return Json(new ResponseMessage(ok));
         }
 
     }

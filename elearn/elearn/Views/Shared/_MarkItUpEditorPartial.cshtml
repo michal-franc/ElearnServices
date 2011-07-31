@@ -1,36 +1,44 @@
 ﻿@model elearn.Models.MarkItUpDataModel
-
-
 @{
     var markitUpId = "markItUp" + Model.Name;
     var previewId = "preview" + Model.Name;
 }
-
-
-<p>
-<textarea id="@markitUpId" cols="80" rows="20">
+@if (Model.Cols != null && Model.Rows != null)
+{
+    <p>
+        <textarea id="@markitUpId" cols="@Model.Cols" rows="@Model.Rows">
 @if (Model.Data != null && Model.Data.Length > 0)
 {
-     @Model.Data;
+@Model.Data.ToString()
 }
-</textarea>
-</p>
+    </textarea>
+    </p>
+}
+else
+{ 
+    <p>
+        <textarea id="@markitUpId" cols="80" rows="20">
+@if (Model.Data != null && Model.Data.Length > 0)
+{
+@Model.Data.ToString()
+}
+    </textarea>
+    </p>
+}
 <div id="@previewId" class="markitupPreview">
 </div>
-    
-
-
 <script type="text/javascript">
 
     $(function () {
-        $("#"+"@markitUpId").markItUp(mySettings);
-        $("#"+"@markitUpId").live("keyup", function () {
+
+        $("#" + "@markitUpId").markItUp(mySettings);
+        $("#" + "@markitUpId").live("keyup", function () {
             $("#" + "@previewId").html(convert($("#" + "@markitUpId").val()));
-            $("#"+"@previewId"+" pre").each(function (index, item) {
+            $("#" + "@previewId" + " pre").each(function (index, item) {
                 $(this).html($(this).html().replace(/\;/g, ";\n"));
                 $(this).html($(this).html().replace(/\{/g, "{\n"));
             });
-            SyntaxHighlighter.highlight($("#"+"@previewId"));
+            SyntaxHighlighter.highlight($("#" + "@previewId"));
         });
     })
 

@@ -22,7 +22,7 @@ namespace NHibernateTests.ServicesTests
             #endregion
 
             #region Act
-            new TestService().AddTest(1, test);
+            new TestService().AddTestToCourse(1, test);
             var tests= new CourseService().GetAllTestsSignatures(1);
             #endregion
 
@@ -38,14 +38,14 @@ namespace NHibernateTests.ServicesTests
         {
             #region Arrange         
             var test = new TestDto{ Author = ProfileModelDto.Map(TestPofile), CreationDate = DateTime.Now, Name = "new test", TestType = TestTypeModelDto.Map(TestTestType) };
-            test.ID =  new TestService().AddTest(1, test);
+            test.ID =  new TestService().AddTestToCourse(1, test);
             var tests = new CourseService().GetAllTestsSignatures(1);
             Assert.That(tests.Count, Is.EqualTo(1));
             #endregion
 
             #region Act
 
-            new TestService().DeleteTest(test);
+            new TestService().DeleteTest(1);
              tests = new CourseService().GetAllTestsSignatures(1);
 
             #endregion

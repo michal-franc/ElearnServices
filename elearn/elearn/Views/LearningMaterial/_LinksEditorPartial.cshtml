@@ -29,9 +29,16 @@
             type: "POST",
             url:"@Url.Action("UpdateLinks","LearningMaterial")/@Model.ID",
             data: "data="+$("#"+"@markitUpId").val(),
-            datatype:'json',
-            succes:function(data)
+            success:function(data)
             {
+                 if(data.IsSuccess)
+                {
+                    ShowGreenAlert("Succesfully Updated Links.");
+                }
+                else
+                {
+                    ShowRedAlert("Problem Updating Links.");
+                }
             }
             });
 

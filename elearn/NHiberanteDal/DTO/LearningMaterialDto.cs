@@ -13,6 +13,10 @@ namespace NHiberanteDal.DTO
         [DataMember]
         public string Description { get; set; }
         [DataMember]
+        public string Title { get; set; }
+        [DataMember]
+        public string IconName { get; set; }
+        [DataMember]
         public string Goals { get; set; }
         [DataMember]
         public int Level { get; set; }
