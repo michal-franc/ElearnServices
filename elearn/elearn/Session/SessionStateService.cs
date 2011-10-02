@@ -82,7 +82,7 @@ namespace elearn.Session
                     else
                     {
                         Logger.Debug("Adding Current user data to session state ");
-                        var profile = _profileService.GetByName(HttpContext.Current.User.Identity.Name);
+                        var profile = _profileService.GetByNameSignature(HttpContext.Current.User.Identity.Name);
                         var currentProfileSession = new CurrentProfileSession(profile);
 
                         AddUserDataToSession(currentProfileSession);

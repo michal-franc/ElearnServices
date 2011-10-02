@@ -21,9 +21,9 @@ namespace NHiberanteDal.Mappings
 
 
             //Many
-            HasMany(x => x.Tests).Cascade.All().LazyLoad();
+            HasMany(x => x.Tests).LazyLoad();
             HasMany(x => x.Sections).Cascade.All().LazyLoad();
-            HasMany(x => x.Files).Cascade.All().LazyLoad();
+            HasMany(x => x.Files).LazyLoad();
 
         }
     }

@@ -98,19 +98,6 @@ namespace NHibernateTests
                    })
                    .CheckReference(c => c.Forum, new ForumModel { Name = "test", Author = "test" })
                    .CheckReference(c => c.ShoutBox, new ShoutboxModel())
-                   .CheckList(c => c.Contents,
-                   new List<ContentModel>
-                       { 
-                            new ContentModel
-                                { Name="test", CreationDate=new DateTime(2010,10,1), ContentUrl="test" , Type=_contentType} 
-                        }
-                   )
-                   .CheckList(c => c.Surveys,
-                   new List<SurveyModel>
-                       { 
-                            new SurveyModel { SurveyText="test"} 
-                        }
-                   )
                    .CheckList(c => c.Tests,
                    new List<TestModel>
                        { 

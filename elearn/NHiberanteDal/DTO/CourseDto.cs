@@ -36,15 +36,11 @@ namespace NHiberanteDal.DTO
         [DataMember]
         public  GroupModelDto Group { get; set; }
         [DataMember]
-        public  ForumModelDto Forum { get; set; }
-        [DataMember]
         public ShoutboxModelDto ShoutBox { get; set; }
-        [DataMember]
-        public SurveyModel LatestSurvey {get;set;}
         [DataMember]
         public bool IsPasswordProtected { get; set; }
         [DataMember]
-        public List<LearningMaterialDto> LearningMaterials { get; set; }
+        public List<LearningMaterialSignatureDto> LearningMaterials { get; set; }
     }
 
 }

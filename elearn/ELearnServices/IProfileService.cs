@@ -43,6 +43,9 @@ namespace ELearnServices
         bool UpdateRole(ProfileModelDto profile, bool createIfNotExist);
 
         [OperationContract]
+        ProfileModelSignatureDto GetByNameSignature(string userName);
+
+        [OperationContract]
         ProfileModelDto GetByName(string userName);
 
         [OperationContract]

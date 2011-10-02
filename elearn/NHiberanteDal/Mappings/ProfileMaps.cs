@@ -15,7 +15,7 @@ namespace NHiberanteDal.Mappings
             References(x => x.GroupType).Not.LazyLoad();
 
             //Many
-            HasManyToMany(x => x.Users).Not.LazyLoad();      
+            HasManyToMany(x => x.Users).LazyLoad();      
         }
     }
 
@@ -40,8 +40,8 @@ namespace NHiberanteDal.Mappings
             Map(x => x.Email).Not.Nullable();
             Map(x => x.IsActive).Default("FALSE");
             //Many
-            HasMany(x=>x.Journals).Cascade.SaveUpdate().Not.LazyLoad();
-            HasMany(x=>x.FinishedTests).Cascade.SaveUpdate().Not.LazyLoad();
+            HasMany(x=>x.Journals).Cascade.SaveUpdate().LazyLoad();
+            HasMany(x=>x.FinishedTests).Cascade.SaveUpdate().LazyLoad();
 
 	    }
     }
@@ -81,7 +81,7 @@ namespace NHiberanteDal.Mappings
             References(x => x.Course).Not.Nullable().Not.LazyLoad();
 
             //Many
-            HasMany(x => x.Marks).Cascade.All().Not.LazyLoad().KeyColumns.Add("JournalId");
+            HasMany(x => x.Marks).Cascade.All().Not.LazyLoad();
 
         }
     }

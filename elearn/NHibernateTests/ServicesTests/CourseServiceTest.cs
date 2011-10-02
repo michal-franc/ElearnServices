@@ -31,32 +31,6 @@ namespace NHibernateTests.ServicesTests
             #endregion
         }
 
-        [Test]
-        public void Can_get_full_course_dto_with_latest_survey()
-        {
-            #region Arrange
-            using (var session = DataAccess.OpenSession())
-            {
-                TestCourse1.Surveys.Add(TestSurvey);
-                TestCourse1.Surveys.Add(TestLatestSurvey);
-                session.SaveOrUpdate(TestCourse1);
-                session.Flush();
-            }
-            #endregion
-
-            #region Act
-
-            var course = new CourseService().GetById(1);
-
-            #endregion
-
-            #region Assert
-            Assert.That(course.ShoutBox,Is.Not.Null);
-            Assert.That(course, Is.InstanceOf(typeof(CourseDto)));
-            Assert.That(course.LatestSurvey,Is.Not.Null);
-            Assert.That(course.LatestSurvey.DateCreated, Is.EqualTo(new DateTime(2011, 1, 1)));
-            #endregion
-        }
 
         [Test]
         public void Can_get_course_latest_test()
@@ -73,43 +47,17 @@ namespace NHibernateTests.ServicesTests
 
             #region Act
 
-            TestDto test = new CourseService().GetLatestTest(1);
+            //TestDto test = new CourseService().GetLatestTest(1);
 
             #endregion
 
             #region Assert
-            Assert.That(test, Is.Not.Null);
-            Assert.That(test, Is.InstanceOf(typeof(TestDto)));
-            Assert.That(test.CreationDate, Is.EqualTo(new DateTime(2011,1,1)));
+            //Assert.That(test, Is.Not.Null);
+            //Assert.That(test, Is.InstanceOf(typeof(TestDto)));
+            //Assert.That(test.CreationDate, Is.EqualTo(new DateTime(2011,1,1)));
             #endregion
         }
 
-        [Test]
-        public void Can_get_course_all_testssignatures()
-        {
-            #region Arrange
-            using (var session = DataAccess.OpenSession())
-            {
-                TestCourse1.Tests.Add(TestTest);
-                TestCourse1.Tests.Add(LatestTest);
-                session.SaveOrUpdate(TestCourse1);
-                session.Flush();
-            }
-            #endregion
-
-            #region Act
-
-            var tests = new CourseService().GetAllTestsSignatures(1);
-
-
-            #endregion
-
-            #region Assert
-            Assert.That(tests, Is.Not.Null);
-            Assert.That(tests.First(), Is.InstanceOf(typeof(TestSignatureDto)));
-            Assert.That(tests.Count, Is.EqualTo(2));
-            #endregion
-        }
 
         [Test]
         public void Can_filter_courses_by_name()
@@ -155,7 +103,6 @@ namespace NHibernateTests.ServicesTests
                                 {
                 CreationDate = DateTime.Now,
                 CourseType = CourseTypeModelDto.Map(TestCourseType),
-                Forum = new ForumModelDto { Author = "test", Name = "added forum" },
                 Group = new GroupModelDto
                             {
                     GroupName = "added test",
@@ -184,7 +131,6 @@ namespace NHibernateTests.ServicesTests
             {
                 Assert.That(testingAddedCourse.Name, Is.EqualTo("test add"));
                 Assert.That(testingAddedCourse.Group.GroupName, Is.EqualTo("added test"));
-                Assert.That(testingAddedCourse.Forum.Name, Is.EqualTo("added forum"));
             }
 
             #endregion
@@ -262,59 +208,6 @@ namespace NHibernateTests.ServicesTests
             TestQuestion.Answers.Add(TestQuestionAnswer);
             TestTest.Questions.Add(TestQuestion);
             TestCourse3.Tests.Add(TestTest);
-
-            int id = -1;
-            DataAccess.InTransaction(session =>
-            {
-                id = (int)session.Save(TestCourse3);
-            });
-
-            #endregion
-
-            #region Act
-
-            bool ok = new CourseService().Remove(id);
-
-            #endregion
-
-            #region Assert
-            Assert.IsTrue(ok);
-            #endregion
-        }
-
-
-        [Test]
-        public void Can_remove_with_nested_contents_by_id()
-        {
-            #region Arrange
-
-            TestCourse3.Contents.Add(TestContent);
-
-            int id = -1;
-            DataAccess.InTransaction(session =>
-            {
-                id = (int)session.Save(TestCourse3);
-            });
-
-            #endregion
-
-            #region Act
-
-            bool ok = new CourseService().Remove(id);
-
-            #endregion
-
-            #region Assert
-            Assert.IsTrue(ok);
-            #endregion
-        }
-
-        [Test]
-        public void Can_remove_with_nested_surveys_by_id()
-        {
-            #region Arrange
-
-            TestCourse3.Surveys.Add(TestSurvey);
 
             int id = -1;
             DataAccess.InTransaction(session =>

@@ -14,7 +14,7 @@ namespace NHiberanteDal.DTO
         [DataMember]
         public CourseSignatureDto Course { get; set; }
         [DataMember]
-        public  IList<JournalMarkModelDto> Marks { get; set; }
+        public  List<JournalMarkModelDto> Marks { get; set; }
         [DataMember]
         public bool IsActive { get; set; }
     }

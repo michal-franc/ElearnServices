@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using elearn.Session;
-using elearn.ProfileService;
 
 namespace elearn.ActionFilters
 {
@@ -13,27 +13,40 @@ namespace elearn.ActionFilters
         {
             base.OnActionExecuted(filterContext);
             var result = filterContext.Result as ViewResult;
-            if (result != null)
+            var profileData = SessionStateService.SessionState.GetCurrentUserDataFromSession();
+            if (profileData == null)
             {
-                result.MasterName = GetMaster(SessionStateService.SessionState.GetCurrentUserDataFromSession());
+                if (result != null && !filterContext.ActionDescriptor.ActionName.Contains("LogOn"))
+                {
+                    RouteValueDictionary redirectTargetDictionary = new RouteValueDictionary();
+                    redirectTargetDictionary.Add("action", "LogOn");
+                    redirectTargetDictionary.Add("controller", "Account");
+                    filterContext.Result = new RedirectToRouteResult(redirectTargetDictionary);
+                }
+            }
+            else if (result != null)
+            {
+                result.MasterName = GetMaster(profileData);
             }
         }
 
         private string GetMaster(CurrentProfileSession profileData)
         {
-
-            if(!HttpContext.Current.User.Identity.IsAuthenticated)
+            if (!HttpContext.Current.User.Identity.IsAuthenticated)
             {
                 Logger.Debug("Layout - Setting Layout to Anonymous User");
                 return "_AnonymousUserLayout";
             }
-
-            if (profileData.Role == "basicuser" || profileData.Role == "admin")
+            else if (profileData.Role == "admin")
+            {
+                Logger.Debug("Layout - Setting Layout to admin");
+                return "_AdminLayout";
+            }
+            else if (profileData.Role == "basicuser" || profileData.Role == "courseowner")
             {
                 Logger.Debug("Layout - Setting Layout to Logged User");
                 return "_LoggedUserLayout";
             }
-
             return String.Empty;
         }
     }

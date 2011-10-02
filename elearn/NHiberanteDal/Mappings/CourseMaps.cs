@@ -18,27 +18,23 @@ namespace NHiberanteDal.Mappings
             Map(x=>x.Password).Nullable();
             
             //One
-            References(x => x.Group).Not.Nullable().Cascade.All().Not.LazyLoad();
+            References(x => x.Group).Not.Nullable().Cascade.All().LazyLoad();
             References(x => x.CourseType).Not.Nullable().Not.LazyLoad();
-            References(x => x.Forum).Not.Nullable().Cascade.All().Not.LazyLoad();
-            References(x => x.ShoutBox).Not.Nullable().Cascade.All().Not.LazyLoad();
+            References(x => x.ShoutBox).Not.Nullable().Cascade.All().LazyLoad();
 
-            //Many
-            HasMany(x => x.Contents).KeyColumns.Add("CourseId").Cascade.SaveUpdate().LazyLoad();
-            HasMany(x => x.Surveys).KeyColumns.Add("CourseId").Cascade.SaveUpdate().LazyLoad();
             HasMany(x => x.Tests).KeyColumns.Add("CourseId").Cascade.SaveUpdate().LazyLoad();
-            HasMany(x => x.LearningMaterials).KeyColumns.Add("CourseId").Cascade.SaveUpdate().Not.LazyLoad();
+            HasMany(x => x.LearningMaterials).KeyColumns.Add("CourseId").Cascade.SaveUpdate().LazyLoad();
+            Cache.ReadWrite();
         }
     }
 
-        public class CourseTypeModelMap : ClassMap<CourseTypeModel>
+    public class CourseTypeModelMap : ClassMap<CourseTypeModel>
+    {
+        public CourseTypeModelMap()
         {
-            public CourseTypeModelMap()
-            {
-                Id(x => x.ID);
-                Map(x => x.TypeName).Not.Nullable();
-            }
+            Id(x => x.ID);
+            Map(x => x.TypeName).Not.Nullable();
+            Cache.ReadOnly();
         }
-
-
     }
+ }

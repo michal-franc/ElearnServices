@@ -1,24 +1,65 @@
 ﻿@{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "My Journals";
 }
 @model NHiberanteDal.DTO.JournalModelDto[]
-           
-
-@if (Model.Count() > 0)
+@foreach (var journal in Model)
 { 
-    foreach(var journal in Model)
-    {
-        @journal.Course.Name
-        <br />
-        @journal.ID
-        <ul>
-            @foreach (var mark in journal.Marks)
-            {
-                <li>@mark.Name - @mark.Value - Date - @mark.DateAdded</li>
-            }
-        </ul>
-    }
+    
+         double avrg =0.0;
+         if (journal.Marks.Count > 0)
+         {
+             var sum = journal.Marks.Sum(c => Double.Parse(c.Value));
+             var count = journal.Marks.Count;
+             avrg = sum / (double)count;
+         
+     
+            <div class="box grid_16 round_all">
+                <h2 class="box_head grad_colour round_top">
+                    @journal.Course.Name  &nbsp; &nbsp; &nbsp; Avg : @avrg.ToString("#.##") % </h2>
+                <a href="#" class="grabber">&nbsp;</a> <a href="#" class="toggle toggle_closed">&nbsp;</a>
+                <div class="block no_padding">
+                    <table class="static">
+                        <thead>
+                            <tr class="even">
+                                <th class="first">
+                                    Mark Id
+                                </th>
+                                <th>
+                                    Date Added
+                                </th>
+                                <th>
+                                    Test Name
+                                </th>
+                                <th class="last">
+                                    Mark
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var mark in journal.Marks)
+                            {
+                                <tr>
+                                    <td>@mark.ID
+                                    </td>
+                                    <td>@mark.DateAdded
+                                    </td>
+                                    <td>@mark.Name
+                                    </td>
+                                    @if (Double.Parse(mark.Value) > 50)
+                                    {
+                                        <td style="color: Green;">@mark.Value %
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                    <td style="color: Red;">@mark.Value %
+                                    </td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+         }
 }
-
-<h2>
-    Details</h2>

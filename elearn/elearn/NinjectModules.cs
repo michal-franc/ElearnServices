@@ -12,12 +12,13 @@ namespace elearn
     {
         public override void Load()
         {
-            Bind<IProfileService>().To<ProfileServiceClient>().InRequestScope();
-            Bind<ICourseService>().To<CourseServiceClient>().InRequestScope();
-            Bind<IGroupService>().To<GroupServiceClient>().InRequestScope();
-            Bind<ITestService>().To<TestServiceClient>().InRequestScope();
-            Bind<IJournalService>().To<JournalServiceClient>().InRequestScope();
-            Bind<ILearningMaterialService>().To<LearningMaterialServiceClient>().InRequestScope();
+            Bind<IProfileService>().To<ProfileServiceClient>().InSingletonScope();
+            Bind<ICourseService>().To<CourseServiceClient>().InSingletonScope();
+            Bind<IGroupService>().To<GroupServiceClient>().InSingletonScope();
+            Bind<ITestService>().To<TestServiceClient>().InSingletonScope();
+            Bind<IJournalService>().To<JournalServiceClient>().InSingletonScope();
+            Bind<ILearningMaterialService>().To<LearningMaterialServiceClient>().InSingletonScope();
+
         }
     }
 }

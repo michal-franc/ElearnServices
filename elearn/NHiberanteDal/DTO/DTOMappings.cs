@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using NHiberanteDal.Models;
 
 namespace NHiberanteDal.DTO
@@ -22,14 +21,23 @@ namespace NHiberanteDal.DTO
                     Mapper.CreateMap<FileModel, FileDto>();
                     Mapper.CreateMap<LearningMaterialDto, LearningMaterialModel>();
                     Mapper.CreateMap<LearningMaterialModel, LearningMaterialDto>();
-
-
+                    Mapper.CreateMap<LearningMaterialSignatureDto, LearningMaterialModel>()
+                            .ForMember(dest=>dest.Sections , opt=>opt.Ignore())
+                            .ForMember(dest => dest.Tests, opt => opt.Ignore())
+                            .ForMember(dest => dest.Files, opt => opt.Ignore());
+                    Mapper.CreateMap<LearningMaterialModel, LearningMaterialSignatureDto>();
                     Mapper.CreateMap<JournalModelDto, JournalModel>();
                     Mapper.CreateMap<JournalModel, JournalModelDto>();
                     Mapper.CreateMap<JournalMarkModelDto, JournalMarkModel>();
                     Mapper.CreateMap<JournalMarkModel, JournalMarkModelDto>();
                     Mapper.CreateMap<ProfileModel, ProfileModelDto>();
                     Mapper.CreateMap<ProfileModelDto, ProfileModel>();
+
+                    Mapper.CreateMap<ProfileModel, ProfileModelSignatureDto>();
+                    Mapper.CreateMap<ProfileModelSignatureDto, ProfileModel>()
+                        .ForMember(dest => dest.Journals, opt => opt.Ignore())
+                        .ForMember(dest => dest.FinishedTests, opt => opt.Ignore());
+
                     Mapper.CreateMap<SurveyModel, SurveyModelDto>();
                     Mapper.CreateMap<SurveyModelDto, SurveyModel>();
                     Mapper.CreateMap<SurveyQuestionModel, SurveyQuestionModelDto>();
@@ -60,11 +68,6 @@ namespace NHiberanteDal.DTO
                     Mapper.CreateMap<GroupModelDto, GroupModel>();
                     Mapper.CreateMap<CourseModel, CourseDto>()
                         .ForMember(
-                            dest => dest.LatestSurvey,
-                            opt => opt.MapFrom(c =>
-                                               c.Surveys.OrderByDescending(s => s.DateCreated).FirstOrDefault())
-                        )
-                        .ForMember(
                             dest => dest.IsPasswordProtected,
                             opt => opt.MapFrom(c => c.Password != null)
                         ).ForMember(
@@ -73,19 +76,18 @@ namespace NHiberanteDal.DTO
                         );
                     Mapper.CreateMap<CourseDto, CourseModel>()
                         .ForMember(dest => dest.Tests, opt => opt.Ignore())
-                        .ForMember(dest => dest.Surveys, opt => opt.Ignore())
-                        .ForMember(dest => dest.Contents, opt => opt.Ignore())
-                        .ForMember(dest => dest.Password, opt => opt.Ignore());
+                        .ForMember(dest => dest.Password, opt => opt.Ignore())
+                        .ForMember(dest => dest.Forum, opt => opt.Ignore());
                     Mapper.CreateMap<CourseModel, CourseSignatureDto>();
                     Mapper.CreateMap<CourseSignatureDto, CourseModel>()
                          .ForMember(dest => dest.Tests, opt => opt.Ignore())
-                         .ForMember(dest => dest.Surveys, opt => opt.Ignore())
-                         .ForMember(dest => dest.Contents, opt => opt.Ignore())
                          .ForMember(dest => dest.Group, opt => opt.Ignore())
                          .ForMember(dest => dest.Forum, opt => opt.Ignore())
                          .ForMember(dest => dest.ShoutBox, opt => opt.Ignore())
                          .ForMember(dest => dest.Password, opt => opt.Ignore())
-                         .ForMember(dest => dest.Description, opt => opt.Ignore());
+                         .ForMember(dest => dest.Description, opt => opt.Ignore())
+                         .ForMember(dest => dest.News, opt => opt.Ignore())
+                         .ForMember(dest => dest.LearningMaterials, opt => opt.Ignore());
 
                     Mapper.CreateMap<FinishedTestModel, FinishedTestModelDto>()
                         .ForMember(dest => dest.TestId, opt => opt.MapFrom(p=>p.Test.ID))

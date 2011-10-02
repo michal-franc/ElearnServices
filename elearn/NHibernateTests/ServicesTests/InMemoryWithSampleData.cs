@@ -84,18 +84,7 @@ namespace NHibernateTests.ServicesTests
                               { SurveyText = "Smiga chodzi fruwa ?", DateCreated = new DateTime(2010, 1, 1) };
             TestLatestSurvey = new SurveyModel
                                     { SurveyText = "Smiga chodzi fruwa ?", DateCreated = new DateTime(2011, 1, 1) };
-            TestCourse1 = new CourseModel
-                               {
-                CourseType = TestCourseType,
-                ShoutBox = TestShoutBox,
-                Forum = TestForum,
-                Group = TestGroup,
-                CreationDate = DateTime.Now,
-                Description = "test",
-                Logo = "/test.jpg",
-                Name = "test",
-                Password = "test"
-            };
+
 
             TestCourse2 = new CourseModel
                                {
@@ -155,6 +144,19 @@ namespace NHibernateTests.ServicesTests
                                             Files = new List<FileModel> {FileModel},
                                             Sections = new List<SectionModel> {SectionModel}
                                         };
+            TestCourse1 = new CourseModel
+            {
+                CourseType = TestCourseType,
+                ShoutBox = TestShoutBox,
+                Forum = TestForum,
+                Group = TestGroup,
+                CreationDate = DateTime.Now,
+                Description = "test",
+                Logo = "/test.jpg",
+                Name = "test",
+                Password = "test",
+                LearningMaterials = new List<LearningMaterialModel> { LearningMaterialModel }
+            };
 
             using (var session = DataAccess.OpenSession())
             {

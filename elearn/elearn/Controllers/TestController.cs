@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using elearn.JournalService;
 using NHiberanteDal.DTO;
 using NLog;
 using elearn.JsonMessages;
@@ -17,17 +18,19 @@ namespace elearn.Controllers
         private readonly ITestService _testService;
         private readonly ICourseService _courseService;
         private readonly IProfileService _profileService;
+        private readonly IJournalService _journalService;
 
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         //todo  : add Authorize parameters
 
 
-        public TestController(ITestService tService, ICourseService cService, IProfileService pService)
+        public TestController(ITestService tService, ICourseService cService, IProfileService pService, IJournalService jService)
         {
             _testService = tService;
             _courseService = cService;
             _profileService = pService;
+            _journalService = jService;
         }
 
         //
@@ -51,7 +54,7 @@ namespace elearn.Controllers
         [HttpGet]
         public ActionResult Create(int id,int typeId)
         {
-            var test = new TestDto();
+            var test = new NHiberanteDal.DTO.TestDto();
             var testTypes = _testService.GetTestTypes();
             test.TestType = testTypes.Where(c => c.ID == typeId).SingleOrDefault();
             ViewBag.ItemId = id;
@@ -61,7 +64,7 @@ namespace elearn.Controllers
         //
         // GET: /Test/Create
         [HttpPost]
-        public ActionResult Create(TestDto test,int itemid)
+        public ActionResult Create(NHiberanteDal.DTO.TestDto test, int itemid)
         {
             test.Author = _profileService.GetByName(User.Identity.Name);
             test.CreationDate = DateTime.Now;
@@ -108,7 +111,7 @@ namespace elearn.Controllers
         //
         // Post: /Test/Edit/id
         [HttpPost]
-        public ActionResult Edit(TestDto test)
+        public ActionResult Edit(NHiberanteDal.DTO.TestDto test)
         {
             if (ModelState.IsValid)
             {
@@ -134,7 +137,7 @@ namespace elearn.Controllers
         {
             if (id > 0)
             {
-                var newQuestion = new TestQuestionModelDto();
+                var newQuestion = new NHiberanteDal.DTO.TestQuestionModelDto();
                 ViewBag.TestId = id;
                 return PartialView("_CreateQuestionPartial", newQuestion);
             }
@@ -143,7 +146,7 @@ namespace elearn.Controllers
         }
 
         [HttpPost]
-        public JsonResult CreateQuestion(int id, TestQuestionModelDto questionModel)
+        public JsonResult CreateQuestion(int id, NHiberanteDal.DTO.TestQuestionModelDto questionModel)
         {
             var questionId = _testService.AddQuestion(id, questionModel);
             return Json(new ResponseMessage(true, questionId));
@@ -163,7 +166,7 @@ namespace elearn.Controllers
         }
 
         [HttpPost]
-        public JsonResult EditQuestion(int id,TestQuestionModelDto questionModel)
+        public JsonResult EditQuestion(int id, NHiberanteDal.DTO.TestQuestionModelDto questionModel)
         {
             questionModel.ID = id;
             var result = _testService.UpdateTestQuestion(questionModel);
@@ -181,7 +184,7 @@ namespace elearn.Controllers
 
         //write test
         [HttpPost]
-        public JsonResult AddAnswers(int id, List<TestQuestionAnswerDto> answers)
+        public JsonResult AddAnswers(int id, List<NHiberanteDal.DTO.TestQuestionAnswerDto> answers)
         {
             if (_testService.AddAnswers(id, answers.ToArray()))
                 return Json(new ResponseMessage(true));
@@ -227,19 +230,31 @@ namespace elearn.Controllers
         }
 
         [HttpPost]
-        public ActionResult DoTest(TestDto testModel)
+        public ActionResult DoTest(NHiberanteDal.DTO.TestDto testModel)
         {
             if (ModelState.IsValid)
             {
                 var mark = CalculateMark(testModel, 100);
                 var profile = _profileService.GetByName(User.Identity.Name);
-                profile.FinishedTests.Add(new FinishedTestModelDto()
+
+                profile.FinishedTests.Add(new NHiberanteDal.DTO.FinishedTestModelDto()
                                               {
                                                   DateFinished = DateTime.Now,
                                                   Mark = mark,
                                                   TestId = testModel.ID,
                                                   TestName = testModel.Name
                                               });
+                var courseId = _journalService.GetCourseIdForTest(testModel.ID);
+                var journal = profile.Journals.Where(j => j.Course.ID == courseId).FirstOrDefault();
+                if (journal != null)
+                {
+                    journal.Marks.Add(new NHiberanteDal.DTO.JournalMarkModelDto
+                                                {
+                                                    DateAdded = DateTime.Now,
+                                                    Name = testModel.Name ?? "None",
+                                                    Value = mark.ToString()
+                                                });
+                }
                 _profileService.UpdateProfile(profile);
                 return View("Score", mark);
             }
@@ -252,7 +267,7 @@ namespace elearn.Controllers
         /// <param name="test">Instance of test model with questions and answers</param>
         /// <param name="maxValue">Maximum value threshold eg with 100 ( we would had 0-100 mark )</param>
         /// <returns></returns>
-        private double CalculateMark(TestDto test,int maxValue)
+        private double CalculateMark(NHiberanteDal.DTO.TestDto test, int maxValue)
         {
             var allQuestionsWithAnswers = test.Questions.Where(q => q.Answers != null).ToList();
             double correctAnswers = allQuestionsWithAnswers.Where(q => q.Answers.Any(a => a.IsSelected && a.Correct)).Count();

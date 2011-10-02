@@ -78,6 +78,26 @@ namespace NHibernateTests.ServicesTests
             Assert.IsTrue(ok);
             #endregion
         }
+
+
+        [Test]
+        public void Can_get_courseid_by_test_id()
+        {
+            #region Arrange
+            #endregion
+
+            #region Act
+
+            var courseId = new JournalService().GetCourseIdForTest(1);
+
+            #endregion
+
+            #region Assert
+
+            Assert.That(courseId,Is.EqualTo(1));
+
+            #endregion
+        }
 				
     }
 }

@@ -17,12 +17,12 @@ namespace NHiberanteDal.DTO
         [DataMember]
         public  GroupTypeModelDto GroupType { get; set; }
         [DataMember]
-        public  IList<ProfileModelDto> Users { get; set; }
+        public  IList<ProfileModelSignatureDto> Users { get; set; }
 
 
         public GroupModelDto()
         {
-                Users = new List<ProfileModelDto>();
+            Users = new List<ProfileModelSignatureDto>();
         }
     }
 }

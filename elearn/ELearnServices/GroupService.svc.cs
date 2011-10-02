@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel.Activation;
 using NHiberanteDal.DTO;
 using NHiberanteDal.Models;
 using NHiberanteDal.DataAccess;
@@ -8,6 +9,7 @@ using NHiberanteDal.DataAccess.QueryObjects;
 
 namespace ELearnServices
 {
+    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class GroupService : IGroupService
     {
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
@@ -15,6 +17,7 @@ namespace ELearnServices
         public GroupService()
         {
             Logger.Info("Created GroupService");
+            //HibernatingRhinos.Profiler.Appender.NHibernate.NHibernateProfiler.Initialize();
             DtoMappings.Initialize();
         }
 

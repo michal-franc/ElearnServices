@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel.Activation;
+using System.ServiceModel.Web;
 using NHiberanteDal.DTO;
 using NHiberanteDal.DataAccess;
 using NHiberanteDal.Models;
@@ -8,13 +10,14 @@ using NHiberanteDal.DataAccess.QueryObjects;
 
 namespace ELearnServices
 {
+    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class CourseService : ICourseService
     {
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
         public CourseService()
         {
-            Logger.Info("Created CourseService");
+            HibernatingRhinos.Profiler.Appender.NHibernate.NHibernateProfiler.Initialize();
             DtoMappings.Initialize();
         }
 
@@ -46,6 +49,7 @@ namespace ELearnServices
 
         public IList<CourseSignatureDto> GetCourseSignaturesByProfileId(int profileId)
         {
+            WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Origin", "*");
             try
             {
                 using (var session = DataAccess.OpenSession())
@@ -78,48 +82,6 @@ namespace ELearnServices
                 return null;
             }
         }
-
-        public TestDto GetLatestTest(int id)
-        {
-            try
-            {
-                TestDto test;
-                using (var session = DataAccess.OpenSession())
-                {
-                    test = TestDto.Map(
-                        session.Get<CourseModel>(id)
-                        .Tests.OrderByDescending(c => c.CreationDate).FirstOrDefault()
-                        );
-                }
-                return test;
-            }
-            catch (Exception ex)
-            {
-                Logger.Error("Error : CourseService.GetLatestTest - {0}", ex.Message);
-                return null;
-            }
-        }
-
-        public IList<TestSignatureDto> GetAllTestsSignatures(int id)
-        {
-            try
-            {
-                IList<TestSignatureDto> tests;
-                using (var session = DataAccess.OpenSession())
-                {
-                    tests = TestSignatureDto.Map(
-                        session.Get<CourseModel>(id).Tests.ToList()
-                        );
-                }
-                return tests;
-            }
-            catch (Exception ex)
-            {
-                Logger.Error("Error : CourseService.GetAllTestsSignatures - {0}", ex.Message);
-                return new List<TestSignatureDto>();
-            }
-        }
-
         public List<CourseDto> GetByName(string value)
         {
             try

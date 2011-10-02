@@ -80,6 +80,7 @@
   <ItemGroup>
     <Compile Include="DataAccess\DataAccess.cs" />
     <Compile Include="DataAccess\IQueryObject.cs" />
+    <Compile Include="DataAccess\IRepository.cs" />
     <Compile Include="DataAccess\QueryObjects\QueryCourseByCourseType.cs" />
     <Compile Include="DataAccess\QueryObjects\QueryCourseByName.cs" />
     <Compile Include="DataAccess\QueryObjects\QueryCoursesByProfileId.cs" />
@@ -101,7 +102,9 @@
     <Compile Include="DTO\JournalMarkModelDto.cs" />
     <Compile Include="DTO\JournalModelDto.cs" />
     <Compile Include="DTO\LearningMaterialDto.cs" />
+    <Compile Include="DTO\LearningMaterialSignatureDto.cs" />
     <Compile Include="DTO\ProfileModelDto.cs" />
+    <Compile Include="DTO\ProfileModelSignatureDto.cs" />
     <Compile Include="DTO\SectionDto.cs" />
     <Compile Include="DTO\ShoutBoxMessageModelDto.cs" />
     <Compile Include="DTO\ShoutboxModelDto.cs" />

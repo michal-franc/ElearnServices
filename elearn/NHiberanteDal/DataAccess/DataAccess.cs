@@ -57,8 +57,15 @@ namespace NHiberanteDal.DataAccess
                 if (_configuration == null)
                 {
                     _configuration = Fluently.Configure().
-                            Database(MsSqlConfiguration.MsSql2008.ConnectionString(ConnectionString))
-                            .Mappings(x => x.FluentMappings.AddFromAssembly(System.Reflection.Assembly.GetExecutingAssembly())).BuildConfiguration();
+                            Database(MsSqlConfiguration.MsSql2008.ConnectionString(ConnectionString))  
+                            .Mappings(x => x.FluentMappings.AddFromAssembly(System.Reflection.Assembly.GetExecutingAssembly()))
+                            .ExposeConfiguration(c => {
+                                // People advice not to use NHibernate.Cache.HashtableCacheProvider for production
+                                c.SetProperty("cache.provider_class", "NHibernate.Cache.HashtableCacheProvider");
+                                c.SetProperty("cache.use_second_level_cache", "true");
+                                c.SetProperty("cache.use_query_cache", "true");
+                            })
+                             .BuildConfiguration();
                 }
                 return _configuration;
             }

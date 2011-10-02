@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "Admin Profiles";
+}
+
+@model NHiberanteDal.DTO.ProfileModelDto[]
+
+
+                <div class="box grid_16 round_all">
+                <h2 class="box_head grad_colour round_top"></h2>
+                <a href="#" class="grabber">&nbsp;</a> <a href="#" class="toggle toggle_closed">&nbsp;</a>
+                <div class="block no_padding">
+                    <table class="static">
+                        <thead>
+                            <tr class="even">
+                                <th class="first">
+                                    Profile ID
+                                </th>
+                                <th>
+                                    Login
+                                </th>
+                                <th>
+                                    Display
+                                </th>
+                                <th>
+                                    Role
+                                </th>
+                                <th>
+                                    Email
+                                </th>
+                                <th  class="last">
+                                    Active
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var profile in Model)
+                        { 
+                            <tr>
+                                <td>@profile.ID
+                                </td>
+                                <td>@profile.LoginName
+                                </td>
+                                <td>@profile.DisplayName
+                                </td>
+                                <td>@profile.Role
+                                </td>
+                                <td>@profile.Email
+                                </td>
+                                <td>@profile.IsActive
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>

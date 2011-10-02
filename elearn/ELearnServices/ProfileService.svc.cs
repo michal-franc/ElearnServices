@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel.Activation;
 using NHiberanteDal.DTO;
 using NHiberanteDal.DataAccess;
 using NHiberanteDal.Models;
@@ -10,6 +11,7 @@ using NHibernate.Criterion;
 
 namespace ELearnServices
 {
+    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class ProfileService : IProfileService
     {
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
@@ -19,6 +21,7 @@ namespace ELearnServices
         public ProfileService() : this(new MembershipRoleProvider())
         {
             Logger.Info("Created ProfileService");
+            //HibernatingRhinos.Profiler.Appender.NHibernate.NHibernateProfiler.Initialize();
         }
 
         public ProfileService(IRoleProvider provider)
@@ -115,7 +118,6 @@ namespace ELearnServices
             {
                 if (!String.IsNullOrWhiteSpace(role))
                 {
-
                     if (_roleProvider.RoleExists(role) && !_roleProvider.IsUserInRole(userName, role))
                     {
                         DeleteUserFromRoles(userName);
@@ -233,6 +235,25 @@ namespace ELearnServices
                 return -1;
             }
         }
+
+
+        public ProfileModelSignatureDto GetByNameSignature(string userName)
+        {
+            try
+            {
+                using (var session = DataAccess.OpenSession())
+                {
+                    var profiles = (List<ProfileModel>)session.CreateQuery(new QueryProfilesByName(userName).Query).List<ProfileModel>();
+                    return ProfileModelSignatureDto.Map(profiles.First());
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Error : ProfileService.GetByName - {0}", ex.Message);
+                return null;
+            }
+        }
+
 
         public ProfileModelDto GetByName(string userName)
         {

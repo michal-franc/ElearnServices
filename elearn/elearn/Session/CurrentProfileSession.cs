@@ -9,7 +9,7 @@ namespace elearn.Session
         public string LoginName { get; set; }
         public string DisplayName { get; set; }
 
-        public CurrentProfileSession(ProfileModelDto profileData)
+        public CurrentProfileSession(ProfileModelSignatureDto profileData)
         {
             ProfileId = profileData.ID;
             Role = profileData.Role;

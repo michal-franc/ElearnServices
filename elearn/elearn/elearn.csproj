@@ -40,8 +40,15 @@
     <Reference Include="Elmah">
       <HintPath>..\packages\elmah.corelibrary.1.2\lib\Elmah.dll</HintPath>
     </Reference>
+    <Reference Include="HibernatingRhinos.Profiler.Appender">
+      <HintPath>..\..\..\Desktop\NHProfiler\HibernatingRhinos.Profiler.Appender.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <HintPath>..\..\..\Desktop\NHProfiler\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Ninject, Version=2.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\libs\Ninject.dll</HintPath>
     </Reference>
     <Reference Include="NLog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL" />
@@ -103,6 +110,11 @@
     <Compile Include="NinjectDependencyResolver.cs" />
     <Compile Include="NinjectModules.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\CourseServiceExternal\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\CourseService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1942,6 +1954,7 @@
     <None Include="Properties\DataSources\NHiberanteDal.DTO.JournalModelDto.datasource" />
     <None Include="Properties\DataSources\NHiberanteDal.DTO.LearningMaterialDto.datasource" />
     <None Include="Properties\DataSources\NHiberanteDal.DTO.ProfileModelDto.datasource" />
+    <None Include="Properties\DataSources\NHiberanteDal.DTO.ProfileModelSignatureDto.datasource" />
     <None Include="Properties\DataSources\NHiberanteDal.DTO.ShoutBoxMessageModelDto.datasource" />
     <None Include="Properties\DataSources\NHiberanteDal.DTO.TestDto.datasource" />
     <None Include="Properties\DataSources\NHiberanteDal.DTO.TestQuestionModelDto.datasource" />
@@ -1993,11 +2006,25 @@
     <None Include="Content\Adminica\js\syntax_highlighter\tests\webrick.rb" />
     <None Include="Content\Adminica\js\syntax_highlighter\tests\webrick.sh" />
     <None Include="Content\Adminica\js\uniform\README.textile" />
-    <None Include="Service References\CourseService\configuration91.svcinfo" />
-    <None Include="Service References\CourseService\configuration.svcinfo" />
-    <None Include="Service References\CourseService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
+    <None Include="Service References\CourseServiceExternal\CourseService.wsdl" />
+    <None Include="Service References\CourseServiceExternal\CourseService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CourseServiceExternal\CourseService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CourseServiceExternal\CourseService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CourseService\CourseService.wsdl" />
+    <None Include="Service References\CourseService\CourseService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CourseService\CourseService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CourseService\CourseService2.xsd">
+      <SubType>Designer</SubType>
     </None>
     <None Include="Service References\GroupService\GroupService.wsdl" />
     <None Include="Service References\GroupService\GroupService.xsd">
@@ -2011,18 +2038,27 @@
     </None>
     <None Include="Service References\JournalService\configuration91.svcinfo" />
     <None Include="Service References\JournalService\configuration.svcinfo" />
+    <None Include="Service References\JournalService\JournalService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\JournalService\JournalService31.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\JournalService\JournalService32.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\JournalService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <None Include="Service References\LearningMaterialService\LearningMaterialService.wsdl" />
-    <None Include="Service References\LearningMaterialService\LearningMaterialService.xsd">
+    <None Include="Service References\LearningMaterialService\LearningMaterialService3.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\LearningMaterialService\LearningMaterialService1.xsd">
+    <None Include="Service References\LearningMaterialService\LearningMaterialService31.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\LearningMaterialService\LearningMaterialService2.xsd">
+    <None Include="Service References\LearningMaterialService\LearningMaterialService32.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\ProfileService\ProfileService1.wsdl" />
@@ -2360,6 +2396,18 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Service References\CourseService\configuration91.svcinfo" />
+    <None Include="Service References\CourseService\configuration.svcinfo" />
+    <None Include="Service References\CourseService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\CourseServiceExternal\configuration91.svcinfo" />
+    <None Include="Service References\CourseServiceExternal\configuration.svcinfo" />
+    <None Include="Service References\CourseServiceExternal\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -2410,21 +2458,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LogOnPartial.cshtml" />
-    <Content Include="Views\Shared\_LoggedUserLayout1.cshtml" />
     <Content Include="Views\Web.config" />
-    <None Include="Service References\CourseService\CourseService.wsdl" />
-    <None Include="Service References\CourseService\CourseService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\CourseService\CourseService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\CourseService\CourseService2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\CourseService\CourseService3.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <Content Include="Views\Course\Index.cshtml" />
     <Content Include="Views\Course\Details.cshtml" />
     <Content Include="Views\Journal\Index.cshtml" />
@@ -2433,25 +2467,7 @@
     <Content Include="Views\Journal\Delete.cshtml" />
     <Content Include="Views\Survey\Index.cshtml" />
     <None Include="Service References\JournalService\JournalService.wsdl" />
-    <None Include="Service References\JournalService\JournalService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\JournalService\JournalService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\JournalService\JournalService2.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Service References\TestService\TestService.wsdl" />
-    <None Include="Service References\TestService\TestService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\TestService\TestService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\TestService\TestService2.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <Content Include="Views\Test\Index.cshtml" />
     <Content Include="Views\Test\Details.cshtml" />
     <Content Include="Views\Test\Create.cshtml" />
@@ -2520,6 +2536,17 @@
     <Content Include="Views\Test\_EditQuestionPartial.cshtml" />
     <Content Include="Views\Test\_DoQuestionListPartial.cshtml" />
     <Content Include="Views\LearningMaterial\_InfoEditorPartial.cshtml" />
+    <Content Include="Views\Course\Admin.cshtml" />
+    <Content Include="Views\Profile\Admin.cshtml" />
+    <None Include="Service References\TestService\TestService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TestService\TestService31.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TestService\TestService32.xsd">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2536,6 +2563,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Service References\CourseServiceExternal\" />
     <WCFMetadataStorage Include="Service References\CourseService\" />
     <WCFMetadataStorage Include="Service References\GroupService\" />
     <WCFMetadataStorage Include="Service References\JournalService\" />

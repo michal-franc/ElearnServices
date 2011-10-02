@@ -117,5 +117,13 @@ namespace elearn.Controllers
 
             return RedirectToAction("List");
         }
+
+        [AuthorizeAttributeWcf(Roles = "admin")]
+        [HttpGet]
+        public ActionResult Admin()
+        {
+            var profiles = _service.GetAllProfiles();
+            return View("Admin", profiles);
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using elearn.LearningMaterialService;
 using elearn.JsonMessages;
@@ -18,6 +19,14 @@ namespace elearn.Controllers
         public ActionResult Details(int id)
         {
             var learningMaterial = _learningMatService.GetById(id);
+            var regex = new Regex("<script((.|\n)*)script>", RegexOptions.ExplicitCapture | RegexOptions.Multiline);
+            foreach (var sect in learningMaterial.Sections)
+            {
+                if (sect.Text != null)
+                {
+                    sect.Text = regex.Replace(sect.Text, "");
+                }
+            }
             return View(learningMaterial);
         }
 

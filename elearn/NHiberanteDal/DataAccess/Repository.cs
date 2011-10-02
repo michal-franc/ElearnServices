@@ -5,7 +5,7 @@ using NHibernate.Criterion;
 
 namespace NHiberanteDal.DataAccess
 {
-    public class Repository<T> where T : class
+    public class Repository<T> : IRepository<T> where T : class
     {
         private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
@@ -133,7 +133,7 @@ namespace NHiberanteDal.DataAccess
                 IList<T> returnedList;
                 using (var session = DataAccess.OpenSession())
                 {
-                    returnedList = session.CreateCriteria(typeof(T)).List<T>();
+                    returnedList = session.CreateCriteria(typeof(T)).SetCacheable(true).List<T>();
                 }
                 return returnedList;
             }

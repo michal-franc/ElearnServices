@@ -22,17 +22,10 @@ namespace elearn.Controllers
             _profileServicel = profileServicel;
         }
 
-        // todotest
-        public ActionResult Index()
-        {
-            return RedirectToAction("MyJournal");
-        }
-
         //
         // GET: /Journal/MyJournal
         [HttpGet]
         [Authorize]
-        //todotest
         public ActionResult MyJournal()
         {
             var profile = _profileServicel.GetByName(User.Identity.Name);

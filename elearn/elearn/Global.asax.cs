@@ -48,6 +48,7 @@ namespace elearn
 
             AreaRegistration.RegisterAllAreas();
 
+
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
             Logger.Info("Application Started");

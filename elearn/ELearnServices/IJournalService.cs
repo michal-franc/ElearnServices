@@ -18,5 +18,8 @@ namespace ELearnServices
 
         [OperationContract]
         bool CreateJournal(int courseId, int profileId);
+
+        [OperationContract]
+        int GetCourseIdForTest(int testId);
     }
 }

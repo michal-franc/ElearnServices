@@ -23,16 +23,12 @@ namespace NHiberanteDal.Models
         public virtual ShoutboxModel ShoutBox { get; set; }
 
         //Many
-        public virtual IList<SurveyModel> Surveys { get; set; }
         public virtual IList<TestModel> Tests { get; set; }
-        public virtual IList<ContentModel> Contents { get; set; }
         public virtual IList<LearningMaterialModel> LearningMaterials { get; set; }
 
         public CourseModel()
         {
-            Surveys = new List<SurveyModel>();
             Tests = new List<TestModel>();
-            Contents = new List<ContentModel>();
             LearningMaterials = new List<LearningMaterialModel>();
         }
 

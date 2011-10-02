@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Web.Mvc;
 using System.Web.Security;
 using elearn.ProfileService;
+using elearn.Session;
 
 namespace elearn.Models
 {
@@ -125,7 +126,16 @@ namespace elearn.Models
                 logger.Info(String.Format("MembershipService \r\nUser : {0} is Inactive or doesnt exist",userName));
                 return false;
             }
-            return _service.ValidateUser(userName, password);
+
+            if(_service.ValidateUser(userName, password))
+            {
+                var profile = _service.GetByNameSignature(userName);
+                SessionStateService.SessionState.AddUserDataToSession(new CurrentProfileSession(profile));
+
+                return true;
+            }
+            return false;
+             
         }
 
         public MembershipCreateStatus CreateUser(string userName, string password, string email)

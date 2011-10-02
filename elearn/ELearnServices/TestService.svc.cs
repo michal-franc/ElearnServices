@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel.Activation;
 using NHiberanteDal.Models;
 using NHiberanteDal.DTO;
 using NHiberanteDal.DataAccess;
 
 namespace ELearnServices
 {
+    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class TestService : ITestService
     {
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
@@ -14,6 +16,7 @@ namespace ELearnServices
         public TestService()
         {
             Logger.Info("Created TestService");
+            //HibernatingRhinos.Profiler.Appender.NHibernate.NHibernateProfiler.Initialize();
             DtoMappings.Initialize();
         }
 

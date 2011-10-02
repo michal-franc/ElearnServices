@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ServiceModel;
+using System.ServiceModel.Activation;
+using System.ServiceModel.Web;
 using NHiberanteDal.DTO;
 
 namespace ELearnServices
@@ -8,20 +10,19 @@ namespace ELearnServices
     [ServiceContract]
     public interface ICourseService
     {
-        [OperationContract]
         IList<CourseDto> GetAll();
 
         [OperationContract]
         CourseDto GetById(int id);
 
         [OperationContract]
+        [AspNetCacheProfile("CacheFor60Seconds")]
+        [WebGet]
         IList<CourseSignatureDto> GetAllSignatures();
 
         [OperationContract]
+        [WebGet(ResponseFormat = WebMessageFormat.Json, UriTemplate = "Get?id={profileId}")]
         IList<CourseSignatureDto> GetCourseSignaturesByProfileId(int profileId);
-
-        [OperationContract]
-        IList<TestSignatureDto> GetAllTestsSignatures(int id);
 
         [OperationContract]
         bool Remove(int id);
@@ -33,6 +34,7 @@ namespace ELearnServices
         List<CourseDto> GetByCourseType(CourseTypeModelDto testCourseType);
 
         [OperationContract]
+        [WebInvoke( BodyStyle=WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]
         bool Update(CourseDto updatedCourse, bool reupload);
 
         [OperationContract]
@@ -45,9 +47,11 @@ namespace ELearnServices
         int? AddShoutBoxMessage(ShoutBoxMessageModelDto msg);
 
         [OperationContract]
+        [WebInvoke( BodyStyle=WebMessageBodyStyle.Wrapped, ResponseFormat = WebMessageFormat.Json)]
         IList<ShoutBoxMessageModelDto> GetLatestShoutBoxMessages(int shoutBoxId, int numberOfMessage);
 
         [OperationContract]
+        [WebInvoke( BodyStyle=WebMessageBodyStyle.Wrapped , ResponseFormat = WebMessageFormat.Json)]
         bool CheckPassword(int courseId, string password);
 
         [OperationContract]
